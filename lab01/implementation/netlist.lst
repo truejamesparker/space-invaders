@@ -1,0 +1,16 @@
+C:\jparker\space-invaders\implementation\system.ngc 1441065399
+C:/jparker/space-invaders/implementation/push_buttons_5bits_wrapper.ngc 1441065358
+C:/jparker/space-invaders/implementation/dip_switches_8bits_wrapper.ngc 1441065371
+C:/jparker/space-invaders/implementation/rs232_uart_1_wrapper.ngc 1441065351
+C:/jparker/space-invaders/implementation/proc_sys_reset_0_wrapper.ngc 1441065258
+C:/jparker/space-invaders/implementation/clock_generator_0_wrapper.ngc 1441065384
+C:/jparker/space-invaders/implementation/microblaze_0_ilmb_wrapper.ngc 1441065375
+C:/jparker/space-invaders/implementation/microblaze_0_dlmb_wrapper.ngc 1441065378
+C:/jparker/space-invaders/implementation/axi4lite_0_wrapper.ngc 1441065387
+C:/jparker/space-invaders/implementation/microblaze_0_wrapper.ngc 1441065381
+C:/jparker/space-invaders/implementation/microblaze_0_i_bram_ctrl_wrapper.ngc 1441065267
+C:/jparker/space-invaders/implementation/microblaze_0_d_bram_ctrl_wrapper.ngc 1441065275
+C:/jparker/space-invaders/implementation/debug_module_wrapper.ngc 1441065332
+C:/jparker/space-invaders/implementation/leds_8bits_wrapper.ngc 1441065364
+C:/jparker/space-invaders/implementation/microblaze_0_bram_block_wrapper.ngc 1441065281
+OK
