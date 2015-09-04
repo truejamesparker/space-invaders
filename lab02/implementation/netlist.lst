@@ -1,0 +1,18 @@
+C:\parkerbros\space-invaders\lab02\implementation\system.ngc 1441402658
+C:/parkerbros/space-invaders/lab02/implementation/push_buttons_5bits_wrapper.ngc 1441402615
+C:/parkerbros/space-invaders/lab02/implementation/dip_switches_8bits_wrapper.ngc 1441402628
+C:/parkerbros/space-invaders/lab02/implementation/rs232_uart_1_wrapper.ngc 1441402608
+C:/parkerbros/space-invaders/lab02/implementation/proc_sys_reset_0_wrapper.ngc 1441402509
+C:/parkerbros/space-invaders/lab02/implementation/clock_generator_0_wrapper.ngc 1441402644
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_ilmb_wrapper.ngc 1441402635
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_dlmb_wrapper.ngc 1441402638
+C:/parkerbros/space-invaders/lab02/implementation/axi4lite_0_wrapper.ngc 1441402647
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_wrapper.ngc 1441402641
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_intc_wrapper.ngc 1441402515
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_i_bram_ctrl_wrapper.ngc 1441402524
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_d_bram_ctrl_wrapper.ngc 1441402533
+C:/parkerbros/space-invaders/lab02/implementation/debug_module_wrapper.ngc 1441402588
+C:/parkerbros/space-invaders/lab02/implementation/leds_8bits_wrapper.ngc 1441402621
+C:/parkerbros/space-invaders/lab02/implementation/fit_timer_0_wrapper.ngc 1441402632
+C:/parkerbros/space-invaders/lab02/implementation/microblaze_0_bram_block_wrapper.ngc 1441402538
+OK
