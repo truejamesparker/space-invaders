@@ -6,10 +6,20 @@
 
 XGpio gpLED;  // This is a handle for the LED GPIO block.
 XGpio gpPB;   // This is a handle for the push-button GPIO block.
+u8 counter; // tens of milliseconds
+u8 seconds = 0;
+u8 minutes = 0;
+char time[5] = "";
 
 // This is invoked in response to a timer interrupt.
 // It does 2 things: 1) debounce switches, and 2) advances the time.
 void timer_interrupt_handler() {
+	counter += 1;
+	if (counter==100){
+		xil_printf("\b\b\b\b%4d", seconds);
+		seconds += 1;
+		counter = 0;
+	}
 }
 
 // This is invoked each time there is a change in the button state (result of a push or a bounce).

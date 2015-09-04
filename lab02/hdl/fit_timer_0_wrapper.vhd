@@ -43,7 +43,7 @@ begin
   fit_timer_0 : fit_timer
     generic map (
       C_FAMILY => "spartan6",
-      C_NO_CLOCKS => 10000000,
+      C_NO_CLOCKS => 1000000,
       C_INACCURACY => 0,
       C_EXT_RESET_HIGH => 1
     )

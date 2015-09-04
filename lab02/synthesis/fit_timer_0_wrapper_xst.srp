@@ -94,7 +94,7 @@ Unit <fit_timer_0_wrapper> synthesized.
 Synthesizing Unit <FIT_timer>.
     Related source file is "c:/xilinx/13.4/ise_ds/edk/hw/xilinxprocessoriplib/pcores/fit_timer_v1_01_b/hdl/vhdl/fit_timer.vhd".
         C_FAMILY = "spartan6"
-        C_NO_CLOCKS = 10000000
+        C_NO_CLOCKS = 1000000
         C_INACCURACY = 0
         C_EXT_RESET_HIGH = 1
     Summary:
@@ -136,8 +136,8 @@ Unit <Divide_part_3> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 22
- 1-bit register                                        : 22
+# Registers                                            : 19
+ 1-bit register                                        : 19
 
 =========================================================================
 
@@ -150,8 +150,8 @@ Macro Statistics
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 22
- Flip-Flops                                            : 22
+# Registers                                            : 19
+ Flip-Flops                                            : 19
 
 =========================================================================
 
@@ -161,12 +161,10 @@ Macro Statistics
 
 Optimizing unit <fit_timer_0_wrapper> ...
 
-Optimizing unit <FIT_timer> ...
-
 Optimizing unit <Divide_part_2> ...
 
 Optimizing unit <Divide_part_3> ...
-INFO:Xst:2261 - The FF/Latch <fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/Rst_d1> in Unit <fit_timer_0_wrapper> is equivalent to the following 7 FFs/Latches, which will be removed : <fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[2].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[6].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[5].Divide_I/Rst_d1> 
+INFO:Xst:2261 - The FF/Latch <fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/Rst_d1> in Unit <fit_timer_0_wrapper> is equivalent to the following 6 FFs/Latches, which will be removed : <fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[2].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[6].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[5].Divide_I/Rst_d1> <fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Rst_d1> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
@@ -178,8 +176,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 15
- Flip-Flops                                            : 15
+# Registers                                            : 13
+ Flip-Flops                                            : 13
 
 =========================================================================
 
@@ -202,16 +200,16 @@ Top Level Output File Name         : fit_timer_0_wrapper.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 25
+# BELS                             : 22
 #      GND                         : 1
-#      LUT2                        : 8
-#      LUT3                        : 15
+#      LUT2                        : 7
+#      LUT3                        : 13
 #      VCC                         : 1
-# FlipFlops/Latches                : 15
-#      FD                          : 8
-#      FDE                         : 7
-# Shift Registers                  : 8
-#      SRL16E                      : 8
+# FlipFlops/Latches                : 13
+#      FD                          : 7
+#      FDE                         : 6
+# Shift Registers                  : 7
+#      SRL16E                      : 7
 
 Device utilization summary:
 ---------------------------
@@ -220,18 +218,18 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              15  out of  54576     0%  
- Number of Slice LUTs:                   31  out of  27288     0%  
-    Number used as Logic:                23  out of  27288     0%  
-    Number used as Memory:                8  out of   6408     0%  
-       Number used as SRL:                8
+ Number of Slice Registers:              13  out of  54576     0%  
+ Number of Slice LUTs:                   27  out of  27288     0%  
+    Number used as Logic:                20  out of  27288     0%  
+    Number used as Memory:                7  out of   6408     0%  
+       Number used as SRL:                7
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:     32
-   Number with an unused Flip Flop:      17  out of     32    53%  
-   Number with an unused LUT:             1  out of     32     3%  
-   Number of fully used LUT-FF pairs:    14  out of     32    43%  
-   Number of unique control sets:         8
+ Number of LUT Flip Flop pairs used:     28
+   Number with an unused Flip Flop:      15  out of     28    53%  
+   Number with an unused LUT:             1  out of     28     3%  
+   Number of fully used LUT-FF pairs:    12  out of     28    42%  
+   Number of unique control sets:         7
 
 IO Utilization: 
  Number of IOs:                           3
@@ -257,11 +255,11 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
------------------------------------+---------------------------------------------------------------------+-------+
-Clock Signal                       | Clock buffer(FF name)                                               | Load  |
------------------------------------+---------------------------------------------------------------------+-------+
-Clk                                | NONE(fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/One_SRL16.SRL16E_I)| 23    |
------------------------------------+---------------------------------------------------------------------+-------+
+-----------------------------------+---------------------------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                                   | Load  |
+-----------------------------------+---------------------------------------------------------+-------+
+Clk                                | NONE(fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/Rst_d1)| 20    |
+-----------------------------------+---------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
@@ -284,7 +282,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'Clk'
   Clock period: 2.939ns (frequency: 340.240MHz)
-  Total number of paths / destination ports: 51 / 36
+  Total number of paths / destination ports: 44 / 31
 -------------------------------------------------------------------------
 Delay:               2.939ns (Levels of Logic = 1)
   Source:            fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/One_SRL16.SRL16E_I (FF)
@@ -305,19 +303,19 @@ Delay:               2.939ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'Clk'
-  Total number of paths / destination ports: 24 / 24
+  Total number of paths / destination ports: 21 / 21
 -------------------------------------------------------------------------
 Offset:              1.204ns (Levels of Logic = 1)
   Source:            Rst (PAD)
-  Destination:       fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/One_SRL16.SRL16E_I (FF)
+  Destination:       fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/One_SRL16.SRL16E_I (FF)
   Destination Clock: Clk rising
 
-  Data Path: Rst to fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/One_SRL16.SRL16E_I
+  Data Path: Rst to fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/One_SRL16.SRL16E_I
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT3:I0->O            1   0.205   0.579  fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Clk_En_i1 (fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Clk_En_i)
-     SRL16E:CE                 0.191          fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/One_SRL16.SRL16E_I
+     LUT3:I0->O            1   0.205   0.579  fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/Clk_En_i1 (fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/Clk_En_i)
+     SRL16E:CE                 0.191          fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/One_SRL16.SRL16E_I
     ----------------------------------------
     Total                      1.204ns (0.625ns logic, 0.579ns route)
                                        (51.9% logic, 48.1% route)
@@ -327,15 +325,15 @@ Timing constraint: Default OFFSET OUT AFTER for Clock 'Clk'
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
 Offset:              0.447ns (Levels of Logic = 0)
-  Source:            fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Clk_En_Out_i (FF)
+  Source:            fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Clk_En_Out_i (FF)
   Destination:       Interrupt (PAD)
   Source Clock:      Clk rising
 
-  Data Path: fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Clk_En_Out_i to Interrupt
+  Data Path: fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Clk_En_Out_i to Interrupt
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              0   0.447   0.000  fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Clk_En_Out_i (fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Clk_En_Out_i)
+     FDE:C->Q              0   0.447   0.000  fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Clk_En_Out_i (fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/Clk_En_Out_i)
     ----------------------------------------
     Total                      0.447ns (0.447ns logic, 0.000ns route)
                                        (100.0% logic, 0.0% route)
@@ -356,12 +354,12 @@ Clk            |    2.939|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.85 secs
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 3.56 secs
  
 --> 
 
-Total memory usage is 264788 kilobytes
+Total memory usage is 264916 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

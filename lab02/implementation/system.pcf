@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map O.87xd on Fri Sep 04 15:38:55 2015
+// Written by: Map O.87xd on Fri Sep 04 16:37:20 2015
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -2974,19 +2974,21 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT0 = PIN
         "LEDs_8Bits/LEDs_8Bits/ip2bus_data_i_D1_26" BEL
         "LEDs_8Bits/LEDs_8Bits/ip2bus_data_i_D1_25" BEL
         "LEDs_8Bits/LEDs_8Bits/ip2bus_data_i_D1_24" BEL
+        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/not_First.Out1"
+        BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[5].Divide_I/not_First.Out1"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[6].Divide_I/not_First.Out1"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/not_First.Out1"
         BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/not_First.Out1"
-        BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[2].Divide_I/not_First.Out1"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/not_First.Out1"
         BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/not_First.Out1"
+        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Clk_En_Out_i"
+        BEL
+        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/One_SRL16.SRL16E_I"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[5].Divide_I/Clk_En_Out_i"
         BEL
@@ -3000,10 +3002,6 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT0 = PIN
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[7].Divide_I/One_SRL16.SRL16E_I"
         BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/Clk_En_Out_i"
-        BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[8].Divide_I/One_SRL16.SRL16E_I"
-        BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[2].Divide_I/Clk_En_Out_i"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[2].Divide_I/One_SRL16.SRL16E_I"
@@ -3011,10 +3009,6 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT0 = PIN
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/Clk_En_Out_i"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[3].Divide_I/One_SRL16.SRL16E_I"
-        BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/Clk_En_Out_i"
-        BEL
-        "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[4].Divide_I/One_SRL16.SRL16E_I"
         BEL
         "fit_timer_0/fit_timer_0/Using_SRL16s.SRL16s[1].Divide_I/One_SRL16.SRL16E_I"
         BEL

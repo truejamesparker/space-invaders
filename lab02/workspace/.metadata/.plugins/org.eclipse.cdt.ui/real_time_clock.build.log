@@ -15,7 +15,7 @@ Finished building target: real_time_clock.elf
 Invoking: MicroBlaze Print Size
 mb-size real_time_clock.elf  |tee "real_time_clock.elf.size"
    text	   data	    bss	    dec	    hex	filename
-   7878	    392	   2130	  10400	   28a0	real_time_clock.elf
+   7962	    400	   2142	  10504	   2908	real_time_clock.elf
 Finished building: real_time_clock.elf.size
 ' '
 Invoking: Xilinx ELF Check

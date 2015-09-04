@@ -224,6 +224,47 @@ Creating hardware output directories ...
 Managing hardware (BBD-specified) netlist files ...
 
 Managing cache ...
+IPNAME:proc_sys_reset INSTANCE:proc_sys_reset_0 -
+C:\parkerbros\space-invaders\lab02\system.mhs line 23 - Copying cache
+implementation netlist
+IPNAME:axi_intc INSTANCE:microblaze_0_intc -
+C:\parkerbros\space-invaders\lab02\system.mhs line 36 - Copying cache
+implementation netlist
+IPNAME:lmb_v10 INSTANCE:microblaze_0_ilmb -
+C:\parkerbros\space-invaders\lab02\system.mhs line 47 - Copying cache
+implementation netlist
+IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_i_bram_ctrl -
+C:\parkerbros\space-invaders\lab02\system.mhs line 54 - Copying cache
+implementation netlist
+IPNAME:lmb_v10 INSTANCE:microblaze_0_dlmb -
+C:\parkerbros\space-invaders\lab02\system.mhs line 63 - Copying cache
+implementation netlist
+IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_d_bram_ctrl -
+C:\parkerbros\space-invaders\lab02\system.mhs line 70 - Copying cache
+implementation netlist
+IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
+C:\parkerbros\space-invaders\lab02\system.mhs line 79 - Copying cache
+implementation netlist
+IPNAME:microblaze INSTANCE:microblaze_0 -
+C:\parkerbros\space-invaders\lab02\system.mhs line 86 - Copying cache
+implementation netlist
+IPNAME:mdm INSTANCE:debug_module - C:\parkerbros\space-invaders\lab02\system.mhs
+line 110 - Copying cache implementation netlist
+IPNAME:axi_interconnect INSTANCE:axi4lite_0 -
+C:\parkerbros\space-invaders\lab02\system.mhs line 136 - Copying cache
+implementation netlist
+IPNAME:axi_uartlite INSTANCE:rs232_uart_1 -
+C:\parkerbros\space-invaders\lab02\system.mhs line 144 - Copying cache
+implementation netlist
+IPNAME:axi_gpio INSTANCE:push_buttons_5bits -
+C:\parkerbros\space-invaders\lab02\system.mhs line 159 - Copying cache
+implementation netlist
+IPNAME:axi_gpio INSTANCE:leds_8bits -
+C:\parkerbros\space-invaders\lab02\system.mhs line 174 - Copying cache
+implementation netlist
+IPNAME:axi_gpio INSTANCE:dip_switches_8bits -
+C:\parkerbros\space-invaders\lab02\system.mhs line 188 - Copying cache
+implementation netlist
 
 Elaborating instances ...
 IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
@@ -252,54 +293,18 @@ Running XST synthesis ...
 INFO:EDK:4211 - The following instances are synthesized with XST. The MPD option
    IMP_NETLIST=TRUE indicates that a NGC file is to be produced using XST
    synthesis. IMP_NETLIST=FALSE (default) instances are not synthesized. 
-INSTANCE:proc_sys_reset_0 - C:\parkerbros\space-invaders\lab02\system.mhs line
-23 - Running XST synthesis
-INSTANCE:microblaze_0_intc - C:\parkerbros\space-invaders\lab02\system.mhs line
-36 - Running XST synthesis
-INSTANCE:microblaze_0_ilmb - C:\parkerbros\space-invaders\lab02\system.mhs line
-47 - Running XST synthesis
-INSTANCE:microblaze_0_i_bram_ctrl -
-C:\parkerbros\space-invaders\lab02\system.mhs line 54 - Running XST synthesis
-INSTANCE:microblaze_0_dlmb - C:\parkerbros\space-invaders\lab02\system.mhs line
-63 - Running XST synthesis
-INSTANCE:microblaze_0_d_bram_ctrl -
-C:\parkerbros\space-invaders\lab02\system.mhs line 70 - Running XST synthesis
-INSTANCE:microblaze_0_bram_block - C:\parkerbros\space-invaders\lab02\system.mhs
-line 79 - Running XST synthesis
-INSTANCE:microblaze_0 - C:\parkerbros\space-invaders\lab02\system.mhs line 86 -
-Running XST synthesis
-INSTANCE:debug_module - C:\parkerbros\space-invaders\lab02\system.mhs line 110 -
-Running XST synthesis
 INSTANCE:clock_generator_0 - C:\parkerbros\space-invaders\lab02\system.mhs line
 123 - Running XST synthesis
-INSTANCE:axi4lite_0 - C:\parkerbros\space-invaders\lab02\system.mhs line 136 -
-Running XST synthesis
-INSTANCE:rs232_uart_1 - C:\parkerbros\space-invaders\lab02\system.mhs line 144 -
-Running XST synthesis
-INSTANCE:push_buttons_5bits - C:\parkerbros\space-invaders\lab02\system.mhs line
-159 - Running XST synthesis
-INSTANCE:leds_8bits - C:\parkerbros\space-invaders\lab02\system.mhs line 174 -
-Running XST synthesis
-INSTANCE:dip_switches_8bits - C:\parkerbros\space-invaders\lab02\system.mhs line
-188 - Running XST synthesis
 INSTANCE:fit_timer_0 - C:\parkerbros\space-invaders\lab02\system.mhs line 203 -
 Running XST synthesis
 
 Running NGCBUILD ...
-IPNAME:microblaze_0_ilmb_wrapper INSTANCE:microblaze_0_ilmb -
-C:\parkerbros\space-invaders\lab02\system.mhs line 47 - Running NGCBUILD
-IPNAME:microblaze_0_dlmb_wrapper INSTANCE:microblaze_0_dlmb -
-C:\parkerbros\space-invaders\lab02\system.mhs line 63 - Running NGCBUILD
-IPNAME:microblaze_0_wrapper INSTANCE:microblaze_0 -
-C:\parkerbros\space-invaders\lab02\system.mhs line 86 - Running NGCBUILD
 IPNAME:clock_generator_0_wrapper INSTANCE:clock_generator_0 -
 C:\parkerbros\space-invaders\lab02\system.mhs line 123 - Running NGCBUILD
-IPNAME:axi4lite_0_wrapper INSTANCE:axi4lite_0 -
-C:\parkerbros\space-invaders\lab02\system.mhs line 136 - Running NGCBUILD
 INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
    If any constraint needs to be overridden, this should be done by modifying
    the data/system.ucf file.
 
 Rebuilding cache ...
 
-Total run time: 147.00 seconds
+Total run time: 16.00 seconds
