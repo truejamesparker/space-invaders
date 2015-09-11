@@ -1,40 +1,90 @@
-#include "xgpio.h"          // Provides access to PB GPIO driver.
 #include <stdio.h>          // xil_printf and so forth.
+#include <stdint.h>			// uint32_t and so forth.
+
+#include "xgpio.h"          // Provides access to PB GPIO driver.
 #include "platform.h"       // Enables caching and other system stuff.
 #include "mb_interface.h"   // provides the microblaze interrupt enables, etc.
 #include "xintc_l.h"        // Provides handy macros for the interrupt controller.
 
+#include "clock/clock.h"
+#include "debouncer/debouncer.h"
+
 XGpio gpLED;  // This is a handle for the LED GPIO block.
 XGpio gpPB;   // This is a handle for the push-button GPIO block.
 u8 counter; // tens of milliseconds
-u8 seconds = 0;
-u8 minutes = 0;
 char time[5] = "";
+uint32_t oldButtonState = 0;
+
+uint8_t debounceCounterEnabled = 0;
+uint8_t debounceCounter = 0;
+
+uint32_t oldState = 0;
 
 // This is invoked in response to a timer interrupt.
 // It does 2 things: 1) debounce switches, and 2) advances the time.
 void timer_interrupt_handler() {
-	counter += 1;
-	if (counter==100){
-		xil_printf("\b\b\b\b%4d", seconds);
-		seconds += 1;
+	// for testing only
+	uint32_t seconds = 0;
+	uint32_t minutes = 0;
+	uint32_t hours = 0;
+
+	if (++counter == 100){
+
+		// clear the counter, it's been a second
 		counter = 0;
+
+		// increment the clock
+		incrementClock();
+
+		// For testing only.
+		getClock(&seconds, &minutes, &hours);
+//		xil_printf("\b\b\b\b\b\b\b\b%02d:%02d:%02d", hours, minutes, seconds);
+
 	}
+
+//	if(bounce_enabled()){
+//		inc_bouncer();
+//	}
+
+	if (debounceCounterEnabled && ++debounceCounter == 5) {
+		xil_printf("Debounced Button 1!\n");
+		debounceCounter = 0;
+		debounceCounterEnabled = 0;
+	}
+
+//	if (enabledBtn1 && ++btn1Count == 5) {
+//		xil_printf("Debounced Button 1!\n");
+//		btn1Count = 0;
+//		enabledBtn1 = 0;
+//	}
 }
 
 // This is invoked each time there is a change in the button state (result of a push or a bounce).
 void pb_interrupt_handler() {
-  // Clear the GPIO interrupt.
-  XGpio_InterruptGlobalDisable(&gpPB);                // Turn off all PB interrupts for now.
-  u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);  // Get the current state of the buttons.
-  xil_printf("push buttons: 0x%x\n", currentButtonState);
-  // You need to do something here.
+	// Clear the GPIO interrupt.
+	XGpio_InterruptGlobalDisable(&gpPB);                // Turn off all PB interrupts for now.
+	u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);  // Get the current state of the buttons.
+	//  xil_printf("push buttons: 0x%x\n", currentButtonState);
+	// You need to do something here.
+
+	if (currentButtonState != oldState) {
+		debounceCounterEnabled = 1;
+		debounceCounter = 0;
+	} else {//if (debounceCounterEnabled) {
+		debounceCounter = 0;
+	}
+//	if (currentButtonState & 0x01) { // btn 1 pressed
+//		enabledBtn1 = 1;
+//	} else {
+//		enabledBtn1 = 0;
+//		btn1Count = 0;
+//	}
 
 
+//	bouncer(currentButtonState);
 
-
-  XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);            // Ack the PB interrupt.
-  XGpio_InterruptGlobalEnable(&gpPB);                 // Re-enable PB interrupts.
+	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);            // Ack the PB interrupt.
+	XGpio_InterruptGlobalEnable(&gpPB);                 // Re-enable PB interrupts.
 }
 
 // Main interrupt handler, queries the interrupt controller to see what peripheral

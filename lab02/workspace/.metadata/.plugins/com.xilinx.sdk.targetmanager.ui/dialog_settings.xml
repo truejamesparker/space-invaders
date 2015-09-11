@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="C:\parkerbros\space-invaders\lab02\workspace\lab02_hw_platform\system.bit" key="lab02_hw_platform-bitFile"/>
+	<item value="C:\parkerbros\space-invaders\lab02\workspace\lab02_hw_platform\system_bd.bmm" key="lab02_hw_platform-bmmFile"/>
+	<item value="C:\parkerbros\space-invaders\lab02\workspace\real_time_clock\Debug\real_time_clock.elf" key="lab02_hw_platform-microblaze_0-initElf"/>
+</section>

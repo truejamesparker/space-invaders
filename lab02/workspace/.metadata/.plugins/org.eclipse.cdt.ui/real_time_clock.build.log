@@ -9,13 +9,13 @@ Finished building: ../src/main.c
 ' '
 Building target: real_time_clock.elf
 Invoking: MicroBlaze gcc linker
-mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp_0/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"real_time_clock.elf"  ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp_0/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"real_time_clock.elf"  ./src/main.o ./src/platform.o  ./src/debouncer/debouncer.o  ./src/clock/clock.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 Finished building target: real_time_clock.elf
 ' '
 Invoking: MicroBlaze Print Size
 mb-size real_time_clock.elf  |tee "real_time_clock.elf.size"
    text	   data	    bss	    dec	    hex	filename
-   7962	    400	   2142	  10504	   2908	real_time_clock.elf
+   8650	    400	   2166	  11216	   2bd0	real_time_clock.elf
 Finished building: real_time_clock.elf.size
 ' '
 Invoking: Xilinx ELF Check
