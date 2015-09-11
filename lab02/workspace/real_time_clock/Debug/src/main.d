@@ -10,8 +10,7 @@ src/main.d src/main.o: ../src/main.c \
   ../src/platform.h ../src/platform_config.h \
   ../../hello_world_bsp_0/microblaze_0/include/mb_interface.h \
   ../../hello_world_bsp_0/microblaze_0/include/xintc_l.h \
-  ../../hello_world_bsp_0/microblaze_0/include/xparameters.h \
-  ../src/clock/clock.h ../src/debouncer/debouncer.h
+  ../../hello_world_bsp_0/microblaze_0/include/xparameters.h
 
 ../../hello_world_bsp_0/microblaze_0/include/xgpio.h:
 
@@ -38,7 +37,3 @@ src/main.d src/main.o: ../src/main.c \
 ../../hello_world_bsp_0/microblaze_0/include/xintc_l.h:
 
 ../../hello_world_bsp_0/microblaze_0/include/xparameters.h:
-
-../src/clock/clock.h:
-
-../src/debouncer/debouncer.h:

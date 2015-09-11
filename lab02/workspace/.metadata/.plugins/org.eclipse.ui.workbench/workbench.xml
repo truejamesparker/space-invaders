@@ -16,10 +16,11 @@
 <coolItem id="org.eclipse.cdt.ui.buildConfigActionSet" itemType="typeToolBarContribution" x="89" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="22"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="61" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="84" y="22"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.cdt.ui.editor.CEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -28,10 +29,16 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/parkerbros/space-invaders/lab02/workspace/real_time_clock/src/main.c" title="main.c" tooltip="real_time_clock/src/main.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/real_time_clock/src/main.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1431" selectionTopPixel="357"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -42,7 +49,11 @@
 <view id="org.eclipse.tm.terminal.view.TerminalView" partName="Terminal"/>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<columnWidths org.eclipse.ui.ide.locationField="64" org.eclipse.ui.ide.markerType="94" org.eclipse.ui.ide.pathField="124" org.eclipse.ui.ide.resourceField="94" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
+<expanded>
+<category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings"/>
+</expanded>
+<columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
@@ -58,7 +69,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.cdt.ui.CPerspective">
+<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="org.eclipse.cdt.ui.CPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.cdt.internal.ui.CPerspectiveFactory" id="org.eclipse.cdt.ui.CPerspective" label="C/C++"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -167,7 +178,166 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/real_time_clock/src/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/real_time_clock/src/clock/clock.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/real_time_clock/src/debouncer/debouncer.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/real_time_clock/src/debouncer/debouncer.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/real_time_clock/src/clock/clock.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.binaryEditor" path="/real_time_clock/Debug/src/main.o"/>
+</editors>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="126" y="3"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1933" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="3153" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1573" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1201" y="0"/>
+</item>
+<item historyLabel="clock.c" index="1">
+<position info="not_deleted" x="118" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1609" y="1"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="3369" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1748" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="345" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="3369" y="0"/>
+</item>
+<item historyLabel="clock.h" index="4">
+<position info="not_deleted" x="146" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="238" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1581" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="126" y="11"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1981" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="152" y="11"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="2048" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="178" y="8"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="2112" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="201" y="9"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="2177" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="225" y="6"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1831" y="0"/>
+</item>
+<item historyLabel="debouncer.h" index="2">
+<position info="not_deleted" x="114" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="2289" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="3369" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1959" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="935" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1095" y="127"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1732" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1930" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1594" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1726" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1585" y="53"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1726" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1585" y="53"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="2046" y="42"/>
+</item>
+<item historyLabel="main.o" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1726" y="0"/>
+</item>
+<item historyLabel="debouncer.c" index="3">
+<position info="not_deleted" x="1578" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1562" y="0"/>
+</item>
+<item historyLabel="clock.c" index="1">
+<position info="not_deleted" x="118" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="935" y="0"/>
+</item>
+<item historyLabel="clock.c" index="1">
+<position info="not_deleted" x="22" y="116"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="935" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1419" y="0"/>
+</item>
+<item historyLabel="clock.h" index="4">
+<position info="not_deleted" x="79" y="69"/>
+</item>
+<item active="true" historyLabel="main.c" index="0">
+<position info="not_deleted" x="1419" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -183,5 +353,24 @@
 </trimArea>
 </trimLayout>
 </window>
-<mruList/>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.binaryEditor" name="main.o" tooltip="real_time_clock/Debug/src/main.o">
+<persistable path="/real_time_clock/Debug/src/main.o"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="debouncer.h" tooltip="real_time_clock/src/debouncer/debouncer.h">
+<persistable path="/real_time_clock/src/debouncer/debouncer.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="debounce.c" tooltip="real_time_clock/src/debouncer/debounce.c">
+<persistable path="/real_time_clock/src/debouncer/debounce.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="clock.h" tooltip="real_time_clock/src/clock/clock.h">
+<persistable path="/real_time_clock/src/clock/clock.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="clock.c" tooltip="real_time_clock/src/clock/clock.c">
+<persistable path="/real_time_clock/src/clock/clock.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="real_time_clock/src/main.c">
+<persistable path="/real_time_clock/src/main.c"/>
+</file>
+</mruList>
 </workbench>
