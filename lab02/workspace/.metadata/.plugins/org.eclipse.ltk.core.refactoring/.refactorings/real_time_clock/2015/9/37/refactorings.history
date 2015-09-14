@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;real_time_clock/src/bouncer&apos; to &apos;debouncer&apos;" description="Rename resource &apos;bouncer&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/bouncer" name="debouncer" stamp="1441938378916" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;real_time_clock/src/debouncer/debounce.c&apos; to &apos;debouncer.c&apos;" description="Rename resource &apos;debounce.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/debouncer/debounce.c" name="debouncer.c" stamp="1441939173987" updateReferences="true"/>
-</session>

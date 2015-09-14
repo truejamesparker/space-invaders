@@ -14,7 +14,6 @@ XGpio gpPB;   // This is a handle for the push-button GPIO block.
 u8 counter; // tens of milliseconds
 u8 manual_counter;
 u8 bouncing = 0;
-char time[5] = "";
 
 // This is invoked in response to a timer interrupt.
 // It does 2 things: 1) debounce switches, and 2) advances the time.
