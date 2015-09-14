@@ -4,7 +4,6 @@
 static uint32_t seconds = 0;
 static uint32_t minutes = 0;
 static uint32_t hours = 0;
-static uint32_t enabled = 1;
 
 void incrementClock() {
 	if (!incrementSeconds()) {
@@ -71,22 +70,4 @@ void decrementHours() {
 	if (--hours > MAX_HOURS) {
 		hours = MAX_HOURS - 1;
 	}
-}
-
-// ----------------------------------------------------------------------------
-
-uint32_t clock_enabled(){
-	return enabled;
-}
-
-// ----------------------------------------------------------------------------
-
-void clock_disable(){
-	enabled = 0;
-}
-
-// ----------------------------------------------------------------------------
-
-void clock_enable(){
-	enabled = 1;
 }

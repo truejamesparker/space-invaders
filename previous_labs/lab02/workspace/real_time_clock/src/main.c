@@ -9,39 +9,37 @@
 #include "clock/clock.h"
 #include "debouncer/debouncer.h"
 
-XGpio gpLED;  // This is a handle for the LED GPIO block.
-XGpio gpPB;   // This is a handle for the push-button GPIO block.
-u8 counter; // tens of milliseconds
-u8 manual_counter;
-u8 bouncing = 0;
+XGpio gpPB;   			// This is a handle for the push-button GPIO block.
+u8 counter = 0;			// tens of milliseconds
+u8 refresh_counter = 0; // screen refresh counter
+u8 bouncing = 0;		// whether or not the button is in debounce mode
 
 // This is invoked in response to a timer interrupt.
 // It does 2 things: 1) debounce switches, and 2) advances the time.
 void timer_interrupt_handler() {
-	// for testing only
 	uint32_t seconds = 0;
 	uint32_t minutes = 0;
 	uint32_t hours = 0;
-	uint8_t manual_mode;
 
-	manual_mode = in_manual();
-
-	if (++counter == 100 && !manual_mode){
-
+	if (++counter == ONE_SECOND && !in_auto_increment_mode()){
 		// clear the counter, it's been a second
 		counter = 0;
 
 		// increment the clock
 		incrementClock();
-	}
-	else if(++manual_counter==20){
+	} else if (++refresh_counter == FAST_COUNT_MAX) {
+		// clear the counter, it's time to refresh
+		refresh_counter = 0;
+
+		// grab the clock values so we can print them out
 		getClock(&seconds, &minutes, &hours);
+
+		// make sure to backspace so clock changes in place
 		xil_printf("\b\b\b\b\b\b\b\b%02d:%02d:%02d", hours, minutes, seconds);
-		manual_counter = 0;
 	}
-	if(bouncing){
-		tick_bouncer();
-	}
+
+	// let the bouncer know an interrupt occurred so it can debounce the button
+	if (bouncing) tick_bouncer();
 
 }
 
@@ -51,8 +49,7 @@ void pb_interrupt_handler() {
 	XGpio_InterruptGlobalDisable(&gpPB);                // Turn off all PB interrupts for now.
 	u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);  // Get the current state of the buttons.
 
-	bouncing = bouncer(currentButtonState) ? 1 : 0;
-//	xil_printf("%d\n\r", currentButtonState);
+	bouncing = bouncer(currentButtonState);
 
 	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);            // Ack the PB interrupt.
 	XGpio_InterruptGlobalEnable(&gpPB);                 // Re-enable PB interrupts.
@@ -64,11 +61,13 @@ void pb_interrupt_handler() {
 // interrupt must be ack'd by the dispatched interrupt handler.
 void interrupt_handler_dispatcher(void* ptr) {
 	int intc_status = XIntc_GetIntrStatus(XPAR_INTC_0_BASEADDR);
+
 	// Check the FIT interrupt first.
 	if (intc_status & XPAR_FIT_TIMER_0_INTERRUPT_MASK){
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_FIT_TIMER_0_INTERRUPT_MASK);
 		timer_interrupt_handler();
 	}
+
 	// Check the push buttons.
 	if (intc_status & XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK){
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK);
@@ -79,8 +78,7 @@ void interrupt_handler_dispatcher(void* ptr) {
 int main (void) {
     init_platform();
     // Initialize the GPIO peripherals.
-    int success;
-    success = XGpio_Initialize(&gpPB, XPAR_PUSH_BUTTONS_5BITS_DEVICE_ID);
+    XGpio_Initialize(&gpPB, XPAR_PUSH_BUTTONS_5BITS_DEVICE_ID);
     // Set the push button peripheral to be inputs.
     XGpio_SetDataDirection(&gpPB, 1, 0x0000001F);
     // Enable the global GPIO interrupt for push buttons.
