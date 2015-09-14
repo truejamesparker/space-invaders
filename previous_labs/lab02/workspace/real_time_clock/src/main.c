@@ -46,19 +46,26 @@ void timer_interrupt_handler() {
 // This is invoked each time there is a change in the button state (result of a push or a bounce).
 void pb_interrupt_handler() {
 	// Clear the GPIO interrupt.
-	XGpio_InterruptGlobalDisable(&gpPB);                // Turn off all PB interrupts for now.
-	u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);  // Get the current state of the buttons.
+
+	// Turn off all PB interrupts for now.
+	XGpio_InterruptGlobalDisable(&gpPB);
+	// Get the current state of the buttons.
+	u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);
 
 	bouncing = bouncer(currentButtonState);
 
-	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);            // Ack the PB interrupt.
-	XGpio_InterruptGlobalEnable(&gpPB);                 // Re-enable PB interrupts.
+	// Ack the PB interrupt.
+	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
+	// Re-enable PB interrupts.
+	XGpio_InterruptGlobalEnable(&gpPB);
 }
 
-// Main interrupt handler, queries the interrupt controller to see what peripheral
-// fired the interrupt and then dispatches the corresponding interrupt handler.
-// This routine acks the interrupt at the controller level but the peripheral
-// interrupt must be ack'd by the dispatched interrupt handler.
+/******************************************************************************
+ * Main interrupt handler, queries interrupt controller to see what peripheral
+ * fired the interrupt and then dispatches the corresponding interrupt handler.
+ * This routine acks the interrupt at the controller level but the peripheral
+ * interrupt must be ack'd by the dispatched interrupt handler.
+ *****************************************************************************/
 void interrupt_handler_dispatcher(void* ptr) {
 	int intc_status = XIntc_GetIntrStatus(XPAR_INTC_0_BASEADDR);
 
