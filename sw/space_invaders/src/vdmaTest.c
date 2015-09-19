@@ -31,7 +31,7 @@
 void print(char *str);
 
 #define FRAME_BUFFER_0_ADDR 0xC0000000  // Starting location in DDR where we will store the images that we display.
-#define MAX_SILLY_TIMER 10000000;
+#define MAX_SILLY_TIMER 10000000
 
 int main()
 {
