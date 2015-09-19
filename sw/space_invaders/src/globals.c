@@ -6,7 +6,7 @@ static unsigned short tankPosition;
 static point_t tankBulletPosition;
 static point_t alienBlockPosition;
 
-int alien_lives_matter[64] = {0};
+int alien_lives_matter[5][10] = {0};
 
 int* getAlienLives(){
 	return alien_lives_matter;
