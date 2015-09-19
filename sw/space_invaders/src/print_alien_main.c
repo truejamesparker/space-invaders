@@ -219,7 +219,7 @@ packword6(1,1,1,1,1,1)
 
 #define WORD_WIDTH 12
 
-static uint64_t alien_lives_matter = 0;
+
 
 main() {
   // Let's print out the alien as ASCII characters on the screen.
