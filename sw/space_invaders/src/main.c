@@ -2,7 +2,9 @@
 
 #include "platform.h"
 
+#include "elements/aliens.h"
 #include "uartControl/uartControl.h"
+#include "screen/screen.h"
 
 void print(char *str);
 
@@ -15,6 +17,8 @@ int main() {
 	 * Initialization Section
 	 *********************************/
 	init_platform();
+	screen_init();
+	screen_clear();
 
 	print("Hello World\n\r");
 
@@ -32,17 +36,44 @@ int main() {
 
 // ----------------------------------------------------------------------------
 
+#define MAX_SILLY_TIMER	1000000
 void application_loop() {
 	char input;
 
-	//	setvbuf(stdin, NULL, _IONBF, 0);
+	// refresh rate
+	uint32_t sillyTimer = MAX_SILLY_TIMER;
+
+	// Which alien we are on
+	uint32_t alienCounter = 0;
 
 	while(1) {
-		// blocking call: wait until a character is present
-		input = getchar();
 
-		// Handle the UART control of game
-		uartControl_handle(input);
+		// Wait until we are ready to refresh screen again
+		while(sillyTimer--);
+		sillyTimer = MAX_SILLY_TIMER;
+
+		// ----------------
+		// Do some screen stuff
+
+		bool* lives = aliens_getLives();
+		lives[alienCounter] = !lives[alienCounter];
+		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
+
+		aliens_draw();
+
+		screen_refresh();
+		// ----------------
+
+		/****
+		 * To enable the UART controller, uncomment below
+		 */
+
+//		// blocking call: wait until a character is present
+//		input = getchar();
+//
+//		// Handle the UART control of game
+//		uartControl_handle(input);
+
 	}
 
 }

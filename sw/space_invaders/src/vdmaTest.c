@@ -20,7 +20,9 @@
  * helloworld.c: simple test application
  */
 #include "globals.h"
+#include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "platform.h"
 #include "xparameters.h"
 #include "xaxivdma.h"
@@ -29,30 +31,41 @@
 #include "unistd.h"
 #define DEBUG
 
+#define ALIEN_COL_COUNT 		11
+#define ALIEN_ROW_COUNT 		5
+#define ALIEN_COUNT 			(ALIEN_COL_COUNT*ALIEN_ROW_COUNT)
+#define ALIEN_SCALE				1
+#define ALIEN_XY_TO_INDEX(x,y) 	(y*ALIEN_COL_COUNT + x)
+#define ALIEN_ALIVE(lives,x,y) 	(lives[ALIEN_XY_TO_INDEX(x,y)])
+
+static bool alienLives[ALIEN_COUNT] = { false };
+
 void print(char *str);
 
 #define FRAME_BUFFER_0_ADDR 0xC1000000  // Starting location in DDR where we will store the images that we display.
-
 #define MAX_SILLY_TIMER 10000000
 
-void blank_screen(int* frame_pointer) {
+void blank_screen(unsigned int* frame_pointer) {
 	int row, col;
 	for (row = 0; row < 480; row++) {
 		for (col = 0; col < 640; col++) {
-			frame_pointer[row * 640 + col] = 0x00000000; // frame 1 is white here.
+			frame_pointer[row * 640 + col] = 0x0000000F; // frame 1 is white here.
 		}
 	}
 }
 
-void draw_alien(int* symbol, int* point, int width, int height, int scale){
-	int row=0, col=0, i=0, j=0, x_offset=0, y_offset=0, color;
-	for(row=0; row<height; row++){
+//void draw_alien(const int* symbol, unsigned int* point, int width, int height, int scale) {
+void draw_alien(const int* symbol, unsigned int* point, point_t origin, int width, int height, int scale) {
+	int row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
+	for (row = 0; row < height; row++) {
 		x_offset = 0;
-		for(col=0; col<width; col++){
-			color = (symbol[row] & (1 << (WORD_WIDTH - 1 - col))) ? 0x0000FFFF : 0x00000000;
-			for(i=0; i<scale; i++){
-				for(j=0; j<scale; j++){
-					point[i+x_offset + 640*(j+y_offset)] = color; // frame 1 is white here.
+		for (col = 0; col < width; col++) {
+			color = (symbol[row] & (1 << (WORD_WIDTH - 1 - col))) ? 0x0000FFFF
+					: 0x00000000;
+			for (i = 0; i < scale; i++) {
+				for (j = 0; j < scale; j++) {
+//					point[i + x_offset + 640 * (j + y_offset)] = color; // frame 1 is white here.
+					point[(origin.y+j+y_offset)*640 + (origin.x+i+x_offset)] = color;
 				}
 			}
 			x_offset += scale;
@@ -61,13 +74,24 @@ void draw_alien(int* symbol, int* point, int width, int height, int scale){
 	}
 }
 
-void init_alien_block(int* pointer, int scale) {
-	int i = 0, j=0;
-	int* lives = getAlienLives();
-	for(i=0; i<5; i++){
-		for(j=0; j<10; j++){
-			if(!(lives[i*j])){
-				draw_alien(topOutAlienSymbol, pointer+(i*640*ALIEN_HEIGHT + j*WORD_WIDTH)*scale, WORD_WIDTH, ALIEN_HEIGHT, scale);
+void init_alien_block(unsigned int* pointer, int scale) {
+	uint16_t x = 0;
+	uint16_t y = 0;
+
+	// Get a pointer to the lives array
+
+	for (y=0; y<ALIEN_ROW_COUNT; y++) {
+		for (x=0; x<ALIEN_COL_COUNT; x++) {
+			if (ALIEN_ALIVE(alienLives,x,y)) {
+				point_t alienOrigin;
+				alienOrigin.x = x*WORD_WIDTH*ALIEN_SCALE;
+				alienOrigin.y = y*ALIEN_HEIGHT*ALIEN_SCALE;
+
+				draw_alien(topOutAlienSymbol, pointer, alienOrigin, WORD_WIDTH, ALIEN_HEIGHT, ALIEN_SCALE);
+
+//				draw_alien(
+//						topOutAlienSymbol,
+//						pointer + (y * 640 * ALIEN_HEIGHT + x * WORD_WIDTH) * scale, WORD_WIDTH, ALIEN_HEIGHT, scale);
 			}
 		}
 	}
@@ -142,21 +166,6 @@ int main() {
 	// Just paint some large red, green, blue, and white squares in different
 	// positions of the image for each frame in the buffer (framePointer0 and framePointer1).
 
-	blank_screen(framePointer);
-
-	init_alien_block(framePointer, 2);
-
-//	int row = 0, col = 0, i = 0;
-//	for (row = 0; row < 480; row++) {
-//		for (col = 0; col < 640; col++) {
-//			if ((topOutAlienSymbol[row % ALIEN_HEIGHT] & (1 << (WORD_WIDTH - 1
-//					- (col % WORD_WIDTH))))) {
-//				framePointer[row * 640 + col] = 0x00FFFFFF; // frame 1 is white here.
-//			} else {
-//				framePointer[row * 640 + col] = 0x00000000; // frame 1 is white here.
-//			}
-//		}
-//	}
 
 	// This tells the HDMI controller the resolution of your display (there must be a better way to do this).
 	XIo_Out32(XPAR_AXI_HDMI_0_BASEADDR, 640*480);
@@ -168,13 +177,31 @@ int main() {
 	int frameIndex = 0;
 	// We have two frames, let's park on frame 0. Use frameIndex to index them.
 	// Note that you have to start the DMA process before parking on a frame.
-	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, frameIndex,
-			XAXIVDMA_READ)) {
+	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, frameIndex, XAXIVDMA_READ)) {
 		xil_printf("vdma parking failed\n\r");
 	}
 
+	blank_screen(framePointer);
+	init_alien_block(framePointer, 1);
+
+
+	// Oscillate between frame 0 and frame 1.
+	int sillyTimer = MAX_SILLY_TIMER; // Just a cheap delay between frames.
+	uint32_t alien = 0;
 	while (1) {
+		while (sillyTimer--); // Decrement the timer.
+
+		sillyTimer = MAX_SILLY_TIMER; // Reset the timer.
+
+		alienLives[alien++] = true;
+
+		init_alien_block(framePointer, 1);
+
+		if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, 0, XAXIVDMA_READ)) {
+			xil_printf("vdma parking failed\n\r");
+		}
 	}
+
 	cleanup_platform();
 
 	return 0;
