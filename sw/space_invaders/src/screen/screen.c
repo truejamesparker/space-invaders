@@ -122,7 +122,7 @@ void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size
 	for (row = 0; row < size.h; row++) {
 		x_offset = 0;
 		for (col = 0; col < size.w; col++) {
-			color = (symbol[row] & (1 << (WORD_WIDTH - 1 - col))) ? onColor : 0x00000000;
+			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : 0x00000000;
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 					SCREEN_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);

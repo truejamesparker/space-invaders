@@ -46,22 +46,22 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 		{
 				.in = alien_middle_in_12x8,			// infantry aliens
 				.out = alien_middle_out_12x8,
-				.size = {.w = 12, .h=8}
+				.size = {.w = 12, .h = 8}
 		},
 		{
 				.in = alien_middle_in_12x8,
 				.out = alien_middle_out_12x8,
-				.size = {.w = 12, .h=8}
+				.size = {.w = 12, .h = 8}
 		},
 		{
 				.in = alien_bottom_in_12x8,			// grunt aliens
 				.out = alien_bottom_out_12x8,
-				.size = {.w = 12, .h=8}
+				.size = {.w = 12, .h = 8}
 		},
 		{
 				.in = alien_bottom_in_12x8,
 				.out = alien_bottom_out_12x8,
-				.size = {.w = 12, .h=8}
+				.size = {.w = 12, .h = 8}
 		}
 };
 
