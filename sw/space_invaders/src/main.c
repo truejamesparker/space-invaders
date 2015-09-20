@@ -45,9 +45,8 @@ void application_loop() {
 
 	// Which alien we are on
 	uint32_t alienCounter = 0;
-
+	bool up = true;
 	while(1) {
-
 		// Wait until we are ready to refresh screen again
 		while(sillyTimer--);
 		sillyTimer = MAX_SILLY_TIMER;
@@ -59,7 +58,8 @@ void application_loop() {
 		lives[alienCounter] = !lives[alienCounter];
 		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
 
-		aliens_draw();
+		aliens_draw(up);
+		up = !up;
 
 		screen_refresh();
 		// ----------------

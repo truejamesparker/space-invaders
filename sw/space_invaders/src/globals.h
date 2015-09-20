@@ -13,6 +13,7 @@ typedef struct {
 	uint16_t h;
 } symbolsize_t;
 
+
 void setTankPositionGlobal(unsigned short val);
 unsigned short getTankPositionGlobal();
 

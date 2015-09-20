@@ -21,6 +21,51 @@
 #define ALIEN_XY_TO_INDEX(x,y) 	((y)*ALIEN_COL_COUNT + (x))
 #define ALIEN_ALIVE(x,y) 	(alien_lives_matter[ALIEN_XY_TO_INDEX((x),(y))])
 
+/***
+ * Struct definitions
+ */
+
+typedef struct{
+	const uint32_t* in;
+	const uint32_t* out;
+	const symbolsize_t size;
+} alien_t;
+
+
+//static symbolsize_t alien_12x8 = {
+//		.w = 12,
+//};
+
+
+static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
+		{
+				.in = alien_top_in_12x8,			// elite aliens
+				.out = alien_top_out_12x8,
+				.size = {.w = 12, .h = 8}
+		},
+		{
+				.in = alien_middle_in_12x8,			// infantry aliens
+				.out = alien_middle_out_12x8,
+				.size = {.w = 12, .h=8}
+		},
+		{
+				.in = alien_middle_in_12x8,
+				.out = alien_middle_out_12x8,
+				.size = {.w = 12, .h=8}
+		},
+		{
+				.in = alien_bottom_in_12x8,			// grunt aliens
+				.out = alien_bottom_out_12x8,
+				.size = {.w = 12, .h=8}
+		},
+		{
+				.in = alien_bottom_in_12x8,
+				.out = alien_bottom_out_12x8,
+				.size = {.w = 12, .h=8}
+		}
+};
+
+
 /****
  * Function prototypes
  */
@@ -29,7 +74,9 @@
 bool* aliens_getLives();
 
 // Draw the aliens to the screen
-void aliens_draw();
+void aliens_draw(bool in);
+
+void aliens_march_right();
 
 
 #endif /* ALIENS_H_ */
