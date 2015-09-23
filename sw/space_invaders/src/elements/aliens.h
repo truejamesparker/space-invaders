@@ -11,7 +11,7 @@
 #define ALIEN_ROW_COUNT 		5
 #define ALIEN_COUNT 			(ALIEN_COL_COUNT*ALIEN_ROW_COUNT)
 
-#define ALIEN_SCALE		1
+#define ALIEN_SCALE		2
 #define ALIEN_COLOR		SCREEN_COLOR_TEAL
 
 /****
@@ -31,6 +31,7 @@ typedef struct{
 	const symbolsize_t size;
 } alien_t;
 
+extern bool flapIn;
 
 //static symbolsize_t alien_12x8 = {
 //		.w = 12,
@@ -65,7 +66,6 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 		}
 };
 
-
 /****
  * Function prototypes
  */
@@ -73,10 +73,17 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 // Return the array of bools representing aliens lives
 bool* aliens_getLives();
 
+void init_alien_rel_origins();
+void aliens_init_lives_array();
+
 // Draw the aliens to the screen
-void aliens_draw(bool in);
+void aliens_draw();
 
 void aliens_march_right();
+
+void aliens_march_left();
+
+void aliens_march_down();
 
 
 #endif /* ALIENS_H_ */

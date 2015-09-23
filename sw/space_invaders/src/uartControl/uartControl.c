@@ -1,4 +1,5 @@
 #include "uartControl.h"
+#include "../elements/aliens.h"
 
 // ----------------------------------------------------------------------------
 
@@ -19,9 +20,11 @@ void uartControl_handle(char key) {
 		/* Alien Controls */
 		case '8': // move
 			xil_printf("alien move\r\n");
+			aliens_march_right();
 			break;
 		case '2': // kill
 			xil_printf("alien kill\r\n");
+			aliens_march_left();
 			break;
 		case '3': // shoot
 			xil_printf("alien shoot\r\n");

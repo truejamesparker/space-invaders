@@ -164,6 +164,16 @@ static const uint32_t tank_15x8[] = {
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1) };
 
+static const uint32_t block_erase_12x8[] = {
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
+
 // Shape of the entire bunker.
 static const uint32_t bunker_24x18[] = {
 		packword24(0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0),

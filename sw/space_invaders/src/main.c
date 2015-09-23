@@ -46,21 +46,36 @@ void application_loop() {
 	// Which alien we are on
 	uint32_t alienCounter = 0;
 	bool up = true;
-	while(1) {
-		// Wait until we are ready to refresh screen again
-		while(sillyTimer--);
-		sillyTimer = MAX_SILLY_TIMER;
+	init_alien_rel_origins();
+	aliens_init_lives_array();
+	aliens_draw();
+	int this = 0;
+	while(this<1000){
+		this++;
+		xil_printf("%d\n\r", this);
+	}
 
-		// ----------------
-		// Do some screen stuff
-
-		bool* lives = aliens_getLives();
-		lives[alienCounter] = !lives[alienCounter];
-		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
-
-		aliens_draw(up);
+	screen_refresh();
+	char i;
+	while(1) {\
+		i = getchar();
+		uartControl_handle(i);
+//		// Wait until we are ready to refresh screen again
+//		while(sillyTimer--);
+//		sillyTimer = MAX_SILLY_TIMER;
+//
+//		// ----------------
+//		// Do some screen stuff
+//
+////		bool* lives = aliens_getLives();
+////		lives[alienCounter] = !lives[alienCounter];
+////		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
+//
 		up = !up;
-
+		flapIn = up;
+//		aliens_march_right();
+////		aliens_march_down();
+		aliens_draw();
 		screen_refresh();
 		// ----------------
 
