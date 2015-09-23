@@ -13,6 +13,7 @@
 
 #define ALIEN_SCALE		2
 #define ALIEN_COLOR		SCREEN_COLOR_TEAL
+#define BUNKER_COLOR		0x32CD32
 
 /****
  * Macro definitions
@@ -20,6 +21,7 @@
 
 #define ALIEN_XY_TO_INDEX(x,y) 	((y)*ALIEN_COL_COUNT + (x))
 #define ALIEN_ALIVE(x,y) 	(alien_lives_matter[ALIEN_XY_TO_INDEX((x),(y))])
+//#define ALIEN_XY_TO_SCREEN_INDEX(x,y)
 
 /***
  * Struct definitions
@@ -36,6 +38,11 @@ extern bool flapIn;
 //static symbolsize_t alien_12x8 = {
 //		.w = 12,
 //};
+
+static const symbolsize_t tank_size= {
+		.w = 24,
+		.h = 18
+};
 
 
 static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
@@ -73,17 +80,22 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 // Return the array of bools representing aliens lives
 bool* aliens_getLives();
 
-void init_alien_rel_origins();
+void aliens_init_rel_origins();
+void bunkers_init_origins();
+
 void aliens_init_lives_array();
 
 // Draw the aliens to the screen
 void aliens_draw();
+void bunkers_draw();
 
 void aliens_march_right();
 
 void aliens_march_left();
 
 void aliens_march_down();
+
+void aliens_kill(uint16_t index);
 
 
 #endif /* ALIENS_H_ */

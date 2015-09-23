@@ -22,6 +22,9 @@ point_t getTankBulletPosition();
 
 #define WORD_WIDTH 		32
 #define ALIEN_HEIGHT 	16
+#define BUNKER_COUNT	4
+#define BUNKER_COLOR 	0x00FF00
+
 
 // Packs each horizontal line of the figures into a single n-bit bit word.
 #define packword32(b31,b30,b29,b28,b27,b26,b25,b24,b23,b22,b21,b20,b19,b18,b17,b16,b15,b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \

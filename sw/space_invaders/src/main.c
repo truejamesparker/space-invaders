@@ -46,14 +46,20 @@ void application_loop() {
 	// Which alien we are on
 	uint32_t alienCounter = 0;
 	bool up = true;
-	init_alien_rel_origins();
+
+	aliens_init_rel_origins();
 	aliens_init_lives_array();
+	bunkers_init_origins();
+
+	bunkers_draw();
 	aliens_draw();
-	int this = 0;
-	while(this<1000){
-		this++;
-		xil_printf("%d\n\r", this);
-	}
+
+
+//	int this = 0;
+//	while(this<1000){
+//		this++;
+//		xil_printf("%d\n\r", this);
+//	}
 
 	screen_refresh();
 	char i;
