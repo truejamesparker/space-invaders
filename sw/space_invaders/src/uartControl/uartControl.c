@@ -23,14 +23,15 @@ void uartControl_handle(char key) {
 			aliens_march_right();
 			break;
 		case '2': // kill
-			xil_printf("alien kill\r\n");
-			xil_printf("which one?");
-			char alien = getchar();
-			while(alien < ASCII_0 && alien > ASCII_3){
-				alien = getchar();
-			}
-			aliens_kill(alien);
-			xil_printf("bam!\n\r");
+//			xil_printf("alien kill\r\n");
+//			xil_printf("which one?");
+//			char alien = getchar();
+//			while(alien < ASCII_0 && alien > ASCII_3){
+//				alien = getchar();
+//			}
+//			aliens_kill(alien);
+//			xil_printf("bam!\n\r");
+			aliens_march_down();
 			break;
 		case '3': // shoot
 			xil_printf("alien shoot\r\n");
