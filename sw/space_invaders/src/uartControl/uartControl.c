@@ -102,6 +102,8 @@ uint16_t getint() {
 	}
 
 	// Add the termination char for atoi()
+	// Make sure that this is indexed at i so that
+	// atoi() doesn't freak out.
 	buffer[i] = '\0';
 
 	// convert to int representation
