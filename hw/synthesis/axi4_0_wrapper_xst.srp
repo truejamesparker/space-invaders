@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "axi4_0_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\parkerbros\space-invaders\hw\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -178,7 +178,7 @@ Analyzing Verilog file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores
 Parsing module <ict105_w_upsizer>.
 Analyzing Verilog file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_interconnect_v1_05_a/hdl/verilog/axi_interconnect.v" into library axi_interconnect_v1_05_a
 Parsing module <axi_interconnect>.
-Analyzing Verilog file "C:\Users\joshuas2\Desktop\427\hdl\axi4_0_wrapper.v" into library work
+Analyzing Verilog file "C:\parkerbros\space-invaders\hw\hdl\axi4_0_wrapper.v" into library work
 Parsing module <axi4_0_wrapper>.
 
 =========================================================================
@@ -487,7 +487,7 @@ Elaborating module <ict105_mux_enc(C_FAMILY="spartan6",C_RATIO=3,C_SEL_WIDTH=32'
 =========================================================================
 
 Synthesizing Unit <axi4_0_wrapper>.
-    Related source file is "c:/users/joshuas2/desktop/427/hdl/axi4_0_wrapper.v".
+    Related source file is "c:/parkerbros/space-invaders/hw/hdl/axi4_0_wrapper.v".
     Summary:
 	no macro.
 Unit <axi4_0_wrapper> synthesized.
@@ -3339,12 +3339,12 @@ axi4_0/si_converter_bank/gen_conv_slot[2].clock_conv_inst/S_AXI_ACLK|    1.913| 
 =========================================================================
 
 
-Total REAL time to Xst completion: 108.00 secs
-Total CPU time to Xst completion: 107.79 secs
+Total REAL time to Xst completion: 94.00 secs
+Total CPU time to Xst completion: 94.38 secs
  
 --> 
 
-Total memory usage is 295132 kilobytes
+Total memory usage is 315324 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :  365 (   0 filtered)

@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "axi4lite_0_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\parkerbros\space-invaders\hw\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -178,7 +178,7 @@ Analyzing Verilog file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores
 Parsing module <ict105_w_upsizer>.
 Analyzing Verilog file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_interconnect_v1_05_a/hdl/verilog/axi_interconnect.v" into library axi_interconnect_v1_05_a
 Parsing module <axi_interconnect>.
-Analyzing Verilog file "C:\Users\joshuas2\Desktop\427\hdl\axi4lite_0_wrapper.v" into library work
+Analyzing Verilog file "C:\parkerbros\space-invaders\hw\hdl\axi4lite_0_wrapper.v" into library work
 Parsing module <axi4lite_0_wrapper>.
 
 =========================================================================
@@ -405,7 +405,7 @@ WARNING:HDLCompiler:413 - "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pco
 =========================================================================
 
 Synthesizing Unit <axi4lite_0_wrapper>.
-    Related source file is "c:/users/joshuas2/desktop/427/hdl/axi4lite_0_wrapper.v".
+    Related source file is "c:/parkerbros/space-invaders/hw/hdl/axi4lite_0_wrapper.v".
     Summary:
 	no macro.
 Unit <axi4lite_0_wrapper> synthesized.
@@ -2793,12 +2793,12 @@ axi4lite_0/si_converter_bank/gen_conv_slot[0].clock_conv_inst/S_AXI_ACLK|    1.4
 =========================================================================
 
 
-Total REAL time to Xst completion: 14.00 secs
-Total CPU time to Xst completion: 14.61 secs
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 9.63 secs
  
 --> 
 
-Total memory usage is 286784 kilobytes
+Total memory usage is 293408 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :  425 (   0 filtered)

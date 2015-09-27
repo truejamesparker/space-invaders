@@ -65,6 +65,9 @@ void application_loop() {
 //		xil_printf("%d\n\r", this);
 //	}
 
+
+	setvbuf(stdin, NULL, _IONBF, 0);
+
 	screen_refresh();
 	char i;
 	while(1) {\
@@ -81,8 +84,8 @@ void application_loop() {
 ////		lives[alienCounter] = !lives[alienCounter];
 ////		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
 //
-		up = !up;
-		flapIn = up;
+//		up = !up;
+//		flapIn = up;
 //		aliens_march_right();
 ////		aliens_march_down();
 		aliens_draw();
