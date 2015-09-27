@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "rs232_uart_1_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\parkerbros\space-invaders\hw\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -52,7 +52,7 @@ Cores Search Directories           : {../implementation}
 
 =========================================================================
 
-WARNING:UtilitiesC:240 - The message file "C:\Users\joshuas2\Desktop\427\synthesis/_xmsgs/xst.xmsgs" is corrupt, therefore all message will be marked as new.
+WARNING:UtilitiesC:240 - The message file "C:\parkerbros\space-invaders\hw\synthesis/_xmsgs/xst.xmsgs" is corrupt, therefore all message will be marked as new.
 INFO:Xst - Part-select index evaluated to out of bound value may lead to incorrect synthesis results; it is recommended not to use them in RTL
 
 =========================================================================
@@ -438,7 +438,7 @@ Parsing architecture <RTL> of entity <uartlite_core>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_uartlite_v1_02_a/hdl/vhdl/axi_uartlite.vhd" into library axi_uartlite_v1_02_a
 Parsing entity <axi_uartlite>.
 Parsing architecture <RTL> of entity <axi_uartlite>.
-Parsing VHDL file "C:\Users\joshuas2\Desktop\427\hdl\rs232_uart_1_wrapper.vhd" into library work
+Parsing VHDL file "C:\parkerbros\space-invaders\hw\hdl\rs232_uart_1_wrapper.vhd" into library work
 Parsing entity <rs232_uart_1_wrapper>.
 Parsing architecture <STRUCTURE> of entity <rs232_uart_1_wrapper>.
 
@@ -494,7 +494,7 @@ INFO:HDLCompiler:679 - "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores
 =========================================================================
 
 Synthesizing Unit <rs232_uart_1_wrapper>.
-    Related source file is "c:/users/joshuas2/desktop/427/hdl/rs232_uart_1_wrapper.vhd".
+    Related source file is "c:/parkerbros/space-invaders/hw/hdl/rs232_uart_1_wrapper.vhd".
     Summary:
 	no macro.
 Unit <rs232_uart_1_wrapper> synthesized.
@@ -1176,12 +1176,12 @@ S_AXI_ACLK     |    3.730|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 8.08 secs
+Total REAL time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 5.24 secs
  
 --> 
 
-Total memory usage is 278848 kilobytes
+Total memory usage is 281312 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   22 (   0 filtered)

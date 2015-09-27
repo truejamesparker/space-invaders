@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "microblaze_0_d_bram_ctrl_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\parkerbros\space-invaders\hw\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -90,7 +90,7 @@ Parsing architecture <IMP> of entity <axi_interface>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/lmb_bram_if_cntlr_v3_00_b/hdl/vhdl/lmb_bram_if_cntlr.vhd" into library lmb_bram_if_cntlr_v3_00_b
 Parsing entity <lmb_bram_if_cntlr>.
 Parsing architecture <imp> of entity <lmb_bram_if_cntlr>.
-Parsing VHDL file "C:\Users\joshuas2\Desktop\427\hdl\microblaze_0_d_bram_ctrl_wrapper.vhd" into library work
+Parsing VHDL file "C:\parkerbros\space-invaders\hw\hdl\microblaze_0_d_bram_ctrl_wrapper.vhd" into library work
 Parsing entity <microblaze_0_d_bram_ctrl_wrapper>.
 Parsing architecture <STRUCTURE> of entity <microblaze_0_d_bram_ctrl_wrapper>.
 
@@ -109,7 +109,7 @@ Elaborating entity <pselect_mask> (architecture <imp>) with generics from librar
 =========================================================================
 
 Synthesizing Unit <microblaze_0_d_bram_ctrl_wrapper>.
-    Related source file is "c:/users/joshuas2/desktop/427/hdl/microblaze_0_d_bram_ctrl_wrapper.vhd".
+    Related source file is "c:/parkerbros/space-invaders/hw/hdl/microblaze_0_d_bram_ctrl_wrapper.vhd".
     Summary:
 	no macro.
 Unit <microblaze_0_d_bram_ctrl_wrapper> synthesized.
@@ -400,12 +400,12 @@ Cross Clock Domains Report:
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.47 secs
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 3.61 secs
  
 --> 
 
-Total memory usage is 265984 kilobytes
+Total memory usage is 268960 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   38 (   0 filtered)
