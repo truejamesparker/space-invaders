@@ -1,5 +1,6 @@
 #include "uartControl.h"
 #include "../elements/aliens.h"
+#include "../elements/tank.h"
 
 // ----------------------------------------------------------------------------
 
@@ -8,9 +9,11 @@ void uartControl_handle(char key) {
 		/* Tank Controls */
 		case '4': // left
 			xil_printf("tank left\r\n");
+			tank_left();
 			break;
 		case '6': // right
 			xil_printf("tank left\r\n");
+			tank_right();
 			break;
 		case '5': // shoot
 			xil_printf("tank shoot\r\n");
@@ -20,18 +23,17 @@ void uartControl_handle(char key) {
 		/* Alien Controls */
 		case '8': // move
 			xil_printf("alien move\r\n");
-			aliens_march_right();
+			aliens_march();
 			break;
 		case '2': // kill
-//			xil_printf("alien kill\r\n");
-//			xil_printf("which one?");
-//			char alien = getchar();
-//			while(alien < ASCII_0 && alien > ASCII_3){
-//				alien = getchar();
-//			}
-//			aliens_kill(alien);
-//			xil_printf("bam!\n\r");
-			aliens_march_down();
+			xil_printf("alien kill\r\n");
+			xil_printf("which one?");
+			char alien = getchar();
+			while(alien < ASCII_0 && alien > ASCII_3){
+				alien = getchar();
+			}
+			aliens_kill(alien);
+			xil_printf("bam!\n\r");
 			break;
 		case '3': // shoot
 			xil_printf("alien shoot\r\n");

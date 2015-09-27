@@ -3,8 +3,10 @@
 #include "platform.h"
 
 #include "elements/aliens.h"
+#include "elements/bunkers.h"
 #include "uartControl/uartControl.h"
 #include "screen/screen.h"
+#include "elements/tank.h"
 
 void print(char *str);
 
@@ -50,9 +52,11 @@ void application_loop() {
 	aliens_init_rel_origins();
 	aliens_init_lives_array();
 	bunkers_init_origins();
+	tank_init();
 
 	bunkers_draw();
 	aliens_draw();
+	tank_draw();
 
 
 //	int this = 0;
@@ -82,7 +86,8 @@ void application_loop() {
 //		aliens_march_right();
 ////		aliens_march_down();
 		aliens_draw();
-		screen_refresh();
+		tank_draw();
+//		screen_refresh();
 		// ----------------
 
 		/****

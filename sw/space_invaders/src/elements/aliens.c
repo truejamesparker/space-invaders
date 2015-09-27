@@ -4,17 +4,21 @@
 
 static bool alien_lives_matter[ALIEN_COUNT] = { false }; bool flapIn = true;
 
-static point_t alien_block_origin = {.x = 0, .y = 0};
+static point_t alien_block_origin = {.x = ALIEN_WIDTH*ALIEN_SCALE, .y = ALIEN_HEIGHT*ALIEN_SCALE*2};
 
 static point_t alien_rel_origins[55];
-static point_t bunker_origins[4];
 
-#define BUNKER_START_XOFFSET 24*ALIEN_SCALE
+static bool march_right = true;
+
+
 
 bool aliens_is_alive_right(uint16_t x, uint16_t y);
 bool aliens_is_alive_left(uint16_t x, uint16_t y);
 point_t alien_atHere(uint16_t x, uint16_t y);
 bool aliens_is_alive_down(uint16_t x, uint16_t y);
+point_t alien_atRight(uint16_t x, uint16_t y);
+point_t alien_atLeft(uint16_t x, uint16_t y);
+point_t alien_atDown(uint16_t x, uint16_t y);
 
 //-----------------------------------------------------------------------------
 
@@ -22,28 +26,6 @@ bool* aliens_getLives() {
 	return alien_lives_matter;
 }
 
-//-----------------------------------------------------------------------------
-
-void bunkers_init_origins(){
-	uint16_t i;
-	for(i=0; i<BUNKER_COUNT; i++){
-		point_t origin = {
-				.x = i * 148 + BUNKER_START_XOFFSET,
-				.y = 3*(SCREEN_HEIGHT)/4
-		};
-		bunker_origins[i] = origin;
-	}
-}
-
-void bunkers_draw(){
-	uint16_t i;
-	for(i=0; i<BUNKER_COUNT; i++){
-		point_t origin = bunker_origins[i];
-		screen_drawSymbol(bunker_24x18, origin, tank_size,
-				ALIEN_SCALE, BUNKER_COLOR);
-	}
-
-}
 //-----------------------------------------------------------------------------
 
 void aliens_init_lives_array(){
@@ -59,8 +41,8 @@ void aliens_init_rel_origins(){
 		alien_t alien = alien_symbols[y];	// select alien type
 		for(x=0; x<ALIEN_COL_COUNT; x++){
 			point_t origin = {
-					.x = (x * 1 * alien.size.w * ALIEN_SCALE)/1,
-					.y = (y * 1 * alien.size.h * ALIEN_SCALE)/1
+					.x = (x * 3 * alien.size.w * ALIEN_SCALE)/2,
+					.y = (y * 3 * alien.size.h * ALIEN_SCALE)/2
 			};
 			alien_rel_origins[ALIEN_XY_TO_INDEX(x, y)] = origin;
 		}
@@ -79,12 +61,6 @@ void aliens_draw() {
 
 			point_t alienOrigin = alien_atHere(x, y);
 
-//			// This is the top-left of the symbol
-//			point_t alienOrigin = {
-//					.x = (x * alien.size.w * ALIEN_SCALE) + alien_block_origin.x,
-//					.y = (y * alien.size.h * ALIEN_SCALE) + alien_block_origin.y
-//			};
-
 			// If the alien is dead, color it the screen, else alien color
 			uint32_t color = (ALIEN_ALIVE(x,y)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
 			const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
@@ -96,41 +72,7 @@ void aliens_draw() {
 }
 
 
-void alien_add_block_offset(point_t alien_origin){
-	alien_origin.x += alien_block_origin.x;
-	alien_origin.y += alien_block_origin.y;
-}
 
-point_t alien_atHere(uint16_t x, uint16_t y){
-	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x,y)];
-//	alien_add_block_offset(alien_origin);
-	alien_origin.x += alien_block_origin.x;
-	alien_origin.y += alien_block_origin.y;
-	return alien_origin;
-}
-
-point_t alien_atRight(uint16_t x, uint16_t y){
-	point_t alien_origin = alien_rel_origins[ALIEN_XY_TO_INDEX((x+1),y)];
-//	alien_origin.x += (alien_symbols[0].size.w * ALIEN_SCALE);
-	alien_add_block_offset(alien_origin);
-	return alien_origin;
-}
-
-point_t alien_atLeft(uint16_t x, uint16_t y){
-	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x,y)];
-	alien_origin.x -= (alien_symbols[0].size.w * ALIEN_SCALE);
-	alien_origin.x += alien_block_origin.x;
-	alien_origin.y += alien_block_origin.y;
-	return alien_origin;
-}
-
-point_t alien_atDown(uint16_t x, uint16_t y){
-	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x,y)];
-	alien_origin.y += (alien_symbols[0].size.h * ALIEN_SCALE);
-	alien_origin.x += alien_block_origin.x;
-	alien_origin.y += alien_block_origin.y;
-	return alien_origin;
-}
 
 void aliens_march_right(){
 	uint16_t x = 0;
@@ -146,15 +88,14 @@ void aliens_march_right(){
 			}
 
 			if(!ALIEN_ALIVE(x, y) && aliens_is_alive_right(x, y)){
-				uint32_t color = SCREEN_BG_COLOR;
 				const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
 				// Tell the screen to draw my symbol
-				screen_drawSymbol(symbol, alien_atRight(x,y), alien.size,
-						ALIEN_SCALE, color);
+				screen_drawSymbol(symbol, alien_atHere(x+1,y), alien.size,
+						ALIEN_SCALE, SCREEN_BG_COLOR);
 			}
 		}
 	}
-	alien_block_origin.x += (alien_symbols[0].size.w * ALIEN_SCALE);
+	alien_block_origin.x += (3 * alien_symbols[0].size.w * ALIEN_SCALE)/2;
 }
 
 void aliens_march_left(){
@@ -171,15 +112,14 @@ void aliens_march_left(){
 			}
 
 			if(!ALIEN_ALIVE(x, y) && aliens_is_alive_left(x, y)){
-				uint32_t color = SCREEN_BG_COLOR;
 				const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
 				// Tell the screen to draw my symbol
-				screen_drawSymbol(symbol, alien_atLeft(x,y), alien.size,
-						ALIEN_SCALE, color);
+				screen_drawSymbol(symbol, alien_atHere(x-1,y), alien.size,
+						ALIEN_SCALE, SCREEN_BG_COLOR);
 			}
 		}
 	}
-	alien_block_origin.x -= (alien_symbols[0].size.w * ALIEN_SCALE);
+	alien_block_origin.x -= (3 * alien_symbols[0].size.w * ALIEN_SCALE)/2;
 }
 
 
@@ -197,20 +137,45 @@ void aliens_march_down(){
 			}
 
 			if(!ALIEN_ALIVE(x, y) && aliens_is_alive_down(x, y)){
-				uint32_t color = SCREEN_BG_COLOR;
 				const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
 				// Tell the screen to draw my symbol
-				screen_drawSymbol(symbol, alien_atDown(x,y), alien.size,
-						ALIEN_SCALE, color);
+				screen_drawSymbol(symbol, alien_atHere(x,y+1), alien.size,
+						ALIEN_SCALE, SCREEN_BG_COLOR);
 			}
 		}
 	}
-	alien_block_origin.y += (alien_symbols[0].size.h * ALIEN_SCALE);
+	alien_block_origin.y += (3 * alien_symbols[0].size.h * ALIEN_SCALE)/2;
 }
 
-//void aliens_march(){
-//	if ()
-//}
+
+
+void aliens_march(){
+	point_t left_origin = alien_atHere(0, 0);
+	point_t right_origin = alien_atHere(ALIEN_COL_COUNT-1, 0);
+	bool shift_down = false;
+
+	xil_printf("Left: %d\r\n", left_origin.x);
+	xil_printf("Right: %d\r\n", right_origin.x);
+
+	if(((right_origin.x + ALIEN_SCALE*ALIEN_WIDTH) >= SCREEN_WIDTH - SCREEN_EDGE_BUFFER) && march_right){
+		march_right = false;
+		aliens_march_down();
+		shift_down = true;
+	}
+	if(left_origin.x <= SCREEN_EDGE_BUFFER && !march_right){
+		march_right = true;
+		aliens_march_down();
+		shift_down = true;
+	}
+	if(march_right && !shift_down){
+		aliens_march_right();
+	}
+	else if(!march_right && !shift_down){
+		aliens_march_left();
+	}
+
+
+}
 
 
 //-----------------------------------------------------------------------------
@@ -247,4 +212,34 @@ bool aliens_is_alive_down(uint16_t x, uint16_t y){
 
 void aliens_kill(uint16_t index){
 	alien_lives_matter[index] = false;
+}
+
+
+void alien_add_block_offset(point_t* alien_origin){
+	(*alien_origin).x += alien_block_origin.x;
+	(*alien_origin).y += alien_block_origin.y;
+}
+
+point_t alien_atHere(uint16_t x, uint16_t y){
+	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x,y)];
+	alien_add_block_offset(&alien_origin);
+	return alien_origin;
+}
+
+point_t alien_atRight(uint16_t x, uint16_t y){
+	point_t alien_origin = alien_rel_origins[ALIEN_XY_TO_INDEX((x+1),y)];
+	alien_add_block_offset(&alien_origin);
+	return alien_origin;
+}
+
+point_t alien_atLeft(uint16_t x, uint16_t y){
+	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x-1,y)];
+	alien_add_block_offset(&alien_origin);
+	return alien_origin;
+}
+
+point_t alien_atDown(uint16_t x, uint16_t y){
+	point_t alien_origin =  alien_rel_origins[ALIEN_XY_TO_INDEX(x,y+1)];
+	alien_add_block_offset(&alien_origin);
+	return alien_origin;
 }

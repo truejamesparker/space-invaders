@@ -2,6 +2,7 @@
 #define globals_h
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct {
 	uint16_t x;
@@ -20,10 +21,9 @@ unsigned short getTankPositionGlobal();
 void setTankBulletPosition(point_t val);
 point_t getTankBulletPosition();
 
-#define WORD_WIDTH 		32
-#define ALIEN_HEIGHT 	16
-#define BUNKER_COUNT	4
-#define BUNKER_COLOR 	0x00FF00
+#define WORD_WIDTH 				32
+#define SCREEN_EDGE_BUFFER 		50
+#define SCALE					2
 
 
 // Packs each horizontal line of the figures into a single n-bit bit word.
@@ -57,7 +57,7 @@ point_t getTankBulletPosition();
 #define packword6(b5,b4,b3,b2,b1,b0) 																								      \
 ((b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
-static const uint32_t topOutAlienSymbol[ALIEN_HEIGHT] = {
+static const uint32_t topOutAlienSymbol[] = {
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packword32(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
@@ -177,6 +177,40 @@ static const uint32_t block_erase_12x8[] = {
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
 
+static const uint32_t missile0_6x6[] = {
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,1,1,0,0)};
+
+static const uint32_t missile1_6x6[] = {
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,1,1,0,0)};
+
+static const uint32_t missile2_6x6[] = {
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,1,1,0,0),
+		packword6(0,0,1,0,0,0)};
+
+static const uint32_t missile3_6x6[] = {
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,0,0,0,0),
+		packword6(1,0,0,0,0,0),
+		packword6(0,1,0,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,0,0,0,0),
+		packword6(1,0,0,0,0,0)};
+
+
 // Shape of the entire bunker.
 static const uint32_t bunker_24x18[] = {
 		packword24(0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0),
@@ -201,16 +235,28 @@ static const uint32_t bunker_24x18[] = {
 // These are the blocks that comprise the bunker and each time a bullet
 // strikes one of these blocks, you erod the block as you sequence through
 // these patterns.
-static const uint32_t bunkerDamage0_6x6[] = { packword6(0,1,1,0,0,0),
-		packword6(0,0,0,0,0,1), packword6(1,1,0,1,0,0), packword6(1,0,0,0,0,0),
-		packword6(0,0,1,1,0,0), packword6(0,0,0,0,1,0) };
+static const uint32_t bunkerDamage0_6x6[] = {
+		packword6(0,1,1,0,0,0),
+		packword6(0,0,0,0,0,1),
+		packword6(1,1,0,1,0,0),
+		packword6(1,0,0,0,0,0),
+		packword6(0,0,1,1,0,0),
+		packword6(0,0,0,0,1,0) };
 
-static const uint32_t bunkerDamage1_6x6[] = { packword6(1,1,1,0,1,0),
-		packword6(1,0,1,0,0,1), packword6(1,1,0,1,1,1), packword6(1,0,0,0,0,0),
-		packword6(0,1,1,1,0,1), packword6(0,1,1,0,1,0) };
+static const uint32_t bunkerDamage1_6x6[] = {
+		packword6(1,1,1,0,1,0),
+		packword6(1,0,1,0,0,1),
+		packword6(1,1,0,1,1,1),
+		packword6(1,0,0,0,0,0),
+		packword6(0,1,1,1,0,1),
+		packword6(0,1,1,0,1,0) };
 
-static const uint32_t bunkerDamage2_6x6[] = { packword6(1,1,1,1,1,1),
-		packword6(1,0,1,1,0,1), packword6(1,1,0,1,1,1), packword6(1,1,0,1,1,0),
-		packword6(0,1,1,1,0,1), packword6(1,1,1,1,1,1) };
+static const uint32_t bunkerDamage2_6x6[] = {
+		packword6(1,1,1,1,1,1),
+		packword6(1,0,1,1,0,1),
+		packword6(1,1,0,1,1,1),
+		packword6(1,1,0,1,1,0),
+		packword6(0,1,1,1,0,1),
+		packword6(1,1,1,1,1,1) };
 
 #endif
