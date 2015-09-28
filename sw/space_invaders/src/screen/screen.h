@@ -40,6 +40,7 @@ void screen_refresh();
 
 //
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor);
+void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor);
 
 
 #endif /* SCREEN_H_ */

@@ -88,20 +88,10 @@ void application_loop() {
 //		flapIn = up;
 //		aliens_march_right();
 ////		aliens_march_down();
-		aliens_draw();
-		tank_draw();
-//		screen_refresh();
-		// ----------------
+//		aliens_draw();
+//		tank_draw();
+		screen_refresh();
 
-		/****
-		 * To enable the UART controller, uncomment below
-		 */
-
-//		// blocking call: wait until a character is present
-//		input = getchar();
-//
-//		// Handle the UART control of game
-//		uartControl_handle(input);
 
 	}
 

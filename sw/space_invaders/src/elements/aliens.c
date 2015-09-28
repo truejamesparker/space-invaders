@@ -10,7 +10,9 @@ static point_t alien_rel_origins[55];
 
 static bool march_right = true;
 
+static const shift = 3;
 
+#define SHIFT 3
 
 bool aliens_is_alive_right(uint16_t x, uint16_t y);
 bool aliens_is_alive_left(uint16_t x, uint16_t y);
@@ -71,32 +73,63 @@ void aliens_draw() {
 	}
 }
 
+void aliens_march_dir(uint16_t dir){
+	uint16_t x, x_shift = 0;
+	uint16_t y, y_shift = 0;
 
+	if (dir==2){
+		x_shift = 0;
+		y_shift = SHIFT;
+	}
+	else if(dir==6){
+		x_shift = SHIFT;
+		y_shift = 0;
+	}
+	else if(dir==4){
+		x_shift = -SHIFT;
+		y_shift = 0;
+	}
 
-
-void aliens_march_right(){
-	uint16_t x = 0;
-	uint16_t y = 0;
 
 	for (y = 0; y < ALIEN_ROW_COUNT; y++) {
 		alien_t alien = alien_symbols[y];	// select alien type
 		const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
 		for (x = 0; x < ALIEN_COL_COUNT; x++) {
-			if(x==0 && ALIEN_ALIVE(x,y)){
-				screen_drawSymbol(symbol, alien_atHere(x, y), alien.size,
-										ALIEN_SCALE, 0x0000);
-			}
 
-			if(!ALIEN_ALIVE(x, y) && aliens_is_alive_right(x, y)){
-				const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
-				// Tell the screen to draw my symbol
-				screen_drawSymbol(symbol, alien_atHere(x+1,y), alien.size,
-						ALIEN_SCALE, SCREEN_BG_COLOR);
-			}
+			point_t alienOrigin = alien_atHere(x, y);
+
+			screen_shiftElement(symbol, alienOrigin, alien.size,
+					x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
 		}
 	}
-	alien_block_origin.x += (3 * alien_symbols[0].size.w * ALIEN_SCALE)/2;
+	alien_block_origin.x += x_shift*ALIEN_SCALE;
+	alien_block_origin.y += y_shift*ALIEN_SCALE;
 }
+
+
+//void aliens_march_right(){
+//	uint16_t x = 0;
+//	uint16_t y = 0;
+//
+//	for (y = 0; y < ALIEN_ROW_COUNT; y++) {
+//		alien_t alien = alien_symbols[y];	// select alien type
+//		const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
+//		for (x = 0; x < ALIEN_COL_COUNT; x++) {
+//			if(x==0 && ALIEN_ALIVE(x,y)){
+//				screen_drawSymbol(symbol, alien_atHere(x, y), alien.size,
+//										ALIEN_SCALE, 0x0000);
+//			}
+//
+//			if(!ALIEN_ALIVE(x, y) && aliens_is_alive_right(x, y)){
+//				const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
+//				// Tell the screen to draw my symbol
+//				screen_drawSymbol(symbol, alien_atHere(x+1,y), alien.size,
+//						ALIEN_SCALE, SCREEN_BG_COLOR);
+//			}
+//		}
+//	}
+//	alien_block_origin.x += (3 * alien_symbols[0].size.w * ALIEN_SCALE)/2;
+//}
 
 void aliens_march_left(){
 	uint16_t x = 0;
@@ -159,19 +192,19 @@ void aliens_march(){
 
 	if(((right_origin.x + ALIEN_SCALE*ALIEN_WIDTH) >= SCREEN_WIDTH - SCREEN_EDGE_BUFFER) && march_right){
 		march_right = false;
-		aliens_march_down();
+		aliens_march_dir(2);
 		shift_down = true;
 	}
 	if(left_origin.x <= SCREEN_EDGE_BUFFER && !march_right){
 		march_right = true;
-		aliens_march_down();
+		aliens_march_dir(2);
 		shift_down = true;
 	}
 	if(march_right && !shift_down){
-		aliens_march_right();
+		aliens_march_dir(6);
 	}
 	else if(!march_right && !shift_down){
-		aliens_march_left();
+		aliens_march_dir(4);
 	}
 
 

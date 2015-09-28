@@ -41,14 +41,15 @@ extern bool flapIn;
 
 
 static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
-		{
-				.in = alien_top_in_12x8,			// elite aliens
-				.out = alien_top_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
-		},
+
 		{
 				.in = alien_middle_in_12x8,			// infantry aliens
 				.out = alien_middle_out_12x8,
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+		},
+		{
+				.in = alien_top_in_12x8,			// elite aliens
+				.out = alien_top_out_12x8,
 				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
 		},
 		{
