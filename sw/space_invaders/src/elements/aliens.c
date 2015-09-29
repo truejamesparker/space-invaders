@@ -74,8 +74,8 @@ void aliens_draw() {
 }
 
 void aliens_march_dir(uint16_t dir){
-	uint16_t x, x_shift = 0;
-	uint16_t y, y_shift = 0;
+	uint16_t x, y;
+	int16_t x_shift, y_shift;
 
 	if (dir==2){
 		x_shift = 0;
@@ -86,7 +86,7 @@ void aliens_march_dir(uint16_t dir){
 		y_shift = 0;
 	}
 	else if(dir==4){
-		x_shift = -SHIFT;
+		x_shift = (-SHIFT);
 		y_shift = 0;
 	}
 
@@ -97,6 +97,8 @@ void aliens_march_dir(uint16_t dir){
 		for (x = 0; x < ALIEN_COL_COUNT; x++) {
 
 			point_t alienOrigin = alien_atHere(x, y);
+
+			uint32_t color = (ALIEN_ALIVE(x,y)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
 
 			screen_shiftElement(symbol, alienOrigin, alien.size,
 					x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);

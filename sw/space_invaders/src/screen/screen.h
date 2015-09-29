@@ -27,6 +27,8 @@
 
 #define SCREEN_XY_TO_INDEX(x,y) (((y)*SCREEN_WIDTH) + (x))
 #define SCREEN_SET_XY_TO_COLOR(x,y,color) (framePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
+#define SCREEN_BG_SET_XY_TO_COLOR(x, y, color) (bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
+
 
 /****
  * Function prototypes
@@ -40,7 +42,9 @@ void screen_refresh();
 
 //
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor);
+void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor);
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor);
-
+uint32_t screen_getBgColor(uint16_t x, uint16_t y);
+uint32_t screen_getScreenColor(uint16_t x, uint16_t y);
 
 #endif /* SCREEN_H_ */

@@ -3,6 +3,7 @@
 static XAxiVdma videoDMAController;
 
 static unsigned int* framePointer;
+static unsigned int* bgFramePointer;
 
 //-----------------------------------------------------------------------------
 
@@ -73,6 +74,7 @@ void screen_init() {
 	// The variables framePointer and framePointer1 are just pointers to the base address
 	// of frame 0 and frame 1.
 	framePointer = (unsigned int *) FRAME_BUFFER_0_ADDR;
+	bgFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
 	// Just paint some large red, green, blue, and white squares in different
 	// positions of the image for each frame in the buffer (framePointer0 and framePointer1).
 
@@ -103,7 +105,8 @@ void screen_clear() {
 
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
-			SCREEN_SET_XY_TO_COLOR(x,y,SCREEN_BG_COLOR);
+			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
+			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 		}
 	}
 }
@@ -124,9 +127,10 @@ void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size
 	for (row = 0; row < size.h; row++) {
 		x_offset = 0;
 		for (col = 0; col < size.w; col++) {
-			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : 0x00000000;
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
+					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset,origin.y+j+y_offset);
+					color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : bgcolor;
 					SCREEN_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
 
 				}
@@ -135,6 +139,31 @@ void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size
 		}
 		y_offset += scale;
 	}
+}
+
+void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
+	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
+	for (row = 0; row < size.h; row++) {
+		x_offset = 0;
+		for (col = 0; col < size.w; col++) {
+			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : SCREEN_BG_COLOR;
+			for (i = 0; i < scale; i++) {
+				for (j = 0; j < scale; j++) {
+					SCREEN_BG_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
+				}
+			}
+			x_offset += scale;
+		}
+		y_offset += scale;
+	}
+}
+
+uint32_t screen_getBgColor(uint16_t x, uint16_t y){
+	return bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))];
+}
+
+uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
+	return framePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
 
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
@@ -160,23 +189,36 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 		ySign = 1;
 	}
 
-//	x_dir = (dx<0) ? -1: 1;
-//	y_dir = (dy<0) ? -1: 1;
+	x_dir = (dx<0) ? -1: 1;
+	y_dir = (dy<0) ? -1: 1;
 
-	for (row = xStart; row < size.h+dy; row++) {
+	for (row = xStart; row < size.h+abs(dy); row++) {
 		x_offset = 0;
-		for (col = 0; col < size.w+dx; col++) {
-			if(col < dx || row < dy){
-				color = SCREEN_BG_COLOR;
-//				xil_printf("erasing...");
+		for (col = 0; col < size.w+abs(dx); col++) {
+			if(x_dir==1 && y_dir==1){
+				if(col < dx || row < dy){
+					color = SCREEN_BG_COLOR;
+				}
+				else{
+					color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : SCREEN_BG_COLOR;
+				}
+				for (i = 0; i < scale; i++) {
+					for (j = 0; j < scale; j++) {
+						SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset), (origin.y+j+y_offset), color);
+					}
+				}
 			}
-			else{
-				color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : SCREEN_BG_COLOR;
-			}
-
-			for (i = 0; i < scale; i++) {
-				for (j = 0; j < scale; j++) {
-					SCREEN_SET_XY_TO_COLOR(x_dir*(origin.x+i+x_offset), y_dir*(origin.y+j+y_offset), color);
+			else if (x_dir==-1){
+				if(col > size.w){
+					color = SCREEN_BG_COLOR;
+				}
+				else{
+					color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : SCREEN_BG_COLOR;
+				}
+				for (i = 0; i < scale; i++) {
+					for (j = 0; j < scale; j++) {
+						SCREEN_SET_XY_TO_COLOR((origin.x+x_dir*(i+x_offset)), (origin.y+j+y_offset), color);
+					}
 				}
 			}
 			x_offset += scale;
