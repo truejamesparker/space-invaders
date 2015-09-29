@@ -1,6 +1,4 @@
 #include "uartControl.h"
-#include "../elements/aliens.h"
-#include "../elements/tank.h"
 
 uint16_t getint();
 
@@ -29,6 +27,11 @@ void uartControl_handle(char key) {
 		case '8': // move
 			xil_printf("alien move\r\n");
 			aliens_march();
+			break;
+		case '1': // move n times
+			xil_printf("How many times should I move alien? ");
+			uint16_t n = getint();
+			for (n; n > 0; n--) aliens_march();
 			break;
 		case '2': // kill
 			xil_printf("Which alien should I kill? (0-54): ");

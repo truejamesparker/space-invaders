@@ -8,8 +8,6 @@
 #include "screen/screen.h"
 #include "elements/tank.h"
 
-void print(char *str);
-
 void application_loop();
 
 // ----------------------------------------------------------------------------
@@ -42,57 +40,28 @@ int main() {
 void application_loop() {
 	char input;
 
-	// refresh rate
-	uint32_t sillyTimer = MAX_SILLY_TIMER;
-
-	// Which alien we are on
-	uint32_t alienCounter = 0;
-	bool up = true;
-
-	aliens_init_rel_origins();
-	aliens_init_lives_array();
+	aliens_init();
 	bunkers_init_origins();
 	tank_init();
 
 	bunkers_draw();
-	aliens_draw();
 	tank_draw();
 
+	// refresh the screen after everything has been initialized
+	screen_refresh();
 
-//	int this = 0;
-//	while(this<1000){
-//		this++;
-//		xil_printf("%d\n\r", this);
-//	}
-
-
+	// Tell stdin that it gets zero! none! (as far as buffering goes)
 	setvbuf(stdin, NULL, _IONBF, 0);
 
-	screen_refresh();
-	char i;
-	while(1) {\
-		i = getchar();
-		uartControl_handle(i);
-//		// Wait until we are ready to refresh screen again
-//		while(sillyTimer--);
-//		sillyTimer = MAX_SILLY_TIMER;
-//
-//		// ----------------
-//		// Do some screen stuff
-//
-////		bool* lives = aliens_getLives();
-////		lives[alienCounter] = !lives[alienCounter];
-////		if (++alienCounter >= ALIEN_COUNT) alienCounter = 0;
-//
-//		up = !up;
-//		flapIn = up;
-//		aliens_march_right();
-////		aliens_march_down();
-//		aliens_draw();
-//		tank_draw();
+	while(1) {
+		// blocking call: wait until a character is present
+		input = getchar();
+
+		// Handle the UART control of game
+		uartControl_handle(input);
+
+		// sync the screen with the frame
 		screen_refresh();
-
-
 	}
 
 }

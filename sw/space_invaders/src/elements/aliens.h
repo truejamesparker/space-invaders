@@ -18,14 +18,23 @@
 #define ALIEN_LOW_COORDINATE	0
 #define ALIEN_HIGH_COORDINATE	(ALIEN_COUNT-1)
 
+#define ALIEN_SHIFT_X			3
+#define ALIEN_SHIFT_Y			6
+
+#define ALIEN_PADDING_X			(ALIEN_SCALE*3)
+#define ALIEN_PADDING_Y			(ALIEN_SCALE*2)
+
+#define ALIEN_MARCH_RIGHT	6
+#define ALIEN_MARCH_LEFT	4
+#define ALIEN_MARCH_DOWN	2
+
 
 /****
  * Macro definitions
  */
 
 #define ALIEN_XY_TO_INDEX(x,y) 	((y)*ALIEN_COL_COUNT + (x))
-#define ALIEN_ALIVE(x,y) 	(alien_lives_matter[ALIEN_XY_TO_INDEX((x),(y))])
-//#define ALIEN_XY_TO_SCREEN_INDEX(x,y)
+#define ALIEN_ALIVE(x,y) 		(alien_lives_matter[ALIEN_XY_TO_INDEX((x),(y))])
 
 /***
  * Struct definitions
@@ -37,19 +46,15 @@ typedef struct{
 	const symbolsize_t size;
 } alien_t;
 
-extern bool flapIn;
-
-
 static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
-
-		{
-				.in = alien_middle_in_12x8,			// infantry aliens
-				.out = alien_middle_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
-		},
 		{
 				.in = alien_top_in_12x8,			// elite aliens
 				.out = alien_top_out_12x8,
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+		},
+		{
+				.in = alien_middle_in_12x8,			// infantry aliens
+				.out = alien_middle_out_12x8,
 				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
 		},
 		{
@@ -73,23 +78,10 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
  * Function prototypes
  */
 
-// Return the array of bools representing aliens lives
-bool* aliens_getLives();
+// Initialize the alien states and draw onto screen
+void aliens_init();
 
-void aliens_init_rel_origins();
-
-
-void aliens_init_lives_array();
-
-// Draw the aliens to the screen
-void aliens_draw();
-
-
-void aliens_march_right();
-
-void aliens_march_left();
-
-void aliens_march_down();
+void aliens_march();
 
 void aliens_kill(uint16_t index);
 

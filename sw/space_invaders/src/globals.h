@@ -22,7 +22,6 @@ void setTankBulletPosition(point_t val);
 point_t getTankBulletPosition();
 
 #define WORD_WIDTH 				32
-#define SCREEN_EDGE_BUFFER 		50
 #define SCALE					2
 
 

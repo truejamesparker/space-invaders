@@ -29,9 +29,9 @@ void screen_init() {
 	// function generates an error if you set the write frame count to 0. We set it to 2
 	// but ignore it because we don't need a write channel at all.
 	XAxiVdma_FrameCounter myFrameConfig;
-	myFrameConfig.ReadFrameCount = 2; //2;
+	myFrameConfig.ReadFrameCount = 2;
 	myFrameConfig.ReadDelayTimerCount = 10;
-	myFrameConfig.WriteFrameCount = 2; //2;
+	myFrameConfig.WriteFrameCount = 2;
 	myFrameConfig.WriteDelayTimerCount = 10;
 	int status = XAxiVdma_SetFrameCounter(&videoDMAController, &myFrameConfig);
 	if (status != XST_SUCCESS) {
@@ -104,6 +104,17 @@ void screen_clear() {
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
 			SCREEN_SET_XY_TO_COLOR(x,y,SCREEN_BG_COLOR);
+#if SCREEN_SHOW_MARGINS
+			if (	x == SCREEN_EDGE_BUFFER ||
+					y == SCREEN_EDGE_BUFFER ||
+					x == SCREEN_WIDTH-SCREEN_EDGE_BUFFER-1 ||
+					y == SCREEN_HEIGHT-SCREEN_EDGE_BUFFER-1) {
+				SCREEN_SET_XY_TO_COLOR(x,y,SCREEN_ELEM_OUTLINE);
+			}
+#endif
+#if SCREEN_SHOW_ALIEN_MARGINS
+
+#endif
 		}
 	}
 }
@@ -120,63 +131,66 @@ void screen_refresh() {
 //-----------------------------------------------------------------------------
 
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
-	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
-	for (row = 0; row < size.h; row++) {
-		x_offset = 0;
-		for (col = 0; col < size.w; col++) {
-			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : 0x00000000;
-			for (i = 0; i < scale; i++) {
-				for (j = 0; j < scale; j++) {
-					SCREEN_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
-
-				}
-			}
-			x_offset += scale;
-		}
-		y_offset += scale;
-	}
+	// drawing a symbol is the same as shifting it by (0,0)
+	screen_shiftElement(symbol, origin, size, 0, 0, scale, onColor);
 }
 
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
 	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
-	int16_t x_dir, y_dir;
 
 	int8_t xSign, ySign;
-	uint32_t xStart, yStart;
 
 	if (dx < 0) {
 		// shift left, clear right
 		xSign = -1;
-		xStart = 0;
+		dx = -1*dx; // abs(dx)
 	} else {
 		// shift right, clear left
 		xSign = 1;
-		xStart = 0;
 	}
 
-	if (dy < 0) {
-		ySign = -1;
-	} else {
+	// Aliens never move up, always down (+direction)
+	if (dy > 0) {
 		ySign = 1;
 	}
 
-//	x_dir = (dx<0) ? -1: 1;
-//	y_dir = (dy<0) ? -1: 1;
-
-	for (row = xStart; row < size.h+dy; row++) {
+	for (row = 0; row < size.h+dy; row++) {
 		x_offset = 0;
 		for (col = 0; col < size.w+dx; col++) {
-			if(col < dx || row < dy){
+
+			// Figure out what color to make things
+			if ((xSign == 1 && (col < dx || row < dy))) {
 				color = SCREEN_BG_COLOR;
-//				xil_printf("erasing...");
-			}
-			else{
+
+			} else if ((xSign == -1 && (col > size.w || row < dy))) {
+				color = SCREEN_BG_COLOR;
+
+			} else if (xSign == 1) {
 				color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : SCREEN_BG_COLOR;
+
+			} else if (xSign == -1 || xSign == 0) {
+				color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : SCREEN_BG_COLOR;
 			}
 
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
-					SCREEN_SET_XY_TO_COLOR(x_dir*(origin.x+i+x_offset), y_dir*(origin.y+j+y_offset), color);
+
+#if SCREEN_SHIFT_BOX
+					if (xSign == 1 || xSign == -1) {
+						if (col == dx || col == size.w+dx-1 || row == 0 || row == size.h-1) {
+							color = SCREEN_ELEM_OUTLINE;
+						}
+
+						if (col == 0 || col == size.w-1) {
+							color = SCREEN_ELEM_DIFF_OUTLINE;
+						}
+					}
+#endif
+#if SCREEN_SHOW_ORIGIN
+					if (col == 0 && row == 0) color = SCREEN_ORIGIN_COLOR;
+#endif
+
+					SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset), (origin.y+j+y_offset), color);
 				}
 			}
 			x_offset += scale;
