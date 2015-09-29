@@ -1,10 +1,3 @@
-/*
- * bunkers.h
- *
- *  Created on: Sep 26, 2015
- *      Author: superman
- */
-
 #ifndef BUNKERS_H_
 #define BUNKERS_H_
 

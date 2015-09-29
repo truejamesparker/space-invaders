@@ -1,9 +1,3 @@
-/*
- * bunkers.c
- *
- *  Created on: Sep 26, 2015
- *      Author: superman
- */
 #include "bunkers.h"
 
 #define BUNKER_START_XOFFSET 24*BUNKER_SCALE
