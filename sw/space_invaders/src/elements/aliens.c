@@ -34,6 +34,8 @@ void aliens_march_dir(uint16_t dir){
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
+		// If marching left, we need to add a correction to the
+		// origin back on the left margin line
 		x_shift = (!_aliensMarchingRight) ? ALIEN_SHIFT_X : 0;
 		y_shift = ALIEN_SHIFT_Y;
 	} else if (dir == ALIEN_MARCH_RIGHT) {
