@@ -29,11 +29,13 @@ void aliens_init() {
 //-----------------------------------------------------------------------------
 
 void aliens_march_dir(uint16_t dir){
-	uint16_t x, x_shift = 0;
-	uint16_t y, y_shift = 0;
+	uint16_t x, y;
+	int16_t x_shift, y_shift;
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
+		// If marching left, we need to add a correction to the
+		// origin back on the left margin line
 		x_shift = (!_aliensMarchingRight) ? ALIEN_SHIFT_X : 0;
 		y_shift = ALIEN_SHIFT_Y;
 	} else if (dir == ALIEN_MARCH_RIGHT) {
@@ -69,6 +71,7 @@ void aliens_march_dir(uint16_t dir){
 			point_t alienOrigin = alien_getAlienOrigin(x, y);
 
 			// Tell the screen to shift this element by x_shift, y_shift
+			// uint32_t color = (ALIEN_ALIVE(x,y)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
 			screen_shiftElement(symbol, alienOrigin, alien.size,
 					x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
 

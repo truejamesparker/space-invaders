@@ -3,6 +3,7 @@
 static XAxiVdma videoDMAController;
 
 static unsigned int* framePointer;
+static unsigned int* bgFramePointer;
 
 //-----------------------------------------------------------------------------
 
@@ -73,6 +74,7 @@ void screen_init() {
 	// The variables framePointer and framePointer1 are just pointers to the base address
 	// of frame 0 and frame 1.
 	framePointer = (unsigned int *) FRAME_BUFFER_0_ADDR;
+	bgFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
 	// Just paint some large red, green, blue, and white squares in different
 	// positions of the image for each frame in the buffer (framePointer0 and framePointer1).
 
@@ -103,7 +105,6 @@ void screen_clear() {
 
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
-			SCREEN_SET_XY_TO_COLOR(x,y,SCREEN_BG_COLOR);
 #if SCREEN_SHOW_MARGINS
 			if (	x == SCREEN_EDGE_BUFFER ||
 					y == SCREEN_EDGE_BUFFER ||
@@ -115,6 +116,8 @@ void screen_clear() {
 #if SCREEN_SHOW_ALIEN_MARGINS
 
 #endif
+			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
+			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 		}
 	}
 }
@@ -133,6 +136,31 @@ void screen_refresh() {
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
 	// drawing a symbol is the same as shifting it by (0,0)
 	screen_shiftElement(symbol, origin, size, 0, 0, scale, onColor);
+}
+
+void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
+	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
+	for (row = 0; row < size.h; row++) {
+		x_offset = 0;
+		for (col = 0; col < size.w; col++) {
+			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : SCREEN_BG_COLOR;
+			for (i = 0; i < scale; i++) {
+				for (j = 0; j < scale; j++) {
+					SCREEN_BG_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
+				}
+			}
+			x_offset += scale;
+		}
+		y_offset += scale;
+	}
+}
+
+uint32_t screen_getBgColor(uint16_t x, uint16_t y){
+	return bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))];
+}
+
+uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
+	return framePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
 
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
@@ -158,22 +186,24 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 		x_offset = 0;
 		for (col = 0; col < size.w+dx; col++) {
 
-			// Figure out what color to make things
-			if ((xSign == 1 && (col < dx || row < dy))) {
-				color = SCREEN_BG_COLOR;
-
-			} else if ((xSign == -1 && (col > size.w || row < dy))) {
-				color = SCREEN_BG_COLOR;
-
-			} else if (xSign == 1) {
-				color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : SCREEN_BG_COLOR;
-
-			} else if (xSign == -1 || xSign == 0) {
-				color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : SCREEN_BG_COLOR;
-			}
-
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
+
+					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset,origin.y+j+y_offset);
+
+					// Figure out what color to make things
+					if ((xSign == 1 && (col < dx || row < dy))) {
+						color = bgcolor;
+
+					} else if ((xSign == -1 && (col > size.w || row < dy))) {
+						color = bgcolor;
+
+					} else if (xSign == 1) {
+						color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : bgcolor;
+
+					} else if (xSign == -1 || xSign == 0) {
+						color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
+					}
 
 #if SCREEN_SHIFT_BOX
 					if (xSign == 1 || xSign == -1) {
