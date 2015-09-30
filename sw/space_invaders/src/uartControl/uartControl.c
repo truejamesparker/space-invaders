@@ -15,7 +15,7 @@ void uartControl_handle(char key) {
 			tank_left();
 			break;
 		case '6': // right
-			xil_printf("tank left\r\n");
+			xil_printf("tank right\r\n");
 			tank_right();
 			break;
 		case '5': // shoot
@@ -32,6 +32,7 @@ void uartControl_handle(char key) {
 		case '1': // move n times
 			xil_printf("How many times should I move alien? ");
 			uint16_t n = getint();
+			xil_printf("\r\n");
 			for (n; n > 0; n--) aliens_march();
 			break;
 		case '2': // kill
@@ -73,6 +74,24 @@ void uartControl_handle(char key) {
 			}
 			break;
 
+		/* Miscellaneous Scaling */
+		case 'a':
+			aliens_left();
+			break;
+		case 'A':
+			aliens_up();
+			break;
+		case 's':
+			aliens_right();
+			break;
+		case 'S':
+			aliens_down();
+			break;
+		case 'c':
+			screen_clear();
+			aliens_init();
+			tank_init();
+			break;
 
 		default:
 			break;

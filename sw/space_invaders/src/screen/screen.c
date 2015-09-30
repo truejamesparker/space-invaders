@@ -105,19 +105,19 @@ void screen_clear() {
 
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
+
+			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
+			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
+
 #if SCREEN_SHOW_MARGINS
 			if (	x == SCREEN_EDGE_BUFFER ||
 					y == SCREEN_EDGE_BUFFER ||
 					x == SCREEN_WIDTH-SCREEN_EDGE_BUFFER-1 ||
 					y == SCREEN_HEIGHT-SCREEN_EDGE_BUFFER-1) {
 				SCREEN_SET_XY_TO_COLOR(x,y,SCREEN_ELEM_OUTLINE);
+				SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_ELEM_OUTLINE);
 			}
 #endif
-#if SCREEN_SHOW_ALIEN_MARGINS
-
-#endif
-			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
-			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 		}
 	}
 }
@@ -166,11 +166,13 @@ uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
 	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
 	int8_t xSign, ySign;
+	int8_t xShiftOffset = 0, yShiftOffset = 0;
 
 	if (dx < 0) {
 		// shift left, clear right
 		xSign = SCREEN_SHIFT_LEFT;
 		dx = -1*dx; // abs(dx)
+		xShiftOffset = dx*scale;
 	} else {
 		// shift right, clear left
 		xSign = SCREEN_SHIFT_RIGHT;
@@ -196,25 +198,27 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					if (xSign == SCREEN_SHIFT_RIGHT && col < dx) {
 						color = bgcolor;
 
-					} else if (xSign == SCREEN_SHIFT_LEFT && col > size.w) {
+					} else if (xSign == SCREEN_SHIFT_LEFT && col >= size.w) {
 						color = bgcolor;
 
 					} else if (ySign == SCREEN_SHIFT_DOWN && row < dy) {
 						color = bgcolor;
 
-					} else if (ySign == SCREEN_SHIFT_UP && row > size.h) {
+					} else if (ySign == SCREEN_SHIFT_UP && row >= size.h) {
 						color = bgcolor;
 
 					} else if (xSign == SCREEN_SHIFT_LEFT || ySign == SCREEN_SHIFT_UP) {
-						color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
+						color = (symbol[row+dy] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
 
-					} else if (xSign == SCREEN_SHIFT_RIGHT) {
+					} else if (xSign == SCREEN_SHIFT_RIGHT || ySign == SCREEN_SHIFT_DOWN) {
 						color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : bgcolor;
 
+					} else {
+						color = SCREEN_COLOR_YELLOW;
 					}
 
 #if SCREEN_SHIFT_BOX
-					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_LEFT) {
+					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_RIGHT) {
 						if (col == dx || col == size.w+dx-1 || row == 0 || row == size.h-1) {
 							color = SCREEN_ELEM_OUTLINE;
 						}
@@ -225,10 +229,14 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					}
 #endif
 #if SCREEN_SHOW_ORIGIN
-					if (col == 0 && row == 0) color = SCREEN_ORIGIN_COLOR;
+					if (xSign == SCREEN_SHIFT_RIGHT) {
+						if (col == dx && row == dy) color = SCREEN_ORIGIN_COLOR;
+					} else if (xSign == SCREEN_SHIFT_LEFT) {
+						if (col == 0 && row == dy) color = SCREEN_ORIGIN_COLOR;
+					}
 #endif
 
-					SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset), (origin.y+j+y_offset), color);
+					SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset-xShiftOffset), (origin.y+j+y_offset-yShiftOffset), color);
 				}
 			}
 			x_offset += scale;

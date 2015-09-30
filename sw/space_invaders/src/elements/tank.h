@@ -10,7 +10,7 @@
 #define TANK_HEIGHT 	8
 #define TANK_SCALE		2
 
-#define TANK_SHIFT_X	((TANK_SCALE*TANK_WIDTH)/2)
+#define TANK_SHIFT_X	4
 
 static const symbolsize_t tank_size = {
 		.w = TANK_WIDTH,

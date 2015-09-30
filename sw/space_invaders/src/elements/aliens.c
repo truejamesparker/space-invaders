@@ -3,7 +3,7 @@
 static bool alien_lives_matter[ALIEN_COUNT] = { false };
 static point_t alienOrigins[ALIEN_COUNT];
 
-static bool flapIn = true;
+static bool flapIn = false;
 
 typedef struct {
 	bool kill;
@@ -42,16 +42,17 @@ void aliens_init() {
 
 void aliens_march_dir(uint16_t dir){
 	uint16_t x, y;
-	int16_t x_shift, y_shift;
+	int16_t x_shift = 0, y_shift = 0;
 
 	aliens_kill_cleanup();
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
-		// If marching left, we need to add a correction to the
-		// origin back on the left margin line
-		x_shift = (!_aliensMarchingRight) ? ALIEN_SHIFT_X : 0;
+		x_shift = 0;
 		y_shift = ALIEN_SHIFT_Y;
+	} else if (dir == ALIEN_MARCH_UP) {
+		x_shift = 0;
+		y_shift = -ALIEN_SHIFT_Y;
 	} else if (dir == ALIEN_MARCH_RIGHT) {
 		x_shift = ALIEN_SHIFT_X;
 		y_shift = 0;
@@ -123,7 +124,7 @@ void aliens_march(){
 		_aliensMarchingRight = false;
 
 	// if I'm about to be in the left margin, drop down, change marching direction
-	} else if(!_aliensMarchingRight && ((left_origin.x) < SCREEN_EDGE_BUFFER)){
+	} else if(!_aliensMarchingRight && ((left_origin.x) <= SCREEN_EDGE_BUFFER)){
 		aliens_march_dir(ALIEN_MARCH_DOWN);
 		_aliensMarchingRight = true;
 
@@ -162,6 +163,32 @@ void aliens_kill_cleanup(){
 		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
 								ALIEN_SCALE, SCREEN_BG_COLOR);
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_left() {
+	_aliensMarchingRight = false;
+	aliens_march();
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_right() {
+	_aliensMarchingRight = true;
+	aliens_march();
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_up() {
+	aliens_march_dir(ALIEN_MARCH_UP);
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_down() {
+	aliens_march_dir(ALIEN_MARCH_DOWN);
 }
 
 //-----------------------------------------------------------------------------

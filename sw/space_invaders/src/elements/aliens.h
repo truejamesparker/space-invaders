@@ -27,6 +27,7 @@
 #define ALIEN_MARCH_RIGHT	6
 #define ALIEN_MARCH_LEFT	4
 #define ALIEN_MARCH_DOWN	2
+#define ALIEN_MARCH_UP		8
 
 
 /****
@@ -91,5 +92,11 @@ void aliens_march();
 void aliens_kill(uint16_t index);
 
 point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
+
+void aliens_left();
+void aliens_right();
+void aliens_up();
+void aliens_down();
+
 
 #endif /* ALIENS_H_ */
