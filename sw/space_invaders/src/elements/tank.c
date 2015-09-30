@@ -7,8 +7,8 @@
 
 #include "tank.h"
 
-#define TANK_SCALE SCALE
-#define SHIFT_DISTANCE (TANK_SCALE * TANK_WIDTH) / 2
+
+//#define SHIFT_DISTANCE (TANK_SCALE * TANK_WIDTH) / 2
 
 static point_t tank_origin = {.x = SCREEN_WIDTH/2 , .y = (7*SCREEN_HEIGHT)/8};
 
@@ -18,21 +18,25 @@ void tank_init(){
 
 }
 
+point_t tank_get_origin(){
+	return tank_origin;
+}
+
 void tank_draw(){
 	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
 					TANK_SCALE, TANK_COLOR);
 }
 
 void tank_right() {
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
-						TANK_SCALE, SCREEN_BG_COLOR);
-	tank_origin.x += SHIFT_DISTANCE;
+	screen_shiftElement(tank_15x8, tank_origin, tank_size,
+			TANK_SHIFT, 0, TANK_SCALE, SCREEN_COLOR_GREEN);
+	tank_origin.x += TANK_SHIFT;
 }
 
 void tank_left() {
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
-						TANK_SCALE, SCREEN_BG_COLOR);
-	tank_origin.x -= SHIFT_DISTANCE;
+	screen_shiftElement(tank_15x8, tank_origin, tank_size,
+				-TANK_SHIFT, 0, TANK_SCALE, SCREEN_COLOR_GREEN);
+	tank_origin.x -= TANK_SHIFT;
 }
 
 //void tank_fire(){

@@ -7,6 +7,7 @@
 #include "uartControl/uartControl.h"
 #include "screen/screen.h"
 #include "elements/tank.h"
+#include "elements/text.h"
 
 void application_loop();
 
@@ -46,6 +47,8 @@ void application_loop() {
 
 	bunkers_draw();
 	tank_draw();
+
+	text_print_game_over();
 
 	// refresh the screen after everything has been initialized
 	screen_refresh();

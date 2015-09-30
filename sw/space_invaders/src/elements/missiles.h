@@ -9,14 +9,20 @@
 #define MISSILES_H_
 
 #include "../globals.h"
+#include "../screen/screen.h"
+#include "aliens.h"
+#include "tank.h"
 
 #define MISSILE_HEIGHT 		6
 #define MISSILE_WIDTH 		6
 #define MISSILE_COUNT		4
-#define MISSILE_SCALE		SCALE
-#define MISSILE_SHIFT 		SCALE * 2
+#define MISSILE_SCALE		1
+#define MISSILE_SHIFT 		SCALE * 3
+#define MISSILE_COLOR 		SCREEN_COLOR_WHITE
+#define TANK_MISSILE		0
 
 typedef struct{
+	point_t origin;
 	uint32_t* symbol;
 	const bool up;
 	bool active;
@@ -25,8 +31,8 @@ typedef struct{
 
 
 void missiles_tank_fire();
-
-void missiles_alien_fire(uint16_t type);
+void missiles_move();
+void missiles_alien_fire();
 
 
 static missile_t missile_array[MISSILE_COUNT] = {

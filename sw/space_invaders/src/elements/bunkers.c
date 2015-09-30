@@ -37,7 +37,7 @@ void bunkers_damage(uint16_t index){
 	point_t origin = bunker_origins[index];
 	origin.x += r%(BUNKER_WIDTH*BUNKER_SCALE);
 	origin.y += -r%(BUNKER_SCALE*10);
-	uint32_t* symbol = bunker_damage_symbols[r%2];
+	uint32_t* symbol = bunker_damage_symbols[r%3];
 	screen_drawSymbol(symbol, origin, bunker_damage_size, 3, SCREEN_BG_COLOR);
 	screen_bgDrawSymbol(symbol, origin, bunker_damage_size, 3, SCREEN_BG_COLOR);
 

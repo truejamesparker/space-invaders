@@ -20,6 +20,7 @@ void uartControl_handle(char key) {
 			break;
 		case '5': // shoot
 			xil_printf("tank shoot\r\n");
+			missiles_tank_fire();
 			break;
 
 

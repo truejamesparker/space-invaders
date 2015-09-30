@@ -182,7 +182,7 @@ static const uint32_t missile0_6x6[] = {
 		packword6(0,0,1,0,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,0,1,0,0,0),
-		packword6(0,1,1,1,0,0)};
+		packword6(0,0,1,0,0,0)};
 
 static const uint32_t missile1_6x6[] = {
 		packword6(0,0,1,0,0,0),
@@ -201,13 +201,13 @@ static const uint32_t missile2_6x6[] = {
 		packword6(0,0,1,0,0,0)};
 
 static const uint32_t missile3_6x6[] = {
+		packword6(0,0,0,1,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,1,0,0,0,0),
-		packword6(1,0,0,0,0,0),
-		packword6(0,1,0,0,0,0),
 		packword6(0,0,1,0,0,0),
-		packword6(0,1,0,0,0,0),
-		packword6(1,0,0,0,0,0)};
+		packword6(0,0,0,1,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,0,0,0,0)};
 
 
 // Shape of the entire bunker.
@@ -269,6 +269,19 @@ static const int bunkerDamage3_6x6[] = {
 		packword6(1,1,1,1,1,1),
 		packword6(1,1,1,1,1,1),
 		packword6(1,1,1,1,1,1)
+};
+
+static const uint32_t char_y_8x1[] = {
+		0x82, // #     #
+		0x82, // #     #
+		0x44, //  #   #
+		0x28, //   # #
+		0x10, //    #
+		0x10, //    #
+		0x10, //    #
+		0x10, //    #
+		0x10, //    #
+		0x00, //
 };
 
 #endif

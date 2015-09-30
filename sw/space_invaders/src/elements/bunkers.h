@@ -11,6 +11,11 @@
 #define BUNKER_WIDTH		24
 #define BUNKER_HEIGHT		18
 
+#define TANK_MISSILE 0
+#define ALIEN_MISSILE1 1
+#define ALIEN_MISSILE2 2
+#define ALIEN_MISSILE3 3
+
 static const symbolsize_t bunker_size= {
 		.w = 24,
 		.h = 18
