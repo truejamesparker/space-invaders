@@ -234,7 +234,7 @@ void initAlienOrigins() {
 		for(x=0; x<ALIEN_COL_COUNT; x++){
 			point_t origin = {
 					.x = (x * alien.size.w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER,
-					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER
+					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + charsize.h*ALIEN_SCALE
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;
 		}

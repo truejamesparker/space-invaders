@@ -48,6 +48,7 @@ void application_loop() {
 	bunkers_draw();
 
 	text_print_game_over();
+	text_print_lives();
 
 	// refresh the screen after everything has been initialized
 	screen_refresh();

@@ -5,6 +5,7 @@
 
 #include "../screen/screen.h"
 #include "../globals.h"
+#include "text.h"
 
 
 
