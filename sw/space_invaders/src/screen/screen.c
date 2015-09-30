@@ -138,6 +138,8 @@ void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size
 	screen_shiftElement(symbol, origin, size, 0, 0, scale, onColor);
 }
 
+//-----------------------------------------------------------------------------
+
 void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
 	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
 	for (row = 0; row < size.h; row++) {
@@ -155,13 +157,19 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 	}
 }
 
+//-----------------------------------------------------------------------------
+
 uint32_t screen_getBgColor(uint16_t x, uint16_t y){
 	return bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
 
+//-----------------------------------------------------------------------------
+
 uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
 	return framePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
+
+//-----------------------------------------------------------------------------
 
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
 	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
@@ -181,6 +189,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 	if (dy < 0) {
 		ySign = SCREEN_SHIFT_UP;
 		dy = -1*dy; // abs(dy)
+		yShiftOffset = dy*scale;
 	} else {
 		ySign = SCREEN_SHIFT_DOWN;
 	}
@@ -204,11 +213,11 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					} else if (ySign == SCREEN_SHIFT_DOWN && row < dy) {
 						color = bgcolor;
 
-					} else if (ySign == SCREEN_SHIFT_UP && row >= size.h) {
+					} else if (ySign == SCREEN_SHIFT_UP && (row >= size.h)) {
 						color = bgcolor;
 
 					} else if (xSign == SCREEN_SHIFT_LEFT || ySign == SCREEN_SHIFT_UP) {
-						color = (symbol[row+dy] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
+						color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
 
 					} else if (xSign == SCREEN_SHIFT_RIGHT || ySign == SCREEN_SHIFT_DOWN) {
 						color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : bgcolor;

@@ -42,10 +42,10 @@ void application_loop() {
 	char input;
 
 	aliens_init();
-	bunkers_init_origins();
+	bunkers_init();
 	tank_init();
+	missiles_init();
 
-	bunkers_draw();
 
 	text_print_game_over();
 	text_print_lives();

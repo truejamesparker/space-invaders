@@ -7,6 +7,8 @@
 
 #include "../elements/aliens.h"
 #include "../elements/tank.h"
+#include "../elements/bunkers.h"
+#include "../elements/missiles.h"
 
 #define ASCII_0	48
 #define ASCII_3 51

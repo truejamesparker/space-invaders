@@ -18,6 +18,8 @@ void tank_init(){
 	tank_draw();
 }
 
+//-----------------------------------------------------------------------------
+
 point_t tank_get_origin(){
 	return tank_origin;
 }
@@ -72,6 +74,7 @@ void tank_shiftOrigin(int16_t xShift, int16_t yShift) {
 
 bool tank_isInMargin(tankdir_t tankDirection) {
 
+	// make sure that my turret doesn't go past left/right margin
 	if (tankDirection == TANK_MOVING_RIGHT) {
 		return (tank_origin.x + (TANK_SCALE*TANK_WIDTH) >= (SCREEN_WIDTH-SCREEN_EDGE_BUFFER));
 	} else {

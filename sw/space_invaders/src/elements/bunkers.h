@@ -1,9 +1,10 @@
 #ifndef BUNKERS_H_
 #define BUNKERS_H_
 
+#include <stdlib.h>
+
 #include "../globals.h"
 #include "../screen/screen.h"
-#include <stdlib.h>
 
 #define BUNKER_COUNT		4
 #define BUNKER_COLOR		0x32CD32
@@ -26,10 +27,9 @@ static const symbolsize_t bunker_damage_size = {
 		.h = 6
 };
 
-static uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6};
+static const uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6};
 
-void bunkers_draw();
-void bunkers_init_origins();
+void bunkers_init();
 void bunkers_damage(uint16_t index);
 
 #endif /* BUNKERS_H_ */

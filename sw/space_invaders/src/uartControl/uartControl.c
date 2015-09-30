@@ -91,6 +91,8 @@ void uartControl_handle(char key) {
 			screen_clear();
 			aliens_init();
 			tank_init();
+			missiles_init();
+			bunkers_init();
 			break;
 
 		default:

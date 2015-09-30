@@ -1,12 +1,9 @@
-/*
- * missiles.h
- *
- *  Created on: Sep 26, 2015
- *      Author: superman
- */
-
 #ifndef MISSILES_H_
 #define MISSILES_H_
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "../globals.h"
 #include "../screen/screen.h"
@@ -23,8 +20,8 @@
 
 typedef struct{
 	point_t origin;
-	uint32_t* symbol_r;
-	uint32_t* symbol_l;
+	const uint32_t* symbol_r;
+	const uint32_t* symbol_l;
 	const bool up;
 	bool active;
 	const symbolsize_t size;
@@ -66,5 +63,9 @@ static missile_t missile_array[MISSILE_COUNT] = {
 				.size = {.w = 6, .h = 6}
 		},
 };
+
+//-----------------------------------------------------------------------------
+
+void missiles_init();
 
 #endif /* MISSILES_H_ */

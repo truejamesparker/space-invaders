@@ -14,6 +14,7 @@
 #define TEXT_SCALE 2
 
 void text_print_game_over();
+void text_print_lives();
 
 static const symbolsize_t charsize = {
 		.w = 8,
