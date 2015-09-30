@@ -1,6 +1,6 @@
 =========================================================================
-Time: Sat Sep 26 6:15:41 PM Mountain Daylight Time 2015
-Running: run_batch_mode 157730240
+Time: Wed Sep 30 5:36:54 PM Mountain Daylight Time 2015
+Running: run_batch_mode 158123456
 {COLLECTING:  INSTANCE MCB_DDR2    }
 {COLLECTING:  C_INTERCONNECT_S0_AXI_MASTERS microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC & axi_vdma_0.M_AXI_MM2S OPTIONAL string none microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC & axi_vdma_0.M_AXI_MM2S}
 {COLLECTING:  C_INTERCONNECT_S0_AXI_IS_ACLK_ASYNC 0 OPTIONAL_UPDATE integer 0 }
@@ -565,6 +565,6 @@ Running: run_batch_mode 157730240
 {SET: CHECK C_NUM_DQ_PINS = 16 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
 RETURN: 0
 =========================================================================
-Time: Sat Sep 26 6:15:42 PM Mountain Daylight Time 2015
-Running: generate_corelevel_constraints 157730240
+Time: Wed Sep 30 5:36:55 PM Mountain Daylight Time 2015
+Running: generate_corelevel_constraints 158123456
 RETURN: 

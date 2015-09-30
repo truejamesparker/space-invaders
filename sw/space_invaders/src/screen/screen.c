@@ -201,7 +201,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 
-					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset,origin.y+j+y_offset);
+					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset-xShiftOffset,origin.y+j+y_offset-yShiftOffset);
 
 					// Figure out what color to make things
 					if (xSign == SCREEN_SHIFT_RIGHT && col < dx) {
