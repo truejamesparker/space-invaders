@@ -3,7 +3,7 @@
 #define BUNKER_START_XOFFSET 24*BUNKER_SCALE
 
 static point_t bunker_origins[4];
-static uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6};
+
 
 
 //-----------------------------------------------------------------------------

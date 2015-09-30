@@ -50,12 +50,14 @@ void uartControl_handle(char key) {
 			break;
 		case '3': // shoot
 			xil_printf("alien shoot\r\n");
+			missiles_alien_fire();
 			break;
 
 
 		/* Update All Bullets */
 		case '9':
 			xil_printf("update all bullets\r\n");
+			missiles_move();
 			break;
 
 

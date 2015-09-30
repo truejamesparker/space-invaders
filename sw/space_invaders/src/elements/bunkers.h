@@ -26,6 +26,8 @@ static const symbolsize_t bunker_damage_size = {
 		.h = 6
 };
 
+static uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6};
+
 void bunkers_draw();
 void bunkers_init_origins();
 void bunkers_damage(uint16_t index);

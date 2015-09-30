@@ -56,6 +56,9 @@ point_t getTankBulletPosition();
 #define packword6(b5,b4,b3,b2,b1,b0) 																								      \
 ((b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
+#define packword3(b2,b1,b0) 																								      \
+((b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
+
 static const uint32_t topOutAlienSymbol[] = {
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
@@ -176,31 +179,55 @@ static const uint32_t block_erase_12x8[] = {
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
 
+//static const uint32_t missile0_6x6[] = {
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0)};
+//
+//static const uint32_t missile1_6x6[] = {
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,1,1,1,0,0)};
+//
+//static const uint32_t missile2_6x6[] = {
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,0,1,0,0,0),
+//		packword6(0,1,1,1,0,0),
+//		packword6(0,0,1,0,0,0)};
+
 static const uint32_t missile0_6x6[] = {
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0)};
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0)};
 
 static const uint32_t missile1_6x6[] = {
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,1,1,1,0,0)};
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(1,1,1)};
 
 static const uint32_t missile2_6x6[] = {
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,0,1,0,0,0),
-		packword6(0,1,1,1,0,0),
-		packword6(0,0,1,0,0,0)};
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(1,1,1),
+		packword3(0,1,0)};
 
-static const uint32_t missile3_6x6[] = {
+static const uint32_t missile3l_6x6[] = {
 		packword6(0,0,0,1,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,1,0,0,0,0),
@@ -208,6 +235,15 @@ static const uint32_t missile3_6x6[] = {
 		packword6(0,0,0,1,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,1,0,0,0,0)};
+
+static const uint32_t missile3r_6x6[] = {
+		packword6(0,1,0,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,0,1,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,1,0,0,0,0),
+		packword6(0,0,1,0,0,0),
+		packword6(0,0,0,1,0,0)};
 
 
 // Shape of the entire bunker.

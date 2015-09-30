@@ -5,11 +5,23 @@ static point_t alienOrigins[ALIEN_COUNT];
 
 static bool flapIn = true;
 
+typedef struct {
+	bool kill;
+	uint16_t x;
+	uint16_t y;
+}kill_t;
+
+static kill_t kill_log = {
+		.kill = false
+};
+
+
 static bool _aliensMarchingRight = true;
 
 void initAlienOrigins();
 void initLivesArray();
 void aliens_draw();
+void aliens_kill_cleanup();
 point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
 void alien_shiftOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift);
 
@@ -31,6 +43,8 @@ void aliens_init() {
 void aliens_march_dir(uint16_t dir){
 	uint16_t x, y;
 	int16_t x_shift, y_shift;
+
+	aliens_kill_cleanup();
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
@@ -72,8 +86,11 @@ void aliens_march_dir(uint16_t dir){
 
 			// Tell the screen to shift this element by x_shift, y_shift
 			// uint32_t color = (ALIEN_ALIVE(x,y)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
-			screen_shiftElement(symbol, alienOrigin, alien.size,
-					x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
+			if(ALIEN_ALIVE(x,y)){
+				screen_shiftElement(symbol, alienOrigin, alien.size,
+									x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
+			}
+
 
 			// update internal alien origin
 			alien_shiftOrigin(x, y, x_shift*ALIEN_SCALE, y_shift*ALIEN_SCALE);
@@ -126,7 +143,25 @@ void aliens_march(){
 //-----------------------------------------------------------------------------
 
 void aliens_kill(uint16_t index) {
+	aliens_kill_cleanup();
 	alien_lives_matter[index] = false;
+	uint16_t y = index / (ALIEN_COL_COUNT);
+	uint16_t x = index % (ALIEN_COL_COUNT);
+	xil_printf("index: %d -> x: %d y: %d", index, x, y);
+	point_t origin = alien_getAlienOrigin(x, y);
+	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
+						ALIEN_SCALE, SCREEN_COLOR_WHITE);
+	kill_log.kill = true;
+	kill_log.x = x;
+	kill_log.y = y;
+}
+
+void aliens_kill_cleanup(){
+	if(kill_log.kill){
+		point_t origin = alien_getAlienOrigin(kill_log.x, kill_log.y);
+		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
+								ALIEN_SCALE, SCREEN_BG_COLOR);
+	}
 }
 
 //-----------------------------------------------------------------------------

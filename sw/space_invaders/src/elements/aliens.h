@@ -74,6 +74,11 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 		}
 };
 
+
+static const symbolsize_t explosionsize = {
+		.w = 12,
+		.h = 10
+};
 /****
  * Function prototypes
  */
@@ -85,5 +90,6 @@ void aliens_march();
 
 void aliens_kill(uint16_t index);
 
+point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
 
 #endif /* ALIENS_H_ */

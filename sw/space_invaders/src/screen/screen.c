@@ -165,21 +165,22 @@ uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
 
 void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t size, int16_t dx, int16_t dy, uint16_t scale, uint32_t onColor){
 	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
-
 	int8_t xSign, ySign;
 
 	if (dx < 0) {
 		// shift left, clear right
-		xSign = -1;
+		xSign = SCREEN_SHIFT_LEFT;
 		dx = -1*dx; // abs(dx)
 	} else {
 		// shift right, clear left
-		xSign = 1;
+		xSign = SCREEN_SHIFT_RIGHT;
 	}
 
-	// Aliens never move up, always down (+direction)
-	if (dy > 0) {
-		ySign = 1;
+	if (dy < 0) {
+		ySign = SCREEN_SHIFT_UP;
+		dy = -1*dy; // abs(dy)
+	} else {
+		ySign = SCREEN_SHIFT_DOWN;
 	}
 
 	for (row = 0; row < size.h+dy; row++) {
@@ -192,21 +193,28 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset,origin.y+j+y_offset);
 
 					// Figure out what color to make things
-					if ((xSign == 1 && (col < dx || row < dy))) {
+					if (xSign == SCREEN_SHIFT_RIGHT && col < dx) {
 						color = bgcolor;
 
-					} else if ((xSign == -1 && (col > size.w || row < dy))) {
+					} else if (xSign == SCREEN_SHIFT_LEFT && col > size.w) {
 						color = bgcolor;
 
-					} else if (xSign == 1) {
+					} else if (ySign == SCREEN_SHIFT_DOWN && row < dy) {
+						color = bgcolor;
+
+					} else if (ySign == SCREEN_SHIFT_UP && row > size.h) {
+						color = bgcolor;
+
+					} else if (xSign == SCREEN_SHIFT_LEFT || ySign == SCREEN_SHIFT_UP) {
+						color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
+
+					} else if (xSign == SCREEN_SHIFT_RIGHT) {
 						color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : bgcolor;
 
-					} else if (xSign == -1 || xSign == 0) {
-						color = (symbol[row] & (1 << (size.w - 1 - (col)))) ? onColor : bgcolor;
 					}
 
 #if SCREEN_SHIFT_BOX
-					if (xSign == 1 || xSign == -1) {
+					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_LEFT) {
 						if (col == dx || col == size.w+dx-1 || row == 0 || row == size.h-1) {
 							color = SCREEN_ELEM_OUTLINE;
 						}

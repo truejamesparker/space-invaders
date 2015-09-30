@@ -46,7 +46,6 @@ void application_loop() {
 	tank_init();
 
 	bunkers_draw();
-	tank_draw();
 
 	text_print_game_over();
 
