@@ -45,7 +45,6 @@ void application_loop() {
 	tank_init();
 
 	bunkers_draw();
-	tank_draw();
 
 	// refresh the screen after everything has been initialized
 	screen_refresh();

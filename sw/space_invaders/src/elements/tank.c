@@ -1,41 +1,57 @@
-/*
- * tank.c
- *
- *  Created on: Sep 26, 2015
- *      Author: superman
- */
-
 #include "tank.h"
 
-#define TANK_SCALE SCALE
-#define SHIFT_DISTANCE (TANK_SCALE * TANK_WIDTH) / 2
+static point_t tank_origin = {
+		.x = SCREEN_WIDTH/2 ,
+		.y = (7*SCREEN_HEIGHT)/8
+};
 
-static point_t tank_origin = {.x = SCREEN_WIDTH/2 , .y = (7*SCREEN_HEIGHT)/8};
+void tank_draw();
+void tank_move(int16_t xShift, int16_t yShift);
+void tank_shiftOrigin(int16_t xShift, int16_t yShift);
 
-static missile_t missile;
+//-----------------------------------------------------------------------------
 
 void tank_init(){
-
+	tank_draw();
 }
 
-void tank_draw(){
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
-					TANK_SCALE, TANK_COLOR);
-}
+//-----------------------------------------------------------------------------
 
 void tank_right() {
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
-						TANK_SCALE, SCREEN_BG_COLOR);
-	tank_origin.x += SHIFT_DISTANCE;
+	tank_move(TANK_SHIFT_X, 0);
 }
+
+//-----------------------------------------------------------------------------
 
 void tank_left() {
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size,
-						TANK_SCALE, SCREEN_BG_COLOR);
-	tank_origin.x -= SHIFT_DISTANCE;
+	tank_move(-TANK_SHIFT_X, 0);
 }
 
-//void tank_fire(){
-//	missile_tank_fire();
-//}
+//-----------------------------------------------------------------------------
+// Private Helper Methods
+//-----------------------------------------------------------------------------
+
+void tank_draw() {
+	screen_drawSymbol(tank_15x8, tank_origin, tank_size, TANK_SCALE, TANK_COLOR);
+}
+
+//-----------------------------------------------------------------------------
+
+void tank_move(int16_t xShift, int16_t yShift) {
+	// shift the tank to the right
+	screen_shiftElement(tank_15x8, tank_origin, tank_size, xShift, yShift, TANK_SCALE, TANK_COLOR);
+
+	// update the internal state of the tank's position
+	tank_shiftOrigin(xShift, yShift);
+}
+
+//-----------------------------------------------------------------------------
+
+void tank_shiftOrigin(int16_t xShift, int16_t yShift) {
+	// Change the x and y of the tank's origin
+	tank_origin.x += xShift;
+	tank_origin.y += yShift;
+}
+
+//-----------------------------------------------------------------------------
 
