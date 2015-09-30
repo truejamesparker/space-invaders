@@ -53,7 +53,6 @@ void tank_draw() {
 //-----------------------------------------------------------------------------
 
 void tank_move(int16_t xShift, int16_t yShift) {
-	xil_printf("moving...\n\r");
 	// shift the tank to the right
 	screen_shiftElement(tank_15x8, tank_origin, tank_size, xShift, yShift, TANK_SCALE, TANK_COLOR);
 
@@ -65,8 +64,8 @@ void tank_move(int16_t xShift, int16_t yShift) {
 
 void tank_shiftOrigin(int16_t xShift, int16_t yShift) {
 	// Change the x and y of the tank's origin
-	tank_origin.x += xShift * TANK_SCALE ;
-	tank_origin.y += yShift * TANK_SCALE;
+	tank_origin.x += xShift;
+	tank_origin.y += yShift;
 }
 
 //-----------------------------------------------------------------------------
