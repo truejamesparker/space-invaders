@@ -9,7 +9,7 @@ typedef struct {
 	bool kill;
 	uint16_t x;
 	uint16_t y;
-}kill_t;
+} kill_t;
 
 static kill_t kill_log = {
 		.kill = false
@@ -86,7 +86,6 @@ void aliens_march_dir(uint16_t dir){
 			point_t alienOrigin = alien_getAlienOrigin(x, y);
 
 			// Tell the screen to shift this element by x_shift, y_shift
-			// uint32_t color = (ALIEN_ALIVE(x,y)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
 			if(ALIEN_ALIVE(x,y)){
 				screen_shiftElement(symbol, alienOrigin, alien.size,
 									x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
@@ -144,25 +143,30 @@ void aliens_march(){
 //-----------------------------------------------------------------------------
 
 void aliens_kill(uint16_t index) {
+	// If there are any exploded aliens, clean up the mess
 	aliens_kill_cleanup();
+
+	// kill the alien in memory
 	alien_lives_matter[index] = false;
+
+	// Convert index to (x,y) coordinates
 	uint16_t y = index / (ALIEN_COL_COUNT);
 	uint16_t x = index % (ALIEN_COL_COUNT);
-	xil_printf("index: %d -> x: %d y: %d", index, x, y);
+
+	// Get the origin of the alien we want to kill
 	point_t origin = alien_getAlienOrigin(x, y);
+
+	// draw the explosion in place of that particular alien
 	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
 						ALIEN_SCALE, SCREEN_COLOR_WHITE);
+
+	// set up the global kill log to know which area needs to be
+	// cleaned up on next kill. Updates on the next march happen
+	// automatically because we killed that alien in memory, so
+	// the explosion will be removed.
 	kill_log.kill = true;
 	kill_log.x = x;
 	kill_log.y = y;
-}
-
-void aliens_kill_cleanup(){
-	if(kill_log.kill){
-		point_t origin = alien_getAlienOrigin(kill_log.x, kill_log.y);
-		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
-								ALIEN_SCALE, SCREEN_BG_COLOR);
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -238,6 +242,22 @@ void initAlienOrigins() {
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;
 		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_kill_cleanup(){
+	if(kill_log.kill){
+		// Get the origin of the already exploded alien to clean up.
+		point_t origin = alien_getAlienOrigin(kill_log.x, kill_log.y);
+
+		// Blank the rectangle that the exploded alien was
+		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
+								ALIEN_SCALE, SCREEN_BG_COLOR);
+
+		// reset kill log
+		kill_log.kill = false;
 	}
 }
 
