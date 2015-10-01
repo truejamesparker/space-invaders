@@ -37,7 +37,6 @@ int main() {
 
 // ----------------------------------------------------------------------------
 
-#define MAX_SILLY_TIMER	1000000
 void application_loop() {
 	char input;
 
@@ -45,7 +44,6 @@ void application_loop() {
 	bunkers_init();
 	tank_init();
 	missiles_init();
-
 
 	text_print_game_over();
 	text_print_lives();
