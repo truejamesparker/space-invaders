@@ -102,4 +102,3 @@ local.properties
 *.elfcheck
 Debug
 hw/SDK
-*.bit

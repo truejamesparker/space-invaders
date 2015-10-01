@@ -1730,8 +1730,8 @@ debug_module/debug_module/drck_i|    2.408|    3.840|    3.249|         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 21.00 secs
-Total CPU time to Xst completion: 21.43 secs
+Total REAL time to Xst completion: 20.00 secs
+Total CPU time to Xst completion: 20.49 secs
  
 --> 
 
