@@ -3,21 +3,29 @@
 static bool alien_lives_matter[ALIEN_COUNT] = { false };
 static point_t alienOrigins[ALIEN_COUNT];
 
+// global var indicates which position the aliens
+// are in (flapping up vs flapping in)
 static bool flapIn = false;
 
+// a struct contiaing a bool indicating whether an 
+// alien death has occurred and its coordinates
 typedef struct {
 	bool kill;
 	uint16_t x;
 	uint16_t y;
 } kill_t;
 
+// implementation of the struct above
+// nicknamed "the kill log"
 static kill_t kill_log = {
 		.kill = false
 };
 
-
+// keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
 
+
+// function definintions
 void initAlienOrigins();
 void initLivesArray();
 void aliens_draw();
@@ -40,11 +48,13 @@ void aliens_init() {
 
 //-----------------------------------------------------------------------------
 
+
+// shift aliens in any direction
 void aliens_march_dir(uint16_t dir){
 	uint16_t x, y;
 	int16_t x_shift = 0, y_shift = 0;
 
-	aliens_kill_cleanup();
+	aliens_kill_cleanup(); // erase any explosions (kills) before moving on
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
@@ -199,6 +209,7 @@ void aliens_down() {
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
+// draw all the aliens as they currently appear (only living aliens)
 void aliens_draw() {
 	uint16_t row = 0, col = 0;
 
@@ -222,6 +233,7 @@ void aliens_draw() {
 
 //-----------------------------------------------------------------------------
 
+// initializes the alien lives array
 void initLivesArray() {
 	uint16_t i;
 	for(i=0; i < ALIEN_COUNT; i++){
@@ -231,13 +243,14 @@ void initLivesArray() {
 
 //-----------------------------------------------------------------------------
 
+// initialize the array containing all the origin point of every alien
 void initAlienOrigins() {
 	uint16_t y, x;
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
 		alien_t alien = alien_symbols[y];	// select alien type
 		for(x=0; x<ALIEN_COL_COUNT; x++){
 			point_t origin = {
-					.x = (x * alien.size.w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER,
+					.x = (x * alien.size.w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER, // account for the screen buffer
 					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + charsize.h*ALIEN_SCALE
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;

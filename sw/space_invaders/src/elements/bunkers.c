@@ -19,13 +19,16 @@ void bunkers_init() {
 
 //-----------------------------------------------------------------------------
 
+// overlay given bunker with a random errosion pattern
 void bunkers_damage(uint16_t index){
 	uint16_t r = rand();
 	point_t origin = bunker_origins[index];
 	origin.x += r%(BUNKER_WIDTH*BUNKER_SCALE);
 	origin.y += -r%(BUNKER_SCALE*10);
 	const uint32_t* symbol = bunker_damage_symbols[r%3];
+	// draw the symbol to the sreen
 	screen_drawSymbol(symbol, origin, bunker_damage_size, 3, SCREEN_BG_COLOR);
+	// also update the background frame (used for reference only)
 	screen_bgDrawSymbol(symbol, origin, bunker_damage_size, 3, SCREEN_BG_COLOR);
 }
 
@@ -33,6 +36,7 @@ void bunkers_damage(uint16_t index){
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
+// initialize bunkers
 void bunkers_init_origins(){
 	uint16_t i;
 	for(i=0; i<BUNKER_COUNT; i++){

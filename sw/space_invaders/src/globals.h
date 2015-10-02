@@ -4,25 +4,33 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+// standard point struct
+// x and y coordinates represent
+// the screen pixel coordinates
 typedef struct {
 	uint16_t x;
 	uint16_t y;
 } point_t;
 
+// standard symbol size struct
+// defining both a width and height
 typedef struct {
 	uint16_t w;
 	uint16_t h;
 } symbolsize_t;
 
 
+// These are currenlty unused but may be enabled later
 void setTankPositionGlobal(unsigned short val);
 unsigned short getTankPositionGlobal();
-
 void setTankBulletPosition(point_t val);
 point_t getTankBulletPosition();
 
+
 #define WORD_WIDTH 				32
-#define SCALE					2
+
+// set the scale of the game
+#define SCALE					2 
 
 
 // Packs each horizontal line of the figures into a single n-bit bit word.
@@ -59,6 +67,9 @@ point_t getTankBulletPosition();
 #define packword3(b2,b1,b0) 																								      \
 ((b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
+// Image bitmaps for vaiarious graphical game elements
+
+// Large main screen alien icon
 static const uint32_t topOutAlienSymbol[] = {
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packword32(0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
@@ -78,6 +89,7 @@ static const uint32_t topOutAlienSymbol[] = {
 	packword32(0,0,0,0,1,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0)
 };
 
+// saucer
 static const uint32_t saucer_16x7[] = {
 		packword16(0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0),
 		packword16(0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0),
@@ -87,6 +99,7 @@ static const uint32_t saucer_16x7[] = {
 		packword16(0,0,1,1,1,0,0,1,1,0,0,1,1,1,0,0),
 		packword16(0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0) };
 
+// explosion
 static const uint32_t alien_explosion_12x10[] = {
 		packword12(0,0,0,0,0,0,1,0,0,0,0,0),
 		packword12(0,0,0,1,0,0,1,0,0,0,1,0),
@@ -98,6 +111,9 @@ static const uint32_t alien_explosion_12x10[] = {
 		packword12(0,0,1,0,0,0,0,0,1,0,0,1),
 		packword12(0,1,0,0,0,1,0,0,1,0,0,0),
 		packword12(0,0,0,0,0,1,0,0,0,0,0,0) };
+
+// the following characterize the vaious alien movements
+// (arms up vs arms down)
 
 static const uint32_t alien_top_in_12x8[] = {
 		packword12(0,0,0,0,0,1,1,0,0,0,0,0),
@@ -159,6 +175,7 @@ static const uint32_t alien_bottom_out_12x8[] = {
 		packword12(0,0,1,1,0,1,1,0,1,1,0,0),
 		packword12(1,1,0,0,0,0,0,0,0,0,1,1) };
 
+// tank
 static const uint32_t tank_15x8[] = {
 		packword15(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),
 		packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),
@@ -169,6 +186,7 @@ static const uint32_t tank_15x8[] = {
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1) };
 
+// currenlty unused
 static const uint32_t block_erase_12x8[] = {
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
@@ -179,29 +197,7 @@ static const uint32_t block_erase_12x8[] = {
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
 
-//static const uint32_t missile0_6x6[] = {
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0)};
-//
-//static const uint32_t missile1_6x6[] = {
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,1,1,1,0,0)};
-//
-//static const uint32_t missile2_6x6[] = {
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,0,1,0,0,0),
-//		packword6(0,1,1,1,0,0),
-//		packword6(0,0,1,0,0,0)};
+// missile bitmaps
 
 static const uint32_t missile0_6x6[] = {
 		packword3(0,1,0),
@@ -305,19 +301,6 @@ static const int bunkerDamage3_6x6[] = {
 		packword6(1,1,1,1,1,1),
 		packword6(1,1,1,1,1,1),
 		packword6(1,1,1,1,1,1)
-};
-
-static const uint32_t char_y_8x1[] = {
-		0x82, // #     #
-		0x82, // #     #
-		0x44, //  #   #
-		0x28, //   # #
-		0x10, //    #
-		0x10, //    #
-		0x10, //    #
-		0x10, //    #
-		0x10, //    #
-		0x00, //
 };
 
 #endif
