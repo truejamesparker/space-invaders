@@ -99,16 +99,19 @@ void screen_init() {
 
 //-----------------------------------------------------------------------------
 
+// clear out the screen (fill black)
 void screen_clear() {
 	uint32_t x = 0;
 	uint32_t y = 0;
 
+	// loop through each pixel
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
 
 			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 
+// debugging statement
 #if SCREEN_SHOW_MARGINS
 			if (	x == SCREEN_EDGE_BUFFER ||
 					y == SCREEN_EDGE_BUFFER ||
@@ -124,6 +127,7 @@ void screen_clear() {
 
 //-----------------------------------------------------------------------------
 
+// repark the screen pointer
 void screen_refresh() {
 	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, 0,
 			XAXIVDMA_READ)) {
@@ -133,6 +137,7 @@ void screen_refresh() {
 
 //-----------------------------------------------------------------------------
 
+// draw the given symbol at the given locations with the appropriate scale applied
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
 	// drawing a symbol is the same as shifting it by (0,0)
 	screen_shiftElement(symbol, origin, size, 0, 0, scale, onColor);
@@ -146,25 +151,27 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 		x_offset = 0;
 		for (col = 0; col < size.w; col++) {
 			color = (symbol[row] & (1 << (size.w - 1 - col))) ? onColor : SCREEN_BG_COLOR;
+			// now scale that pixel on the screen
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 					SCREEN_BG_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
 				}
 			}
-			x_offset += scale;
+			x_offset += scale; // account for the scale in x
 		}
-		y_offset += scale;
+		y_offset += scale; // account for the scale in y
 	}
 }
 
 //-----------------------------------------------------------------------------
 
+// return bg color at screen coordinates (x,y)
 uint32_t screen_getBgColor(uint16_t x, uint16_t y){
 	return bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
 
 //-----------------------------------------------------------------------------
-
+// return screen color at screen coordinates (x,y)
 uint32_t screen_getScreenColor(uint16_t x, uint16_t y){
 	return framePointer[SCREEN_XY_TO_INDEX((x),(y))];
 }
@@ -194,10 +201,12 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 		ySign = SCREEN_SHIFT_DOWN;
 	}
 
+	// loop through every pixel in the bitmap
 	for (row = 0; row < size.h+dy; row++) {
 		x_offset = 0;
 		for (col = 0; col < size.w+dx; col++) {
 
+			// now sclae that pixel
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 
@@ -225,7 +234,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					} else {
 						color = SCREEN_COLOR_YELLOW;
 					}
-
+// debug statement
 #if SCREEN_SHIFT_BOX
 					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_RIGHT) {
 						if (col == dx || col == size.w+dx-1 || row == 0 || row == size.h-1) {
@@ -237,6 +246,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 						}
 					}
 #endif
+// debug statment
 #if SCREEN_SHOW_ORIGIN
 					if (xSign == SCREEN_SHIFT_RIGHT) {
 						if (col == dx && row == dy) color = SCREEN_ORIGIN_COLOR;
@@ -248,9 +258,9 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset-xShiftOffset), (origin.y+j+y_offset-yShiftOffset), color);
 				}
 			}
-			x_offset += scale;
+			x_offset += scale; // account for scale in x
 		}
-		y_offset += scale;
+		y_offset += scale; // account for scale in y
 	}
 }
 

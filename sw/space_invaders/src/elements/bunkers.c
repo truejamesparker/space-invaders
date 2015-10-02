@@ -50,6 +50,7 @@ void bunkers_init_origins(){
 
 //-----------------------------------------------------------------------------
 
+// draw all bunkers to the screen
 void bunkers_draw(){
 	uint16_t i;
 	for(i=0; i<BUNKER_COUNT; i++){
