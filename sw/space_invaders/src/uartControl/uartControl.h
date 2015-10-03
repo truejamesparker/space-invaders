@@ -10,6 +10,7 @@
 #include "../elements/bunkers.h"
 #include "../elements/missiles.h"
 
+// ASCII decimal values
 #define ASCII_0	48
 #define ASCII_3 51
 #define ASCII_9 57

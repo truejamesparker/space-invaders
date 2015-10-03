@@ -6,16 +6,20 @@
 #include "../globals.h"
 #include "../screen/screen.h"
 
+// bunker characteristics
 #define BUNKER_COUNT		4
 #define BUNKER_COLOR		0x32CD32
-#define BUNKER_SCALE 		SCALE // define the bunker scale (see globals.h)
+
+// define the bunker scale (see globals.h)
+#define BUNKER_SCALE 		SCALE 
 #define BUNKER_WIDTH		24
 #define BUNKER_HEIGHT		18
 
-#define TANK_MISSILE 0
-#define ALIEN_MISSILE1 1
-#define ALIEN_MISSILE2 2
-#define ALIEN_MISSILE3 3
+// missile array indexes
+#define TANK_MISSILE 		0
+#define ALIEN_MISSILE1 		1
+#define ALIEN_MISSILE2 		2
+#define ALIEN_MISSILE3 		3
 
 
 // struct definintions

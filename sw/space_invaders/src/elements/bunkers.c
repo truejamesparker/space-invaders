@@ -20,6 +20,7 @@ void bunkers_init() {
 //-----------------------------------------------------------------------------
 
 // overlay given bunker with a random errosion pattern
+// todo: make this function accept an point param rather than using rand
 void bunkers_damage(uint16_t index){
 	uint16_t r = rand();
 	point_t origin = bunker_origins[index];

@@ -17,6 +17,7 @@
 #define MISSILE_SCALE		1 // how much should we scale?
 #define MISSILE_SHIFT 		6 // how many pixels shold we move by every time?
 
+
 // color def
 #define MISSILE_COLOR 		SCREEN_COLOR_WHITE
 
