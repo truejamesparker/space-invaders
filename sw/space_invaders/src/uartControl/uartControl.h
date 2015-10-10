@@ -10,6 +10,11 @@
 #include "../elements/bunkers.h"
 #include "../elements/missiles.h"
 
+// Tell the application loop whether or not
+// we are using the UART to control our game
+// (Useful for debugging)
+#define USE_UART_CONTROL	0
+
 // ASCII decimal values
 #define ASCII_0	48
 #define ASCII_3 51
