@@ -13,6 +13,15 @@ NET RS232_Uart_1_sin LOC = "A16"  |  IOSTANDARD = "LVCMOS33";
 NET RS232_Uart_1_sout LOC = "B16"  |  IOSTANDARD = "LVCMOS33";
 NET rzq IOSTANDARD = "LVCMOS18_JEDEC";
 NET zio IOSTANDARD = "LVCMOS18_JEDEC";
+
+#Push Buttons
+#
+#
+NET Push_Buttons_5Bits_TRI_I[0] LOC = "N4"  |  IOSTANDARD = "LVCMOS18";
+NET Push_Buttons_5Bits_TRI_I[1] LOC = "P4"  |  IOSTANDARD = "LVCMOS18";
+NET Push_Buttons_5Bits_TRI_I[2] LOC = "P3"  |  IOSTANDARD = "LVCMOS18";
+NET Push_Buttons_5Bits_TRI_I[3] LOC = "F6"  |  IOSTANDARD = "LVCMOS18";
+NET Push_Buttons_5Bits_TRI_I[4] LOC = "F5"  |  IOSTANDARD = "LVCMOS18";
 #
 # additional constraints
 #

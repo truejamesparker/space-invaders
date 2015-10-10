@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "digilent_quadspi_cntlr_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\parkerbros\space-invaders\hw\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -57,13 +57,13 @@ INFO:Xst - Part-select index evaluated to out of bound value may lead to incorre
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Analyzing Verilog file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_tr8.v" into library d_qspi_axi_v1_00_a
+Analyzing Verilog file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_tr8.v" into library d_qspi_axi_v1_00_a
 Parsing module <spi_tr8>.
-Analyzing Verilog file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" into library d_qspi_axi_v1_00_a
+Analyzing Verilog file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" into library d_qspi_axi_v1_00_a
 Parsing module <spi_fifo_send>.
-Analyzing Verilog file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" into library d_qspi_axi_v1_00_a
+Analyzing Verilog file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" into library d_qspi_axi_v1_00_a
 Parsing module <spi_fifo_receive>.
-Analyzing Verilog file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" into library d_qspi_axi_v1_00_a
+Analyzing Verilog file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" into library d_qspi_axi_v1_00_a
 Parsing module <spi_sf>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/proc_common_pkg.vhd" into library proc_common_v3_00_a
 Parsing package <proc_common_pkg>.
@@ -86,16 +86,16 @@ Parsing architecture <IMP> of entity <address_decoder>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/slave_attachment.vhd" into library axi_lite_ipif_v1_01_a
 Parsing entity <slave_attachment>.
 Parsing architecture <imp> of entity <slave_attachment>.
-Parsing VHDL file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/user_logic.vhd" into library d_qspi_axi_v1_00_a
+Parsing VHDL file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/user_logic.vhd" into library d_qspi_axi_v1_00_a
 Parsing entity <user_logic>.
 Parsing architecture <IMP> of entity <user_logic>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_lite_ipif_v1_01_a/hdl/vhdl/axi_lite_ipif.vhd" into library axi_lite_ipif_v1_01_a
 Parsing entity <axi_lite_ipif>.
 Parsing architecture <imp> of entity <axi_lite_ipif>.
-Parsing VHDL file "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" into library d_qspi_axi_v1_00_a
+Parsing VHDL file "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" into library d_qspi_axi_v1_00_a
 Parsing entity <d_qspi_axi>.
 Parsing architecture <IMP> of entity <d_qspi_axi>.
-Parsing VHDL file "C:\parkerbros\space-invaders\hw\hdl\digilent_quadspi_cntlr_wrapper.vhd" into library work
+Parsing VHDL file "C:\Users\joshuas2\Desktop\427\hdl\digilent_quadspi_cntlr_wrapper.vhd" into library work
 Parsing entity <digilent_quadspi_cntlr_wrapper>.
 Parsing architecture <STRUCTURE> of entity <digilent_quadspi_cntlr_wrapper>.
 
@@ -138,21 +138,21 @@ Going to verilog side to elaborate module spi_sf
 Elaborating module <spi_sf(idle=0,send_cmd=1,send_addr_0=3,send_addr_1=2,send_addr_2=6,send_dummy=7,prepare_read_data=15,read_data=4,prepare_send_data=14,send_data=13)>.
 
 Elaborating module <spi_tr8>.
-WARNING:HDLCompiler:189 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 465: Size mismatch in connection of port <dq_t_delayed>. Formal port size is 4-bit while actual signal size is 1-bit.
+WARNING:HDLCompiler:189 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 465: Size mismatch in connection of port <dq_t_delayed>. Formal port size is 4-bit while actual signal size is 1-bit.
 
 Elaborating module <spi_fifo_send>.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 54: Result of 10-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 99: Result of 10-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 101: Result of 32-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:1127 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 472: Assignment to send_buffer_almost_empty ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 473: Assignment to send_buffer_almost_full ignored, since the identifier is never used
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 54: Result of 10-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 99: Result of 10-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v" Line 101: Result of 32-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:1127 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 472: Assignment to send_buffer_almost_empty ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 473: Assignment to send_buffer_almost_full ignored, since the identifier is never used
 
 Elaborating module <spi_fifo_receive>.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 54: Result of 10-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 99: Result of 10-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:413 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 101: Result of 32-bit expression is truncated to fit in 9-bit target.
-WARNING:HDLCompiler:1127 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 481: Assignment to receive_buffer_almost_empty ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 482: Assignment to receive_buffer_almost_full ignored, since the identifier is never used
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 54: Result of 10-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 99: Result of 10-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:413 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v" Line 101: Result of 32-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:1127 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 481: Assignment to receive_buffer_almost_empty ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" Line 482: Assignment to receive_buffer_almost_full ignored, since the identifier is never used
 Back to vhdl to continue elaboration
 
 =========================================================================
@@ -160,13 +160,13 @@ Back to vhdl to continue elaboration
 =========================================================================
 
 Synthesizing Unit <digilent_quadspi_cntlr_wrapper>.
-    Related source file is "c:/parkerbros/space-invaders/hw/hdl/digilent_quadspi_cntlr_wrapper.vhd".
+    Related source file is "c:/users/joshuas2/desktop/427/hdl/digilent_quadspi_cntlr_wrapper.vhd".
     Summary:
 	no macro.
 Unit <digilent_quadspi_cntlr_wrapper> synthesized.
 
 Synthesizing Unit <d_qspi_axi>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd".
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
         C_S_AXI_DATA_WIDTH = 32
@@ -185,9 +185,9 @@ WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/p
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
     Set property "MAX_FANOUT = 10000" for signal <S_AXI_ARESETN>.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_Addr> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_CS> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_RNW> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_Addr> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_CS> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/d_qspi_axi.vhd" line 233: Output port <Bus2IP_RNW> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
     Summary:
 	no macro.
 Unit <d_qspi_axi> synthesized.
@@ -365,7 +365,7 @@ Synthesizing Unit <pselect_f_9>.
 Unit <pselect_f_9> synthesized.
 
 Synthesizing Unit <user_logic>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/user_logic.vhd".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/vhdl/user_logic.vhd".
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
         C_NUM_REG = 9
@@ -387,7 +387,7 @@ WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/p
 Unit <user_logic> synthesized.
 
 Synthesizing Unit <spi_sf>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v".
         idle = 0
         send_cmd = 1
         send_addr_0 = 3
@@ -398,10 +398,10 @@ Synthesizing Unit <spi_sf>.
         read_data = 4
         prepare_send_data = 14
         send_data = 13
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 470: Output port <almost_empty> of the instance <spi2> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 470: Output port <almost_full> of the instance <spi2> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 479: Output port <almost_empty> of the instance <spi3> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 479: Output port <almost_full> of the instance <spi3> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 470: Output port <almost_empty> of the instance <spi2> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 470: Output port <almost_full> of the instance <spi2> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 479: Output port <almost_empty> of the instance <spi3> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_sf.v" line 479: Output port <almost_full> of the instance <spi3> is unconnected or connected to loadless signal.
     Found 4-bit register for signal <state>.
     Found 2-bit register for signal <mode>.
     Found 1-bit register for signal <start>.
@@ -449,7 +449,7 @@ INFO:Xst:3210 - "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digi
 Unit <spi_sf> synthesized.
 
 Synthesizing Unit <spi_tr8>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_tr8.v".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_tr8.v".
         idle = 3'b000
         idle_wait = 3'b001
         send_dummy = 3'b011
@@ -577,7 +577,7 @@ Synthesizing Unit <spi_tr8>.
 Unit <spi_tr8> synthesized.
 
 Synthesizing Unit <spi_fifo_send>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_send.v".
 WARNING:Xst:3035 - Index value(s) does not match array range for signal <mem>, simulation mismatch.
     Found 261x8-bit dual-port RAM <Mram_mem> for signal <mem>.
     Found 9-bit register for signal <wr_ptr>.
@@ -601,7 +601,7 @@ WARNING:Xst:3035 - Index value(s) does not match array range for signal <mem>, s
 Unit <spi_fifo_send> synthesized.
 
 Synthesizing Unit <spi_fifo_receive>.
-    Related source file is "c:/ee427/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v".
+    Related source file is "c:/users/joshuas2/downloads/atlys_bsb_support_v_3_4/atlys_bsb_support_v_3_4/atlys_axi_bsb_support/lib/digilent/pcores/d_qspi_axi_v1_00_a/hdl/verilog/spi_fifo_receive.v".
 WARNING:Xst:3035 - Index value(s) does not match array range for signal <mem>, simulation mismatch.
     Found 261x8-bit dual-port RAM <Mram_mem> for signal <mem>.
     Found 9-bit register for signal <wr_ptr>.
@@ -1134,12 +1134,12 @@ S_AXI_ACLK     |    6.790|    3.548|    3.049|         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 10.00 secs
-Total CPU time to Xst completion: 9.70 secs
+Total REAL time to Xst completion: 15.00 secs
+Total CPU time to Xst completion: 15.04 secs
  
 --> 
 
-Total memory usage is 280992 kilobytes
+Total memory usage is 279040 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   63 (   0 filtered)

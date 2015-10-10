@@ -60,6 +60,7 @@
  PORT axi_ac97_0_Sync_pin = axi_ac97_0_Sync, DIR = O
  PORT axi_ac97_0_SData_Out_pin = axi_ac97_0_SData_Out, DIR = O
  PORT axi_ac97_0_AC97Reset_n_pin = axi_ac97_0_AC97Reset_n, DIR = O
+ PORT Push_Buttons_5Bits_TRI_I = Push_Buttons_5Bits_TRI_I, DIR = I, VEC = [0:4]
 
 
 BEGIN proc_sys_reset
@@ -139,6 +140,7 @@ BEGIN microblaze
  BUS_INTERFACE DEBUG = microblaze_0_debug
  PORT MB_RESET = proc_sys_reset_0_MB_Reset
  PORT CLK = clk_100_0000MHzPLL0
+ PORT INTERRUPT = axi_intc_0_Irq
 END
 
 BEGIN mdm
@@ -194,6 +196,21 @@ BEGIN axi_vdma
  PORT m_axis_mm2s_aclk = S_AXIS_MM2S_ACLK_int
  PORT mm2s_buffer_almost_empty = axi_vdma_0_mm2s_buffer_almost_empty
  PORT mm2s_fsync_out = axi_vdma_0_mm2s_fsync_out
+END
+
+BEGIN axi_gpio
+ PARAMETER INSTANCE = Push_Buttons_5Bits
+ PARAMETER HW_VER = 1.01.b
+ PARAMETER C_GPIO_WIDTH = 5
+ PARAMETER C_ALL_INPUTS = 1
+ PARAMETER C_INTERRUPT_PRESENT = 1
+ PARAMETER C_IS_DUAL = 0
+ PARAMETER C_BASEADDR = 0x40000000
+ PARAMETER C_HIGHADDR = 0x4000ffff
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+ PORT GPIO_IO_I = Push_Buttons_5Bits_TRI_I
+ PORT IP2INTC_Irpt = Push_Buttons_5Bits_IP2INTC_Irpt
 END
 
 BEGIN axi_hdmi
@@ -342,7 +359,8 @@ BEGIN axi_intc
  PARAMETER C_HIGHADDR = 0x4120ffff
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
- PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt
+ PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt & Push_Buttons_5Bits_IP2INTC_Irpt & fit_timer_0_Interrupt
+ PORT Irq = axi_intc_0_Irq
 END
 
 BEGIN axi_timer
@@ -353,5 +371,13 @@ BEGIN axi_timer
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
  PORT Interrupt = axi_timer_0_Interrupt
+END
+
+BEGIN fit_timer
+ PARAMETER INSTANCE = fit_timer_0
+ PARAMETER HW_VER = 1.01.b
+ PARAMETER C_NO_CLOCKS = 1000000
+ PORT Interrupt = fit_timer_0_Interrupt
+ PORT Clk = clk_100_0000MHzPLL0
 END
 
