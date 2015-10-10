@@ -66,7 +66,7 @@ void missiles_tank_fire(){
 // initiate an alien missile
 void missiles_alien_fire(){
 	int i;
-	for(i=1; i<4; i++){
+	for(i=1; i<MISSILE_COUNT; i++){
 		if (missile_array[i].active==false){ // find a missile that is not already active
 			// set the initial position of the missile to the center
 			// of a random alien in the bottorm row
@@ -103,5 +103,26 @@ void missiles_set_alien_origin(uint16_t index) {
 	alien_point.x += (ALIEN_WIDTH * ALIEN_SCALE)/2;
 	missile_array[index].origin = alien_point;
 }
+
+
+point_t missiles_get_tip(int index){
+
+}
+
+bool missiles_check_impact(){
+	int i;
+	missile_t* missile;
+	for(i=0; i<MISSILE_COUNT; i++){
+		missile = &missile_array[i];
+		if(missile->active){
+			point_t missile_tip = missiles_get_tip(i);
+			int8_t inc = (missile->up) ? -1 : 1;
+			missile_tip.y += inc;
+//			if()
+		}
+	}
+}
+
+
 
 

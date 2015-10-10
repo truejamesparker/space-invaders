@@ -46,7 +46,7 @@ void application_loop() {
 	missiles_init();
 
 	text_print_game_over();
-	text_print_lives();
+//	text_print_lives();
 
 	// refresh the screen after everything has been initialized
 	screen_refresh();

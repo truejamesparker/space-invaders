@@ -8,18 +8,31 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-
+#include "bitmapDB.h"
 #include "../globals.h"
 #include "../screen/screen.h"
-#define TEXT_SCALE 2
+#define TEXT_SCALE 3
 
 void text_print_game_over();
 void text_print_lives();
 
-static const symbolsize_t charsize = {
-		.w = 8,
-		.h = 9
-};
+
+
+//////////////////////////////////////////////////////
+
+
+// Font data for Gill Sans MT 9pt
+extern const int bitmaps[];
+extern const FONT_INFO fontInfo;
+extern const FONT_CHAR_INFO descriptors[];
+
+
+////////////////////////////////////////////////////
+
+//static const symbolsize_t charsize = {
+//		.w = 8,
+//		.h = 9
+//};
 
 
 static const int COLON[] = { // @100 ':' (1 pixels wide)
