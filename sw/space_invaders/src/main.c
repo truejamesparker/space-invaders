@@ -37,7 +37,6 @@ int main() {
 
 	// text
 	text_print_game_over();
-	text_print_lives();
 
 	/**********************************
 	 * Interrupt Registration Section

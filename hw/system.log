@@ -9193,36 +9193,13 @@ Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 
 ********************************************************************************
-At Local date and time: Sat Oct 10 13:49:32 2015
+At Local date and time: Sat Oct 10 17:05:36 2015
  make -f system.make exporttosdk started...
 make: Nothing to be done for `exporttosdk'.
 Done!
 
 ********************************************************************************
-At Local date and time: Sat Oct 10 13:49:32 2015
- xsdk.exe -hwspec C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\system.xml started...
-Xilinx Software Development Kit
-Xilinx EDK 13.4 Build EDK_O.87xd
-Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
-Done!
-Writing filter settings....
-Done writing filter settings to:
-	C:\parkerbros\space-invaders\hw\etc\system.filters
-Done writing Tab View settings to:
-	C:\parkerbros\space-invaders\hw\etc\system.gui
-Xilinx Platform Studio (XPS)
-Xilinx EDK 13.4 Build EDK_O.87xd
-Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
-
-
-********************************************************************************
-At Local date and time: Sat Oct 10 13:50:30 2015
- make -f system.make exporttosdk started...
-make: Nothing to be done for `exporttosdk'.
-Done!
-
-********************************************************************************
-At Local date and time: Sat Oct 10 13:50:30 2015
+At Local date and time: Sat Oct 10 17:05:36 2015
  xsdk.exe -hwspec C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\system.xml started...
 Xilinx Software Development Kit
 Xilinx EDK 13.4 Build EDK_O.87xd
