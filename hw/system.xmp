@@ -4,6 +4,22 @@ VerMgmt: 13.4
 IntStyle: default
 Flow: ise
 ModuleSearchPath: C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/axi_hdmi_v1_00_a/../../../
+ModuleSearchPath: C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/Digilent/pcores/axi_hdmi_v1_00_a/../../../
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
 ModuleSearchPath: C:/Users/joshuas2/Downloads/Atlys_BSB_Support_v_3_4/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
 MHS File: system.mhs
 Architecture: spartan6
