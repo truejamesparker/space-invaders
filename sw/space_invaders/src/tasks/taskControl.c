@@ -24,6 +24,12 @@ void taskControl_init() {
 	tasks[sm].elapsedTime = tasks[sm].period;
 	tasks[sm].TickFn = &alienBlockSM_tick;
 
+	// Missile SM (for updating the missiles)
+	++sm;
+	tasks[sm].period = SM_PERIOD_MISSILE_MS;
+	tasks[sm].elapsedTime = tasks[sm].period;
+	tasks[sm].TickFn = &missileSM_tick;
+
 }
 
 // ----------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #define MISSILE_WIDTH 		3
 #define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
-#define MISSILE_SHIFT 		6 // how many pixels shold we move by every time?
+#define MISSILE_SHIFT 		8 // how many pixels shold we move by every time?
 
 
 // color def
