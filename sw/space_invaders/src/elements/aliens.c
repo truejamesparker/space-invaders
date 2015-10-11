@@ -7,7 +7,7 @@ static point_t alienOrigins[ALIEN_COUNT];
 // are in (flapping up vs flapping in)
 static bool flapIn = false;
 
-// a struct contiaing a bool indicating whether an 
+// a struct containing a bool indicating whether an
 // alien death has occurred and its coordinates
 typedef struct {
 	bool kill;
@@ -25,7 +25,7 @@ static kill_t kill_log = {
 static bool _aliensMarchingRight = true;
 
 
-// function definintions
+// function definitions
 void initAlienOrigins();
 void initLivesArray();
 void aliens_draw();

@@ -1,5 +1,7 @@
 #include "alienBlockSM.h"
 
+static bulletsInAir;
+
 // ----------------------------------------------------------------------------
 
 void alienBlockSM_init() {

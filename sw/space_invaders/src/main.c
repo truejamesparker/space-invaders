@@ -5,7 +5,7 @@
 #include "elements/aliens.h"
 #include "elements/bunkers.h"
 #include "elements/tank.h"
-#include "elements/text.h"
+#include "elements/gameScreen.h"
 #include "uartControl/uartControl.h"
 #include "screen/screen.h"
 #include "interrupts.h"
@@ -30,6 +30,7 @@ int main() {
 	taskControl_init();
 
 	// elements
+	gameScreen_init();
 	aliens_init();
 	bunkers_init();
 	tank_init();

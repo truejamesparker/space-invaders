@@ -28,12 +28,14 @@ void missiles_move(){
 	wobble = !wobble;
 	for(i=0; i<MISSILE_COUNT; i++){
 		missile_t missile = missile_array[i];
-		if (missile.active){
+		if (missile.active) {
 			int8_t dir = missile.up ? -1 : 1;
 			const uint32_t* symbol = wobble ? missile.symbol_r : missile.symbol_l;
+
 			// shift it on the scrren
 			screen_shiftElement(symbol, missile.origin, missile.size,
 								0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
+
 			// no update the origin in the missile struct
 			missiles_shift_origin(i);
 		}
@@ -67,14 +69,18 @@ void missiles_tank_fire(){
 void missiles_alien_fire(){
 	int i;
 	for(i=1; i<MISSILE_COUNT; i++){
-		if (missile_array[i].active==false){ // find a missile that is not already active
+		// find a missile that is not already active
+		if (!missile_array[i].active) {
 			// set the initial position of the missile to the center
-			// of a random alien in the bottorm row
+			// of a random alien in the bottom row
 			missiles_set_alien_origin(i);
+
 			// draw the symbol to the screen
 			screen_drawSymbol(missile_array[i].symbol_r, missile_array[i].origin,
 					missile_array[i].size, MISSILE_SCALE, MISSILE_COLOR);
+
 			missile_array[i].active = true; // set missile status to active
+
 			break;
 		}
 	}
@@ -104,6 +110,7 @@ void missiles_set_alien_origin(uint16_t index) {
 	missile_array[index].origin = alien_point;
 }
 
+//-----------------------------------------------------------------------------
 
 point_t missiles_get_tip(int index){
 	missile_t* missile = &missile_array[index];
@@ -112,6 +119,8 @@ point_t missiles_get_tip(int index){
 	origin.y += (missile->up) ? 0 : MISSILE_HEIGHT*MISSILE_SCALE;
 	return origin;
 }
+
+//-----------------------------------------------------------------------------
 
 void missiles_check_impact(){
 	int i;
@@ -128,6 +137,8 @@ void missiles_check_impact(){
 		}
 	}
 }
+
+//-----------------------------------------------------------------------------
 
 void missiles_tank_check_impact(){
 	missile_t* missile = &missile_array[TANK_MISSILE];

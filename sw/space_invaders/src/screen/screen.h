@@ -21,6 +21,8 @@
 #define SCREEN_COLOR_BROWN  0x00F4A460
 #define SCREEN_COLOR_YELLOW 0x00FFFF00
 #define SCREEN_COLOR_WHITE 	0x00FFFFFF
+
+
 #define SCREEN_BG_COLOR				SCREEN_COLOR_BLACK
 #define SCREEN_ELEM_OUTLINE 		SCREEN_COLOR_RED
 #define SCREEN_ELEM_DIFF_OUTLINE	SCREEN_COLOR_GREEN
@@ -36,13 +38,13 @@
 #define SCREEN_SHIFT_DOWN	 1
 
 // screen buffer width
-#define SCREEN_EDGE_BUFFER 	20
+#define SCREEN_EDGE_BUFFER 	15
 
 // starting address of main dispaly frame
 #define FRAME_BUFFER_0_ADDR 0xC1000000
 
 // For debugging positions, sizes and shifts
-#define SCREEN_SHOW_MARGINS 0
+#define SCREEN_SHOW_MARGINS 1
 #define SCREEN_SHIFT_BOX	0
 #define SCREEN_SHOW_ORIGIN	0
 

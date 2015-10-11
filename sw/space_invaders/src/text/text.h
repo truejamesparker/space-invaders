@@ -1,10 +1,3 @@
-/*
- * text.h
- *
- *  Created on: Sep 29, 2015
- *      Author: superman
- */
-
 #ifndef TEXT_H_
 #define TEXT_H_
 

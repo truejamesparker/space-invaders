@@ -1,10 +1,3 @@
-/*
- * text.c
- *
- *  Created on: Sep 29, 2015
- *      Author: superman
- */
-
 #include "text.h"
 
 //static int string_game_over[9] = {G, A, M, E, SPACE, O, V, E, R};
