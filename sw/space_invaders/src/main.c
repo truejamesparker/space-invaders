@@ -41,7 +41,7 @@ int main() {
 	/**********************************
 	 * Interrupt Registration Section
 	 *********************************/
-#if !(USE_UART_CONTROL)
+#if !(USE_UART_CONTROL) || FORCE_INTERRUPT_CONTROL
 	// Register the task controller to run every time FIT expires
 	interrupts_register_handler(INTS_TIMER, taskControl_tick);
 #endif

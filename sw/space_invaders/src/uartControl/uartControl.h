@@ -13,7 +13,8 @@
 // Tell the application loop whether or not
 // we are using the UART to control our game
 // (Useful for debugging)
-#define USE_UART_CONTROL	0
+#define USE_UART_CONTROL		1
+#define FORCE_INTERRUPT_CONTROL 1
 
 // ASCII decimal values
 #define ASCII_0	48
