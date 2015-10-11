@@ -206,6 +206,13 @@ void aliens_down() {
 }
 
 //-----------------------------------------------------------------------------
+
+
+bool alien_isAlive(uint16_t x, uint16_t y) {
+	return ALIEN_ALIVE(x,y);
+}
+
+//-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
@@ -251,7 +258,7 @@ void initAlienOrigins() {
 		for(x=0; x<ALIEN_COL_COUNT; x++){
 			point_t origin = {
 					.x = (x * alien.size.w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER, // account for the screen buffer
-					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + 8*ALIEN_SCALE
+					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + 3*ALIEN_HEIGHT*ALIEN_SCALE
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;
 		}
@@ -279,6 +286,10 @@ void aliens_kill_cleanup(){
 point_t alien_getAlienOrigin(uint16_t x, uint16_t y) {
 	point_t origin = alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
 	return origin;
+}
+
+bool* alien_getAlienLives(){
+	return alien_lives_matter;
 }
 
 //-----------------------------------------------------------------------------

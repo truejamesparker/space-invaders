@@ -9,6 +9,7 @@
 #include "../screen/screen.h"
 #include "aliens.h"
 #include "tank.h"
+#include "bunkers.h"
 
 // missile size info
 #define MISSILE_HEIGHT 		6
@@ -16,7 +17,6 @@
 #define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
 #define MISSILE_SHIFT 		8 // how many pixels shold we move by every time?
-
 
 // color def
 #define MISSILE_COLOR 		SCREEN_COLOR_WHITE

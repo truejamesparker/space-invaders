@@ -103,6 +103,11 @@ void aliens_kill(uint16_t index);
 // coorinates within the alien block (i.e. row 1, col 2)
 point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
 
+bool alien_isAlive(uint16_t x, uint16_t y);
+
+// return pointer to alien_lives_matter array
+//bool* alien_getAlienLives();
+
 // move alien block
 void aliens_left();
 void aliens_right();

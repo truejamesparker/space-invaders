@@ -14,7 +14,7 @@
 #define TEXT_SCALE 3
 
 void text_print_game_over();
-void text_print_lives();
+void text_print_init();
 
 
 
@@ -22,7 +22,7 @@ void text_print_lives();
 
 
 // Font data for Gill Sans MT 9pt
-extern const int bitmaps[];
+extern const uint32_t bitmaps[];
 extern const FONT_INFO fontInfo;
 extern const FONT_CHAR_INFO descriptors[];
 
@@ -35,7 +35,7 @@ extern const FONT_CHAR_INFO descriptors[];
 //};
 
 
-static const int COLON[] = { // @100 ':' (1 pixels wide)
+static const uint32_t COLON[] = { // @100 ':' (1 pixels wide)
 		0x00, //
 		0x00, //
 		0x00, //
@@ -49,7 +49,7 @@ static const int COLON[] = { // @100 ':' (1 pixels wide)
 };
 
 
-static const int ZERO[] = { // @0 '0' (5 pixels wide)
+static const uint32_t ZERO[] = { // @0 '0' (5 pixels wide)
 	0x70, //  ###
 	0x88, // #   #
 	0x88, // #   #
@@ -63,7 +63,7 @@ static const int ZERO[] = { // @0 '0' (5 pixels wide)
 };
 
 
-static const int ONE[] = {	// @10 '1' (3 pixels wide)
+static const uint32_t ONE[] = {	// @10 '1' (3 pixels wide)
 	0x20, //   #
 	0xE0, // ###
 	0x20, //   #
@@ -77,7 +77,7 @@ static const int ONE[] = {	// @10 '1' (3 pixels wide)
 };
 
 
-static const int TWO[] = {	// @20 '2' (5 pixels wide)
+static const uint32_t TWO[] = {	// @20 '2' (5 pixels wide)
 	0x70, //  ###
 	0x88, // #   #
 	0x08, //     #
@@ -91,7 +91,7 @@ static const int TWO[] = {	// @20 '2' (5 pixels wide)
 };
 
 
-static const int THREE[] = {	// @30 '3' (5 pixels wide)
+static const uint32_t THREE[] = {	// @30 '3' (5 pixels wide)
 	0x70, //  ###
 	0x88, // #   #
 	0x08, //     #
@@ -105,7 +105,7 @@ static const int THREE[] = {	// @30 '3' (5 pixels wide)
 };
 
 
-static const int FOUR[] = {	// @40 '4' (5 pixels wide)
+static const uint32_t FOUR[] = {	// @40 '4' (5 pixels wide)
 	0x10, //    #
 	0x30, //   ##
 	0x30, //   ##
@@ -119,7 +119,7 @@ static const int FOUR[] = {	// @40 '4' (5 pixels wide)
 };
 
 
-static const int FIVE[] = {	// @50 '5' (5 pixels wide)
+static const uint32_t FIVE[] = {	// @50 '5' (5 pixels wide)
 	0xF8, // #####
 	0x80, // #
 	0x80, // #
@@ -175,7 +175,7 @@ static const int EIGHT[] = {	// @80 '8' (5 pixels wide)
 };
 
 
-static const int NINE[] = {	// @90 '9' (5 pixels wide)
+static const uint32_t NINE[] = {	// @90 '9' (5 pixels wide)
 	0x70, //  ###
 	0x88, // #   #
 	0x88, // #   #
@@ -189,7 +189,7 @@ static const int NINE[] = {	// @90 '9' (5 pixels wide)
 };
 
 
-static const int A[] = {	// @100 'A' (7 pixels wide)
+static const uint32_t A[] = {	// @100 'A' (7 pixels wide)
 	0x10, //    #
 	0x10, //    #
 	0x28, //   # #
@@ -203,7 +203,7 @@ static const int A[] = {	// @100 'A' (7 pixels wide)
 };
 
 
-static const int B[] = {	// @110 'B' (5 pixels wide)
+static const uint32_t B[] = {	// @110 'B' (5 pixels wide)
 	0xF0, // ####
 	0x88, // #   #
 	0x88, // #   #
@@ -217,7 +217,7 @@ static const int B[] = {	// @110 'B' (5 pixels wide)
 };
 
 
-static const int C[] = {	// @120 'C' (6 pixels wide)
+static const uint32_t C[] = {	// @120 'C' (6 pixels wide)
 	0x78, //  ####
 	0x84, // #    #
 	0x80, // #
@@ -231,7 +231,7 @@ static const int C[] = {	// @120 'C' (6 pixels wide)
 };
 
 
-static const int D[] = {	// @130 'D' (6 pixels wide)
+static const uint32_t D[] = {	// @130 'D' (6 pixels wide)
 	0xF0, // ####
 	0x88, // #   #
 	0x84, // #    #
@@ -245,7 +245,7 @@ static const int D[] = {	// @130 'D' (6 pixels wide)
 };
 
 
-static const int E[] = {	// @140 'E' (5 pixels wide)
+static const uint32_t E[] = {	// @140 'E' (5 pixels wide)
 	0xF8, // #####
 	0x80, // #
 	0x80, // #
@@ -259,7 +259,7 @@ static const int E[] = {	// @140 'E' (5 pixels wide)
 };
 
 
-static const int F[] = {	// @150 'F' (5 pixels wide)
+static const uint32_t F[] = {	// @150 'F' (5 pixels wide)
 	0xF8, // #####
 	0x80, // #
 	0x80, // #
@@ -273,7 +273,7 @@ static const int F[] = {	// @150 'F' (5 pixels wide)
 };
 
 
-static const int G[] = {	// @160 'G' (6 pixels wide)
+static const uint32_t G[] = {	// @160 'G' (6 pixels wide)
 	0x78, //  ####
 	0x84, // #    #
 	0x80, // #
@@ -287,7 +287,7 @@ static const int G[] = {	// @160 'G' (6 pixels wide)
 };
 
 
-static const int H[] = {	// @170 'H' (6 pixels wide)
+static const uint32_t H[] = {	// @170 'H' (6 pixels wide)
 	0x84, // #    #
 	0x84, // #    #
 	0x84, // #    #
@@ -301,7 +301,7 @@ static const int H[] = {	// @170 'H' (6 pixels wide)
 };
 
 
-static const int I[] = {	// @180 'I' (1 pixels wide)
+static const uint32_t I[] = {	// @180 'I' (1 pixels wide)
 	0x80, // #
 	0x80, // #
 	0x80, // #
@@ -315,7 +315,7 @@ static const int I[] = {	// @180 'I' (1 pixels wide)
 };
 
 
-static const int J[] = {	// @190 'J' (4 pixels wide)
+static const uint32_t J[] = {	// @190 'J' (4 pixels wide)
 	0x10, //    #
 	0x10, //    #
 	0x10, //    #
@@ -329,7 +329,7 @@ static const int J[] = {	// @190 'J' (4 pixels wide)
 };
 
 
-static const int K[] = {	// @200 'K' (6 pixels wide)
+static const uint32_t K[] = {	// @200 'K' (6 pixels wide)
 	0x88, // #   #
 	0x90, // #  #
 	0xA0, // # #
@@ -343,7 +343,7 @@ static const int K[] = {	// @200 'K' (6 pixels wide)
 };
 
 
-static const int L[] = {	// @210 'L' (5 pixels wide)
+static const uint32_t L[] = {	// @210 'L' (5 pixels wide)
 	0x80, // #
 	0x80, // #
 	0x80, // #
@@ -357,7 +357,7 @@ static const int L[] = {	// @210 'L' (5 pixels wide)
 };
 
 
-static const int M[] = {	// @220 'M' (7 pixels wide)
+static const uint32_t M[] = {	// @220 'M' (7 pixels wide)
 	0x82, // #     #
 	0x82, // #     #
 	0xC6, // ##   ##
@@ -371,7 +371,7 @@ static const int M[] = {	// @220 'M' (7 pixels wide)
 };
 
 
-static const int N[] = {	// @230 'N' (6 pixels wide)
+static const uint32_t N[] = {	// @230 'N' (6 pixels wide)
 	0x84, // #    #
 	0xC4, // ##   #
 	0xC4, // ##   #
@@ -385,7 +385,7 @@ static const int N[] = {	// @230 'N' (6 pixels wide)
 };
 
 
-static const int O[] = {	// @240 'O' (6 pixels wide)
+static const uint32_t O[] = {	// @240 'O' (6 pixels wide)
 	0x78, //  ####
 	0x84, // #    #
 	0x84, // #    #
@@ -399,7 +399,7 @@ static const int O[] = {	// @240 'O' (6 pixels wide)
 };
 
 
-static const int P[] = {	// @250 'P' (6 pixels wide)
+static const uint32_t P[] = {	// @250 'P' (6 pixels wide)
 	0xF8, // #####
 	0x84, // #    #
 	0x84, // #    #
@@ -413,7 +413,7 @@ static const int P[] = {	// @250 'P' (6 pixels wide)
 };
 
 
-static const int Q[] = {	// @260 'Q' (6 pixels wide)
+static const uint32_t Q[] = {	// @260 'Q' (6 pixels wide)
 	0x78, //  ####
 	0x84, // #    #
 	0x84, // #    #
@@ -427,7 +427,7 @@ static const int Q[] = {	// @260 'Q' (6 pixels wide)
 };
 
 
-static const int R[] = {	// @270 'R' (6 pixels wide)
+static const uint32_t R[] = {	// @270 'R' (6 pixels wide)
 	0xF8, // #####
 	0x84, // #    #
 	0x84, // #    #
@@ -441,7 +441,7 @@ static const int R[] = {	// @270 'R' (6 pixels wide)
 };
 
 
-static const int S[] = {	// @280 'S' (5 pixels wide)
+static const uint32_t S[] = {	// @280 'S' (5 pixels wide)
 	0x70, //  ###
 	0x88, // #   #
 	0x80, // #
@@ -455,7 +455,7 @@ static const int S[] = {	// @280 'S' (5 pixels wide)
 };
 
 
-static const int T[] = {	// @290 'T' (5 pixels wide)
+static const uint32_t T[] = {	// @290 'T' (5 pixels wide)
 	0xF8, // #####
 	0x20, //   #
 	0x20, //   #
@@ -469,7 +469,7 @@ static const int T[] = {	// @290 'T' (5 pixels wide)
 };
 
 
-static const int U[] = {	// @300 'U' (6 pixels wide)
+static const uint32_t U[] = {	// @300 'U' (6 pixels wide)
 	0x84, // #    #
 	0x84, // #    #
 	0x84, // #    #
@@ -483,7 +483,7 @@ static const int U[] = {	// @300 'U' (6 pixels wide)
 };
 
 
-static const int V[] = {	// @310 'V' (7 pixels wide)
+static const uint32_t V[] = {	// @310 'V' (7 pixels wide)
 	0x82, // #     #
 	0x82, // #     #
 	0x44, //  #   #
@@ -497,7 +497,7 @@ static const int V[] = {	// @310 'V' (7 pixels wide)
 };
 
 
-static const int W[] = {	// @320 'W' (11 pixels wide)
+static const uint32_t W[] = {	// @320 'W' (11 pixels wide)
 	0x80, 	0x20, // #         #
 	0x80, 	0x20, // #         #
 	0x44, 	0x40, //  #   #   #
@@ -511,7 +511,7 @@ static const int W[] = {	// @320 'W' (11 pixels wide)
 };
 
 
-static const int X[] = {	// @340 'X' (7 pixels wide)
+static const uint32_t X[] = {	// @340 'X' (7 pixels wide)
 	0x82, // #     #
 	0x82, // #     #
 	0x44, //  #   #
@@ -525,7 +525,7 @@ static const int X[] = {	// @340 'X' (7 pixels wide)
 };
 
 
-static const int Y[] = {	// @350 'Y' (7 pixels wide)
+static const uint32_t Y[] = {	// @350 'Y' (7 pixels wide)
 	0x82, // #     #
 	0x82, // #     #
 	0x44, //  #   #
@@ -539,7 +539,7 @@ static const int Y[] = {	// @350 'Y' (7 pixels wide)
 };
 
 
-static const int Z[] = {	// @360 'Z' (7 pixels wide)
+static const uint32_t Z[] = {	// @360 'Z' (7 pixels wide)
 	0xFE, // #######
 	0x02, //       #
 	0x04, //      #
@@ -552,7 +552,7 @@ static const int Z[] = {	// @360 'Z' (7 pixels wide)
 	0x00, //
 };
 
-static const int SPACE[] = { // @0 '0' (5 pixels wide)
+static const uint32_t SPACE[] = { // @0 '0' (5 pixels wide)
 	0x00, //  ###
 	0x00, // #   #
 	0x00, // #   #

@@ -106,10 +106,14 @@ void missiles_set_alien_origin(uint16_t index) {
 
 
 point_t missiles_get_tip(int index){
-
+	missile_t* missile = &missile_array[index];
+	point_t origin = missile->origin;
+	origin.x = (MISSILE_WIDTH*SCALE)/2;
+	origin.y += (missile->up) ? 0 : MISSILE_HEIGHT*MISSILE_SCALE;
+	return origin;
 }
 
-bool missiles_check_impact(){
+void missiles_check_impact(){
 	int i;
 	missile_t* missile;
 	for(i=0; i<MISSILE_COUNT; i++){
@@ -118,11 +122,23 @@ bool missiles_check_impact(){
 			point_t missile_tip = missiles_get_tip(i);
 			int8_t inc = (missile->up) ? -1 : 1;
 			missile_tip.y += inc;
-//			if()
+			if(screen_getScreenColor(missile_tip.x, missile_tip.y)!=SCREEN_COLOR_BLACK){
+
+			}
 		}
 	}
 }
 
-
-
+void missiles_tank_check_impact(){
+	missile_t* missile = &missile_array[TANK_MISSILE];
+	int x, y;
+	for(x=0; x<ALIEN_COL_COUNT; x++){
+		for(y=0; y<ALIEN_ROW_COUNT; y++){
+			if (alien_isAlive(x,y)) {
+				point_t alien_pt = alien_getAlienOrigin(x,y);
+			}
+//			ALIEN_XY_TO_INDEX(x,y);
+		}
+	}
+}
 

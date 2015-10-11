@@ -88,4 +88,6 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 uint32_t screen_getBgColor(uint16_t x, uint16_t y);
 
 
+
+
 #endif /* SCREEN_H_ */

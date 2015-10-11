@@ -36,7 +36,7 @@ int main() {
 	missiles_init();
 
 	// text
-	text_print_game_over();
+	text_print_init();
 
 	/**********************************
 	 * Interrupt Registration Section

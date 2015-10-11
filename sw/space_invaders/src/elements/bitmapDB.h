@@ -37,7 +37,7 @@ typedef struct
 	const uint8_t 			endChar;		// the last character in the font
 	const uint8_t			spacePixels;	// number of pixels that a space character takes up
 	const FONT_CHAR_INFO*	charInfo;		// pointer to array of char information
-	const uint8_t*			data;			// pointer to generated array of character visual representation
+	const uint32_t*			data;			// pointer to generated array of character visual representation
 
 } FONT_INFO;
 
