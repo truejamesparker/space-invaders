@@ -273,7 +273,7 @@ static const uint32_t bunker_24x18[] = {
 		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1) };
 
 // These are the blocks that comprise the bunker and each time a bullet
-// strikes one of these blocks, you erod the block as you sequence through
+// strikes one of these blocks, you erode the block as you sequence through
 // these patterns.
 
 static const uint32_t bunkerDamage0_6x6[] = {
@@ -328,85 +328,173 @@ packword24(1,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0),
 packword24(1,1,1,1,0,1,0,0,0,1,0,0,0,1,1,1,1,0,1,1,1,0,0,0)
 };
 
-
-static const uint32_t number_0_5x5[] = {
-packword5(0,0,1,0,0),
-packword5(0,1,0,1,0),
-packword5(0,1,0,1,0),
-packword5(0,1,0,1,0),
-packword5(0,0,1,0,0)
+static const uint32_t numbers_5x5[][5] = {
+		{
+				// 0
+				packword5(0,0,1,0,0),
+				packword5(0,1,0,1,0),
+				packword5(0,1,0,1,0),
+				packword5(0,1,0,1,0),
+				packword5(0,0,1,0,0)
+		},
+		{
+				// 1
+				packword5(0,0,1,0,0),
+				packword5(0,1,1,0,0),
+				packword5(0,0,1,0,0),
+				packword5(0,0,1,0,0),
+				packword5(0,1,1,1,0)
+		},
+		{
+				// 2
+				packword5(0,1,1,1,0),
+				packword5(0,0,0,1,0),
+				packword5(0,1,1,1,0),
+				packword5(0,1,0,0,0),
+				packword5(0,1,1,1,0)
+		},
+		{
+				// 3
+				packword5(0,1,1,1,0),
+				packword5(0,0,0,1,0),
+				packword5(0,0,1,1,0),
+				packword5(0,0,0,1,0),
+				packword5(0,1,1,1,0),
+		},
+		{
+				// 4
+				packword5(0,0,0,1,0),
+				packword5(0,0,1,1,0),
+				packword5(0,1,0,1,0),
+				packword5(0,1,1,1,0),
+				packword5(0,0,0,1,0)
+		},
+		{
+				// 5
+				packword5(0,1,1,1,0),
+				packword5(0,1,0,0,0),
+				packword5(0,1,1,0,0),
+				packword5(0,0,0,1,0),
+				packword5(0,1,1,0,0)
+		},
+		{
+				// 6
+				packword5(0,0,1,1,0),
+				packword5(0,1,0,0,0),
+				packword5(0,1,1,0,0),
+				packword5(0,1,0,1,0),
+				packword5(0,0,1,0,0)
+		},
+		{
+				// 7
+				packword5(0,1,1,1,0),
+				packword5(0,0,0,1,0),
+				packword5(0,0,1,0,0),
+				packword5(0,1,0,0,0),
+				packword5(0,1,0,0,0)
+		},
+		{
+				// 8
+				packword5(0,0,1,0,0),
+				packword5(0,1,0,1,0),
+				packword5(0,0,1,0,0),
+				packword5(0,1,0,1,0),
+				packword5(0,0,1,0,0)
+		},
+		{
+				// 9
+				packword5(0,0,1,0,0),
+				packword5(0,1,0,1,0),
+				packword5(0,0,1,1,0),
+				packword5(0,0,0,1,0),
+				packword5(0,1,1,0,0)
+		}
 };
 
-static const uint32_t number_1_5x5[] = {
-packword5(0,0,1,0,0),
-packword5(0,1,1,0,0),
-packword5(0,0,1,0,0),
-packword5(0,0,1,0,0),
-packword5(0,1,1,1,0)
-};
+//static const uint32_t number_0_5x5[] = {
+//packword5(0,0,1,0,0),
+//packword5(0,1,0,1,0),
+//packword5(0,1,0,1,0),
+//packword5(0,1,0,1,0),
+//packword5(0,0,1,0,0)
+//};
+//
+//static const uint32_t number_1_5x5[] = {
+//packword5(0,0,1,0,0),
+//packword5(0,1,1,0,0),
+//packword5(0,0,1,0,0),
+//packword5(0,0,1,0,0),
+//packword5(0,1,1,1,0)
+//};
+//
+//static const uint32_t number_2_5x5[] = {
+//packword5(0,1,1,1,0),
+//packword5(0,0,0,1,0),
+//packword5(0,1,1,1,0),
+//packword5(0,1,0,0,0),
+//packword5(0,1,1,1,0)
+//};
+//
+//static const uint32_t number_3_5x5[] = {
+//packword5(0,1,1,1,0),
+//packword5(0,0,0,1,0),
+//packword5(0,0,1,1,0),
+//packword5(0,0,0,1,0),
+//packword5(0,1,1,1,0),
+//};
+//
+//
+//static const uint32_t number_4_5x5[] = {
+//packword5(0,0,0,1,0),
+//packword5(0,0,1,1,0),
+//packword5(0,1,0,1,0),
+//packword5(0,1,1,1,0),
+//packword5(0,0,0,1,0)
+//};
+//
+//static const uint32_t number_5_5x5[] = {
+//packword5(0,1,1,1,0),
+//packword5(0,1,0,0,0),
+//packword5(0,1,1,0,0),
+//packword5(0,0,0,1,0),
+//packword5(0,1,1,0,0),
+//};
+//
+//static const uint32_t number_6_5x5[] = {
+//packword5(0,0,1,1,0),
+//packword5(0,1,0,0,0),
+//packword5(0,1,1,0,0),
+//packword5(0,1,0,1,0),
+//packword5(0,0,1,0,0)
+//};
+//
+//static const uint32_t number_7_5x5[] = {
+//packword5(0,1,1,1,0),
+//packword5(0,0,0,1,0),
+//packword5(0,0,1,0,0),
+//packword5(0,1,0,0,0),
+//packword5(0,1,0,0,0),
+//};
+//
+//static const uint32_t number_8_5x5[] = {
+//packword5(0,0,1,0,0),
+//packword5(0,1,0,1,0),
+//packword5(0,0,1,0,0),
+//packword5(0,1,0,1,0),
+//packword5(0,0,1,0,0),
+//};
+//
+//static const uint32_t number_9_5x5[] = {
+//packword5(0,0,1,0,0),
+//packword5(0,1,0,1,0),
+//packword5(0,0,1,1,0),
+//packword5(0,0,0,1,0),
+//packword5(0,1,1,0,0)
+//};
 
-static const uint32_t number_2_5x5[] = {
-packword5(0,1,1,1,0),
-packword5(0,0,0,1,0),
-packword5(0,1,1,1,0),
-packword5(0,1,0,0,0),
-packword5(0,1,1,1,0)
-};
-
-static const uint32_t number_3_5x5[] = {
-packword5(0,1,1,1,0),
-packword5(0,0,0,1,0),
-packword5(0,0,1,1,0),
-packword5(0,0,0,1,0),
-packword5(0,1,1,1,0),
-};
-
-static const uint32_t number_4_5x5[] = {
-packword5(0,0,0,1,0),
-packword5(0,0,1,1,0),
-packword5(0,1,0,1,0),
-packword5(0,1,1,1,0),
-packword5(0,0,0,1,0)
-};
-
-static const uint32_t number_5_5x5[] = {
-packword5(0,1,1,1,0),
-packword5(0,1,0,0,0),
-packword5(0,1,1,0,0),
-packword5(0,0,0,1,0),
-packword5(0,1,1,0,0),
-};
-
-static const uint32_t number_6_5x5[] = {
-packword5(0,0,1,1,0),
-packword5(0,1,0,0,0),
-packword5(0,1,1,0,0),
-packword5(0,1,0,1,0),
-packword5(0,0,1,0,0)
-};
-
-static const uint32_t number_7_5x5[] = {
-packword5(0,1,1,1,0),
-packword5(0,0,0,1,0),
-packword5(0,0,1,0,0),
-packword5(0,1,0,0,0),
-packword5(0,1,0,0,0),
-};
-
-static const uint32_t number_8_5x5[] = {
-packword5(0,0,1,0,0),
-packword5(0,1,0,1,0),
-packword5(0,0,1,0,0),
-packword5(0,1,0,1,0),
-packword5(0,0,1,0,0),
-};
-
-static const uint32_t number_9_5x5[] = {
-packword5(0,0,1,0,0),
-packword5(0,1,0,1,0),
-packword5(0,0,1,1,0),
-packword5(0,0,0,1,0),
-packword5(0,1,1,0,0)
+static const uint32_t floor_32x2[] = {
+		0xFFFFFFFF,
+		0xFFFFFFFF
 };
 
 #endif
