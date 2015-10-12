@@ -30,7 +30,10 @@ void tank_init();
 void tank_right();
 void tank_left();
 
+void tank_kill();
+
 // get origin of the tank
 point_t tank_get_origin();
+
 
 #endif /* TANK_H_ */

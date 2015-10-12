@@ -92,8 +92,12 @@ void missiles_alien_fire(){
 
 // update the missile origin (shift it in the y direction)
 void missiles_shift_origin(uint16_t index) {
-	int16_t dir = missile_array[index].up ? -1 : 1;
-	missile_array[index].origin.y += dir*MISSILE_SHIFT*MISSILE_SCALE;
+	missile_t* missile = &(missile_array[index]);
+	int8_t dir = (missile->up) ? -1 : 1;
+	missile->origin.y += dir*MISSILE_SHIFT*MISSILE_SCALE;
+	if(missile->origin.y > (SCREEN_HEIGHT-SCREEN_EDGE_BUFFER) || missile->origin.y < SCREEN_EDGE_BUFFER){
+		missile->active = false;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -104,7 +108,7 @@ void missiles_set_alien_origin(uint16_t index) {
 	uint16_t r = rand();
 	// todo: change this the be the bottom aliens
 	// NOT just the last row (this will cause a bug later)
-	point_t alien_point = alien_getAlienOrigin(r%10, 4);
+	point_t alien_point = alien_get_origin(r%10, 4);
 	alien_point.y += (ALIEN_HEIGHT * ALIEN_SCALE);
 	alien_point.x += (ALIEN_WIDTH * ALIEN_SCALE)/2;
 	missile_array[index].origin = alien_point;
@@ -146,10 +150,38 @@ void missiles_tank_check_impact(){
 	for(x=0; x<ALIEN_COL_COUNT; x++){
 		for(y=0; y<ALIEN_ROW_COUNT; y++){
 			if (alien_isAlive(x,y)) {
-				point_t alien_pt = alien_getAlienOrigin(x,y);
+				point_t alien_pt = alien_get_origin(x,y);
 			}
 //			ALIEN_XY_TO_INDEX(x,y);
 		}
 	}
 }
 
+void missile_missile_impact(){
+
+}
+
+void missile_bunker_impact(){
+
+}
+
+void missile_alien_impact(){
+	point_t alien_origin;
+	int x, y, dist;
+		for(x=0; x<ALIEN_COL_COUNT; x++){
+			for(y=0; y<ALIEN_ROW_COUNT; y++){
+				if (alien_isAlive(x,y)) {
+					alien_origin = alien_get_origin(x,y);
+					if alien_origin.x
+				}
+			}
+		}
+}
+
+void missile_tank_impact(point_t alien_missile){
+	point_t tank_origin = tank_get_origin();
+	int dist = (alien_missile.x - tank_origin.x);
+	if(dist < (TANK_WIDTH*TANK_SCALE) && dist > 0){
+		tank_kill();
+	}
+}

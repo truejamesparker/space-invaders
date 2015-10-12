@@ -45,4 +45,6 @@ void bunkers_init();
 // erode the given bunker
 void bunkers_damage(uint16_t index);
 
+point_t* bunkers_get_origins();
+
 #endif /* BUNKERS_H_ */

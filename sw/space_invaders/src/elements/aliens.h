@@ -101,7 +101,7 @@ void aliens_kill(uint16_t index);
 
 // return the origin of the alien at the coordinates 
 // coorinates within the alien block (i.e. row 1, col 2)
-point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
+point_t alien_get_origin(uint16_t x, uint16_t y);
 
 bool alien_isAlive(uint16_t x, uint16_t y);
 

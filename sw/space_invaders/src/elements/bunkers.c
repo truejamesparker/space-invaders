@@ -63,3 +63,7 @@ void bunkers_draw(){
 	}
 
 }
+
+point_t* bunkers_get_origins(){
+	return bunker_origins;
+}

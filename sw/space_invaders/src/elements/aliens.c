@@ -30,7 +30,7 @@ void initAlienOrigins();
 void initLivesArray();
 void aliens_draw();
 void aliens_kill_cleanup();
-point_t alien_getAlienOrigin(uint16_t x, uint16_t y);
+point_t alien_get_origin(uint16_t x, uint16_t y);
 void alien_shiftOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift);
 
 //-----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void aliens_march_dir(uint16_t dir){
 			// -------------- possibly backward x ----------------
 
 			// Grab the alien origin for this given alien (col,row)
-			point_t alienOrigin = alien_getAlienOrigin(x, y);
+			point_t alienOrigin = alien_get_origin(x, y);
 
 			// Tell the screen to shift this element by x_shift, y_shift
 			if(ALIEN_ALIVE(x,y)){
@@ -122,9 +122,9 @@ void aliens_march_dir(uint16_t dir){
 
 void aliens_march(){
 	// origin of leftmost alien
-	point_t left_origin = alien_getAlienOrigin(0, 0);
+	point_t left_origin = alien_get_origin(0, 0);
 	// origin of rightmost alien
-	point_t right_origin = alien_getAlienOrigin(ALIEN_COL_COUNT-1, 0);
+	point_t right_origin = alien_get_origin(ALIEN_COL_COUNT-1, 0);
 
 	// if i'm marching right and my rightmost part of me will be in the
 	// margin, drop down onto the next row, change marching direction to left
@@ -164,7 +164,7 @@ void aliens_kill(uint16_t index) {
 	uint16_t x = index % (ALIEN_COL_COUNT);
 
 	// Get the origin of the alien we want to kill
-	point_t origin = alien_getAlienOrigin(x, y);
+	point_t origin = alien_get_origin(x, y);
 
 	// draw the explosion in place of that particular alien
 	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
@@ -226,7 +226,7 @@ void aliens_draw() {
 		for (col = 0; col < ALIEN_COL_COUNT; col++) {
 
 			// Convert Alien Coordinates (col,row) into an absolute point (x,y)
-			point_t alienOrigin = alien_getAlienOrigin(col, row);
+			point_t alienOrigin = alien_get_origin(col, row);
 
 			// If the alien is dead, color it the screen, else alien color
 			uint32_t color = (ALIEN_ALIVE(col,row)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
@@ -270,7 +270,7 @@ void initAlienOrigins() {
 void aliens_kill_cleanup(){
 	if(kill_log.kill){
 		// Get the origin of the already exploded alien to clean up.
-		point_t origin = alien_getAlienOrigin(kill_log.x, kill_log.y);
+		point_t origin = alien_get_origin(kill_log.x, kill_log.y);
 
 		// Blank the rectangle that the exploded alien was
 		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
@@ -283,7 +283,7 @@ void aliens_kill_cleanup(){
 
 //-----------------------------------------------------------------------------
 
-point_t alien_getAlienOrigin(uint16_t x, uint16_t y) {
+point_t alien_get_origin(uint16_t x, uint16_t y) {
 	point_t origin = alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
 	return origin;
 }

@@ -30,7 +30,7 @@ point_t getTankBulletPosition();
 #define WORD_WIDTH 				32
 
 // set the scale of the game
-#define SCALE					2 
+#define SCALE					2
 
 
 // Packs each horizontal line of the figures into a single n-bit bit word.
@@ -208,7 +208,8 @@ static const uint32_t block_erase_12x8[] = {
 
 // missile bitmaps
 
-static const uint32_t missile0_6x6[] = {
+static const uint32_t missile0_3x7[] = {
+		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
@@ -216,7 +217,8 @@ static const uint32_t missile0_6x6[] = {
 		packword3(0,1,0),
 		packword3(0,1,0)};
 
-static const uint32_t missile1_6x6[] = {
+static const uint32_t missile1_3x7[] = {
+		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
@@ -224,7 +226,8 @@ static const uint32_t missile1_6x6[] = {
 		packword3(0,1,0),
 		packword3(1,1,1)};
 
-static const uint32_t missile2_6x6[] = {
+static const uint32_t missile2l_3x7[] = {
+		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
 		packword3(0,1,0),
@@ -232,7 +235,16 @@ static const uint32_t missile2_6x6[] = {
 		packword3(1,1,1),
 		packword3(0,1,0)};
 
-static const uint32_t missile3l_6x6[] = {
+static const uint32_t missile2r_3x7[] = {
+		packword3(0,1,0),
+		packword3(1,1,1),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0),
+		packword3(0,1,0)};
+
+static const uint32_t missile3l_6x7[] = {
 		packword6(0,0,0,1,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,1,0,0,0,0),
@@ -241,7 +253,7 @@ static const uint32_t missile3l_6x6[] = {
 		packword6(0,0,1,0,0,0),
 		packword6(0,1,0,0,0,0)};
 
-static const uint32_t missile3r_6x6[] = {
+static const uint32_t missile3r_6x7[] = {
 		packword6(0,1,0,0,0,0),
 		packword6(0,0,1,0,0,0),
 		packword6(0,0,0,1,0,0),
@@ -326,6 +338,14 @@ packword24(1,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0),
 packword24(1,0,0,0,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,1,0,0,0),
 packword24(1,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0),
 packword24(1,1,1,1,0,1,0,0,0,1,0,0,0,1,1,1,1,0,1,1,1,0,0,0)
+};
+
+static const uint32_t word_game_24x5[] = {
+packword24(1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,1,1,1,0,0,0),
+packword24(1,0,0,0,0,0,1,0,1,0,0,1,1,0,1,1,0,1,0,0,0,0,0,0),
+packword24(1,0,1,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,0,0,0),
+packword24(1,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0),
+packword24(1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,1,1,1,0,0,0)
 };
 
 
