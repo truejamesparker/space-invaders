@@ -10,6 +10,7 @@
 #include "aliens.h"
 #include "tank.h"
 #include "bunkers.h"
+#include "gameScreen.h"
 
 // missile size info
 #define MISSILE_HEIGHT 		7
@@ -17,6 +18,10 @@
 #define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
 #define MISSILE_SHIFT 		8 // how many pixels shold we move by every time?
+
+// missile boundary conditions
+#define MISSILE_BOTTOM_BUFFER	(FLOOR_ORIGIN_Y-(MISSILE_HEIGHT*MISSILE_SCALE)-FLOOR_HEIGHT*FLOOR_SCALE)
+#define MISSILE_TOP_BUFFER		(SCREEN_EDGE_BUFFER+2*SCORE_TXT_HEIGHT*SCORE_TXT_SCALE)
 
 // color def
 #define MISSILE_COLOR 		SCREEN_COLOR_WHITE

@@ -119,7 +119,7 @@ void missiles_erase(missile_t* missile){
 }
 
 bool missiles_in_bounds(missile_t* missile){
-	if(missile->origin.y > (SCREEN_HEIGHT-SCREEN_EDGE_BUFFER) || missile->origin.y < SCREEN_EDGE_BUFFER){
+	if(missile->origin.y > MISSILE_BOTTOM_BUFFER || missile->origin.y < MISSILE_TOP_BUFFER){
 		return false;
 	}
 	else{
