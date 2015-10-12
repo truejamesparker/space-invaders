@@ -42,7 +42,7 @@
 // static elements (floor, lives, score)
 void gameScreen_init();
 
-void gameScreen_setScore(uint16_t score);
+void gameScreen_setScore(uint32_t score);
 
 
 #endif /* GAMESCREEN_H_ */

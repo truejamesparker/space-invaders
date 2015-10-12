@@ -172,7 +172,7 @@ void missile_alien_impact(){
 			for(y=0; y<ALIEN_ROW_COUNT; y++){
 				if (alien_isAlive(x,y)) {
 					alien_origin = alien_get_origin(x,y);
-					if alien_origin.x
+//					if alien_origin.x
 				}
 			}
 		}
