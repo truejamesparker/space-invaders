@@ -124,6 +124,10 @@ void uartControl_handle(char key) {
 			xil_printf("Setting score: %d\r\n", currentScore);
 			break;
 
+		case '.':
+			spaceship_start();
+			break;
+
 		default:
 			break;
 	}

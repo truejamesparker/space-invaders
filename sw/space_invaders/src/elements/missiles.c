@@ -41,7 +41,7 @@ void missiles_move(){
 			int8_t dir = missile->up ? -1 : 1;
 			const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 
-			// shift it on the scrren
+			// shift it on the screen
 			screen_shiftElement(symbol, missile->origin, missile->size,
 								0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
 			// now update the origin in the missile struct
@@ -68,7 +68,7 @@ void missiles_tank_fire(){
 
 		missile->active = true; // set status to active
 		point_t tank_gun_origin = tank_get_origin(); // get tank location
-		// compute the cooridnates of the cannon
+		// compute the coordinates of the cannon
 		tank_gun_origin.x += (TANK_WIDTH*TANK_SCALE)/2 - (missile->size.w*MISSILE_SCALE)/2;
 		tank_gun_origin.y -= MISSILE_HEIGHT*MISSILE_SCALE;
 

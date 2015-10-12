@@ -5,7 +5,6 @@
 
 #include "../screen/screen.h"
 #include "../globals.h"
-#include "../text/text.h"
 
 
 #define ALIEN_COL_COUNT 		11
