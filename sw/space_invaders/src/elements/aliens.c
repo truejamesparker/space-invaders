@@ -212,6 +212,12 @@ bool alien_isAlive(uint16_t x, uint16_t y) {
 	return ALIEN_ALIVE(x,y);
 }
 
+uint16_t alien_xy_to_index(uint16_t x , uint16_t y){
+	return ALIEN_XY_TO_INDEX(x,y);
+}
+
+
+
 //-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------

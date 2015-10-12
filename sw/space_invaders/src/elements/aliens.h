@@ -104,6 +104,7 @@ void aliens_kill(uint16_t index);
 point_t alien_get_origin(uint16_t x, uint16_t y);
 
 bool alien_isAlive(uint16_t x, uint16_t y);
+uint16_t alien_xy_to_index(uint16_t x , uint16_t y);
 
 // return pointer to alien_lives_matter array
 //bool* alien_getAlienLives();
