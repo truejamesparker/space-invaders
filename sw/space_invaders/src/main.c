@@ -36,9 +36,6 @@ int main() {
 	tank_init();
 	missiles_init();
 
-	// text
-	text_print_init();
-
 	/**********************************
 	 * Interrupt Registration Section
 	 *********************************/

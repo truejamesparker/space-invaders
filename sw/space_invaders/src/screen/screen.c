@@ -111,7 +111,6 @@ void screen_clear() {
 			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
 
-// debugging statement
 #if SCREEN_SHOW_MARGINS
 			if (	x == SCREEN_EDGE_BUFFER ||
 					y == SCREEN_EDGE_BUFFER ||
@@ -206,7 +205,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 		x_offset = 0;
 		for (col = 0; col < size.w+dx; col++) {
 
-			// now sclae that pixel
+			// now scale that pixel
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 
