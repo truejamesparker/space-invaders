@@ -9,6 +9,7 @@
 #include "../elements/tank.h"
 #include "../elements/bunkers.h"
 #include "../elements/missiles.h"
+#include "../elements/gameScreen.h"
 
 // Tell the application loop whether or not
 // we are using the UART to control our game

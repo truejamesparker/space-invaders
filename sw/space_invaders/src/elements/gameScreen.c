@@ -33,19 +33,36 @@ void gameScreen_setScore(uint32_t score) {
 	// Get score info as an array so we can loop through each digit
 	gameScreen_getScoreAsArray(score, currentScoreArray, &currentScoreLength);
 
-	for (i=0; i<currentScoreLength; i++) {
+	for (i=0; i<SCORE_VAL_MAX_LEN; i++) {
+
+		// Find out if this digit should be drawn or not
+		uint32_t color = (i<currentScoreLength) ? SCORE_VAL_COLOR : SCREEN_BG_COLOR;
+
 		uint32_t digit = currentScoreArray[i];
-		screen_drawSymbol(numbers_5x5[digit], origin, size, SCORE_VAL_SCALE, SCORE_VAL_COLOR);
+		screen_drawSymbol(numbers_5x5[digit], origin, size, SCORE_VAL_SCALE, color);
 
 		// Shift the origin over to the next spot
-		origin.x += (SCORE_VAL_WIDTH*SCORE_VAL_SCALE) + SCORE_VAL_PADDING;
+		origin.x += (SCORE_VAL_WIDTH+SCORE_VAL_PADDING)*SCORE_VAL_SCALE;
 	}
 }
 
 // ----------------------------------------------------------------------------
 
 void gameScreen_setLives(uint8_t lives) {
+	point_t origin = { .x = LIVES_TANK_ORIGIN_X, .y = LIVES_TANK_ORIGIN_Y };
+	symbolsize_t size = { .w = LIVES_TANK_WIDTH, .h = LIVES_TANK_HEIGHT };
+	uint8_t i = 0;
 
+	for (i=0; i<LIVES_MAX; i++) {
+		// Find out if this tank live should be drawn or not
+		uint32_t color = (i<lives) ? LIVES_TANK_COLOR : SCREEN_BG_COLOR;
+
+		// Draw a tank at the given origin
+		screen_drawSymbol(tank_15x8, origin, size, LIVES_TANK_SCALE, color);
+
+		// Shift the origin over to the next tank
+		origin.x += (LIVES_TANK_WIDTH+LIVES_TANK_PADDING)*LIVES_TANK_SCALE;
+	}
 }
 
 // ----------------------------------------------------------------------------
