@@ -8,10 +8,11 @@
 #include "../stateMachines/screenRefreshSM.h"
 #include "../stateMachines/tankSM.h"
 #include "../stateMachines/missileSM.h"
+#include "../stateMachines/spaceshipSM.h"
 
 #define TC_TIMER_PERIOD_MS 	10 	// how often does the FIT expire?
 #define TC_SM_PERIOD_GCD	5	// GCD of all the periods
-#define TC_SM_COUNT 		4	// Pretty self explanatory, eh?
+#define TC_SM_COUNT 		5	// Pretty self explanatory, eh?
 
 // An array of these are created to handle when to tick SMs
 typedef struct {

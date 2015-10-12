@@ -10,13 +10,18 @@
 #include "aliens.h"
 #include "tank.h"
 #include "bunkers.h"
+#include "gameScreen.h"
 
 // missile size info
 #define MISSILE_HEIGHT 		7
 #define MISSILE_WIDTH 		3
 #define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
-#define MISSILE_SHIFT 		8 // how many pixels shold we move by every time?
+#define MISSILE_SHIFT 		8 // how many pixels should we move by every time?
+
+// missile boundary conditions
+#define MISSILE_BOTTOM_BUFFER	(FLOOR_ORIGIN_Y-(MISSILE_HEIGHT*MISSILE_SCALE)-FLOOR_HEIGHT*FLOOR_SCALE)
+#define MISSILE_TOP_BUFFER		(SCREEN_EDGE_BUFFER+2*SCORE_TXT_HEIGHT*SCORE_TXT_SCALE)
 
 // color def
 #define MISSILE_COLOR 		SCREEN_COLOR_WHITE
@@ -31,11 +36,11 @@ typedef struct{
 	const uint32_t* symbol_r;	// alternating missile bitmap
 	const uint32_t* symbol_l;	// alternating missile bitmap
 	const bool up; 				// missile direction
-	bool active;				// missle in flight?
+	bool active;				// missile in flight?
 	const symbolsize_t size;	// size of missile bitmap
 } missile_t;
 
-// function delcarations
+// function declarations
 void missiles_tank_fire();
 void missiles_move();
 void missiles_alien_fire();

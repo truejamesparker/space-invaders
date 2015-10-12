@@ -5,7 +5,6 @@
 
 #include "../screen/screen.h"
 #include "../globals.h"
-#include "../text/text.h"
 
 
 #define ALIEN_COL_COUNT 		11
@@ -21,8 +20,8 @@
 #define ALIEN_SHIFT_X			3
 #define ALIEN_SHIFT_Y			6
 
-#define ALIEN_PADDING_X			(ALIEN_SCALE*3)
-#define ALIEN_PADDING_Y			(ALIEN_SCALE*2)
+#define ALIEN_PADDING_X			(ALIEN_SCALE*4)
+#define ALIEN_PADDING_Y			(ALIEN_SCALE*5)
 
 
 // Direction parameters to pass into alien_march_dir(int dir)

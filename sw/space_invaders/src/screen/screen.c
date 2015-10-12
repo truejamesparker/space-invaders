@@ -233,7 +233,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					} else {
 						color = SCREEN_COLOR_YELLOW;
 					}
-// debug statement
+
 #if SCREEN_SHIFT_BOX
 					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_RIGHT) {
 						if (col == dx || col == size.w+dx-1 || row == 0 || row == size.h-1) {
@@ -245,7 +245,7 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 						}
 					}
 #endif
-// debug statment
+
 #if SCREEN_SHOW_ORIGIN
 					if (xSign == SCREEN_SHIFT_RIGHT) {
 						if (col == dx && row == dy) color = SCREEN_ORIGIN_COLOR;

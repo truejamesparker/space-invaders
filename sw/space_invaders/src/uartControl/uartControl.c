@@ -1,6 +1,10 @@
 #include "uartControl.h"
 
-uint16_t getint();
+// for debugging the score/lives
+static uint8_t currentLives = LIVES_MAX;
+static uint32_t currentScore = 0;
+
+static uint16_t getint();
 
 // ----------------------------------------------------------------------------
 
@@ -89,10 +93,39 @@ void uartControl_handle(char key) {
 			break;
 		case 'c':
 			screen_clear();
+			gameScreen_init();
 			aliens_init();
 			tank_init();
 			missiles_init();
 			bunkers_init();
+			break;
+
+		case '/':
+			if (currentLives == 0) return;
+			gameScreen_setLives(--currentLives);
+			xil_printf("Setting lives: %d\r\n", currentLives);
+			break;
+
+		case '*':
+			if (currentLives == LIVES_MAX) return;
+			gameScreen_setLives(++currentLives);
+			xil_printf("Setting lives: %d\r\n", currentLives);
+			break;
+
+		case '-':
+			if (currentScore == 0) return;
+			gameScreen_setScore(--currentScore);
+			xil_printf("Setting score: %d\r\n", currentScore);
+			break;
+
+		case '+':
+			if (currentScore == SCORE_VAL_MAX) return;
+			gameScreen_setScore(++currentScore);
+			xil_printf("Setting score: %d\r\n", currentScore);
+			break;
+
+		case '.':
+			spaceship_start();
 			break;
 
 		default:
@@ -105,7 +138,7 @@ void uartControl_handle(char key) {
 //-----------------------------------------------------------------------------
 
 #define INT_BUFFER_LENGTH 5
-uint16_t getint() {
+static uint16_t getint() {
 	// +1 for the termination '\0'
 	char buffer[INT_BUFFER_LENGTH+1];
 
