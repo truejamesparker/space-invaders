@@ -6,7 +6,7 @@
 
 #include "../elements/missiles.h"
 
-#define SM_PERIOD_MISSILE_MS 	15
+#define SM_PERIOD_MISSILE_MS 	30
 
 void missileSM_tick();
 

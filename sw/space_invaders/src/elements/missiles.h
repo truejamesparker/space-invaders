@@ -44,11 +44,11 @@ void missiles_alien_fire();
 // array of all missile types
 static missile_t missile_array[MISSILE_COUNT] = {
 		{
-				.symbol_r = missile0_3x7,			// missile type 1 (tank)
-				.symbol_l = missile0_3x7,
+				.symbol_r = missile0_1x7,			// missile type 1 (tank)
+				.symbol_l = missile0_1x7,
 				.up = true,
 				.active = false,
-				.size = {.w = 3, .h = MISSILE_HEIGHT}
+				.size = {.w = 1, .h = MISSILE_HEIGHT}
 		},
 		{
 				.symbol_r = missile1_3x7,			// missile type 2 (alien)

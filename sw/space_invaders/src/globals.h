@@ -208,14 +208,15 @@ static const uint32_t block_erase_12x8[] = {
 
 // missile bitmaps
 
-static const uint32_t missile0_3x7[] = {
-		packword3(0,1,0),
-		packword3(0,1,0),
-		packword3(0,1,0),
-		packword3(0,1,0),
-		packword3(0,1,0),
-		packword3(0,1,0),
-		packword3(0,1,0)};
+static const uint32_t missile0_1x7[] = {
+		0x1,
+		0x1,
+		0x1,
+		0x1,
+		0x1,
+		0x1,
+		0x1
+};
 
 static const uint32_t missile1_3x7[] = {
 		packword3(0,1,0),
