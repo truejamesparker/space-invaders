@@ -2,6 +2,7 @@
 
 #define BUNKER_START_XOFFSET 	24*BUNKER_SCALE
 
+
 static bunker_t bunker_array[4];
 static point_t bunker_sub_origins[40];
 static int32_t bunker_state[4] = {0,0,0,0};
@@ -29,19 +30,42 @@ void bunkers_init() {
 
 //-----------------------------------------------------------------------------
 
-//void bunkers_get_contact_point(point_t point){
-//
-//}
+
+uint8_t bunker_point_status(uint8_t bunker_index, uint8_t sub_index){
+	return (bunker_array[bunker_index].status >> sub_index) & 0x7;
+}
+
+void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
+	uint32_t status_all = bunker_array[bunker_index].status;
+	uint8_t status = bunker_point_status(bunker_index, sub_index);
+	status++;
+	uint32_t bit_mask = (0x7<<sub_index);         // (mask of the bits you want to set)
+	status_all = (status_all & (~bit_mask)) | (status<<sub_index);
+	bunker_array[bunker_index].status = status_all;
+}
+
+bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index){
+	uint8_t status = bunker_point_status(bunker_index, sub_index);
+	if(status < BUNKER_ERODED_STATUS){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
 
 
 // overlay given bunker with a random erosion pattern
 // TODO: make this function accept an point param rather than using rand
-void bunkers_damage(point_t point){
-	const uint32_t* symbol = bunker_damage_symbols[2];
+void bunkers_damage(uint8_t index, uint8_t sub_index){
+	bunker_t* bunker = &bunker_array[index];
+	point_t point = bunker->sub_points[sub_index];
+	uint32_t* symbol = bunker_damage_symbols[bunker_point_status(index, sub_index)];
+	bunker_point_damage(index, sub_index);
 	// draw the symbol to the screen
-	screen_drawSymbol(symbol, point, bunker_damage_size, 3, SCREEN_BG_COLOR);
+	screen_drawSymbol(symbol, point, bunker_damage_size, 1, SCREEN_BG_COLOR);
 	// also update the background frame (used for reference only)
-	screen_bgDrawSymbol(symbol, point, bunker_damage_size, 3, SCREEN_BG_COLOR);
+	screen_bgDrawSymbol(symbol, point, bunker_damage_size, 1, SCREEN_BG_COLOR);
 }
 
 
@@ -63,26 +87,38 @@ void bunkers_init_origins(){
 		bunker->origin = origin;
 		bunker->size = bunker_size;
 		bunker->status=0;
-
-//		bunker->sub_points = (point_t*)malloc(4);
-//		bunkers_init_sub_origins(origin, bunker->sub_points);
+		bunker->sub_points = malloc(BUNKER_SUB_ORIGIN_COUNT * sizeof bunker->sub_points);
+		bunkers_init_sub_origins(origin, bunker->sub_points);
 
 	}
 }
 
 void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
-	int i, j, x_offset=0, y_offset=0;
+	int i, j, k=0, x_offset=0, y_offset=0;
 	for(j=0; j<3; j++){
 		for(i=0; i<4; i++){
-			sub_points[j*4+i].x += x_offset;
-			sub_points[j*4+i].y += y_offset;
-			x_offset += (BUNKER_WIDTH*BUNKER_SCALE)/4;
+			if(!(j==2 && (i==1 || i==2))){ // ignore blocks 10 and 11 (empty)
+				sub_points[k].x = origin.x + x_offset;
+				sub_points[k].y = origin.y + y_offset;
+				k++;
+			}
+			x_offset += BUNKER_SUB_ORIGIN_WIDTH;
 		}
-		y_offset += (BUNKER_HEIGHT*BUNKER_SCALE)/3;
+		y_offset += BUNKER_SUB_ORIGIN_HEIGHT;
 	}
 }
 
 //-----------------------------------------------------------------------------
+
+void draw_sub_points(bunker_t bunker){
+	int i;
+	uint32_t bit = 0x1;
+	symbolsize_t size = {.w=1, .h=1};
+	for(i=0; i<BUNKER_SUB_ORIGIN_COUNT; i++){
+		screen_drawSymbol(&bit, bunker.sub_points[i], size,
+						BUNKER_SCALE, SCREEN_COLOR_RED);
+	}
+}
 
 // draw all bunkers to the screen
 void bunkers_draw(){
@@ -93,10 +129,13 @@ void bunkers_draw(){
 				BUNKER_SCALE, BUNKER_COLOR);
 		screen_bgDrawSymbol(bunker_24x18, origin, bunker_size,
 				BUNKER_SCALE, BUNKER_COLOR);
+		draw_sub_points(bunker_array[i]);
 	}
 
 }
 
-bunker_t* bunkers_get_origins(){
-	return bunker_array;
+bunker_t bunkers_get_bunker(uint8_t index){
+	return bunker_array[index];
 }
+
+

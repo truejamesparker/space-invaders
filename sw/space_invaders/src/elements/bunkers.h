@@ -21,6 +21,11 @@
 #define ALIEN_MISSILE2 		2
 #define ALIEN_MISSILE3 		3
 
+#define BUNKER_ERODED_STATUS		3
+#define BUNKER_SUB_ORIGIN_COUNT 	10
+#define BUNKER_SUB_ORIGIN_WIDTH		(BUNKER_SCALE*BUNKER_WIDTH)/4
+#define BUNKER_SUB_ORIGIN_HEIGHT	(BUNKER_SCALE*BUNKER_HEIGHT)/3
+
 
 // bunker struct definition
 typedef struct {
@@ -43,8 +48,9 @@ static const uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDama
 void bunkers_init();
 
 // erode the given bunker
-void bunkers_damage(point_t index);
+void bunkers_damage(uint8_t bunker_index, uint8_t sub_index);
+bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index);
 
-bunker_t* bunkers_get_origins();
+bunker_t bunkers_get_bunker(uint8_t index);
 
 #endif /* BUNKERS_H_ */

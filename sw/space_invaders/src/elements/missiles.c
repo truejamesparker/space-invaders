@@ -4,7 +4,6 @@
 // move across the screen. This global
 // defines which state we're in
 static bool wobble;
-static bunker_t* bunker_origins;
 
 // function declarations
 void missiles_shift_origin(missile_t* missile);
@@ -18,7 +17,7 @@ void missile_tank_impact(missile_t* missile);
 void missiles_deactivate(missile_t* missile);
 void missiles_check_impact(missile_t* missile);
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height);
-bool missile_aliens_check_row(missile_t* missile, uint16_t row);
+bool missile_kill_alien_in_row(missile_t* missile, uint16_t row);
 
 //-----------------------------------------------------------------------------
 
@@ -28,7 +27,6 @@ void missiles_init() {
 	for (i=0; i<MISSILE_COUNT; i++) {
 		// Turn off all missiles
 		missile_array[i].active = false;
-		bunker_origins = bunkers_get_origins();
 	}
 }
 
@@ -50,7 +48,6 @@ void missiles_move(){
 			// now update the origin in the missile struct
 			missiles_shift_origin(missile);
 			if(!missiles_in_bounds(missile)){
-				xil_printf("deactivating missile\n\r");
 				missiles_deactivate(missile);
 			}
 			else{
@@ -131,6 +128,7 @@ bool missiles_in_bounds(missile_t* missile){
 }
 
 void missiles_deactivate(missile_t* missile){
+	xil_printf("deactivating missile!\n\r");
 	missiles_erase(missile);
 	missile->active = false;
 }
@@ -183,12 +181,29 @@ void missile_missile_impact(missile_t* missile){
 
 }
 
-//void missile_in_bunker(missile_t*){
-//
-//}
 
 void missile_bunker_impact(missile_t* missile){
-//	xil_printf("hit bunker?\n\r");
+	int i, j;
+	for(i=0; i<BUNKER_COUNT; i++){
+		bunker_t bunker = bunkers_get_bunker(i);
+		if(missile_in_block(missile, bunker.origin, bunker.size.w*BUNKER_SCALE, bunker.size.h*BUNKER_SCALE)){
+			xil_printf("missile in bunker\n\r");
+			for(j=0; j<BUNKER_SUB_ORIGIN_COUNT; j++){
+//				xil_printf("sub point (%d, %d), bunker point (%d, %d)\n\r", bunker.sub_points[i].x, bunker.sub_points[i].y,
+//						bunker.origin.x, bunker.origin.y);
+				if(missile_in_block(missile, bunker.sub_points[j], BUNKER_SUB_ORIGIN_WIDTH, BUNKER_SUB_ORIGIN_HEIGHT)){
+					xil_printf("in sub block\n\r");
+					if(!bunker_point_eroded(i,j)){
+						bunkers_damage(i, j);
+						missiles_deactivate(missile);
+						return;
+					}
+
+				}
+			}
+		}
+
+	}
 }
 
 void missile_alien_impact(missile_t* missile){
@@ -197,14 +212,14 @@ void missile_alien_impact(missile_t* missile){
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
 		int y_dist = height - alien_get_origin(0,y).y;
 		if(y_dist <= ALIEN_HEIGHT*ALIEN_SCALE){
-			if(missile_aliens_check_row(missile, y)){
+			if(missile_kill_alien_in_row(missile, y)){
 				return;
 			}
 		}
 	}
 }
 
-bool missile_aliens_check_row(missile_t* missile, uint16_t row){
+bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 	point_t alien_origin;
 	int x;
 	for(x=0; x<ALIEN_COL_COUNT; x++){
