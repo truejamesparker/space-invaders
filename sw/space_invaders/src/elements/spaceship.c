@@ -1,7 +1,6 @@
 #include "spaceship.h"
 
-// remember which way we are going
-// use SCREEN_SHIFT_LEFT or SCREEN_SHIFT_RIGHT
+// remember which way we are going. Use SCREEN_SHIFT_LEFT or SCREEN_SHIFT_RIGHT
 static int8_t shiftDir = 0;
 
 // remember where we are currently

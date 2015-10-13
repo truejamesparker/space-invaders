@@ -19,8 +19,7 @@
 #define SPACESHIP_SHIFT_X		4
 #define SPACESHIP_SHIFT_Y		0
 
-// Kick off the spaceship, pick a direction to go
-// and start drawing
+// Kick off the spaceship, pick a direction to go and start drawing
 void spaceship_start();
 
 // shift the spaceship in the direction it is going
