@@ -195,7 +195,7 @@ static const uint32_t tank_15x8[] = {
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1) };
 
-// currenlty unused
+// currently unused
 static const uint32_t block_erase_12x8[] = {
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
 		packword12(0,0,0,0,0,0,0,0,0,0,0,0),

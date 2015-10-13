@@ -209,7 +209,13 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 			for (i = 0; i < scale; i++) {
 				for (j = 0; j < scale; j++) {
 
-					uint32_t bgcolor = screen_getBgColor(origin.x+i+x_offset-xShiftOffset,origin.y+j+y_offset-yShiftOffset);
+					// Get the current (x,y) for the given loop iteration, etc.
+					uint16_t x = origin.x + i + x_offset - xShiftOffset;
+					uint16_t y = origin.y + j + y_offset - yShiftOffset;
+
+					// Get the background color from the secondary background frame.
+					// This is important for drawing over bunkers, aliens, etc.
+					uint32_t bgcolor = screen_getBgColor(x, y);
 
 					// Figure out what color to make things
 					if (xSign == SCREEN_SHIFT_RIGHT && col < dx) {
@@ -254,7 +260,11 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					}
 #endif
 
-					SCREEN_SET_XY_TO_COLOR((origin.x+i+x_offset-xShiftOffset), (origin.y+j+y_offset-yShiftOffset), color);
+					// Only set the screen color if within the bounds of the screen.
+					// This turns off image wrapping. This works because (x,y) are unsigned.
+					// Therefore, when it goes below the screen's origin (0,0) the numbers
+					// actually get bigger than the screen width and height.
+					if (x < SCREEN_WIDTH && y < SCREEN_HEIGHT) SCREEN_SET_XY_TO_COLOR(x, y, color);
 				}
 			}
 			x_offset += scale; // account for scale in x

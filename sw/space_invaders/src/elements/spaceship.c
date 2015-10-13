@@ -15,17 +15,15 @@ int8_t chooseRandomShiftDirection();
 // ----------------------------------------------------------------------------
 
 void spaceship_start() {
+	// Make sure we are not already flying through the air
+	if (shiftDir) return;
+
 	// set up the shift direction
 	shiftDir = chooseRandomShiftDirection();
 
 	// based on the random shift direction, choose an x origin
 	origin.x = (shiftDir == SCREEN_SHIFT_RIGHT) ? \
-			(SPACESHIP_START_LEFT_X-(SPACESHIP_WIDTH*SPACESHIP_SCALE)) : \
-			SPACESHIP_START_RIGHT_X;
-
-	// We don't want the screen to wrap so let's change the
-	// width of what we want to draw
-//	symbolsize_t size = getSpaceshipSize();
+			SPACESHIP_START_LEFT_X : SPACESHIP_START_RIGHT_X;
 
 	// draw it on the screen, it will be hanging off the screen
 	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SPACESHIP_COLOR);
@@ -36,7 +34,10 @@ void spaceship_start() {
 void spaceship_move() {
 	if (shiftDir) { // first off, are we even moving?
 		// check if we are off the screen
-		if (origin.x > SCREEN_WIDTH) return;
+		if (origin.x > SPACESHIP_START_RIGHT_X && origin.x < SPACESHIP_START_LEFT_X) {
+			shiftDir = 0;
+			return;
+		}
 
 		// redraw
 		screen_shiftElement(saucer_16x7, origin, size, (shiftDir*SPACESHIP_SHIFT_X), \
