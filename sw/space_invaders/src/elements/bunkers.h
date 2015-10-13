@@ -22,13 +22,13 @@
 #define ALIEN_MISSILE3 		3
 
 
-// struct definintions
-
-// size of bunker bitmap
-static const symbolsize_t bunker_size= {
-		.w = 24,
-		.h = 18
-};
+// bunker struct definition
+typedef struct {
+	point_t origin;				// current location of missile
+	symbolsize_t size;	// size of missile bitmap
+	int32_t status;
+	point_t *sub_points;
+} bunker_t;
 
 // size of bumker-damage bitmap
 static const symbolsize_t bunker_damage_size = {
@@ -43,8 +43,8 @@ static const uint32_t* bunker_damage_symbols[3] = {bunkerDamage0_6x6, bunkerDama
 void bunkers_init();
 
 // erode the given bunker
-void bunkers_damage(uint16_t index);
+void bunkers_damage(point_t index);
 
-point_t* bunkers_get_origins();
+bunker_t* bunkers_get_origins();
 
 #endif /* BUNKERS_H_ */
