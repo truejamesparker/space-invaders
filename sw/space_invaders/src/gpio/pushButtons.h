@@ -16,10 +16,10 @@
 void pushButtons_init();
 
 // Public functions to make life easy
-bool pushButtons_LeftPressed();
-bool pushButtons_RightPressed();
-bool pushButtons_DownPressed();
-bool pushButtons_UpPressed();
-bool pushButtons_CenterPressed();
+bool pushButtons_leftPressed();
+bool pushButtons_rightPressed();
+bool pushButtons_downPressed();
+bool pushButtons_upPressed();
+bool pushButtons_centerPressed();
 
 #endif /* PUSHBUTTONS_H_ */

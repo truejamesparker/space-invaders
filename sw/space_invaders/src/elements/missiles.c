@@ -6,9 +6,8 @@
 static bool wobble;
 
 // function declarations
-void missiles_shift_origin(missile_t* missile);
+void shiftMissileOrigin(missile_t* missile);
 bool missiles_in_bounds(missile_t* missile);
-void missiles_set_alien_origin(uint16_t index);
 void missiles_impact(missile_t* missile);
 void missile_bunker_impact(missile_t* missile);
 void missile_missile_impact(missile_t* missile);
@@ -46,7 +45,7 @@ void missiles_move(){
 			screen_shiftElement(symbol, missile->origin, missile->size,
 								0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
 			// now update the origin in the missile struct
-			missiles_shift_origin(missile);
+			shiftMissileOrigin(missile);
 			if(!missiles_in_bounds(missile)){
 				missiles_deactivate(missile);
 			}
@@ -61,7 +60,7 @@ void missiles_move(){
 //-----------------------------------------------------------------------------
 
 // fire the tank missile
-void missiles_tank_fire(){
+void missiles_tankFire(){
 	missile_t *missile = &missile_array[TANK_MISSILE];
 
 	if (!missile->active){ // no tank missile on screen
@@ -82,14 +81,24 @@ void missiles_tank_fire(){
 //-----------------------------------------------------------------------------
 
 // initiate an alien missile
-void missiles_alien_fire(){
-	int i;
+void missiles_alienFire(uint16_t x, uint16_t y) {
+	uint8_t i = 0;
+
+	// start at i=1 (the tank is 0)
 	for(i=1; i<MISSILE_COUNT; i++){
 		// find a missile that is not already active
 		if (!missile_array[i].active) {
-			// set the initial position of the missile to the center
-			// of a random alien in the bottom row
-			missiles_set_alien_origin(i);
+
+			// Make sure that alien is even living
+			if (!alien_isAlive(x,y)) return;
+
+			// Get the given aliens origin
+			point_t alienOrigin = aliens_getAlienOrigin(x, y);
+
+			// transform alien origin into the origin/tip of the missile
+			alienOrigin.y += (ALIEN_HEIGHT * ALIEN_SCALE);
+			alienOrigin.x += (ALIEN_WIDTH * ALIEN_SCALE)/2;
+			missile_array[i].origin = alienOrigin;
 
 			// draw the symbol to the screen
 			screen_drawSymbol(missile_array[i].symbol_r, missile_array[i].origin,
@@ -107,7 +116,7 @@ void missiles_alien_fire(){
 //-----------------------------------------------------------------------------
 
 // update the missile origin (shift it in the y direction)
-void missiles_shift_origin(missile_t* missile) {
+void shiftMissileOrigin(missile_t* missile) {
 	int8_t dir = (missile->up) ? -1 : 1;
 	missile->origin.y += dir*MISSILE_SHIFT*MISSILE_SCALE;
 }
@@ -135,27 +144,13 @@ void missiles_deactivate(missile_t* missile){
 
 //-----------------------------------------------------------------------------
 
-// set the initial position of the missile to the center
-// of a random alien in the bottom row
-void missiles_set_alien_origin(uint16_t index) {
-	uint16_t r = rand();
-	// todo: change this the be the bottom aliens
-	// NOT just the last row (this will cause a bug later)
-	point_t alien_point = alien_get_origin(r%10, 4);
-	alien_point.y += (ALIEN_HEIGHT * ALIEN_SCALE);
-	alien_point.x += (ALIEN_WIDTH * ALIEN_SCALE)/2;
-	missile_array[index].origin = alien_point;
-}
-
-//-----------------------------------------------------------------------------
-
 point_t missiles_get_tip(missile_t* missile){
 	point_t origin;
 	uint16_t x = missile->origin.x;
 	uint16_t y = missile->origin.y;
 	origin.x = x + 1;
 	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
-	int sym = 1;
+//	int sym = 1;
 //	symbolsize_t size = {.w=1,.h=1};
 //	screen_drawSymbol(&sym, origin, size, 1, SCREEN_COLOR_RED);
 	return origin;
@@ -210,7 +205,7 @@ void missile_alien_impact(missile_t* missile){
 	int y;
 	uint16_t height = missile->origin.y;
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
-		int y_dist = height - alien_get_origin(0,y).y;
+		int y_dist = height - aliens_getAlienOrigin(0,y).y;
 		if(y_dist <= ALIEN_HEIGHT*ALIEN_SCALE){
 			if(missile_kill_alien_in_row(missile, y)){
 				return;
@@ -223,7 +218,7 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 	point_t alien_origin;
 	int x;
 	for(x=0; x<ALIEN_COL_COUNT; x++){
-		alien_origin = alien_get_origin(x,row);
+		alien_origin = aliens_getAlienOrigin(x,row);
 		if(!alien_isAlive(x, row)){
 			continue;
 		}

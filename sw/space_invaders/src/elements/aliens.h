@@ -43,10 +43,10 @@
  * Struct definitions 
  */
 
-typedef struct{
-	const uint32_t* in; // alien "in" bitmap
-	const uint32_t* out; // alien "out" bitmap
-	const symbolsize_t size; // size of alien bitmap
+typedef struct {
+	const uint32_t* in; 		// alien "in" bitmap
+	const uint32_t* out; 		// alien "out" bitmap
+	const symbolsize_t size; 	// size of alien bitmap
 } alien_t;
 
 // array of the 3 types of aliens (elite, infantry, and grunt)
@@ -99,14 +99,17 @@ void aliens_march();
 void aliens_kill(uint16_t index);
 
 // return the origin of the alien at the coordinates 
-// coorinates within the alien block (i.e. row 1, col 2)
-point_t alien_get_origin(uint16_t x, uint16_t y);
+// coordinates within the alien block (i.e. row 1, col 2)
+point_t aliens_getAlienOrigin(uint16_t x, uint16_t y);
 
+// Ask if a particular (x,y) alien is still alive
 bool alien_isAlive(uint16_t x, uint16_t y);
+
+// Convert a particular (x,y) alien to an array index
 uint16_t alien_xy_to_index(uint16_t x , uint16_t y);
 
-// return pointer to alien_lives_matter array
-//bool* alien_getAlienLives();
+// Get a list of the bottom-most aliens
+void aliens_getLowestAliens(uint16_t *xArray, uint16_t *yArray);
 
 // move alien block
 void aliens_left();

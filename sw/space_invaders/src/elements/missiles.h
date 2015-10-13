@@ -40,12 +40,6 @@ typedef struct{
 	const symbolsize_t size;	// size of missile bitmap
 } missile_t;
 
-// function declarations
-void missiles_tank_fire();
-void missiles_move();
-void missiles_alien_fire();
-
-
 // array of all missile types
 static missile_t missile_array[MISSILE_COUNT] = {
 		{
@@ -80,6 +74,16 @@ static missile_t missile_array[MISSILE_COUNT] = {
 
 //-----------------------------------------------------------------------------
 
+// Initialize all the missile objects
 void missiles_init();
+
+// Tell the tank to fire a missile
+void missiles_tankFire();
+
+// update all missile locations
+void missiles_move();
+
+// have the (x,y) alien shoot a missile
+void missiles_alienFire(uint16_t x, uint16_t y);
 
 #endif /* MISSILES_H_ */

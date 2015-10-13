@@ -10,15 +10,15 @@ void tankSM_init() {
 
 void tankSM_tick() {
 	// Tank direction
-	if (pushButtons_LeftPressed()) {
+	if (pushButtons_leftPressed()) {
 		tank_left();
-	} else if (pushButtons_RightPressed()) {
+	} else if (pushButtons_rightPressed()) {
 		tank_right();
 	}
 
 	// Tank shooting
-	if (pushButtons_CenterPressed()) {
-		missiles_tank_fire();
+	if (pushButtons_centerPressed()) {
+		missiles_tankFire();
 	}
 }
 

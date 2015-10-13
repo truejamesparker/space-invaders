@@ -3,6 +3,10 @@
 static bool alien_lives_matter[ALIEN_COUNT] = { false };
 static point_t alienOrigins[ALIEN_COUNT];
 
+// Holds the lowest 11 living aliens (used for shooting)
+static uint16_t lowestAlien_Xs[ALIEN_COL_COUNT];
+static uint16_t lowestAlien_Ys[ALIEN_COL_COUNT];
+
 // global var indicates which position the aliens
 // are in (flapping up vs flapping in)
 static bool flapIn = false;
@@ -15,8 +19,7 @@ typedef struct {
 	uint16_t y;
 } kill_t;
 
-// implementation of the struct above
-// nicknamed "the kill log"
+// implementation of the struct above, nicknamed "the kill log"
 static kill_t kill_log = {
 		.kill = false
 };
@@ -28,10 +31,10 @@ static bool _aliensMarchingRight = true;
 // function definitions
 void initAlienOrigins();
 void initLivesArray();
-void aliens_draw();
-void aliens_kill_cleanup();
-point_t alien_get_origin(uint16_t x, uint16_t y);
-void alien_shiftOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift);
+void drawAliens();
+void cleanupAlienKill();
+void shiftAlienOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift);
+void updateLowestLivingAliens(uint16_t x, uint16_t y);
 
 //-----------------------------------------------------------------------------
 
@@ -43,7 +46,7 @@ void aliens_init() {
 	initAlienOrigins();
 
 	// draw the aliens!
-	aliens_draw();
+	drawAliens();
 }
 
 //-----------------------------------------------------------------------------
@@ -54,7 +57,7 @@ void aliens_march_dir(uint16_t dir){
 	uint16_t x, y;
 	int16_t x_shift = 0, y_shift = 0;
 
-	aliens_kill_cleanup(); // erase any explosions (kills) before moving on
+	cleanupAlienKill(); // erase any explosions (kills) before moving on
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
@@ -93,7 +96,7 @@ void aliens_march_dir(uint16_t dir){
 			// -------------- possibly backward x ----------------
 
 			// Grab the alien origin for this given alien (col,row)
-			point_t alienOrigin = alien_get_origin(x, y);
+			point_t alienOrigin = aliens_getAlienOrigin(x, y);
 
 			// Tell the screen to shift this element by x_shift, y_shift
 			if(ALIEN_ALIVE(x,y)){
@@ -103,7 +106,7 @@ void aliens_march_dir(uint16_t dir){
 
 
 			// update internal alien origin
-			alien_shiftOrigin(x, y, x_shift*ALIEN_SCALE, y_shift*ALIEN_SCALE);
+			shiftAlienOrigin(x, y, x_shift*ALIEN_SCALE, y_shift*ALIEN_SCALE);
 
 			// ---------------------------------------------------
 
@@ -122,9 +125,9 @@ void aliens_march_dir(uint16_t dir){
 
 void aliens_march(){
 	// origin of leftmost alien
-	point_t left_origin = alien_get_origin(0, 0);
+	point_t left_origin = aliens_getAlienOrigin(0, 0);
 	// origin of rightmost alien
-	point_t right_origin = alien_get_origin(ALIEN_COL_COUNT-1, 0);
+	point_t right_origin = aliens_getAlienOrigin(ALIEN_COL_COUNT-1, 0);
 
 	// if i'm marching right and my rightmost part of me will be in the
 	// margin, drop down onto the next row, change marching direction to left
@@ -154,7 +157,7 @@ void aliens_march(){
 
 void aliens_kill(uint16_t index) {
 	// If there are any exploded aliens, clean up the mess
-	aliens_kill_cleanup();
+	cleanupAlienKill();
 
 	// kill the alien in memory
 	alien_lives_matter[index] = false;
@@ -164,7 +167,7 @@ void aliens_kill(uint16_t index) {
 	uint16_t x = index % (ALIEN_COL_COUNT);
 
 	// Get the origin of the alien we want to kill
-	point_t origin = alien_get_origin(x, y);
+	point_t origin = aliens_getAlienOrigin(x, y);
 
 	// draw the explosion in place of that particular alien
 	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
@@ -177,6 +180,9 @@ void aliens_kill(uint16_t index) {
 	kill_log.kill = true;
 	kill_log.x = x;
 	kill_log.y = y;
+
+	// Also, update which are the lowest living aliens
+	updateLowestLivingAliens(x, y);
 }
 
 //-----------------------------------------------------------------------------
@@ -212,18 +218,36 @@ bool alien_isAlive(uint16_t x, uint16_t y) {
 	return ALIEN_ALIVE(x,y);
 }
 
+//-----------------------------------------------------------------------------
+
 uint16_t alien_xy_to_index(uint16_t x , uint16_t y){
 	return ALIEN_XY_TO_INDEX(x,y);
 }
 
+//-----------------------------------------------------------------------------
 
+point_t aliens_getAlienOrigin(uint16_t x, uint16_t y) {
+	point_t origin = alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
+	return origin;
+}
+
+//-----------------------------------------------------------------------------
+
+void aliens_getLowestAliens(uint16_t *xArray, uint16_t *yArray) {
+	uint8_t i = 0;
+	for (i=0; i<ALIEN_COL_COUNT; i++) {
+		// deep copy the lowest living alien coordinates
+		xArray[i] = lowestAlien_Xs[i];
+		yArray[i] = lowestAlien_Ys[i];
+	}
+}
 
 //-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
 // draw all the aliens as they currently appear (only living aliens)
-void aliens_draw() {
+void drawAliens() {
 	uint16_t row = 0, col = 0;
 
 	// For every alien out of the all the aliens in the whole wide world...
@@ -232,7 +256,7 @@ void aliens_draw() {
 		for (col = 0; col < ALIEN_COL_COUNT; col++) {
 
 			// Convert Alien Coordinates (col,row) into an absolute point (x,y)
-			point_t alienOrigin = alien_get_origin(col, row);
+			point_t alienOrigin = aliens_getAlienOrigin(col, row);
 
 			// If the alien is dead, color it the screen, else alien color
 			uint32_t color = (ALIEN_ALIVE(col,row)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
@@ -267,16 +291,23 @@ void initAlienOrigins() {
 					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + 3*ALIEN_HEIGHT*ALIEN_SCALE
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;
+
+			// set the lowest alien coordinate arrays
+			if (y == (ALIEN_ROW_COUNT-1)) {
+				// I'm on the last row
+				lowestAlien_Xs[x] = x;
+				lowestAlien_Ys[x] = y;
+			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 
-void aliens_kill_cleanup(){
+void cleanupAlienKill() {
 	if(kill_log.kill){
 		// Get the origin of the already exploded alien to clean up.
-		point_t origin = alien_get_origin(kill_log.x, kill_log.y);
+		point_t origin = aliens_getAlienOrigin(kill_log.x, kill_log.y);
 
 		// Blank the rectangle that the exploded alien was
 		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
@@ -289,18 +320,7 @@ void aliens_kill_cleanup(){
 
 //-----------------------------------------------------------------------------
 
-point_t alien_get_origin(uint16_t x, uint16_t y) {
-	point_t origin = alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
-	return origin;
-}
-
-bool* alien_getAlienLives(){
-	return alien_lives_matter;
-}
-
-//-----------------------------------------------------------------------------
-
-void alien_shiftOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift) {
+void shiftAlienOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift) {
 	point_t *origin = &alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
 
 	// Change the x and y in place (the actual value in the array)
@@ -309,3 +329,23 @@ void alien_shiftOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift) {
 }
 
 //-----------------------------------------------------------------------------
+
+void updateLowestLivingAliens(uint16_t x, uint16_t y) {
+	// If no alien exists in column, setting the y to 0 is fine because
+	// the missiles_alienFire function will check if that spot is living
+	uint8_t i = 0;
+
+	if (y == (ALIEN_ROW_COUNT-1)) { // If I'm a bottom alien
+		i = 1; // start looking directly above me
+
+		// while the alien above me is dead, but I'm still looking within range
+		while(!ALIEN_ALIVE(x, (y-i)) && (y-i) > 0) i++;
+
+		// here, I either found an alien above me, or I got out of range
+		// Because the above loop has the condition that (y-i) is strictly
+		// greater than 0, (y-i) will never underflow to MAX_SHORT.
+		// So the following expression is always safe.
+		lowestAlien_Ys[x] = (y-i);
+
+	}
+}

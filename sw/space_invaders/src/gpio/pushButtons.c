@@ -17,31 +17,31 @@ void pushButtons_init() {
 
 // ----------------------------------------------------------------------------
 
-bool pushButtons_LeftPressed() {
+bool pushButtons_leftPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_LEFT_MASK;
 }
 
 // ----------------------------------------------------------------------------
 
-bool pushButtons_RightPressed() {
+bool pushButtons_rightPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_RIGHT_MASK;
 }
 
 // ----------------------------------------------------------------------------
 
-bool pushButtons_DownPressed() {
+bool pushButtons_downPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_DOWN_MASK;
 }
 
 // ----------------------------------------------------------------------------
 
-bool pushButtons_UpPressed() {
+bool pushButtons_upPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_UP_MASK;
 }
 
 // ----------------------------------------------------------------------------
 
-bool pushButtons_CenterPressed() {
+bool pushButtons_centerPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_CENTER_MASK;
 }
 
