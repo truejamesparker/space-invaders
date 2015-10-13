@@ -64,8 +64,8 @@ void bunkers_init_origins(){
 		bunker->size = bunker_size;
 		bunker->status=0;
 
-		bunker->sub_points = (point_t*)malloc(4);
-		bunkers_init_sub_origins(origin, bunker->sub_points);
+//		bunker->sub_points = (point_t*)malloc(4);
+//		bunkers_init_sub_origins(origin, bunker->sub_points);
 
 	}
 }
