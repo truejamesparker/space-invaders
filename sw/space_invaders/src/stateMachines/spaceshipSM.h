@@ -6,7 +6,7 @@
 
 #include "../elements/spaceship.h"
 
-#define SM_PERIOD_SPACESHIP_MS	60
+#define SM_PERIOD_SPACESHIP_MS	15
 
 // How many times out of 1000 do you want the
 // spaceship to be started every SM period?
