@@ -12,7 +12,7 @@
 
 // How many times out of 100 do you want a missile
 // to be fired every SM tick?
-#define ALIEN_BLOCK_MISSILE_PROBABILITY		40
+#define ALIEN_BLOCK_MISSILE_PROBABILITY		45
 
 void alienBlockSM_tick();
 
