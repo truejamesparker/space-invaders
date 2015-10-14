@@ -4,8 +4,10 @@
 
 
 static bunker_t bunker_array[4];
-static point_t bunker_sub_origins[40];
-static int32_t bunker_state[4] = {0,0,0,0};
+
+// array of three different types of bunker damage patterns
+static const uint32_t* bunker_damage_symbols[4] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6, bunkerDamage3_6x6};
+
 
 // size of bunker bitmap
 static const symbolsize_t bunker_size = {
@@ -13,6 +15,9 @@ static const symbolsize_t bunker_size = {
 		.h = 18
 };
 
+
+//delete me
+const uint32_t colors[4] = {SCREEN_COLOR_RED, SCREEN_COLOR_YELLOW, SCREEN_COLOR_WHITE, SCREEN_COLOR_BLACK};
 
 void bunkers_draw();
 void bunkers_init_origins();
@@ -32,15 +37,16 @@ void bunkers_init() {
 
 
 uint8_t bunker_point_status(uint8_t bunker_index, uint8_t sub_index){
-	return (bunker_array[bunker_index].status >> sub_index) & 0x7;
+	return (bunker_array[bunker_index].status >> sub_index*3) & 0x7;
 }
 
 void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	uint32_t status_all = bunker_array[bunker_index].status;
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
 	status++;
-	uint32_t bit_mask = (0x7<<sub_index);         // (mask of the bits you want to set)
-	status_all = (status_all & (~bit_mask)) | (status<<sub_index);
+	xil_printf("bunker %d, block %d status: %d\n\r", bunker_index, sub_index, status);
+	uint32_t bit_mask = (0x7<<sub_index*3);         // (mask of the bits you want to set)
+	status_all = (status_all & (~bit_mask)) | (status<<sub_index*3);
 	bunker_array[bunker_index].status = status_all;
 }
 
@@ -60,12 +66,14 @@ bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index){
 void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_t* bunker = &bunker_array[index];
 	point_t point = bunker->sub_points[sub_index];
-	uint32_t* symbol = bunker_damage_symbols[bunker_point_status(index, sub_index)];
+	uint8_t status = bunker_point_status(index, sub_index);
+	uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
 	// draw the symbol to the screen
-	screen_drawSymbol(symbol, point, bunker_damage_size, 1, SCREEN_BG_COLOR);
+//	uint32_t color = colors[status];
+	screen_bgDrawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
+	screen_drawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
 	// also update the background frame (used for reference only)
-	screen_bgDrawSymbol(symbol, point, bunker_damage_size, 1, SCREEN_BG_COLOR);
 }
 
 
@@ -104,6 +112,7 @@ void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
 			}
 			x_offset += BUNKER_SUB_ORIGIN_WIDTH;
 		}
+		x_offset = 0;
 		y_offset += BUNKER_SUB_ORIGIN_HEIGHT;
 	}
 }

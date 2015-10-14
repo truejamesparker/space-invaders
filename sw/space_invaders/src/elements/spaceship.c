@@ -102,6 +102,10 @@ void spaceship_kill() {
 	flashNumber = 2*SPACESHIP_SCORE_FLASHES;
 }
 
+point_t spaceship_get_origin(){
+	return origin;
+}
+
 // ----------------------------------------------------------------------------
 // Private Helper Methods
 // ----------------------------------------------------------------------------

@@ -3,6 +3,8 @@
 // some missiles "wiggle" as they move across the screen.
 // This global defines which state we're in.
 static bool wobble;
+static uint16_t bunker_y;
+static uint16_t alien_block_y;
 
 // function declarations
 void shiftMissileOrigin(missile_t* missile);
@@ -25,6 +27,8 @@ void missiles_init() {
 	for (i=0; i<MISSILE_COUNT; i++) {
 		// Turn off all missiles
 		missile_array[i].active = false;
+		bunker_y = bunkers_get_bunker(0).origin.y;
+		alien_block_y = aliens_get_lowest_y();
 	}
 }
 
@@ -164,14 +168,20 @@ point_t missiles_get_tip(missile_t* missile){
 //-----------------------------------------------------------------------------
 
 void missiles_check_impact(missile_t* missile){
+	point_t tip = missiles_get_tip(missile);
 	if(missile->up){
 		// Then it's a tank's missile
-		missile_bunker_impact(missile);
-		missile_alien_impact(missile);
+		if(tip.y > aliens_get_lowest_y()){
+			missile_bunker_impact(missile);
+			missile_alien_impact(missile);
+		}
 	} else {
 		// Then it's an alien's missile
-		missile_tank_impact(missile);
-		missile_bunker_impact(missile);
+		// Don't check if the missile is higher than the bunkers
+		if(tip.y < bunker_y){
+			missile_tank_impact(missile);
+			missile_bunker_impact(missile);
+		}
 	}
 }
 
@@ -188,22 +198,16 @@ void missile_bunker_impact(missile_t* missile){
 	for(i=0; i<BUNKER_COUNT; i++){
 		bunker_t bunker = bunkers_get_bunker(i);
 		if(missile_in_block(missile, bunker.origin, bunker.size.w*BUNKER_SCALE, bunker.size.h*BUNKER_SCALE)){
-			xil_printf("missile in bunker\n\r");
 			for(j=0; j<BUNKER_SUB_ORIGIN_COUNT; j++){
-//				xil_printf("sub point (%d, %d), bunker point (%d, %d)\n\r", bunker.sub_points[i].x, bunker.sub_points[i].y,
-//						bunker.origin.x, bunker.origin.y);
 				if(missile_in_block(missile, bunker.sub_points[j], BUNKER_SUB_ORIGIN_WIDTH, BUNKER_SUB_ORIGIN_HEIGHT)){
-					xil_printf("in sub block\n\r");
 					if(!bunker_point_eroded(i,j)){
 						bunkers_damage(i, j);
 						missiles_deactivate(missile);
 						return;
 					}
-
 				}
 			}
 		}
-
 	}
 }
 
@@ -247,9 +251,13 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 //-----------------------------------------------------------------------------
 
 void missile_tank_impact(missile_t* missile){
+	point_t tip = missiles_get_tip(missile);
+	if (screen_getScreenColor(tip.x, tip.y)!=TANK_COLOR){
+		return;
+	}
 	point_t tank_origin = tank_get_origin();
-	int dist = (missile->origin.x - tank_origin.x);
-	if(dist < (TANK_WIDTH*TANK_SCALE) && dist > 0){
+	bool hit = missile_in_block(missile, tank_origin, TANK_WIDTH*TANK_SCALE, TANK_HEIGHT*TANK_SCALE);
+	if(hit){
 		tank_kill();
 	}
 }
@@ -258,10 +266,12 @@ void missile_tank_impact(missile_t* missile){
 
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height){
 	bool up = missile->up;
-	int x_dist = (missile->origin.x - target_origin.x);
-	int y_dist = up ? (missile->origin.y - target_origin.y) : (target_origin.y - missile->origin.y);
+	point_t tip = missiles_get_tip(missile);
+	int x_dist = (tip.x - target_origin.x);
+//	int y_dist = up ? (tip.y - target_origin.y) : (target_origin.y - tip.y);
+	int y_dist = (tip.y - target_origin.y);
 
-	if (x_dist < target_width && x_dist > 0 && y_dist < target_height && y_dist > -MISSILE_HEIGHT*MISSILE_SCALE){
+	if ((x_dist <= target_width) && (x_dist >= 0) && (y_dist < target_height) && (y_dist > -MISSILE_HEIGHT*MISSILE_SCALE)){
 		return true;
 	}
 	else{

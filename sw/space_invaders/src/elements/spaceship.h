@@ -40,4 +40,6 @@ void spaceship_move();
 // kill the spaceship, flashing the points in its place
 void spaceship_kill();
 
+point_t spaceship_get_origin();
+
 #endif /* SPACESHIFT_H_ */

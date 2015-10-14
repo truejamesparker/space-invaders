@@ -384,3 +384,15 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 	// the lowest alien is still lowestAlien_Ys[x].
 
 }
+
+uint16_t aliens_get_lowest_y(){
+	uint8_t i, la;
+	uint16_t y=0;
+	for(i=0; i<11; i++){
+		la = lowestAlien_Ys[i];
+		if(la>y){
+			y = la;
+		}
+	}
+	return y;
+}

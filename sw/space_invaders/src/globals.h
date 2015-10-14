@@ -289,40 +289,40 @@ static const uint32_t bunker_24x18[] = {
 // strikes one of these blocks, you erode the block as you sequence through
 // these patterns.
 
-static const uint32_t bunkerDamage0_6x6[] = {
-		packword6(1,1,0,0,0,0),
-		packword6(1,1,1,0,0,0),
-		packword6(1,1,1,1,0,0),
-		packword6(1,1,1,1,1,0),
-		packword6(0,0,1,1,0,0),
-		packword6(0,0,0,0,1,0)
+static const int bunkerDamage0_6x6[] = {
+	packword6(0,1,1,0,0,0),
+	packword6(0,0,0,0,0,1),
+	packword6(1,1,0,1,0,0),
+	packword6(1,0,0,0,0,0),
+	packword6(0,0,1,1,0,0),
+	packword6(0,0,0,0,1,0)
 };
 
-static const uint32_t bunkerDamage1_6x6[] = {
-		packword6(1,1,1,0,1,0),
-		packword6(1,0,1,0,0,1),
-		packword6(1,1,0,1,1,1),
-		packword6(1,0,0,0,0,0),
-		packword6(0,1,1,1,0,1),
-		packword6(0,1,1,0,1,0)
+static const int bunkerDamage1_6x6[] = {
+	packword6(1,1,1,0,1,0),
+	packword6(1,0,1,0,0,1),
+	packword6(1,1,0,1,1,1),
+	packword6(1,0,0,0,0,0),
+	packword6(0,1,1,1,0,1),
+	packword6(0,1,1,0,1,0)
 };
 
-static const uint32_t bunkerDamage2_6x6[] = {
-		packword6(1,1,1,1,1,1),
-		packword6(1,0,1,1,0,1),
-		packword6(1,1,0,1,1,1),
-		packword6(1,1,0,1,1,0),
-		packword6(0,1,1,1,0,1),
-		packword6(1,1,1,1,1,1)
-};
+static const int bunkerDamage2_6x6[] = {
+	packword6(1,1,1,1,1,1),
+	packword6(1,0,1,1,0,1),
+	packword6(1,1,0,1,1,1),
+	packword6(1,1,0,1,1,0),
+	packword6(0,1,1,1,0,1),
+	packword6(1,1,1,1,1,1)
+	};
 
-static const uint32_t bunkerDamage3_6x6[] = {
-		packword6(1,1,1,1,1,1),
-		packword6(1,1,1,1,1,1),
-		packword6(1,1,1,1,1,1),
-		packword6(1,1,1,1,1,1),
-		packword6(1,1,1,1,1,1),
-		packword6(1,1,1,1,1,1)
+static const int bunkerDamage3_6x6[] = {
+	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1)
 };
 
 static const uint32_t word_score_30x5[] = {

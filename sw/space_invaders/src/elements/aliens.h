@@ -134,6 +134,7 @@ void aliens_left();
 void aliens_right();
 void aliens_up();
 void aliens_down();
+uint16_t aliens_get_lowest_y();
 
 
 #endif /* ALIENS_H_ */

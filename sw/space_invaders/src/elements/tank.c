@@ -93,7 +93,7 @@ bool tank_isInMargin(tankdir_t tankDirection) {
 }
 
 void tank_kill(){
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size, TANK_SCALE, TANK_COLOR);
+	screen_drawSymbol(tank_15x8, tank_origin, tank_size, TANK_SCALE, SCREEN_BG_COLOR);
 }
 
 //-----------------------------------------------------------------------------
