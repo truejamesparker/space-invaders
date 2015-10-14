@@ -349,6 +349,7 @@ static const uint32_t word_game_24x5[] = {
 	packword24(1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,1,1,1,0,0,0)
 };
 
+static const symbolsize_t numbersSize = { .w=5, .h=5 };
 static const uint32_t numbers_5x5[][5] = {
 		{
 				// 0

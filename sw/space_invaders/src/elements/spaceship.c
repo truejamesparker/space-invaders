@@ -9,6 +9,14 @@ static point_t origin = { .x = 0, .y = SPACESHIP_ORIGIN_Y };
 // how big are we?
 static symbolsize_t size = { .w = SPACESHIP_WIDTH, .h = SPACESHIP_HEIGHT };
 
+// current random score decisions
+uint8_t scoreArray[SPACESHIP_SCORE_MAX_LEN];
+uint8_t scoreArrayLength = 0;
+
+// current score flash number
+uint8_t flashNumber = 0;
+bool flashOn = true; // flashOn == numbers, flashOff == SCREEN_BG_COLOR
+
 int8_t chooseRandomShiftDirection();
 
 // ----------------------------------------------------------------------------
@@ -44,8 +52,54 @@ void spaceship_move() {
 
 		// shift our origin
 		origin.x += (shiftDir*SPACESHIP_SHIFT_X*SPACESHIP_SCALE);
+	} else if (flashNumber) {
+		// we are in flash mode!
 
+		// Flashing is really just drawing over with alternating colors
+		uint32_t color = (flashOn) ? SPACESHIP_SCORE_COLOR : SCREEN_BG_COLOR;
+
+		text_drawNumberString(scoreArray, scoreArrayLength, SPACESHIP_SCORE_MAX_LEN,
+				origin, SPACESHIP_SCORE_SCALE, color);
+
+		// next time we alternate color
+		flashOn = !flashOn;
+
+		// we did a flash, so decrement how many we have left
+		flashNumber--;
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+void spaceship_kill() {
+	// You can't kill a dead spaceship
+	if (!shiftDir) return;
+
+	// stop the spaceship from moving
+	shiftDir = 0;
+
+	// erase spaceship
+	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SCREEN_BG_COLOR);
+
+	// pick a random score between its bounds
+	// (rand()%(max-min+1))+min
+	uint32_t r = (rand()%(
+					(SPACESHIP_SCORE_MAX/SPACESHIP_SCORE_STEP)
+				   -(SPACESHIP_SCORE_MIN/SPACESHIP_SCORE_STEP)+1))
+				   +(SPACESHIP_SCORE_MIN/SPACESHIP_SCORE_STEP);
+
+	// calculate a valid score
+	uint32_t score = r*SPACESHIP_SCORE_STEP;
+
+	// Increase score!
+	gameScreen_increaseScore(score);
+
+	/** set up the score flashing **/
+	// Get score info as an array so we can loop through each digit
+	text_explodeNumber(score, SPACESHIP_SCORE_MAX_LEN, scoreArray, &scoreArrayLength);
+
+	// Set the flashNumber to twice the flash count (1 flash is both on and off)
+	flashNumber = 2*SPACESHIP_SCORE_FLASHES;
 }
 
 // ----------------------------------------------------------------------------
@@ -57,5 +111,3 @@ int8_t chooseRandomShiftDirection() {
 	int8_t rnd = rand() % 2; // (rand()%(max-min+1))+min
 	return (rnd) ? SCREEN_SHIFT_LEFT : SCREEN_SHIFT_RIGHT;
 }
-
-// ----------------------------------------------------------------------------

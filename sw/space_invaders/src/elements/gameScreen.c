@@ -10,7 +10,6 @@ static uint8_t currentLives = 0;
 void drawFloor();
 void drawScore();
 void drawLives();
-void getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength);
 uint32_t setScore(uint32_t score);
 uint8_t setLives(uint8_t lives);
 
@@ -118,61 +117,16 @@ uint8_t setLives(uint8_t lives) {
 
 uint32_t setScore(uint32_t score) {
 	point_t origin = { .x = SCORE_VAL_ORIGIN_X, .y = SCORE_VAL_ORIGIN_Y };
-	symbolsize_t size = { .w = SCORE_VAL_WIDTH, .h = SCORE_VAL_HEIGHT };
-	uint8_t i = 0;
 
 	// Get score info as an array so we can loop through each digit
-	getScoreAsArray(score, currentScoreArray, &currentScoreLength);
+	text_explodeNumber(score, SCORE_VAL_MAX_LEN, currentScoreArray, &currentScoreLength);
 
-	for (i=0; i<SCORE_VAL_MAX_LEN; i++) {
-
-		// Find out if this digit should be drawn or not
-		uint32_t color = (i<currentScoreLength) ? SCORE_VAL_COLOR : SCREEN_BG_COLOR;
-
-		uint32_t digit = currentScoreArray[i];
-		screen_drawSymbol(numbers_5x5[digit], origin, size, SCORE_VAL_SCALE, color);
-
-		// Shift the origin over to the next spot
-		origin.x += (SCORE_VAL_WIDTH+SCORE_VAL_PADDING)*SCORE_VAL_SCALE;
-	}
+	// actually draw the exploded array to the screen
+	text_drawNumberString(currentScoreArray, currentScoreLength, SCORE_VAL_MAX_LEN,
+					origin, SCORE_VAL_SCALE, SCORE_VAL_COLOR);
 
 	// save score for next time
 	currentScore = score;
 
 	return currentScore;
-}
-
-// ----------------------------------------------------------------------------
-
-void getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength) {
-
-	uint8_t tmpArray[SCORE_VAL_MAX_LEN] = { 0 };
-	uint8_t count = 0;
-	int8_t i = (SCORE_VAL_MAX_LEN-1); // A backward counter to tell us which digit
-
-	// If you passed in a 0 score, make the appropriate array/length
-	if (score == 0) {
-		scoreArray[0] = 0;
-		*scoreLength = 1;
-		return;
-	}
-
-	// while there's still a score to explode out into an array
-	while(score) {
-		// Grab the digit
-		tmpArray[i] = (score % 10);
-
-		// Divide by 10 to get the next digit in the one's spot
-		score /= 10;
-
-		i--;
-		count++;
-	}
-
-	uint8_t j = 0;
-	// Push the tmpArray to the left, so the 0's are at the end
-	for (j=0; j<count; j++) scoreArray[j] = tmpArray[++i];
-
-	// Let the caller now how many digits there are
-	*scoreLength = count;
 }

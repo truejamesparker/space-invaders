@@ -151,6 +151,10 @@ void uartControl_handle(char key) {
 			}
 			break;
 
+		case 'K':
+			xil_printf("Killing the spaceship\r\n");
+			spaceship_kill();
+
 		default:
 			break;
 	}

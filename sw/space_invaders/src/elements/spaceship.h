@@ -4,8 +4,11 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 #include "../globals.h"
+#include "../text/text.h"
 #include "missiles.h"
 
 #define SPACESHIP_COLOR			SCREEN_COLOR_RED
@@ -19,10 +22,22 @@
 #define SPACESHIP_SHIFT_X		4
 #define SPACESHIP_SHIFT_Y		0
 
+// scoring
+#define SPACESHIP_SCORE_COLOR		SCREEN_COLOR_WHITE
+#define SPACESHIP_SCORE_SCALE		2
+#define SPACESHIP_SCORE_FLASHES		3
+#define SPACESHIP_SCORE_MAX_LEN		3
+#define SPACESHIP_SCORE_MAX			350
+#define SPACESHIP_SCORE_MIN			50
+#define SPACESHIP_SCORE_STEP		50
+
 // Kick off the spaceship, pick a direction to go and start drawing
 void spaceship_start();
 
 // shift the spaceship in the direction it is going
 void spaceship_move();
+
+// kill the spaceship, flashing the points in its place
+void spaceship_kill();
 
 #endif /* SPACESHIFT_H_ */
