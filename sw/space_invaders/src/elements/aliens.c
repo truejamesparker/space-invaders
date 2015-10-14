@@ -67,6 +67,8 @@ void aliens_march_dir(uint16_t dir){
 	aliens_cleanupKills();  // erase any explosions (kills) before moving on
 							// this causes no explosion when a alien is killed
 							// right before it's about to march
+							// The reason this needs to be here is because an
+							// artifact is left if killed and then aliens move.
 
 	// Set the (x,y) shifts according to dir input
 	if (dir == ALIEN_MARCH_DOWN) {
