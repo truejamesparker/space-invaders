@@ -51,7 +51,6 @@ void aliens_init() {
 
 //-----------------------------------------------------------------------------
 
-
 // shift aliens in any direction
 void aliens_march_dir(uint16_t dir){
 	uint16_t x, y;
@@ -121,7 +120,7 @@ void aliens_march_dir(uint16_t dir){
 	}
 }
 
-
+//-----------------------------------------------------------------------------
 
 void aliens_march(){
 	// origin of leftmost alien
@@ -335,17 +334,26 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 	// the missiles_alienFire function will check if that spot is living
 	uint8_t i = 0;
 
-	if (y == (ALIEN_ROW_COUNT-1)) { // If I'm a bottom alien
+	if (y == lowestAlien_Ys[x]) { // If I'm the lowest living alien
 		i = 1; // start looking directly above me
 
 		// while the alien above me is dead, but I'm still looking within range
 		while(!ALIEN_ALIVE(x, (y-i)) && (y-i) > 0) i++;
 
-		// here, I either found an alien above me, or I got out of range
-		// Because the above loop has the condition that (y-i) is strictly
-		// greater than 0, (y-i) will never underflow to MAX_SHORT.
-		// So the following expression is always safe.
-		lowestAlien_Ys[x] = (y-i);
+		// Because of the starting condition of i, we need to subtract
+		// one from i so that we don't underflow lowestAlien_Ys when
+		// we kill the alien at position '0'. (We want it to stay 0)
+		//
+		// uint16_t is promoted to an int for this subtraction.
+		// i.e, (unsigned)0 - (unsigned)1 == -1
+		if ((y-i) < 0) i--;
 
+		// here, I either found an alien above me, or I got out of range
+		// Due to the previous check, this expression is always safe.
+		lowestAlien_Ys[x] = (y-i);
 	}
+	// If I'm not the lowest alien, that means you just
+	// killed an alien above a living alien. Thus,
+	// the lowest alien is still lowestAlien_Ys[x].
+
 }
