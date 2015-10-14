@@ -126,6 +126,9 @@ void aliens_getLowestAliens(uint16_t *xArray, uint16_t *yArray);
 // How many aliens are still alive?
 uint32_t aliens_areLiving();
 
+// clean up the mess of dead aliens
+void aliens_cleanupKills();
+
 // move alien block
 void aliens_left();
 void aliens_right();

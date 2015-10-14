@@ -97,6 +97,7 @@ void uartControl_handle(char key) {
 			aliens_down();
 			break;
 		case 'c':
+			missiles_init();
 			screen_clear();
 			gameScreen_init();
 			aliens_init();
