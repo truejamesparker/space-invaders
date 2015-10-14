@@ -85,13 +85,13 @@ void missiles_tankFire(){
 bool missiles_alienFire(uint16_t x, uint16_t y) {
 	uint8_t i = 0;
 
+	// First off, make sure that alien is even living
+	if (!alien_isAlive(x,y)) return false;
+
 	// start at i=1 (the tank is 0)
 	for(i=1; i<MISSILE_COUNT; i++){
 		// find a missile that is not already active
 		if (!missile_array[i].active) {
-
-			// Make sure that alien is even living
-			if (!alien_isAlive(x,y)) return false;
 
 			// Get the given aliens origin
 			point_t alienOrigin = aliens_getAlienOrigin(x, y);
