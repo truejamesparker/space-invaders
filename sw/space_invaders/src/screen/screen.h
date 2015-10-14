@@ -44,7 +44,7 @@
 #define FRAME_BUFFER_0_ADDR 0xC1000000
 
 // For debugging positions, sizes and shifts
-#define SCREEN_SHOW_MARGINS 1
+#define SCREEN_SHOW_MARGINS 0
 #define SCREEN_SHIFT_BOX	0
 #define SCREEN_SHOW_ORIGIN	0
 
