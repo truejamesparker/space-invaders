@@ -55,9 +55,11 @@ void uartControl_handle(char key) {
 			break;
 		case '3': // shoot
 			xil_printf("alien shoot\r\n");
-			uint16_t x = (rand()%11);
-			uint16_t y = (rand()%4);
-			missiles_alienFire(x,y);
+			uint16_t Xs[ALIEN_COL_COUNT];
+			uint16_t Ys[ALIEN_COL_COUNT];
+			aliens_getLowestAliens(Xs, Ys);
+			uint16_t x = (rand()%ALIEN_COL_COUNT);
+			missiles_alienFire(Xs[x], Ys[x]);
 			break;
 
 
@@ -128,7 +130,10 @@ void uartControl_handle(char key) {
 
 		case '.':
 			spaceship_start();
+			break;
 
+		case 'l':
+			xil_printf("Here are the lowest living aliens:\r\n");
 			uint16_t xs[ALIEN_COL_COUNT] = { 0 };
 			uint16_t ys[ALIEN_COL_COUNT] = { 0 };
 			aliens_getLowestAliens(xs, ys);
@@ -138,8 +143,6 @@ void uartControl_handle(char key) {
 				xil_printf("Lowest Alien: (%d, %d)\r\n", xs[i], ys[i]);
 			}
 
-
-			spaceship_start();
 			break;
 
 		default:

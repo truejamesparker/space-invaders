@@ -54,7 +54,7 @@ void spaceship_move() {
 
 int8_t chooseRandomShiftDirection() {
 	// random number between 0 and 1
-	int8_t rnd = rand() % 2; // (rand()%(max-min))+min
+	int8_t rnd = rand() % 2; // (rand()%(max-min+1))+min
 	return (rnd) ? SCREEN_SHIFT_LEFT : SCREEN_SHIFT_RIGHT;
 }
 
