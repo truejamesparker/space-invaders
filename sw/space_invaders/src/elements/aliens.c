@@ -20,9 +20,7 @@ typedef struct {
 } kill_t;
 
 // implementation of the struct above, nicknamed "the kill log"
-static kill_t kill_log = {
-		.kill = false
-};
+static kill_t kill_log = { .kill = false };
 
 // keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
@@ -171,6 +169,9 @@ void aliens_kill(uint16_t index) {
 	// draw the explosion in place of that particular alien
 	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
 						ALIEN_SCALE, SCREEN_COLOR_WHITE);
+
+	// Increase score!
+	gameScreen_increaseScore(ALIEN_SCORE_VALUE);
 
 	// set up the global kill log to know which area needs to be
 	// cleaned up on next kill. Updates on the next march happen

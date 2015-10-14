@@ -1,8 +1,8 @@
 #include "uartControl.h"
 
-// for debugging the score/lives
-static uint8_t currentLives = LIVES_MAX;
-static uint32_t currentScore = 0;
+// for debugging
+static uint8_t lives;
+static uint32_t score;
 
 static uint16_t getint();
 
@@ -105,27 +105,23 @@ void uartControl_handle(char key) {
 			break;
 
 		case '/':
-			if (currentLives == 0) return;
-			gameScreen_setLives(--currentLives);
-			xil_printf("Setting lives: %d\r\n", currentLives);
+			lives = gameScreen_increaseLives(-1);
+			xil_printf("Setting lives: %d\r\n", lives);
 			break;
 
 		case '*':
-			if (currentLives == LIVES_MAX) return;
-			gameScreen_setLives(++currentLives);
-			xil_printf("Setting lives: %d\r\n", currentLives);
+			lives = gameScreen_increaseLives(1);
+			xil_printf("Setting lives: %d\r\n", lives);
 			break;
 
 		case '-':
-			if (currentScore == 0) return;
-			gameScreen_setScore(--currentScore);
-			xil_printf("Setting score: %d\r\n", currentScore);
+			score = gameScreen_increaseScore(-1);
+			xil_printf("Setting score: %d\r\n", score);
 			break;
 
 		case '+':
-			if (currentScore == SCORE_VAL_MAX) return;
-			gameScreen_setScore(++currentScore);
-			xil_printf("Setting score: %d\r\n", currentScore);
+			score = gameScreen_increaseScore(1);
+			xil_printf("Setting score: %d\r\n", score);
 			break;
 
 		case '.':

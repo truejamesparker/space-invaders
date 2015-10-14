@@ -23,6 +23,9 @@
 #define ALIEN_PADDING_X			(ALIEN_SCALE*4)
 #define ALIEN_PADDING_Y			(ALIEN_SCALE*5)
 
+// scoring
+#define ALIEN_SCORE_VALUE		10
+
 
 // Direction parameters to pass into alien_march_dir(int dir)
 #define ALIEN_MARCH_RIGHT	6

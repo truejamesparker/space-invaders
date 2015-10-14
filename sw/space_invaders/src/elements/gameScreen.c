@@ -1,13 +1,18 @@
 #include "gameScreen.h"
 
 // We need these to know what to erase the next time
+static uint32_t currentScore = 0;
 static uint8_t currentScoreArray[SCORE_VAL_MAX_LEN] = { 0 };
 static uint8_t currentScoreLength = 0;
+
+static uint8_t currentLives = 0;
 
 void drawFloor();
 void drawScore();
 void drawLives();
-void gameScreen_getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength);
+void getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength);
+uint32_t setScore(uint32_t score);
+uint8_t setLives(uint8_t lives);
 
 // ----------------------------------------------------------------------------
 
@@ -17,52 +22,34 @@ void gameScreen_init() {
 	drawLives();
 
 	// draw a '0' next to "SCORE"
-	gameScreen_setScore(0);
+	setScore(0);
 
 	// draw 3 tanks next to "LIVES"
-	gameScreen_setLives(LIVES_MAX);
+	setLives(LIVES_MAX);
 }
 
 // ----------------------------------------------------------------------------
 
-void gameScreen_setScore(uint32_t score) {
-	point_t origin = { .x = SCORE_VAL_ORIGIN_X, .y = SCORE_VAL_ORIGIN_Y };
-	symbolsize_t size = { .w = SCORE_VAL_WIDTH, .h = SCORE_VAL_HEIGHT };
-	uint8_t i = 0;
+uint32_t gameScreen_increaseScore(int32_t score) {
+	uint32_t newScore = currentScore;
 
-	// Get score info as an array so we can loop through each digit
-	gameScreen_getScoreAsArray(score, currentScoreArray, &currentScoreLength);
+	if ((currentScore + score) < 0) newScore = 0;
+	else if ((currentScore + score) > SCORE_VAL_MAX) newScore = SCORE_VAL_MAX;
+	else newScore = currentScore + score;
 
-	for (i=0; i<SCORE_VAL_MAX_LEN; i++) {
-
-		// Find out if this digit should be drawn or not
-		uint32_t color = (i<currentScoreLength) ? SCORE_VAL_COLOR : SCREEN_BG_COLOR;
-
-		uint32_t digit = currentScoreArray[i];
-		screen_drawSymbol(numbers_5x5[digit], origin, size, SCORE_VAL_SCALE, color);
-
-		// Shift the origin over to the next spot
-		origin.x += (SCORE_VAL_WIDTH+SCORE_VAL_PADDING)*SCORE_VAL_SCALE;
-	}
+	return setScore(newScore);
 }
 
 // ----------------------------------------------------------------------------
 
-void gameScreen_setLives(uint8_t lives) {
-	point_t origin = { .x = LIVES_TANK_ORIGIN_X, .y = LIVES_TANK_ORIGIN_Y };
-	symbolsize_t size = { .w = LIVES_TANK_WIDTH, .h = LIVES_TANK_HEIGHT };
-	uint8_t i = 0;
+uint8_t gameScreen_increaseLives(int8_t lives) {
+	uint8_t newLives = currentLives;
 
-	for (i=0; i<LIVES_MAX; i++) {
-		// Find out if this tank live should be drawn or not
-		uint32_t color = (i<lives) ? LIVES_TANK_COLOR : SCREEN_BG_COLOR;
+	if ((currentLives + lives) < 0) newLives = 0;
+	else if ((currentLives + lives) > LIVES_MAX) newLives = LIVES_MAX;
+	else newLives = currentLives + lives;
 
-		// Draw a tank at the given origin
-		screen_drawSymbol(tank_15x8, origin, size, LIVES_TANK_SCALE, color);
-
-		// Shift the origin over to the next tank
-		origin.x += (LIVES_TANK_WIDTH+LIVES_TANK_PADDING)*LIVES_TANK_SCALE;
-	}
+	return setLives(newLives);
 }
 
 // ----------------------------------------------------------------------------
@@ -105,7 +92,59 @@ void drawLives() {
 
 // ----------------------------------------------------------------------------
 
-void gameScreen_getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength) {
+uint8_t setLives(uint8_t lives) {
+	point_t origin = { .x = LIVES_TANK_ORIGIN_X, .y = LIVES_TANK_ORIGIN_Y };
+	symbolsize_t size = { .w = LIVES_TANK_WIDTH, .h = LIVES_TANK_HEIGHT };
+	uint8_t i = 0;
+
+	for (i=0; i<LIVES_MAX; i++) {
+		// Find out if this tank live should be drawn or not
+		uint32_t color = (i<lives) ? LIVES_TANK_COLOR : SCREEN_BG_COLOR;
+
+		// Draw a tank at the given origin
+		screen_drawSymbol(tank_15x8, origin, size, LIVES_TANK_SCALE, color);
+
+		// Shift the origin over to the next tank
+		origin.x += (LIVES_TANK_WIDTH+LIVES_TANK_PADDING)*LIVES_TANK_SCALE;
+	}
+
+	// save lives for next time
+	currentLives = lives;
+
+	return currentLives;
+}
+
+// ----------------------------------------------------------------------------
+
+uint32_t setScore(uint32_t score) {
+	point_t origin = { .x = SCORE_VAL_ORIGIN_X, .y = SCORE_VAL_ORIGIN_Y };
+	symbolsize_t size = { .w = SCORE_VAL_WIDTH, .h = SCORE_VAL_HEIGHT };
+	uint8_t i = 0;
+
+	// Get score info as an array so we can loop through each digit
+	getScoreAsArray(score, currentScoreArray, &currentScoreLength);
+
+	for (i=0; i<SCORE_VAL_MAX_LEN; i++) {
+
+		// Find out if this digit should be drawn or not
+		uint32_t color = (i<currentScoreLength) ? SCORE_VAL_COLOR : SCREEN_BG_COLOR;
+
+		uint32_t digit = currentScoreArray[i];
+		screen_drawSymbol(numbers_5x5[digit], origin, size, SCORE_VAL_SCALE, color);
+
+		// Shift the origin over to the next spot
+		origin.x += (SCORE_VAL_WIDTH+SCORE_VAL_PADDING)*SCORE_VAL_SCALE;
+	}
+
+	// save score for next time
+	currentScore = score;
+
+	return currentScore;
+}
+
+// ----------------------------------------------------------------------------
+
+void getScoreAsArray(uint32_t score, uint8_t *scoreArray, uint8_t *scoreLength) {
 
 	uint8_t tmpArray[SCORE_VAL_MAX_LEN] = { 0 };
 	uint8_t count = 0;

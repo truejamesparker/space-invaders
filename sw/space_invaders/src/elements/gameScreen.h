@@ -66,9 +66,11 @@
 // static elements (floor, lives, score)
 void gameScreen_init();
 
-void gameScreen_setScore(uint32_t score);
+// increase/decrease the score of the game
+uint32_t gameScreen_increaseScore(int32_t score);
 
-void gameScreen_setLives(uint8_t lives);
+// increase/decrease the tank lives
+uint8_t gameScreen_increaseLives(int8_t lives);
 
 
 #endif /* GAMESCREEN_H_ */
