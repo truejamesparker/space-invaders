@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "../globals.h"
 #include "../screen/screen.h"
@@ -84,6 +85,6 @@ void missiles_tankFire();
 void missiles_move();
 
 // have the (x,y) alien shoot a missile
-void missiles_alienFire(uint16_t x, uint16_t y);
+bool missiles_alienFire(uint16_t x, uint16_t y);
 
 #endif /* MISSILES_H_ */

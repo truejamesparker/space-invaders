@@ -6,21 +6,31 @@ void alienBlockSM_tick() {
 	// Always march the aliens
 	aliens_march();
 
-	// Decide when to fire missiles
-	uint16_t r = (rand()%(100))+1; // (rand()%(max-min+1))+min;
+	if (aliens_areLiving()) {
 
-	// fancy probability CDF thing
-	if (r <= ALIEN_BLOCK_MISSILE_PROBABILITY) {
-		// Get the lowest living aliens
-		uint16_t Xs[ALIEN_COL_COUNT];
-		uint16_t Ys[ALIEN_COL_COUNT];
-		aliens_getLowestAliens(Xs, Ys);
+		// Decide when to fire missiles
+		uint16_t r = (rand()%(100))+1; // (rand()%(max-min+1))+min;
 
-		// pick a random lowest living alien
-		uint16_t x = (rand()%ALIEN_COL_COUNT);
+		// fancy probability CDF thing
+		if (r <= ALIEN_BLOCK_MISSILE_PROBABILITY) {
+			// Get the lowest living aliens
+			uint16_t Xs[ALIEN_COL_COUNT];
+			uint16_t Ys[ALIEN_COL_COUNT];
+			aliens_getLowestAliens(Xs, Ys);
 
-		// fire!
-		missiles_alienFire(Xs[x], Ys[x]);
+			// The loop makes sure some alien will fire
+			bool fired = false;
+			while(!fired) {
+				// pick a random lowest living alien
+				uint16_t x = (rand()%ALIEN_COL_COUNT);
+
+				// fire!
+				fired = missiles_alienFire(Xs[x], Ys[x]);
+			}
+		}
+
+	} else { // the game is over!
+
 	}
 }
 

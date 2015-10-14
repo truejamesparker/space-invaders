@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#include "gameScreen.h"
 #include "../screen/screen.h"
 #include "../globals.h"
 
@@ -24,7 +25,9 @@
 #define ALIEN_PADDING_Y			(ALIEN_SCALE*5)
 
 // scoring
-#define ALIEN_SCORE_VALUE		10
+#define ALIEN_SCORE_ELITE_VALUE		40
+#define ALIEN_SCORE_INFANTRY_VALUE	20
+#define ALIEN_SCORE_GRUNT_VALUE		10
 
 
 // Direction parameters to pass into alien_march_dir(int dir)
@@ -50,6 +53,7 @@ typedef struct {
 	const uint32_t* in; 		// alien "in" bitmap
 	const uint32_t* out; 		// alien "out" bitmap
 	const symbolsize_t size; 	// size of alien bitmap
+	const uint32_t scoreValue;	// score value of the alien
 } alien_t;
 
 // array of the 3 types of aliens (elite, infantry, and grunt)
@@ -58,27 +62,32 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 		{
 				.in = alien_top_in_12x8,			// elite aliens
 				.out = alien_top_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.scoreValue = ALIEN_SCORE_ELITE_VALUE
 		},
 		{
 				.in = alien_middle_in_12x8,			// infantry aliens
 				.out = alien_middle_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
 		},
 		{
 				.in = alien_middle_in_12x8,
 				.out = alien_middle_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
 		},
 		{
 				.in = alien_bottom_in_12x8,			// grunt aliens
 				.out = alien_bottom_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
 		},
 		{
 				.in = alien_bottom_in_12x8,
 				.out = alien_bottom_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT}
+				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
 		}
 };
 
@@ -113,6 +122,9 @@ uint16_t alien_xy_to_index(uint16_t x , uint16_t y);
 
 // Get a list of the bottom-most aliens
 void aliens_getLowestAliens(uint16_t *xArray, uint16_t *yArray);
+
+// How many aliens are still alive?
+uint32_t aliens_areLiving();
 
 // move alien block
 void aliens_left();

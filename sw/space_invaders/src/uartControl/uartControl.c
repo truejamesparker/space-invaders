@@ -10,7 +10,8 @@ static uint16_t getint();
 
 void uartControl_handle(char key) {
 
-//	xil_printf("\b\r");
+	uint8_t i = 0;
+	uint32_t j = 0;
 
 	switch(key) {
 		/* Tank Controls */
@@ -134,11 +135,19 @@ void uartControl_handle(char key) {
 			uint16_t ys[ALIEN_COL_COUNT] = { 0 };
 			aliens_getLowestAliens(xs, ys);
 
-			uint8_t i = 0;
 			for (i=0; i<ALIEN_COL_COUNT; i++) {
 				xil_printf("Lowest Alien: (%d, %d)\r\n", xs[i], ys[i]);
 			}
 
+			break;
+
+		case 'k':
+			xil_printf("Killing almost all aliens...\r\n");
+			for (i=1; i<ALIEN_COUNT-3; i++) {
+				aliens_kill(i);
+				j = 100000000;
+				while(--j);
+			}
 			break;
 
 		default:

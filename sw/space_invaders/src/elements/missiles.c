@@ -1,8 +1,7 @@
 #include "missiles.h"
 
-// some missiles "wiggle" as they
-// move across the screen. This global
-// defines which state we're in
+// some missiles "wiggle" as they move across the screen.
+// This global defines which state we're in.
 static bool wobble;
 
 // function declarations
@@ -83,7 +82,7 @@ void missiles_tankFire(){
 //-----------------------------------------------------------------------------
 
 // initiate an alien missile
-void missiles_alienFire(uint16_t x, uint16_t y) {
+bool missiles_alienFire(uint16_t x, uint16_t y) {
 	uint8_t i = 0;
 
 	// start at i=1 (the tank is 0)
@@ -92,7 +91,7 @@ void missiles_alienFire(uint16_t x, uint16_t y) {
 		if (!missile_array[i].active) {
 
 			// Make sure that alien is even living
-			if (!alien_isAlive(x,y)) return;
+			if (!alien_isAlive(x,y)) return false;
 
 			// Get the given aliens origin
 			point_t alienOrigin = aliens_getAlienOrigin(x, y);
@@ -108,9 +107,11 @@ void missiles_alienFire(uint16_t x, uint16_t y) {
 
 			missile_array[i].active = true; // set missile status to active
 
-			break;
+			return true;
 		}
 	}
+
+	return true;
 }
 
 //-----------------------------------------------------------------------------

@@ -7,6 +7,9 @@ static point_t alienOrigins[ALIEN_COUNT];
 static uint16_t lowestAlien_Xs[ALIEN_COL_COUNT];
 static uint16_t lowestAlien_Ys[ALIEN_COL_COUNT];
 
+// Keep track of the living
+static uint32_t alienAliveCount = ALIEN_COUNT;
+
 // global var indicates which position the aliens
 // are in (flapping up vs flapping in)
 static bool flapIn = false;
@@ -156,6 +159,9 @@ void aliens_kill(uint16_t index) {
 	// If there are any exploded aliens, clean up the mess
 	cleanupAlienKill();
 
+	// Make sure we should be here: if already dead, bail
+	if (!alien_lives_matter[index]) return;
+
 	// kill the alien in memory
 	alien_lives_matter[index] = false;
 
@@ -171,7 +177,10 @@ void aliens_kill(uint16_t index) {
 						ALIEN_SCALE, SCREEN_COLOR_WHITE);
 
 	// Increase score!
-	gameScreen_increaseScore(ALIEN_SCORE_VALUE);
+	gameScreen_increaseScore(alien_symbols[y].scoreValue);
+
+	// Keep track of how many aliens are alive
+	alienAliveCount--;
 
 	// set up the global kill log to know which area needs to be
 	// cleaned up on next kill. Updates on the next march happen
@@ -240,6 +249,12 @@ void aliens_getLowestAliens(uint16_t *xArray, uint16_t *yArray) {
 		xArray[i] = lowestAlien_Xs[i];
 		yArray[i] = lowestAlien_Ys[i];
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+uint32_t aliens_areLiving() {
+	return alienAliveCount;
 }
 
 //-----------------------------------------------------------------------------
