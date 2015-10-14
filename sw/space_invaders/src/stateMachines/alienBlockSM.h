@@ -7,6 +7,7 @@
 
 #include "../elements/aliens.h"
 #include "../elements/missiles.h"
+#include "../elements/gameScreen.h"
 
 #define SM_PERIOD_ALIEN_BLOCK_MS 		325
 

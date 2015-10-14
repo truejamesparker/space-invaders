@@ -31,6 +31,10 @@ void alienBlockSM_tick() {
 
 	} else { // the game is over!
 
+		// redraw the aliens, top off lives
+		aliens_init();
+		gameScreen_increaseLives(LIVES_MAX);
+
 	}
 }
 

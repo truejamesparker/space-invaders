@@ -8,7 +8,7 @@ static uint16_t lowestAlien_Xs[ALIEN_COL_COUNT];
 static uint16_t lowestAlien_Ys[ALIEN_COL_COUNT];
 
 // Keep track of the living
-static uint32_t alienAliveCount = ALIEN_COUNT;
+static uint32_t alienAliveCount = 0;
 
 // global var indicates which position the aliens
 // are in (flapping up vs flapping in)
@@ -48,6 +48,14 @@ void aliens_init() {
 
 	// draw the aliens!
 	drawAliens();
+
+	// set how many aliens are alive
+	alienAliveCount = ALIEN_COUNT;
+	kill_log.kill = false;
+
+	// direction info
+	flapIn = false;
+	_aliensMarchingRight = true;
 }
 
 //-----------------------------------------------------------------------------

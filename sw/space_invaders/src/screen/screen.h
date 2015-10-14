@@ -40,7 +40,7 @@
 // screen buffer width
 #define SCREEN_EDGE_BUFFER 	15
 
-// starting address of main dispaly frame
+// starting address of main display frame
 #define FRAME_BUFFER_0_ADDR 0xC1000000
 
 // For debugging positions, sizes and shifts
