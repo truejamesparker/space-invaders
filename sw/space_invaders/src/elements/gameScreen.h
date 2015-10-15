@@ -72,6 +72,8 @@ uint32_t gameScreen_increaseScore(int32_t score);
 // increase/decrease the tank lives
 uint8_t gameScreen_increaseLives(int8_t lives);
 
+uint8_t gameScreen_getTankLives();
+
 // print "GAME OVER" in the middle of screen
 void gameScreen_printGameOver();
 

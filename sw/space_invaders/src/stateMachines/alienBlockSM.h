@@ -12,6 +12,9 @@
 
 #define SM_PERIOD_ALIEN_BLOCK_MS 		25
 
+// how many attempts to make before bailing out of the while loop
+#define ALIENBLOCK_MAX_SHOOT_ATTEMPTS	3
+
 // march speeds (march every n periods)
 #define ALIEN_BLOCK_MARCH_SLOW			13
 #define ALIEN_BLOCK_MARCH_MED			11

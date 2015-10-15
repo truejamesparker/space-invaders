@@ -18,4 +18,7 @@
 
 void tankSM_tick();
 
+void tankSM_lock();
+void tankSM_unlock();
+
 #endif /* TANKSM_H_ */

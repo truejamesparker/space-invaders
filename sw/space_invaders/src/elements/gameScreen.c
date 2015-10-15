@@ -54,6 +54,12 @@ uint8_t gameScreen_increaseLives(int8_t lives) {
 
 // ----------------------------------------------------------------------------
 
+uint8_t gameScreen_getTankLives() {
+	return currentLives;
+}
+
+// ----------------------------------------------------------------------------
+
 void gameScreen_printGameOver() {
 	// get the location the text needs to start to be centered
 	point_t start_point = text_getCenterStartPoint(wordSize.w+GAME_OVER_SPACE, wordSize.h, GAME_OVER_SCALE);

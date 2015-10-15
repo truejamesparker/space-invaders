@@ -2,7 +2,7 @@
 
 volatile static uint32_t timeoutSMPeriods = 0;
 
-volatile static bool waitForButton = false;
+volatile static bool locked = false;
 
 void resumeGamePlay();
 
@@ -10,23 +10,7 @@ void resumeGamePlay();
 
 void tankSM_tick() {
 
-	if (waitForButton) {
-		if (pushButtons_anyPressed()) {
-			waitForButton = false;
-
-			// reset screen
-			screen_clear();
-			gameScreen_init();
-			aliens_init();
-			bunkers_init();
-
-			// restart the march speed
-			alienBlockSM_marchSlow();
-
-			// unlock SMs and such
-			resumeGamePlay();
-		}
-
+	if (locked) {
 		// continue to smoulder
 		if (timeoutSMPeriods % 2) tank_smoulder();
 
@@ -45,8 +29,8 @@ void tankSM_tick() {
 		// (freeze the screen, smoulder, etc) and then start a timer
 		// to lock everything out for a given length of time
 		if (!timeoutSMPeriods) {
-			// remove a tank life, will check if zero later
-			uint8_t lives = gameScreen_increaseLives(-1);
+			// remove a tank life
+			gameScreen_increaseLives(-1);
 
 			// lock the alien block SM and spaceship SM
 			alienBlockSM_lock();
@@ -57,14 +41,6 @@ void tankSM_tick() {
 
 			// remove the spaceship
 			spaceship_cancel();
-
-			// check if we need to enter the gameover mode (no more lives)
-			if (!lives) {
-				gameScreen_printGameOver();
-				waitForButton = true;
-
-				return;
-			}
 
 		} else if (timeoutSMPeriods == TANK_KILLED_TIMEOUT) {
 			// the timeout has elapsed and we can resume game play
@@ -94,6 +70,19 @@ void tankSM_tick() {
 	if (pushButtons_centerPressed()) {
 		missiles_tankFire();
 	}
+}
+
+// ----------------------------------------------------------------------------
+
+void tankSM_lock() {
+	locked = true;
+}
+
+// ----------------------------------------------------------------------------
+
+void tankSM_unlock() {
+	timeoutSMPeriods = 0;
+	locked = false;
 }
 
 // ----------------------------------------------------------------------------

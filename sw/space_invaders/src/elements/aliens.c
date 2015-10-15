@@ -276,6 +276,31 @@ void aliens_cleanupKills() {
 }
 
 //-----------------------------------------------------------------------------
+
+bool aliens_belowBunkers() {
+	// Get the lowest living aliens
+	uint16_t Xs[ALIEN_COL_COUNT];
+	uint16_t Ys[ALIEN_COL_COUNT];
+	aliens_getLowestAliens(Xs, Ys);
+
+	bool aliensBelowBunkers = false;
+
+	uint8_t i = 0;
+	for (i=0; i<ALIEN_COL_COUNT; i++) {
+		// so, grab each lowest living alien per column and see if its
+		// (origin.y+its height) is lower than BUNKER_END_Y
+		point_t alienOrigin = aliens_getAlienOrigin(Xs[i], Ys[i]);
+		if (alienOrigin.y+ALIEN_HEIGHT*ALIEN_SCALE > BUNKER_END_Y) {
+			// this living alien is below the bunkers
+			aliensBelowBunkers = true;
+			break;
+		}
+	}
+
+	return aliensBelowBunkers;
+}
+
+//-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 

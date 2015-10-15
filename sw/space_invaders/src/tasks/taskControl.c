@@ -14,6 +14,12 @@ void taskControl_init() {
 
 	// Tank SM
 	++sm;
+	tasks[sm].period = SM_PERIOD_GAMEPLAY_MS;
+	tasks[sm].elapsedTime = tasks[sm].period;
+	tasks[sm].TickFn = &gamePlaySM_tick;
+
+	// Tank SM
+	++sm;
 	tasks[sm].period = SM_PERIOD_TANK_MS;
 	tasks[sm].elapsedTime = tasks[sm].period;
 	tasks[sm].TickFn = &tankSM_tick;

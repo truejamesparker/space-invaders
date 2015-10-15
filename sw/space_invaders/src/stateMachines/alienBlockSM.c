@@ -10,7 +10,6 @@ volatile static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
 // Is this SM locked?
 volatile bool locked = false;
 
-void startNewLevel();
 void updateMarchingSpeed(uint32_t livingCount);
 
 // ----------------------------------------------------------------------------
@@ -24,7 +23,7 @@ void alienBlockSM_tick() {
 	cleanSMPeriods++;
 
 	if (marchSMPeriods >= marchSpeed) {
-		// Always march the aliens
+		// march the aliens
 		aliens_march();
 
 		// get how many aliens are currently living
@@ -68,8 +67,12 @@ void alienBlockSM_tick() {
 				// for the fact that a single missile could issue double bunker damage.
 				bool alreadyFired[ALIEN_COL_COUNT] = { false };
 
+				// don't spin in a while(1) if you can't shoot. This happens
+				// when there are aliens on top of each other -- only 1 can shoot
+				uint8_t shootAttempts = ALIENBLOCK_MAX_SHOOT_ATTEMPTS;
+
 				// The loop makes sure some alien will fire
-				while(missilesLeftToFire) {
+				while(missilesLeftToFire || !shootAttempts--) {
 					// pick a random lowest living alien
 					uint16_t x = (rand()%ALIEN_COL_COUNT);
 
@@ -85,7 +88,7 @@ void alienBlockSM_tick() {
 				}
 			}
 
-		} else alienBlockSM_startNewLevel();
+		}
 
 		// reset the period timer
 		marchSMPeriods = 0;
@@ -133,17 +136,6 @@ void alienBlockSM_lock() {
 
 void alienBlockSM_unlock() {
 	locked = false;
-}
-
-// ----------------------------------------------------------------------------
-
-void alienBlockSM_startNewLevel() {
-	// redraw the aliens, top off lives
-	aliens_init();
-	gameScreen_increaseLives(LIVES_MAX);
-
-	// restart the march speed
-	alienBlockSM_marchSlow();
 }
 
 // ----------------------------------------------------------------------------

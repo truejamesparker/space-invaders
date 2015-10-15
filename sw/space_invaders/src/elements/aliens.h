@@ -6,6 +6,7 @@
 #include "gameScreen.h"
 #include "../screen/screen.h"
 #include "../globals.h"
+#include "bunkers.h"
 
 
 #define ALIEN_COL_COUNT 		11
@@ -122,6 +123,9 @@ uint32_t aliens_areLiving();
 
 // clean up the mess of dead aliens
 void aliens_cleanupKills();
+
+// are the lowest living aliens below the bunkers?
+bool aliens_belowBunkers();
 
 // move alien block
 void aliens_left();
