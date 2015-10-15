@@ -113,6 +113,7 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 			return true;
 		}
 	}
+
 	return true;
 }
 
@@ -123,7 +124,10 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 void moveMissile(uint8_t missileIndex) {
 	// Grab the missile that was passed in
 	missile_t* missile = &missile_array[missileIndex];
-
+	// if a missile was exploded, clean it up before moving missiles again
+	if(mkill_log.kill){
+			missile_cleanup();
+		}
 	// No need to do anything if the missile isn't actively on screen
 	if (missile->active) {
 		int8_t dir = missile->up ? -1 : 1;

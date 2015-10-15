@@ -78,7 +78,7 @@ void uartControl_handle(char key) {
 			uint16_t bunker = getint(); // query for the bunker
 			if (bunker >= 0 && bunker <= 3) {
 				xil_printf("%c. Okay, will do.\r\n", bunker);
-//				bunkers_damage(bunker);
+				bunkers_damage(bunker, rand()%10);
 			} else {
 				xil_printf(" Bailing.\r\n");
 			}
