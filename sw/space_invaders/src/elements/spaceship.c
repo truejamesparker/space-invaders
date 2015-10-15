@@ -17,6 +17,9 @@ uint8_t scoreArrayLength = 0;
 uint8_t flashNumber = 0;
 bool flashOn = true; // flashOn == numbers, flashOff == SCREEN_BG_COLOR
 
+// was I just killed?
+bool justKilled = false;
+
 int8_t chooseRandomShiftDirection();
 
 // ----------------------------------------------------------------------------
@@ -52,21 +55,36 @@ void spaceship_move() {
 
 		// shift our origin
 		origin.x += (shiftDir*SPACESHIP_SHIFT_X*SPACESHIP_SCALE);
-	} else if (flashNumber) {
-		// we are in flash mode!
-
-		// Flashing is really just drawing over with alternating colors
-		uint32_t color = (flashOn) ? SPACESHIP_SCORE_COLOR : SCREEN_BG_COLOR;
-
-		text_drawNumberString(scoreArray, scoreArrayLength, SPACESHIP_SCORE_MAX_LEN,
-				origin, SPACESHIP_SCORE_SCALE, color);
-
-		// next time we alternate color
-		flashOn = !flashOn;
-
-		// we did a flash, so decrement how many we have left
-		flashNumber--;
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+bool spaceship_flashScore() {
+	// are we in flash mode?
+	if (!flashNumber) return false;
+
+	// Flashing is really just drawing over with alternating colors
+	uint32_t color = (flashOn) ? SPACESHIP_SCORE_COLOR : SCREEN_BG_COLOR;
+
+	text_drawNumberString(scoreArray, scoreArrayLength, SPACESHIP_SCORE_MAX_LEN,
+			origin, SPACESHIP_SCORE_SCALE, color);
+
+	// next time we alternate color
+	flashOn = !flashOn;
+
+	// we did a flash, so decrement how many we have left
+	flashNumber--;
+
+	// don't ever say I was killed two calls in a row
+	if (justKilled) {
+		// so set future justKilled to false
+		justKilled = false;
+
+		// but say that this time it was true
+		return true;
+	}
+
 }
 
 //-----------------------------------------------------------------------------
@@ -100,6 +118,9 @@ void spaceship_kill() {
 
 	// Set the flashNumber to twice the flash count (1 flash is both on and off)
 	flashNumber = 2*SPACESHIP_SCORE_FLASHES;
+
+	// I was just killed
+	justKilled = true;
 }
 
 point_t spaceship_get_origin(){

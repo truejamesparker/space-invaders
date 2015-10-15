@@ -1,6 +1,6 @@
 #include "alienBlockSM.h"
 
-static uint32_t marchSMPeriods = 0;
+volatile static uint32_t marchSMPeriods = 0;
 static uint32_t cleanSMPeriods = 0;
 
 static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
