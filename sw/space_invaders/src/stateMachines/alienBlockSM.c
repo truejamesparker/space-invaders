@@ -72,7 +72,7 @@ void alienBlockSM_tick() {
 				}
 			}
 
-		} else startNewLevel();
+		} else alienBlockSM_startNewLevel();
 
 		// reset the period timer
 		marchSMPeriods = 0;
@@ -123,10 +123,8 @@ void alienBlockSM_unlock() {
 }
 
 // ----------------------------------------------------------------------------
-// Private Helper Methods
-// ----------------------------------------------------------------------------
 
-void startNewLevel() {
+void alienBlockSM_startNewLevel() {
 	// redraw the aliens, top off lives
 	aliens_init();
 	gameScreen_increaseLives(LIVES_MAX);
@@ -135,6 +133,8 @@ void startNewLevel() {
 	alienBlockSM_marchSlow();
 }
 
+// ----------------------------------------------------------------------------
+// Private Helper Methods
 // ----------------------------------------------------------------------------
 
 void updateMarchingSpeed(uint32_t livingCount) {
