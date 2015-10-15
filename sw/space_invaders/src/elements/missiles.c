@@ -189,17 +189,18 @@ void missiles_check_impact(missile_t* missile){
 
 //-----------------------------------------------------------------------------
 
-void missile_missile_impact(missile_t* missile){
+void missile_missile_impact(){
 	int i;
 	missile_t* am;
+	missile_t* tm = &missile_array[TANK_MISSILE];
 	for(i=1; i<MISSILE_COUNT; i++){
 		am = &missile_array[i];
 		if(am->active){
-			if(missile_in_block(missile, am->origin, MISSILE_WIDTH*MISSILE_SCALE*10, MISSILE_HEIGHT*MISSILE_SCALE)){
-				xil_printf("collision!\n\r");
+			if(missile_in_block(tm, am->origin, MISSILE_WIDTH*MISSILE_SCALE*2, MISSILE_HEIGHT*MISSILE_SCALE)){
+//				xil_printf("collision!\n\r");
 				missiles_deactivate(am);
-				missiles_deactivate(missile);
-				missile_explode(missile->origin);
+				missiles_deactivate(tm);
+				missile_explode(tm->origin);
 			}
 		}
 	}
