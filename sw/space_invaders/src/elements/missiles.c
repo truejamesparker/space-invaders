@@ -122,12 +122,23 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 void missiles_deactivateAll() {
 	uint8_t i = 0;
 	for(i=0; i<MISSILE_COUNT; i++) {
-		// grab a missile
-		missile_t* missile = &missile_array[i];
-
-		// turn it off!
-		missiles_deactivate(missile);
+		// grab a missile and turn it off!
+		missiles_deactivate(&missile_array[i]);
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+uint16_t missiles_getActiveAlienMissiles() {
+	uint8_t i = 0;
+	uint16_t count = 0;
+
+	// i=1, we are only considering alien missiles
+	for(i=1; i<MISSILE_COUNT; i++) {
+		if (missile_array[i].active) count++;
+	}
+
+	return count;
 }
 
 //-----------------------------------------------------------------------------
