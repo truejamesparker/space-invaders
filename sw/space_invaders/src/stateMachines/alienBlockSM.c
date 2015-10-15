@@ -1,9 +1,11 @@
 #include "alienBlockSM.h"
 
 volatile static uint32_t marchSMPeriods = 0;
-static uint32_t cleanSMPeriods = 0;
+volatile static uint32_t cleanSMPeriods = 0;
 
-static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
+volatile static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
+
+volatile bool locked = false;
 
 void startNewLevel();
 void updateMarchingSpeed(uint32_t livingCount);
@@ -11,6 +13,9 @@ void updateMarchingSpeed(uint32_t livingCount);
 // ----------------------------------------------------------------------------
 
 void alienBlockSM_tick() {
+	// bail if this SM is locked
+	if (locked) return;
+
 	// It's been another SM Period
 	marchSMPeriods++;
 	cleanSMPeriods++;
@@ -84,6 +89,18 @@ void alienBlockSM_marchFast() {
 
 void alienBlockSM_marchVeryFast() {
 	marchSpeed = ALIEN_BLOCK_MARCH_VERY_FAST;
+}
+
+// ----------------------------------------------------------------------------
+
+void alienBlockSM_lock() {
+	locked = true;
+}
+
+// ----------------------------------------------------------------------------
+
+void alienBlockSM_unlock() {
+	locked = false;
 }
 
 // ----------------------------------------------------------------------------

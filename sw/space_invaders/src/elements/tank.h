@@ -1,9 +1,13 @@
 #ifndef TANK_H_
 #define TANK_H_
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #include "../globals.h"
 #include "../screen/screen.h"
 #include "missiles.h"
+#include "bunkers.h"
 
 #define TANK_COLOR		SCREEN_COLOR_GREEN
 
@@ -32,10 +36,16 @@ void tank_init();
 void tank_right();
 void tank_left();
 
+// set the tank to dead
 void tank_kill();
+
+// the world can ask if the tank is alive
+bool tank_isAlive();
 
 // get origin of the tank
 point_t tank_get_origin();
 
+// switch between the smouldering guises
+void tank_smoulder();
 
 #endif /* TANK_H_ */

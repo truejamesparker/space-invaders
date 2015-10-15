@@ -2,6 +2,8 @@
 
 static uint32_t flashSMPeriods = 0;
 
+volatile static bool locked = false;
+
 // we don't want an spaceship to appear while we are mourning the death
 // of the previous spaceship as that would be insensitive
 // (as well as make the flashing score position glitch)
@@ -10,6 +12,9 @@ volatile static uint16_t mourningPeriodsRemaining = 0;
 // ----------------------------------------------------------------------------
 
 void spaceshipSM_tick() {
+	// bail if this SM is locked
+	if (locked) return;
+
 	// keep track of how many periods have elapsed
 	flashSMPeriods++;
 
@@ -42,6 +47,18 @@ void spaceshipSM_tick() {
 		// mourn for a period
 		mourningPeriodsRemaining--;
 	}
+}
+
+// ----------------------------------------------------------------------------
+
+void spaceshipSM_lock() {
+	locked = true;
+}
+
+// ----------------------------------------------------------------------------
+
+void spaceshipSM_unlock() {
+	locked = false;
 }
 
 // ----------------------------------------------------------------------------

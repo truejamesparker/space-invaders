@@ -50,4 +50,7 @@ point_t spaceship_get_origin();
 // return if spaceship is on the screen
 bool spaceship_isActive();
 
+// remove the spaceship from the screen
+void spaceship_cancel();
+
 #endif /* SPACESHIFT_H_ */

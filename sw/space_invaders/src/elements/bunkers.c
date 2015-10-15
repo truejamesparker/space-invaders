@@ -1,8 +1,5 @@
 #include "bunkers.h"
 
-#define BUNKER_START_XOFFSET 	24*BUNKER_SCALE
-#define STATUS_BIT_LENGTH		3
-
 static bunker_t bunker_array[4];
 
 // array of three different types of bunker damage patterns

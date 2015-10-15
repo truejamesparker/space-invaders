@@ -93,11 +93,8 @@ void spaceship_kill() {
 	// You can't kill a dead spaceship
 	if (!shiftDir) return;
 
-	// stop the spaceship from moving
-	shiftDir = 0;
-
-	// erase spaceship
-	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SCREEN_BG_COLOR);
+	// get rid of the element on the screen and cancel its movement
+	spaceship_cancel();
 
 	// pick a random score between its bounds
 	// (rand()%(max-min+1))+min
@@ -123,8 +120,23 @@ void spaceship_kill() {
 	justKilled = true;
 }
 
+// ----------------------------------------------------------------------------
+
 point_t spaceship_get_origin(){
 	return origin;
+}
+
+// ----------------------------------------------------------------------------
+
+void spaceship_cancel() {
+	// You can't kill a dead spaceship
+	if (!shiftDir) return;
+
+	// stop the spaceship from moving
+	shiftDir = 0;
+
+	// erase spaceship
+	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SCREEN_BG_COLOR);
 }
 
 // ----------------------------------------------------------------------------
