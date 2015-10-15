@@ -81,8 +81,11 @@ void missiles_init();
 // Tell the tank to fire a missile
 void missiles_tankFire();
 
-// update all missile locations
-void missiles_move();
+// update all alien missile locations
+void missiles_moveAlienMissiles();
+
+// update the tank's missile
+void missiles_moveTankMissile();
 
 // have the (x,y) alien shoot a missile
 bool missiles_alienFire(uint16_t x, uint16_t y);
