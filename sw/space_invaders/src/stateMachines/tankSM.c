@@ -26,6 +26,13 @@ void tankSM_tick() {
 			// unlock SMs and such
 			resumeGamePlay();
 		}
+
+		// continue to smoulder
+		if (timeoutSMPeriods % 2) tank_smoulder();
+
+		// increase this for the same of smouldering
+		timeoutSMPeriods++;
+
 		return;
 	}
 
