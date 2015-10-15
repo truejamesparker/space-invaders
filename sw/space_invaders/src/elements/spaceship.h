@@ -40,6 +40,11 @@ void spaceship_move();
 // kill the spaceship, flashing the points in its place
 void spaceship_kill();
 
+// flash the score on and off after a spaceship kill.
+// returns true if this is the alien was just killed
+bool spaceship_flashScore();
+
+// get the current position of the spaceship
 point_t spaceship_get_origin();
 
 #endif /* SPACESHIFT_H_ */
