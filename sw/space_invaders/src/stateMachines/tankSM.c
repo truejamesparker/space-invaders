@@ -2,9 +2,32 @@
 
 volatile static uint32_t timeoutSMPeriods = 0;
 
+volatile static bool waitForButton = false;
+
+void resumeGamePlay();
+
 // ----------------------------------------------------------------------------
 
 void tankSM_tick() {
+
+	if (waitForButton) {
+		if (pushButtons_anyPressed()) {
+			waitForButton = false;
+
+			// reset screen
+			screen_clear();
+			gameScreen_init();
+			aliens_init();
+			bunkers_init();
+
+			// restart the march speed
+			alienBlockSM_marchSlow();
+
+			// unlock SMs and such
+			resumeGamePlay();
+		}
+		return;
+	}
 
 	// check if tank was hit, or is currently dead
 	if (!tank_isAlive()) {
@@ -31,20 +54,14 @@ void tankSM_tick() {
 			// check if we need to enter the gameover mode (no more lives)
 			if (!lives) {
 				gameScreen_printGameOver();
+				waitForButton = true;
+
+				return;
 			}
 
 		} else if (timeoutSMPeriods == TANK_KILLED_TIMEOUT) {
 			// the timeout has elapsed and we can resume game play
-
-			// unlock the SMs
-			alienBlockSM_unlock();
-			spaceshipSM_unlock();
-
-			// restart the tank
-			tank_init();
-
-			// reset the timer
-			timeoutSMPeriods = 0;
+			resumeGamePlay();
 
 			return;
 
@@ -73,3 +90,20 @@ void tankSM_tick() {
 }
 
 // ----------------------------------------------------------------------------
+// Private Helper Methods
+// ----------------------------------------------------------------------------
+
+void resumeGamePlay() {
+	// unlock the SMs
+	alienBlockSM_unlock();
+	spaceshipSM_unlock();
+
+	// restart the tank
+	tank_init();
+
+	// reset the timer
+	timeoutSMPeriods = 0;
+}
+
+// ----------------------------------------------------------------------------
+

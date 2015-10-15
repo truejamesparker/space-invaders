@@ -11,6 +11,7 @@
 #define BTN_DOWN_MASK	0x04
 #define BTN_UP_MASK		0x10
 #define BTN_CENTER_MASK	0x01
+#define BTN_ANY_MASK	0xFF
 
 // Setup the PBs in HW
 void pushButtons_init();
@@ -21,5 +22,6 @@ bool pushButtons_rightPressed();
 bool pushButtons_downPressed();
 bool pushButtons_upPressed();
 bool pushButtons_centerPressed();
+bool pushButtons_anyPressed();
 
 #endif /* PUSHBUTTONS_H_ */

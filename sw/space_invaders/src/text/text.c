@@ -52,3 +52,16 @@ void text_drawNumberString(uint8_t *array, uint8_t length, uint32_t maxLength,
 		origin.x += (numbersSize.w+TEXT_NUMBER_PADDING)*scale;
 	}
 }
+
+// ----------------------------------------------------------------------------
+
+point_t text_getCenterStartPoint(uint16_t width, uint16_t height, uint8_t scale) {
+	uint16_t x_offset = (width*scale)/2;
+	uint16_t y_offset = (height*scale)/2;
+
+	point_t origin = {
+			.x = SCREEN_WIDTH/2 - x_offset,
+			.y = SCREEN_HEIGHT/2 - y_offset
+	};
+	return origin;
+}

@@ -52,11 +52,19 @@ uint8_t gameScreen_increaseLives(int8_t lives) {
 	return setLives(newLives);
 }
 
-void gameScreen_printGameOver(){
-	uint16_t space = 6*GAME_OVER_SCALE;
-	point_t start_point = getCenterStartPoint(wordSize.w+space, wordSize.h, GAME_OVER_SCALE);
+// ----------------------------------------------------------------------------
+
+void gameScreen_printGameOver() {
+	// get the location the text needs to start to be centered
+	point_t start_point = text_getCenterStartPoint(wordSize.w+GAME_OVER_SPACE, wordSize.h, GAME_OVER_SCALE);
+
+	// draw "GAME"
 	screen_drawSymbol(word_game_24x5, start_point, wordSize, GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
-	start_point.x += wordSize.w*GAME_OVER_SCALE + space;
+
+	// shift over for a space
+	start_point.x += wordSize.w*GAME_OVER_SCALE + GAME_OVER_SPACE;
+
+	// draw "OVER"
 	screen_drawSymbol(word_over_24x5, start_point, wordSize, GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
 }
 
@@ -140,11 +148,4 @@ uint32_t setScore(uint32_t score) {
 	return currentScore;
 }
 
-point_t getCenterStartPoint(uint16_t width, uint16_t height, uint8_t scale){
-	point_t origin;
-	uint16_t x_offset = (width*scale)/2;
-	uint16_t y_offset = (height*scale)/2;
-	origin.y = SCREEN_HEIGHT/2 - y_offset;
-	origin.x = SCREEN_WIDTH/2 - x_offset;
-	return origin;
-}
+// ----------------------------------------------------------------------------

@@ -43,4 +43,7 @@ void alienBlockSM_marchVeryFast();
 void alienBlockSM_lock();
 void alienBlockSM_unlock();
 
+// Reset the aliens
+void alienBlockSM_startNewLevel();
+
 #endif /* ALIENBLOCKSM_H_ */

@@ -17,4 +17,7 @@ void text_explodeNumber(uint32_t number, uint32_t maxLength, uint8_t *array, uin
 void text_drawNumberString(uint8_t *array, uint8_t length, uint32_t maxLength,
 							point_t origin, uint8_t scale, uint32_t color);
 
+// given that you want some text centered, this will create an origin point for you
+point_t text_getCenterStartPoint(uint16_t width, uint16_t height, uint8_t scale);
+
 #endif /* TEXT_H_ */
