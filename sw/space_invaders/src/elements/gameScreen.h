@@ -58,6 +58,7 @@
 #define LIVES_TANK_ORIGIN_X	((LIVES_TXT_ORIGIN_X+LIVES_TXT_WIDTH*LIVES_TXT_SCALE)+POST_TEXT_PADDING)
 #define LIVES_TANK_ORIGIN_Y	(SCREEN_EDGE_BUFFER-3*LIVES_TANK_SCALE)
 
+#define GAME_OVER_SCALE		4
 
 // Initialize the screen by drawing all the
 // static elements (floor, lives, score)

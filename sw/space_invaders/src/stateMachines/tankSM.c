@@ -30,7 +30,7 @@ void tankSM_tick() {
 
 			// check if we need to enter the gameover mode (no more lives)
 			if (!lives) {
-				// do your thing
+				gameScreen_printGameOver();
 			}
 
 		} else if (timeoutSMPeriods == TANK_KILLED_TIMEOUT) {
