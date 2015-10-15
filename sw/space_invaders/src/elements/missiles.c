@@ -296,6 +296,7 @@ void missile_alien_impact(missile_t* missile){
 		missile_t* missile = &missile_array[TANK_MISSILE];
 		bool hit = missile_in_block(missile, s_origin, SPACESHIP_WIDTH*SPACESHIP_SCALE, SPACESHIP_HEIGHT*SPACESHIP_SCALE);
 		if(hit){
+			missiles_deactivate(missile);
 			spaceship_kill();
 		}
 	}
@@ -340,6 +341,13 @@ void missile_tank_impact(missile_t* missile){
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height){
 	point_t tip = missiles_get_tip(missile);
 	bool up = missile->up;
+
+	// account for the fact that we diable graphics wrapping
+	// and allow for overflow in the origin cooridinates
+	if(target_origin.x > SCREEN_WIDTH){
+		target_origin.x = 0;
+	}
+
 	int x_dist = (tip.x - target_origin.x);
 	int y_dist = up ? ((target_origin.y+target_height) - tip.y) : (tip.y - target_origin.y);
 //	int y_dist = (tip.y - target_origin.y);
