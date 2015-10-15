@@ -1,10 +1,13 @@
 #include "alienBlockSM.h"
 
+// independent march and clean kill SM periods
 volatile static uint32_t marchSMPeriods = 0;
 volatile static uint32_t cleanSMPeriods = 0;
 
+// how fast aliens are currently marching
 volatile static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
 
+// Is this SM locked?
 volatile bool locked = false;
 
 void startNewLevel();
@@ -30,7 +33,7 @@ void alienBlockSM_tick() {
 		// if necessary update speed
 		updateMarchingSpeed(livingCount);
 
-		if (livingCount) {
+		if (livingCount) { // if there are aliens living
 
 			// Decide when to fire missiles
 			uint16_t r = (rand()%(100))+1; // (rand()%(max-min+1))+min;
@@ -42,14 +45,30 @@ void alienBlockSM_tick() {
 				uint16_t Ys[ALIEN_COL_COUNT];
 				aliens_getLowestAliens(Xs, Ys);
 
+				// figure out the max num of missiles even available to me to fire
+				uint16_t maxMissilesFireable = MISSILE_ALIEN_COUNT-missiles_getActiveAlienMissiles();
+				// get a random number of missiles in that range to fire
+				uint16_t missilesLeftToFire = (rand()%(maxMissilesFireable+1));
+
+				// this array will make sure that the same alien doesn't fire two
+				// missiles on top of each other, which is imperceptible except
+				// for the fact that a single missile could issue double bunker damage.
+				bool alreadyFired[ALIEN_COL_COUNT] = { false };
+
 				// The loop makes sure some alien will fire
-				bool fired = false;
-				while(!fired) {
+				while(missilesLeftToFire) {
 					// pick a random lowest living alien
 					uint16_t x = (rand()%ALIEN_COL_COUNT);
 
+					if (alreadyFired[x]) continue;
+
 					// fire!
-					fired = missiles_alienFire(Xs[x], Ys[x]);
+					bool fired = missiles_alienFire(Xs[x], Ys[x]);
+
+					if (fired) {
+						alreadyFired[x] = true;
+						missilesLeftToFire--;
+					}
 				}
 			}
 

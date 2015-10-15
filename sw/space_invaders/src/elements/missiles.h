@@ -17,9 +17,12 @@
 // missile size info
 #define MISSILE_HEIGHT 		7
 #define MISSILE_WIDTH 		3
-#define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
 #define MISSILE_SHIFT 		4 // how many pixels should we move by every time?
+
+#define MISSILE_ALIEN_COUNT	3
+#define MISSILE_TANK_COUNT	1
+#define MISSILE_COUNT		(MISSILE_TANK_COUNT+MISSILE_ALIEN_COUNT)
 
 // missile boundary conditions
 #define MISSILE_BOTTOM_BUFFER	(FLOOR_ORIGIN_Y-(2*MISSILE_HEIGHT*MISSILE_SCALE)-FLOOR_HEIGHT*FLOOR_SCALE)
@@ -93,5 +96,8 @@ bool missiles_alienFire(uint16_t x, uint16_t y);
 
 // erase all the flying missiles
 void missiles_deactivateAll();
+
+// how many alien missiles are there in the sky?
+uint16_t missiles_getActiveAlienMissiles();
 
 #endif /* MISSILES_H_ */
