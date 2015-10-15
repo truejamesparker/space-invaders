@@ -67,7 +67,8 @@ void uartControl_handle(char key) {
 		/* Update All Bullets */
 		case '9':
 			xil_printf("update all bullets\r\n");
-			missiles_move();
+			missiles_moveAlienMissiles();
+			missiles_moveTankMissile();
 			break;
 
 

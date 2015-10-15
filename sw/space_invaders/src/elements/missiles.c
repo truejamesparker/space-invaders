@@ -9,6 +9,7 @@ static uint16_t alien_block_y;
 static kill_t mkill_log = {.kill = false, .x = 0, .y=0};
 
 // function declarations
+void moveMissile(uint8_t missileIndex);
 void shiftMissileOrigin(missile_t* missile);
 bool missiles_inBounds(missile_t* missile);
 void missiles_impact(missile_t* missile);
@@ -38,37 +39,26 @@ void missiles_init() {
 
 //-----------------------------------------------------------------------------
 
-// update the position of all missiles
-void missiles_move(){
+// update the position of all alien missiles
+void missiles_moveAlienMissiles(){
 	uint8_t i;
+	// make the alien bullets wobble next time
 	wobble = !wobble;
-	// if a missile was exploded, clean it up before moving missiles again
-	if(mkill_log.kill){
-		missile_cleanup();
-	}
-	for(i=0; i<MISSILE_COUNT; i++){
-		missile_t* missile = &missile_array[i];
-		if (missile->active) {
-			int8_t dir = missile->up ? -1 : 1;
-			const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
+	// i=1 because this function only updates alien missiles
+	for(i=1; i<MISSILE_COUNT; i++){
+		// move the corresponding missile
+		moveMissile(i);
 
-			// shift it on the screen
-			screen_shiftElement(symbol, missile->origin, missile->size,
-								0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
+	}
+}
 
-			// now update the origin in the missile struct
-			shiftMissileOrigin(missile);
-			// Should we keep drawing this missile?
-			if (missiles_inBounds(missile)) {
-				missiles_check_impact(missile);
-			} else {
-				missiles_deactivate(missile);
-			}
-		}
-	}
-	if(missile_array[TANK_MISSILE].active){
-		missile_missile_impact();
-	}
+//-----------------------------------------------------------------------------
+
+void missiles_moveTankMissile() {
+	moveMissile(TANK_MISSILE);
+
+	// Check if the tank missile impacted with any alien missiles
+	if (missile_array[TANK_MISSILE].active) missile_missile_impact();
 }
 
 //-----------------------------------------------------------------------------
@@ -123,12 +113,40 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 			return true;
 		}
 	}
-
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 // Private Helper Methods
+//-----------------------------------------------------------------------------
+
+void moveMissile(uint8_t missileIndex) {
+	// Grab the missile that was passed in
+	missile_t* missile = &missile_array[missileIndex];
+
+	// No need to do anything if the missile isn't actively on screen
+	if (missile->active) {
+		int8_t dir = missile->up ? -1 : 1;
+		const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
+
+		// shift it on the screen
+		screen_shiftElement(symbol, missile->origin, missile->size,
+							0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
+
+		// now update the origin in the missile struct
+		shiftMissileOrigin(missile);
+
+		// Should we keep drawing this missile?
+		if (missiles_inBounds(missile)) {
+			// Yes? Then check if it hit anything
+			missiles_check_impact(missile);
+		} else {
+			// No? Then get it outta here!
+			missiles_deactivate(missile);
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
 
 // update the missile origin (shift it in the y direction)
@@ -168,9 +186,6 @@ point_t missiles_get_tip(missile_t* missile){
 	uint16_t y = missile->origin.y;
 	origin.x = x + 1;
 	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
-//	int sym = 1;
-//	symbolsize_t size = {.w=1,.h=1};
-//	screen_drawSymbol(&sym, origin, size, 1, SCREEN_COLOR_RED);
 	return origin;
 }
 
