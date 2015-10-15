@@ -12,6 +12,8 @@
 #define TANK_HEIGHT 	8
 #define TANK_SCALE		2
 
+#define TANK_GUN_HEIGHT 3
+
 // how many pixels to shift tank
 #define TANK_SHIFT_X	4
 

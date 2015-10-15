@@ -91,12 +91,6 @@ static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
 		}
 };
 
-// Struct defining symbol size (width, height)
-static const symbolsize_t explosionsize = {
-		.w = 12,
-		.h = 10
-};
-
 /****
  * Function prototypes
  */

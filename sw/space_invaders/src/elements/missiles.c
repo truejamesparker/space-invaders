@@ -6,6 +6,8 @@ static bool wobble;
 static uint16_t bunker_y;
 static uint16_t alien_block_y;
 
+static kill_t mkill_log = {.kill = false, .x = 0, .y=0};
+
 // function declarations
 void shiftMissileOrigin(missile_t* missile);
 bool missiles_inBounds(missile_t* missile);
@@ -19,6 +21,7 @@ void missiles_check_impact(missile_t* missile);
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height);
 bool missile_kill_alien_in_row(missile_t* missile, uint16_t row);
 void missile_explode(point_t origin);
+void missile_cleanup();
 
 //-----------------------------------------------------------------------------
 
@@ -39,6 +42,10 @@ void missiles_init() {
 void missiles_move(){
 	uint8_t i;
 	wobble = !wobble;
+	// if a missile was exploded, clean it up before moving missiles again
+	if(mkill_log.kill){
+		missile_cleanup();
+	}
 	for(i=0; i<MISSILE_COUNT; i++){
 		missile_t* missile = &missile_array[i];
 		if (missile->active) {
@@ -57,7 +64,6 @@ void missiles_move(){
 			} else {
 				missiles_deactivate(missile);
 			}
-
 		}
 	}
 	if(missile_array[TANK_MISSILE].active){
@@ -162,8 +168,8 @@ point_t missiles_get_tip(missile_t* missile){
 	uint16_t y = missile->origin.y;
 	origin.x = x + 1;
 	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
-	int sym = 1;
-	symbolsize_t size = {.w=1,.h=1};
+//	int sym = 1;
+//	symbolsize_t size = {.w=1,.h=1};
 //	screen_drawSymbol(&sym, origin, size, 1, SCREEN_COLOR_RED);
 	return origin;
 }
@@ -233,11 +239,21 @@ void missile_alien_impact(missile_t* missile){
 	uint16_t height = missile->origin.y;
 
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
+		// figure out what row the missile is closest to
+		// subtract its height
 		int16_t y_dist = height - aliens_getAlienOrigin(0,y).y;
 		if(y_dist <= ALIEN_HEIGHT*ALIEN_SCALE){
 			if(missile_kill_alien_in_row(missile, y)){
 				return;
 			}
+		}
+	}
+	if(spaceship_isActive()){
+		point_t s_origin = spaceship_get_origin();
+		missile_t* missile = &missile_array[TANK_MISSILE];
+		bool hit = missile_in_block(missile, s_origin, SPACESHIP_WIDTH*SPACESHIP_SCALE, SPACESHIP_HEIGHT*SPACESHIP_SCALE);
+		if(hit){
+			spaceship_kill();
 		}
 	}
 }
@@ -267,16 +283,15 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 
 void missile_tank_impact(missile_t* missile){
 	point_t tip = missiles_get_tip(missile);
-	if (screen_getScreenColor(tip.x, tip.y)!=TANK_COLOR){
+	point_t tank_origin = tank_get_origin();
+	if (screen_getScreenColor(tip.x, tip.y)!=TANK_COLOR && tip.y < (tank_origin.y + TANK_GUN_HEIGHT*TANK_SCALE) ){
 		return;
 	}
-	point_t tank_origin = tank_get_origin();
 	bool hit = missile_in_block(missile, tank_origin, TANK_WIDTH*TANK_SCALE, TANK_HEIGHT*TANK_SCALE);
 	if(hit){
 		tank_kill();
 	}
 }
-
 //-----------------------------------------------------------------------------
 
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height){
@@ -297,7 +312,19 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 }
 
 void missile_explode(point_t origin){
+//	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
+	origin.x -= (explosionsize.w*MISSILE_SCALE)/2; // center on missile collision
+	screen_drawSymbol(missile_explosion_12x10, origin,
+						explosionsize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
+	mkill_log.kill = true;
+	mkill_log.x = origin.x;
+	mkill_log.y = origin.y;
+}
 
+void missile_cleanup(){
+	point_t kill_point = {.x=mkill_log.x, .y=mkill_log.y};
+	screen_drawSymbol(missile_explosion_12x10, kill_point,
+			explosionsize, MISSILE_SCALE, SCREEN_COLOR_BLACK);
 }
 
 //-----------------------------------------------------------------------------

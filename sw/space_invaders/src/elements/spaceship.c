@@ -136,3 +136,7 @@ int8_t chooseRandomShiftDirection() {
 	int8_t rnd = rand() % 2; // (rand()%(max-min+1))+min
 	return (rnd) ? SCREEN_SHIFT_LEFT : SCREEN_SHIFT_RIGHT;
 }
+
+bool spaceship_isActive(){
+	return (shiftDir!=0);
+}

@@ -47,4 +47,7 @@ bool spaceship_flashScore();
 // get the current position of the spaceship
 point_t spaceship_get_origin();
 
+// return if spaceship is on the screen
+bool spaceship_isActive();
+
 #endif /* SPACESHIFT_H_ */

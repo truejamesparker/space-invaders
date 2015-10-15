@@ -14,20 +14,11 @@ static uint32_t alienAliveCount = 0;
 // are in (flapping up vs flapping in)
 static bool flapIn = false;
 
-// a struct containing a bool indicating whether an
-// alien death has occurred and its coordinates
-typedef struct {
-	bool kill;
-	uint16_t x;
-	uint16_t y;
-} kill_t;
-
 // implementation of the struct above, nicknamed "the kill log"
 static kill_t kill_log = { .kill = false };
 
 // keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
-
 
 // function definitions
 void initAlienOrigins();

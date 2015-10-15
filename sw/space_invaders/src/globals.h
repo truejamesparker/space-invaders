@@ -19,6 +19,13 @@ typedef struct {
 	uint16_t h;
 } symbolsize_t;
 
+// a struct containing a bool indicating whether an
+// character death has occurred and its coordinates
+typedef struct {
+	bool kill;
+	uint16_t x;
+	uint16_t y;
+} kill_t;
 
 // These are currenlty unused but may be enabled later
 void setTankPositionGlobal(unsigned short val);
@@ -120,6 +127,24 @@ static const uint32_t alien_explosion_12x10[] = {
 		packword12(0,0,1,0,0,0,0,0,1,0,0,1),
 		packword12(0,1,0,0,0,1,0,0,1,0,0,0),
 		packword12(0,0,0,0,0,1,0,0,0,0,0,0) };
+
+static const uint32_t missile_explosion_12x10[] = {
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(1,0,0,1,0,0,0,0,0,0,1,0),
+		packword12(0,1,0,0,1,0,1,0,1,0,0,1),
+		packword12(0,0,0,1,1,1,1,1,0,0,1,1),
+		packword12(1,1,0,0,1,1,0,0,0,0,0,0),
+		packword12(0,0,0,1,0,0,0,1,0,1,1,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,1),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
+		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
+
+// Struct defining symbol size (width, height)
+static const symbolsize_t explosionsize = {
+		.w = 12,
+		.h = 10
+};
 
 // the following characterize the vaious alien movements
 // (arms up vs arms down)
@@ -309,7 +334,7 @@ static const uint32_t bunker_24x18[] = {
 // strikes one of these blocks, you erode the block as you sequence through
 // these patterns.
 
-static const int bunkerDamage0_6x6[] = {
+static const uint32_t bunkerDamage0_6x6[] = {
 	packword6(0,1,1,0,0,0),
 	packword6(0,0,0,0,0,1),
 	packword6(1,1,0,1,0,0),
@@ -318,7 +343,7 @@ static const int bunkerDamage0_6x6[] = {
 	packword6(0,0,0,0,1,0)
 };
 
-static const int bunkerDamage1_6x6[] = {
+static const uint32_t bunkerDamage1_6x6[] = {
 	packword6(1,1,1,0,1,0),
 	packword6(1,0,1,0,0,1),
 	packword6(1,1,0,1,1,1),
@@ -327,7 +352,7 @@ static const int bunkerDamage1_6x6[] = {
 	packword6(0,1,1,0,1,0)
 };
 
-static const int bunkerDamage2_6x6[] = {
+static const uint32_t bunkerDamage2_6x6[] = {
 	packword6(1,1,1,1,1,1),
 	packword6(1,0,1,1,0,1),
 	packword6(1,1,0,1,1,1),
@@ -336,7 +361,7 @@ static const int bunkerDamage2_6x6[] = {
 	packword6(1,1,1,1,1,1)
 	};
 
-static const int bunkerDamage3_6x6[] = {
+static const uint32_t bunkerDamage3_6x6[] = {
 	packword6(1,1,1,1,1,1),
 	packword6(1,1,1,1,1,1),
 	packword6(1,1,1,1,1,1),

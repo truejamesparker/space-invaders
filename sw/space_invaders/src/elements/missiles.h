@@ -12,6 +12,7 @@
 #include "tank.h"
 #include "bunkers.h"
 #include "gameScreen.h"
+#include "spaceship.h"
 
 // missile size info
 #define MISSILE_HEIGHT 		7

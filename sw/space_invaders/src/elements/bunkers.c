@@ -1,12 +1,17 @@
 #include "bunkers.h"
 
 #define BUNKER_START_XOFFSET 	24*BUNKER_SCALE
-
+#define STATUS_BIT_LENGTH		3
 
 static bunker_t bunker_array[4];
 
 // array of three different types of bunker damage patterns
-static const uint32_t* bunker_damage_symbols[4] = {bunkerDamage0_6x6, bunkerDamage1_6x6, bunkerDamage2_6x6, bunkerDamage3_6x6};
+static const uint32_t* bunker_damage_symbols[4] = {
+		bunkerDamage0_6x6,
+		bunkerDamage1_6x6,
+		bunkerDamage2_6x6,
+		bunkerDamage3_6x6
+};
 
 
 // size of bunker bitmap
@@ -37,14 +42,14 @@ void bunkers_init() {
 
 
 uint8_t bunker_point_status(uint8_t bunker_index, uint8_t sub_index){
-	return (bunker_array[bunker_index].status >> sub_index*3) & 0x7;
+	return (bunker_array[bunker_index].status >> sub_index*STATUS_BIT_LENGTH) & 0x7;
 }
 
 void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	uint32_t status_all = bunker_array[bunker_index].status;
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
 	status++;
-	uint32_t bit_mask = (0x7<<sub_index*3);         // (mask of the bits you want to set)
+	uint32_t bit_mask = (0x7<<sub_index*STATUS_BIT_LENGTH);         // (mask of the bits you want to set)
 	status_all = (status_all & (~bit_mask)) | (status<<sub_index*3);
 	bunker_array[bunker_index].status = status_all;
 }
@@ -66,7 +71,7 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_t* bunker = &bunker_array[index];
 	point_t point = bunker->sub_points[sub_index];
 	uint8_t status = bunker_point_status(index, sub_index);
-	uint32_t* symbol = bunker_damage_symbols[status];
+	const uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
 	// draw the symbol to the screen
 //	uint32_t color = colors[status];
@@ -83,7 +88,7 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 
 // initialize bunkers
 void bunkers_init_origins(){
-	uint16_t i;
+	uint8_t i;
 	bunker_t* bunker;
 	for(i=0; i<BUNKER_COUNT; i++){
 		point_t origin = {
@@ -101,7 +106,7 @@ void bunkers_init_origins(){
 }
 
 void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
-	int i, j, k=0, x_offset=0, y_offset=0;
+	uint8_t i, j, k=0, x_offset=0, y_offset=0;
 	for(j=0; j<3; j++){
 		for(i=0; i<4; i++){
 			if(!(j==2 && (i==1 || i==2))){ // ignore blocks 10 and 11 (empty)
@@ -120,7 +125,7 @@ void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
 
 // DEBUG FUNCTION ~ include in bunkers_draw()
 void draw_sub_points(bunker_t bunker){
-	int i;
+	uint8_t i;
 	uint32_t bit = 0x1;
 	symbolsize_t size = {.w=1, .h=1};
 	for(i=0; i<BUNKER_SUB_ORIGIN_COUNT; i++){
@@ -131,7 +136,7 @@ void draw_sub_points(bunker_t bunker){
 
 // draw all bunkers to the screen
 void bunkers_draw(){
-	uint16_t i;
+	uint8_t i;
 	for(i=0; i<BUNKER_COUNT; i++){
 		point_t origin = bunker_array[i].origin;
 		screen_drawSymbol(bunker_24x18, origin, bunker_size,
