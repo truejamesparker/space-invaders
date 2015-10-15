@@ -45,8 +45,21 @@ void alienBlockSM_tick() {
 				uint16_t Ys[ALIEN_COL_COUNT];
 				aliens_getLowestAliens(Xs, Ys);
 
+				// So, if the living number of aliens is less than MISSILE_ALIEN_COUNT, lets
+				// use livingCount as our ceiling. If we don't, one alien would have an
+				// unfair advantage against our mere 1 bullet on the screen at a time.
+				uint16_t maxMissilesOnScreen = MISSILE_ALIEN_COUNT;
+				if (livingCount < MISSILE_ALIEN_COUNT) maxMissilesOnScreen = livingCount;
+
 				// figure out the max num of missiles even available to me to fire
-				uint16_t maxMissilesFireable = MISSILE_ALIEN_COUNT-missiles_getActiveAlienMissiles();
+				uint16_t maxMissilesFireable = maxMissilesOnScreen-missiles_getActiveAlienMissiles();
+
+				// min between the two because we want the least amount of missiles
+				// on the screen at once as possible. Whenever maxMissilesOnScreen
+				// changes from the #define into the livingCount, it is possible a
+				// negative number could occur
+				maxMissilesFireable = MIN(livingCount,maxMissilesFireable);
+
 				// get a random number of missiles in that range to fire
 				uint16_t missilesLeftToFire = (rand()%(maxMissilesFireable+1));
 

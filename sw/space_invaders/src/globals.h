@@ -27,12 +27,7 @@ typedef struct {
 	uint16_t y;
 } kill_t;
 
-// These are currenlty unused but may be enabled later
-void setTankPositionGlobal(unsigned short val);
-unsigned short getTankPositionGlobal();
-void setTankBulletPosition(point_t val);
-point_t getTankBulletPosition();
-
+#define MIN(a,b) (((a)<(b)) ? (a) : (b))
 
 #define WORD_WIDTH 				32
 
