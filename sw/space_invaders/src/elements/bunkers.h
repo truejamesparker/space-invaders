@@ -11,10 +11,13 @@
 #define BUNKER_COLOR		0x32CD32
 
 // define the bunker scale (see globals.h)
-#define BUNKER_SCALE 		SCALE
-#define BUNKER_ERODE_SCALE	2
-#define BUNKER_WIDTH		24
-#define BUNKER_HEIGHT		18
+#define BUNKER_SCALE 			SCALE
+#define BUNKER_ERODE_SCALE		2
+#define BUNKER_WIDTH			24
+#define BUNKER_HEIGHT			18
+#define BUNKER_START_XOFFSET 	24*BUNKER_SCALE
+
+#define STATUS_BIT_LENGTH		3
 
 // missile array indexes
 #define TANK_MISSILE 		0
@@ -31,7 +34,7 @@
 // bunker struct definition
 typedef struct {
 	point_t origin;				// current location of missile
-	symbolsize_t size;	// size of missile bitmap
+	symbolsize_t size;			// size of missile bitmap
 	int32_t status;
 	point_t *sub_points;
 } bunker_t;

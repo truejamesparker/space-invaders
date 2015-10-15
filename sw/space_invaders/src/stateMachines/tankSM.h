@@ -6,10 +6,15 @@
 
 #include "../gpio/pushButtons.h"
 #include "../elements/tank.h"
+#include "../elements/missiles.h"
+#include "../elements/gameScreen.h"
+#include "spaceshipSM.h"
+#include "alienBlockSM.h"
 
 #define SM_PERIOD_TANK_MS 	30
 
-void tankSM_init();
+// how many periods to wait after a tank death
+#define TANK_KILLED_TIMEOUT	30
 
 void tankSM_tick();
 

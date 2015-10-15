@@ -1,13 +1,15 @@
 #include "tank.h"
 
 // position of tank
-static point_t tank_origin = {
-		.x = (SCREEN_WIDTH/2 - TANK_WIDTH/2),
-		.y = (7*SCREEN_HEIGHT)/8
-};
+static point_t origin;
 
 // direction of tank
 typedef enum tankEnum { TANK_MOVING_RIGHT, TANK_MOVING_LEFT } tankdir_t;
+
+// status of tank
+static bool alive = true;
+
+static bool smoulderToggler = false;
 
 // function declarations
 void tank_draw();
@@ -19,6 +21,18 @@ bool tank_isInMargin(tankdir_t tankDirection);
 
 // draw all tanks to screen
 void tank_init(){
+	// clear the tank in its place if it was somewhere
+	if (!alive) {
+		screen_drawSymbol(tank_15x8, origin, tank_size, TANK_SCALE, SCREEN_BG_COLOR);
+	}
+
+	// make the alien living!
+	alive = true;
+
+	// init origin
+	origin.x = BUNKER_START_XOFFSET + ((BUNKER_WIDTH*BUNKER_SCALE/2)-(TANK_WIDTH*TANK_SCALE/2));
+	origin.y = (7*SCREEN_HEIGHT)/8;
+
 	tank_draw();
 }
 
@@ -26,7 +40,7 @@ void tank_init(){
 
 // return tank origin
 point_t tank_get_origin(){
-	return tank_origin;
+	return origin;
 }
 
 //-----------------------------------------------------------------------------
@@ -52,12 +66,40 @@ void tank_left() {
 }
 
 //-----------------------------------------------------------------------------
+
+void tank_kill() {
+	// let the world know that I'm dead.
+	alive = false;
+
+//	screen_drawSymbol(tank_smoulder1_15x8, origin, tank_size, TANK_SCALE, TANK_COLOR);
+}
+
+//-----------------------------------------------------------------------------
+
+void tank_smoulder() {
+	// this will switch the guise for next time
+	smoulderToggler = !smoulderToggler;
+
+	// get a guise!
+	const uint32_t *guise = (smoulderToggler) ? tank_smoulder1_15x8 : tank_smoulder2_15x8;
+
+	// go ahead and draw it
+	screen_drawSymbol(guise, origin, tank_size, TANK_SCALE, TANK_COLOR);
+}
+
+//-----------------------------------------------------------------------------
+
+bool tank_isAlive() {
+	return alive;
+}
+
+//-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
 // draw tank at origin
 void tank_draw() {
-	screen_drawSymbol(tank_15x8, tank_origin, tank_size, TANK_SCALE, TANK_COLOR);
+	screen_drawSymbol(tank_15x8, origin, tank_size, TANK_SCALE, TANK_COLOR);
 }
 
 //-----------------------------------------------------------------------------
@@ -65,7 +107,7 @@ void tank_draw() {
 // shift the tank by xShift or yShift
 void tank_move(int16_t xShift, int16_t yShift) {
 	// shift the tank to the right
-	screen_shiftElement(tank_15x8, tank_origin, tank_size, xShift, yShift, TANK_SCALE, TANK_COLOR);
+	screen_shiftElement(tank_15x8, origin, tank_size, xShift, yShift, TANK_SCALE, TANK_COLOR);
 
 	// update the internal state of the tank's position
 	tank_shiftOrigin(xShift*TANK_SCALE, yShift*TANK_SCALE);
@@ -76,8 +118,8 @@ void tank_move(int16_t xShift, int16_t yShift) {
 // update the global tank origin variable
 void tank_shiftOrigin(int16_t xShift, int16_t yShift) {
 	// Change the x and y of the tank's origin
-	tank_origin.x += xShift;
-	tank_origin.y += yShift;
+	origin.x += xShift;
+	origin.y += yShift;
 }
 
 //-----------------------------------------------------------------------------
@@ -86,14 +128,10 @@ bool tank_isInMargin(tankdir_t tankDirection) {
 
 	// make sure that my turret doesn't go past left/right margin
 	if (tankDirection == TANK_MOVING_RIGHT) {
-		return (tank_origin.x + (TANK_SCALE*TANK_WIDTH) >= (SCREEN_WIDTH-SCREEN_EDGE_BUFFER));
+		return (origin.x + (TANK_SCALE*TANK_WIDTH) >= (SCREEN_WIDTH-SCREEN_EDGE_BUFFER));
 	} else {
-		return (tank_origin.x + (TANK_SCALE*TANK_WIDTH)/4 <= SCREEN_EDGE_BUFFER);
+		return (origin.x + (TANK_SCALE*TANK_WIDTH)/4 <= SCREEN_EDGE_BUFFER);
 	}
-}
-
-void tank_kill(){
-	screen_drawSymbol(tank_smoulder1_15x8, tank_origin, tank_size, TANK_SCALE, TANK_COLOR);
 }
 
 //-----------------------------------------------------------------------------

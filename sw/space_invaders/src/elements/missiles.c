@@ -118,6 +118,19 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 }
 
 //-----------------------------------------------------------------------------
+
+void missiles_deactivateAll() {
+	uint8_t i = 0;
+	for(i=0; i<MISSILE_COUNT; i++) {
+		// grab a missile
+		missile_t* missile = &missile_array[i];
+
+		// turn it off!
+		missiles_deactivate(missile);
+	}
+}
+
+//-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 

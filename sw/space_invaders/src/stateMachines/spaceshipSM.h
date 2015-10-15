@@ -22,4 +22,8 @@
 
 void spaceshipSM_tick();
 
+// lock/unlock this SM from runnning
+void spaceshipSM_lock();
+void spaceshipSM_unlock();
+
 #endif /* SPACESHIPSM_H_ */

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "../elements/aliens.h"
 #include "../elements/missiles.h"
@@ -37,5 +38,9 @@ void alienBlockSM_marchSlow();
 void alienBlockSM_marchMedium();
 void alienBlockSM_marchFast();
 void alienBlockSM_marchVeryFast();
+
+// lock/unlock this SM from runnning
+void alienBlockSM_lock();
+void alienBlockSM_unlock();
 
 #endif /* ALIENBLOCKSM_H_ */

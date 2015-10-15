@@ -91,4 +91,7 @@ void missiles_moveTankMissile();
 // have the (x,y) alien shoot a missile
 bool missiles_alienFire(uint16_t x, uint16_t y);
 
+// erase all the flying missiles
+void missiles_deactivateAll();
+
 #endif /* MISSILES_H_ */
