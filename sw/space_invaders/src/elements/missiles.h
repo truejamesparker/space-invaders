@@ -18,7 +18,7 @@
 #define MISSILE_WIDTH 		3
 #define MISSILE_COUNT		4
 #define MISSILE_SCALE		1 // how much should we scale?
-#define MISSILE_SHIFT 		8 // how many pixels should we move by every time?
+#define MISSILE_SHIFT 		4 // how many pixels should we move by every time?
 
 // missile boundary conditions
 #define MISSILE_BOTTOM_BUFFER	(FLOOR_ORIGIN_Y-(2*MISSILE_HEIGHT*MISSILE_SCALE)-FLOOR_HEIGHT*FLOOR_SCALE)

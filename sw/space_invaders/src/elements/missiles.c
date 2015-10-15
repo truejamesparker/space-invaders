@@ -11,13 +11,14 @@ void shiftMissileOrigin(missile_t* missile);
 bool missiles_inBounds(missile_t* missile);
 void missiles_impact(missile_t* missile);
 void missile_bunker_impact(missile_t* missile);
-void missile_missile_impact(missile_t* missile);
+void missile_missile_impact();
 void missile_alien_impact(missile_t* missile);
 void missile_tank_impact(missile_t* missile);
 void missiles_deactivate(missile_t* missile);
 void missiles_check_impact(missile_t* missile);
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height);
 bool missile_kill_alien_in_row(missile_t* missile, uint16_t row);
+void missile_explode(point_t origin);
 
 //-----------------------------------------------------------------------------
 
@@ -27,9 +28,9 @@ void missiles_init() {
 	for (i=0; i<MISSILE_COUNT; i++) {
 		// Turn off all missiles
 		missile_array[i].active = false;
-		bunker_y = bunkers_get_bunker(0).origin.y;
-		alien_block_y = aliens_get_lowest_y();
 	}
+	bunker_y = bunkers_get_bunker(0).origin.y;
+	alien_block_y = aliens_get_lowest_y();
 }
 
 //-----------------------------------------------------------------------------
@@ -50,7 +51,6 @@ void missiles_move(){
 
 			// now update the origin in the missile struct
 			shiftMissileOrigin(missile);
-
 			// Should we keep drawing this missile?
 			if (missiles_inBounds(missile)) {
 				missiles_check_impact(missile);
@@ -59,6 +59,9 @@ void missiles_move(){
 			}
 
 		}
+	}
+	if(missile_array[TANK_MISSILE].active){
+		missile_missile_impact();
 	}
 }
 
@@ -159,8 +162,8 @@ point_t missiles_get_tip(missile_t* missile){
 	uint16_t y = missile->origin.y;
 	origin.x = x + 1;
 	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
-//	int sym = 1;
-//	symbolsize_t size = {.w=1,.h=1};
+	int sym = 1;
+	symbolsize_t size = {.w=1,.h=1};
 //	screen_drawSymbol(&sym, origin, size, 1, SCREEN_COLOR_RED);
 	return origin;
 }
@@ -172,23 +175,34 @@ void missiles_check_impact(missile_t* missile){
 	if(missile->up){
 		// Then it's a tank's missile
 		if(tip.y > aliens_get_lowest_y()){
-			missile_bunker_impact(missile);
 			missile_alien_impact(missile);
 		}
 	} else {
 		// Then it's an alien's missile
 		// Don't check if the missile is higher than the bunkers
-		if(tip.y < bunker_y){
+		if(tip.y > bunker_y){
 			missile_tank_impact(missile);
-			missile_bunker_impact(missile);
 		}
 	}
+	missile_bunker_impact(missile);
 }
 
 //-----------------------------------------------------------------------------
 
 void missile_missile_impact(missile_t* missile){
-
+	int i;
+	missile_t* am;
+	for(i=1; i<MISSILE_COUNT; i++){
+		am = &missile_array[i];
+		if(am->active){
+			if(missile_in_block(missile, am->origin, MISSILE_WIDTH*MISSILE_SCALE*10, MISSILE_HEIGHT*MISSILE_SCALE)){
+				xil_printf("collision!\n\r");
+				missiles_deactivate(am);
+				missiles_deactivate(missile);
+				missile_explode(missile->origin);
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -265,18 +279,24 @@ void missile_tank_impact(missile_t* missile){
 //-----------------------------------------------------------------------------
 
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height){
-	bool up = missile->up;
 	point_t tip = missiles_get_tip(missile);
+	bool up = missile->up;
 	int x_dist = (tip.x - target_origin.x);
-//	int y_dist = up ? (tip.y - target_origin.y) : (target_origin.y - tip.y);
-	int y_dist = (tip.y - target_origin.y);
+	int y_dist = up ? ((target_origin.y+target_height) - tip.y) : (tip.y - target_origin.y);
+//	int y_dist = (tip.y - target_origin.y);
 
-	if ((x_dist <= target_width) && (x_dist >= 0) && (y_dist < target_height) && (y_dist > -MISSILE_HEIGHT*MISSILE_SCALE)){
+	if ((x_dist <= target_width) && (x_dist >= 0) &&
+			(y_dist <= (target_height+MISSILE_HEIGHT*MISSILE_SCALE)) &&
+					(y_dist >= 0)){
 		return true;
 	}
 	else{
 		return false;
 	}
+}
+
+void missile_explode(point_t origin){
+
 }
 
 //-----------------------------------------------------------------------------

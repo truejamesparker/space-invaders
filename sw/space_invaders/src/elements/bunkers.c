@@ -44,7 +44,6 @@ void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	uint32_t status_all = bunker_array[bunker_index].status;
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
 	status++;
-	xil_printf("bunker %d, block %d status: %d\n\r", bunker_index, sub_index, status);
 	uint32_t bit_mask = (0x7<<sub_index*3);         // (mask of the bits you want to set)
 	status_all = (status_all & (~bit_mask)) | (status<<sub_index*3);
 	bunker_array[bunker_index].status = status_all;
@@ -119,6 +118,7 @@ void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
 
 //-----------------------------------------------------------------------------
 
+// DEBUG FUNCTION ~ include in bunkers_draw()
 void draw_sub_points(bunker_t bunker){
 	int i;
 	uint32_t bit = 0x1;
@@ -138,7 +138,7 @@ void bunkers_draw(){
 				BUNKER_SCALE, BUNKER_COLOR);
 		screen_bgDrawSymbol(bunker_24x18, origin, bunker_size,
 				BUNKER_SCALE, BUNKER_COLOR);
-		draw_sub_points(bunker_array[i]);
+//		draw_sub_points(bunker_array[i]);
 	}
 
 }
