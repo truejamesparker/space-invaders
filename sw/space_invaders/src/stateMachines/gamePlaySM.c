@@ -55,6 +55,7 @@ void gamePlaySM_tick() {
 
 void startNewLevel() {
 	// redraw the aliens, top off lives
+	aliens_cleanupKills();
 	aliens_init();
 	gameScreen_increaseLives(LIVES_MAX);
 

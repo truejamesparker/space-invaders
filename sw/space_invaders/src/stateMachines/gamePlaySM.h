@@ -10,6 +10,7 @@
 #include "../elements/tank.h"
 #include "alienBlockSM.h"
 #include "spaceshipSM.h"
+#include "tankSM.h"
 
 #define SM_PERIOD_GAMEPLAY_MS		10
 

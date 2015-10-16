@@ -27,12 +27,12 @@ void alienBlockSM_tick() {
 		aliens_march();
 
 		// get how many aliens are currently living
-		uint32_t livingCount = aliens_areLiving();
+		uint32_t firingCount = aliens_getFiringCount();
 
 		// if necessary update speed
-		updateMarchingSpeed(livingCount);
+		updateMarchingSpeed(firingCount);
 
-		if (livingCount) { // if there are aliens living
+		if (firingCount) { // if there are aliens living
 
 			// Decide when to fire missiles
 			uint16_t r = (rand()%(100))+1; // (rand()%(max-min+1))+min;
@@ -48,7 +48,7 @@ void alienBlockSM_tick() {
 				// use livingCount as our ceiling. If we don't, one alien would have an
 				// unfair advantage against our mere 1 bullet on the screen at a time.
 				uint16_t maxMissilesOnScreen = MISSILE_ALIEN_COUNT;
-				if (livingCount < MISSILE_ALIEN_COUNT) maxMissilesOnScreen = livingCount;
+				if (firingCount < MISSILE_ALIEN_COUNT) maxMissilesOnScreen = firingCount;
 
 				// figure out the max num of missiles even available to me to fire
 				uint16_t maxMissilesFireable = maxMissilesOnScreen-missiles_getActiveAlienMissiles();
@@ -57,7 +57,7 @@ void alienBlockSM_tick() {
 				// on the screen at once as possible. Whenever maxMissilesOnScreen
 				// changes from the #define into the livingCount, it is possible a
 				// negative number could occur
-				maxMissilesFireable = MIN(livingCount,maxMissilesFireable);
+				maxMissilesFireable = MIN(firingCount,maxMissilesFireable);
 
 				// get a random number of missiles in that range to fire
 				uint16_t missilesLeftToFire = (rand()%(maxMissilesFireable+1));
@@ -69,10 +69,10 @@ void alienBlockSM_tick() {
 
 				// don't spin in a while(1) if you can't shoot. This happens
 				// when there are aliens on top of each other -- only 1 can shoot
-				uint8_t shootAttempts = ALIENBLOCK_MAX_SHOOT_ATTEMPTS;
+//				uint8_t shootAttempts = ALIENBLOCK_MAX_SHOOT_ATTEMPTS;
 
 				// The loop makes sure some alien will fire
-				while(missilesLeftToFire || !shootAttempts--) {
+				while(missilesLeftToFire) {
 					// pick a random lowest living alien
 					uint16_t x = (rand()%ALIEN_COL_COUNT);
 

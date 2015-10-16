@@ -133,6 +133,6 @@ void aliens_right();
 void aliens_up();
 void aliens_down();
 uint16_t aliens_get_lowest_y();
-
+uint16_t aliens_getFiringCount();
 
 #endif /* ALIENS_H_ */

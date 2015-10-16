@@ -72,7 +72,7 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_point_damage(index, sub_index);
 	// draw the symbol to the screen
 //	uint32_t color = colors[status];
-	screen_bgDrawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
+	screen_bgDrawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_COLOR_BLACK);
 	screen_drawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
 	// also update the background frame (used for reference only)
 }

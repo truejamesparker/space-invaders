@@ -108,8 +108,8 @@ void screen_clear() {
 	for (y = 0; y < SCREEN_HEIGHT; y++) {
 		for (x = 0; x < SCREEN_WIDTH; x++) {
 
-			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
-			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_BG_COLOR);
+			SCREEN_SET_XY_TO_COLOR(x, y, SCREEN_COLOR_BLACK);
+			SCREEN_BG_SET_XY_TO_COLOR(x, y, SCREEN_COLOR_BLACK);
 
 #if SCREEN_SHOW_MARGINS
 			if (	x == SCREEN_EDGE_BUFFER ||
@@ -157,12 +157,6 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 					}
 				}
 			}
-			// now scale that pixel on the screen
-//			for (i = 0; i < scale; i++) {
-//				for (j = 0; j < scale; j++) {
-//					SCREEN_BG_SET_XY_TO_COLOR(origin.x+i+x_offset,origin.y+j+y_offset,color);
-//				}
-//			}
 			x_offset += scale; // account for the scale in x
 		}
 		y_offset += scale; // account for the scale in y
@@ -246,6 +240,14 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 					} else {
 						color = SCREEN_COLOR_YELLOW;
 					}
+
+					// if the color is SCREEN_BG_COLOR we assume we
+					// want to use the pixel color of the background
+
+					if(onColor==SCREEN_BG_COLOR){
+						color = bgcolor;
+					}
+
 
 #if SCREEN_SHIFT_BOX
 					if (xSign == SCREEN_SHIFT_LEFT || xSign == SCREEN_SHIFT_RIGHT) {

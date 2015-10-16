@@ -20,12 +20,16 @@ static kill_t kill_log = { .kill = false };
 // keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
 
+static bool colExists[ALIEN_COL_COUNT] = { false };
+
 // function definitions
 void initAlienOrigins();
 void initLivesArray();
 void drawAliens();
 void shiftAlienOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift);
 void updateLowestLivingAliens(uint16_t x, uint16_t y);
+point_t get_rightPoint();
+point_t get_leftPoint();
 
 //-----------------------------------------------------------------------------
 
@@ -46,6 +50,10 @@ void aliens_init() {
 	// direction info
 	flapIn = false;
 	_aliensMarchingRight = true;
+	uint8_t i;
+	for(i=0; i<ALIEN_COL_COUNT; i++){
+		colExists[i] = true;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -127,9 +135,9 @@ void aliens_march_dir(uint16_t dir){
 
 void aliens_march(){
 	// origin of leftmost alien
-	point_t left_origin = aliens_getAlienOrigin(0, 0);
+	point_t left_origin = get_leftPoint();
 	// origin of rightmost alien
-	point_t right_origin = aliens_getAlienOrigin(ALIEN_COL_COUNT-1, 0);
+	point_t right_origin = get_rightPoint();
 
 	// if i'm marching right and my rightmost part of me will be in the
 	// margin, drop down onto the next row, change marching direction to left
@@ -194,6 +202,9 @@ void aliens_kill(uint16_t index) {
 
 	// Also, update which are the lowest living aliens
 	updateLowestLivingAliens(x, y);
+//	if(aliens_areLiving()==0){
+//		aliens_cleanupKills();
+//	}
 }
 
 //-----------------------------------------------------------------------------
@@ -389,7 +400,10 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 		//
 		// uint16_t is promoted to an int for this subtraction.
 		// i.e, (unsigned)0 - (unsigned)1 == -1
-		if ((y-i) < 0) i--;
+		if ((y-i) < 0){
+			i--;
+			colExists[x] = false; // mark this column as destroyed
+		}
 
 		// here, I either found an alien above me, or I got out of range
 		// Due to the previous check, this expression is always safe.
@@ -399,6 +413,16 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 	// killed an alien above a living alien. Thus,
 	// the lowest alien is still lowestAlien_Ys[x].
 
+}
+
+uint16_t aliens_getFiringCount(){
+	uint8_t i, count=0;
+	for(i=0; i<ALIEN_COL_COUNT; i++){
+		if(ALIEN_ALIVE(lowestAlien_Xs[i], lowestAlien_Ys[i])){
+			count++;
+		}
+	}
+	return count;
 }
 
 uint16_t aliens_get_lowest_y(){
@@ -412,3 +436,27 @@ uint16_t aliens_get_lowest_y(){
 	}
 	return y;
 }
+
+point_t get_leftPoint(){
+	uint8_t i;
+	point_t alien = {0, 0};
+	for(i=0; i<ALIEN_COL_COUNT; i++){
+		if(colExists[i]){
+			return aliens_getAlienOrigin(i, 0);
+		}
+	}
+	return alien; // this condition is never reached
+}
+
+point_t get_rightPoint(){
+	uint8_t i;
+	point_t alien = {0, 0};
+	for(i=ALIEN_COL_COUNT-1; i>0; i--){
+		if(colExists[i]){
+			return aliens_getAlienOrigin(i, 0);
+		}
+	}
+	return alien; // this condition is never reached
+}
+
+

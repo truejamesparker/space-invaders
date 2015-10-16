@@ -23,7 +23,10 @@
 #define SCREEN_COLOR_WHITE 	0x00FFFFFF
 
 
-#define SCREEN_BG_COLOR				SCREEN_COLOR_BLACK
+// this is a key word color and will reference the
+// background pixel value at the given screen coordinates
+#define SCREEN_BG_COLOR				0xFF00000
+
 #define SCREEN_ELEM_OUTLINE 		SCREEN_COLOR_RED
 #define SCREEN_ELEM_DIFF_OUTLINE	SCREEN_COLOR_GREEN
 #define SCREEN_ORIGIN_COLOR			SCREEN_COLOR_BROWN
