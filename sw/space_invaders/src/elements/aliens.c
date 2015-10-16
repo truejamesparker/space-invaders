@@ -403,10 +403,7 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 		//
 		// uint16_t is promoted to an int for this subtraction.
 		// i.e, (unsigned)0 - (unsigned)1 == -1
-		if ((y-i) < 0){
-			i--;
-			colExists[x] = false; // mark this column as destroyed
-		}
+		if ((y-i) < 0) i--;
 
 		// here, I either found an alien above me, or I got out of range
 		// Due to the previous check, this expression is always safe.
