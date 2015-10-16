@@ -20,7 +20,7 @@ static kill_t kill_log = { .kill = false };
 // keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
 
-static bool colExists[ALIEN_COL_COUNT] = { false };
+static uint8_t colCount[ALIEN_COL_COUNT] = { 0 };
 
 // function definitions
 void initAlienOrigins();
@@ -52,7 +52,7 @@ void aliens_init() {
 	_aliensMarchingRight = true;
 	uint8_t i;
 	for(i=0; i<ALIEN_COL_COUNT; i++){
-		colExists[i] = true;
+		colCount[i] = 5;
 	}
 }
 
@@ -201,6 +201,9 @@ void aliens_kill(uint16_t index) {
 	kill_log.y = y;
 
 	// Also, update which are the lowest living aliens
+
+	colCount[x]--;
+
 	updateLowestLivingAliens(x, y);
 //	if(aliens_areLiving()==0){
 //		aliens_cleanupKills();
@@ -441,7 +444,7 @@ point_t get_leftPoint(){
 	uint8_t i;
 	point_t alien = {0, 0};
 	for(i=0; i<ALIEN_COL_COUNT; i++){
-		if(colExists[i]){
+		if(colCount[i]){
 			return aliens_getAlienOrigin(i, 0);
 		}
 	}
@@ -452,7 +455,7 @@ point_t get_rightPoint(){
 	uint8_t i;
 	point_t alien = {0, 0};
 	for(i=ALIEN_COL_COUNT-1; i>0; i--){
-		if(colExists[i]){
+		if(colCount[i]){
 			return aliens_getAlienOrigin(i, 0);
 		}
 	}
