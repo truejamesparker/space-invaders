@@ -63,5 +63,8 @@ point_t text_getCenterStartPoint(uint16_t width, uint16_t height, uint8_t scale)
 			.x = SCREEN_WIDTH/2 - x_offset,
 			.y = SCREEN_HEIGHT/2 - y_offset
 	};
+
+	// return what the origin of text should be if you want a certain sized
+	// text to print in the center of the screen, e.g., "GAME OVER"
 	return origin;
 }
