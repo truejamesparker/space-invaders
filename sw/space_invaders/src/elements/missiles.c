@@ -200,7 +200,7 @@ void shiftMissileOrigin(missile_t* missile) {
 void missiles_erase(missile_t* missile){
 	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 	screen_drawSymbol(symbol, missile->origin,
-						missile->size, MISSILE_SCALE, SCREEN_COLOR_BLACK);
+						missile->size, MISSILE_SCALE, SREEN_BG_COLOR);
 }
 
 //-----------------------------------------------------------------------------

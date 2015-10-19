@@ -83,7 +83,7 @@ void bunkers_init_origins(){
 	bunker_t* bunker;
 	for(i=0; i<BUNKER_COUNT; i++){
 		point_t origin = {
-				.x = i*(SCREEN_WIDTH/4) + BUNKER_START_XOFFSET,
+				.x = i*(SCREEN_WIDTH/BUNKER_COUNT) + BUNKER_START_XOFFSET,
 				.y = BUNKER_START_Y
 		};
 		bunker = &bunker_array[i];
