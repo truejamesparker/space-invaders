@@ -325,19 +325,21 @@ void missile_alien_impact(missile_t* missile){
 
 //-----------------------------------------------------------------------------
 
+// check if an alien has been hit
 bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 	point_t alien_origin;
 	uint16_t x;
 	for(x=0; x<ALIEN_COL_COUNT; x++){
 		alien_origin = aliens_getAlienOrigin(x,row);
 		if(!alien_isAlive(x, row)){
-			continue;
+			continue; // it's dead, move on
 		}
+		// did the missile penetrate this alien?
 		bool hit = missile_in_block(missile, alien_origin, ALIEN_WIDTH*ALIEN_SCALE, ALIEN_HEIGHT*ALIEN_SCALE);
 		if(hit){
 			uint16_t index = alien_xy_to_index(x, row);
-			missiles_deactivate(missile);
-			aliens_kill(index);
+			missiles_deactivate(missile); // deactivate the missile
+			aliens_kill(index); // ... aliens lives don't matter
 			return true;
 		}
 	}
@@ -346,6 +348,7 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 
 //-----------------------------------------------------------------------------
 
+// check if the tank has been hit
 void missile_tank_impact(missile_t* missile){
 	point_t tip = missiles_get_tip(missile);
 	point_t tank_origin = tank_get_origin();
@@ -384,7 +387,6 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 
 // draw the misile-to-missile explosions
 void missile_explode(point_t origin){
-//	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 	origin.x -= (explosionsize.w*MISSILE_SCALE)/2; // center on missile collision
 	screen_drawSymbol(missile_explosion_12x10, origin,
 						explosionsize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
