@@ -6,7 +6,7 @@
 
 #include "../elements/missiles.h"
 
-#define SM_PERIOD_MISSILE_MS 	10
+#define SM_PERIOD_MISSILE_MS 	20
 
 // missile speeds (update every n periods)
 #define MISSILE_ALIEN_REFRESH	2

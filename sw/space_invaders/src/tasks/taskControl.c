@@ -59,6 +59,6 @@ void taskControl_tick() {
 
 		// increase the task's elapsedTime by whatever the period of
 		// the FIT timer is (which is what calls this function)
-		tasks[i].elapsedTime += TC_SM_PERIOD_GCD;
+		tasks[i].elapsedTime += TC_TIMER_PERIOD_MS;
 	}
 }

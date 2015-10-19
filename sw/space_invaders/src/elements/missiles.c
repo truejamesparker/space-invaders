@@ -375,7 +375,7 @@ void missile_explode(point_t origin){
 void missile_cleanup(){
 	point_t kill_point = {.x=mkill_log.x, .y=mkill_log.y};
 	screen_drawSymbol(missile_explosion_12x10, kill_point,
-			explosionsize, MISSILE_SCALE, SCREEN_COLOR_BLACK);
+			explosionsize, MISSILE_SCALE, SCREEN_BG_COLOR);
 	mkill_log.kill = false;
 }
 
