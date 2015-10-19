@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "xtmrctr.h"
-
 #include "../stateMachines/alienBlockSM.h"
 #include "../stateMachines/screenRefreshSM.h"
 #include "../stateMachines/tankSM.h"
