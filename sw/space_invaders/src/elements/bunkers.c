@@ -1,4 +1,5 @@
 #include "bunkers.h"
+#define STATUS_MASK 	0x07
 
 static bunker_t bunker_array[4];
 
@@ -17,10 +18,7 @@ static const symbolsize_t bunker_size = {
 		.h = 18
 };
 
-
-//delete me
-const uint32_t colors[4] = {SCREEN_COLOR_RED, SCREEN_COLOR_YELLOW, SCREEN_COLOR_WHITE, SCREEN_COLOR_BLACK};
-
+// function definitions
 void bunkers_draw();
 void bunkers_init_origins();
 void bunkers_init_sub_origins(point_t origin, point_t *sub_points);
@@ -30,18 +28,18 @@ void bunkers_init_sub_origins(point_t origin, point_t *sub_points);
 void bunkers_init() {
 	// create the origins of the bunkers
 	bunkers_init_origins();
-
-	// draw the origins
+	// draw the bunkers
 	bunkers_draw();
 }
 
 //-----------------------------------------------------------------------------
 
-
+// get the status of the bunker "sub-block"
 uint8_t bunker_point_status(uint8_t bunker_index, uint8_t sub_index){
-	return (bunker_array[bunker_index].status >> sub_index*STATUS_BIT_LENGTH) & 0x7;
+	return (bunker_array[bunker_index].status >> sub_index*STATUS_BIT_LENGTH) & STATUS_MASK;
 }
 
+// increment the damange of the bunker "sub-block"
 void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	uint32_t status_all = bunker_array[bunker_index].status;
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
@@ -51,6 +49,7 @@ void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	bunker_array[bunker_index].status = status_all;
 }
 
+// is the bunker "sub-block" completely eroded?
 bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index){
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
 	if(status < BUNKER_ERODED_STATUS){
@@ -61,23 +60,18 @@ bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index){
 	}
 }
 
-
 // overlay given bunker with a random erosion pattern
-// TODO: make this function accept an point param rather than using rand
 void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_t* bunker = &bunker_array[index];
 	point_t point = bunker->sub_points[sub_index];
 	uint8_t status = bunker_point_status(index, sub_index);
 	const uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
-	// draw the symbol to the screen
-//	uint32_t color = colors[status];
+	// update the background frame (used for reference only)
 	screen_bgDrawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_COLOR_BLACK);
+	// draw the damage to the screen
 	screen_drawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
-	// also update the background frame (used for reference only)
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Private Helper Methods
@@ -89,7 +83,7 @@ void bunkers_init_origins(){
 	bunker_t* bunker;
 	for(i=0; i<BUNKER_COUNT; i++){
 		point_t origin = {
-				.x = i * 148 + BUNKER_START_XOFFSET,
+				.x = i*(SCREEN_WIDTH/4) + BUNKER_START_XOFFSET,
 				.y = BUNKER_START_Y
 		};
 		bunker = &bunker_array[i];
@@ -97,6 +91,7 @@ void bunkers_init_origins(){
 		bunker->size = bunker_size;
 		bunker->status=0;
 		bunker->sub_points = malloc(BUNKER_SUB_ORIGIN_COUNT * sizeof bunker->sub_points);
+		// initialize the coordinates of all 10 sub-origins of the bunker
 		bunkers_init_sub_origins(origin, bunker->sub_points);
 
 	}
@@ -145,6 +140,7 @@ void bunkers_draw(){
 
 }
 
+// return array of current bunkers
 bunker_t bunkers_get_bunker(uint8_t index){
 	return bunker_array[index];
 }
