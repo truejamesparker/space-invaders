@@ -387,9 +387,9 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 
 // draw the misile-to-missile explosions
 void missile_explode(point_t origin){
-	origin.x -= (explosionSize.w*MISSILE_SCALE)/2; // center on missile collision
+	origin.x -= (explosionBitmapSize.w*MISSILE_SCALE)/2; // center on missile collision
 	screen_drawSymbol(missile_explosion_12x10, origin,
-			explosionSize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
+			explosionBitmapSize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
 	// log this collision to the kill-log
 	mkill_log.kill = true;
 	mkill_log.x = origin.x;
@@ -400,7 +400,7 @@ void missile_explode(point_t origin){
 void missile_cleanup(){
 	point_t kill_point = {.x=mkill_log.x, .y=mkill_log.y};
 	screen_drawSymbol(missile_explosion_12x10, kill_point,
-			explosionSize, MISSILE_SCALE, SCREEN_BG_COLOR);
+			explosionBitmapSize, MISSILE_SCALE, SCREEN_BG_COLOR);
 	mkill_log.kill = false;
 }
 

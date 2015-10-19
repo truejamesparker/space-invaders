@@ -46,10 +46,10 @@ void text_drawNumberString(uint8_t *array, uint8_t length, uint32_t maxLength,
 		uint32_t myColor = (i<length) ? color : SCREEN_BG_COLOR;
 
 		uint32_t digit = array[i];
-		screen_drawSymbol(numbers_5x5[digit], origin, numbersSize, scale, myColor);
+		screen_drawSymbol(numbers_6x5[digit], origin, numbersBitmapSize, scale, myColor);
 
 		// Shift the origin over to the next spot
-		origin.x += (numbersSize.w+TEXT_NUMBER_PADDING)*scale;
+		origin.x += (numbersBitmapSize.w+TEXT_NUMBER_PADDING)*scale;
 	}
 }
 

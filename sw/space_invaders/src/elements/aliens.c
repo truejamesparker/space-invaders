@@ -20,7 +20,8 @@ static kill_t kill_log = { .kill = false };
 // keeps track of whether the aliens should be marching right or left
 static bool _aliensMarchingRight = true;
 
-static uint8_t colCount[ALIEN_COL_COUNT] = { 0 };
+// how many living aliens are there in this column?
+static uint8_t aliensInColumn[ALIEN_COL_COUNT] = { 0 };
 
 // function definitions
 void initAlienOrigins();
@@ -52,7 +53,7 @@ void aliens_init() {
 	_aliensMarchingRight = true;
 	uint8_t i;
 	for(i=0; i<ALIEN_COL_COUNT; i++){
-		colCount[i] = 5;
+		aliensInColumn[i] = ALIEN_ROW_COUNT;
 	}
 }
 
@@ -110,7 +111,7 @@ void aliens_march_dir(uint16_t dir){
 
 			// Tell the screen to shift this element by x_shift, y_shift
 			if(ALIEN_ALIVE(x,y)){
-				screen_shiftElement(symbol, alienOrigin, alien.size,
+				screen_shiftElement(symbol, alienOrigin, *alien.bitmapSize,
 									x_shift, y_shift, ALIEN_SCALE, ALIEN_COLOR);
 			}
 
@@ -141,7 +142,7 @@ void aliens_march(){
 
 	// if i'm marching right and my rightmost part of me will be in the
 	// margin, drop down onto the next row, change marching direction to left
-	if(_aliensMarchingRight && ((right_origin.x + ALIEN_SCALE*ALIEN_WIDTH) >= SCREEN_WIDTH - SCREEN_EDGE_BUFFER)){
+	if(_aliensMarchingRight && ((right_origin.x + ALIEN_WIDTH) >= SCREEN_WIDTH - SCREEN_EDGE_BUFFER)){
 		aliens_march_dir(ALIEN_MARCH_DOWN);
 		_aliensMarchingRight = false;
 
@@ -183,7 +184,7 @@ void aliens_kill(uint16_t index) {
 	point_t origin = aliens_getAlienOrigin(x, y);
 
 	// draw the explosion in place of that particular alien
-	screen_drawSymbol(alien_explosion_12x10, origin, explosionSize,
+	screen_drawSymbol(alien_explosion_12x10, origin, explosionBitmapSize,
 						ALIEN_SCALE, SCREEN_COLOR_WHITE);
 
 	// Increase score!
@@ -202,7 +203,7 @@ void aliens_kill(uint16_t index) {
 
 	// Also, update which are the lowest living aliens
 
-	colCount[x]--;
+	aliensInColumn[x]--;
 
 	updateLowestLivingAliens(x, y);
 //	if(aliens_areLiving()==0){
@@ -281,7 +282,7 @@ void aliens_cleanupKills() {
 		point_t origin = aliens_getAlienOrigin(kill_log.x, kill_log.y);
 
 		// Blank the rectangle that the exploded alien was
-		screen_drawSymbol(alien_explosion_12x10, origin, explosionSize,
+		screen_drawSymbol(alien_explosion_12x10, origin, explosionBitmapSize,
 								ALIEN_SCALE, SCREEN_BG_COLOR);
 
 		// reset kill log
@@ -304,7 +305,7 @@ bool aliens_belowBunkers() {
 		// so, grab each lowest living alien per column and see if its
 		// (origin.y+its height) is lower than BUNKER_END_Y
 		point_t alienOrigin = aliens_getAlienOrigin(Xs[i], Ys[i]);
-		if (alienOrigin.y+ALIEN_HEIGHT*ALIEN_SCALE > BUNKER_END_Y) {
+		if (alienOrigin.y+ALIEN_HEIGHT > BUNKER_END_Y) {
 			// this living alien is below the bunkers
 			aliensBelowBunkers = true;
 			break;
@@ -334,7 +335,7 @@ void drawAliens() {
 			uint32_t color = (ALIEN_ALIVE(col,row)) ? ALIEN_COLOR : SCREEN_BG_COLOR;
 			const uint32_t* symbol = flapIn ? alien.in : alien.out;	// set direction (up/down)
 			// Tell the screen to draw my symbol
-			screen_drawSymbol(symbol, alienOrigin, alien.size,
+			screen_drawSymbol(symbol, alienOrigin, *alien.bitmapSize,
 					ALIEN_SCALE, color);
 		}
 	}
@@ -359,8 +360,8 @@ void initAlienOrigins() {
 		alien_t alien = alien_symbols[y];	// select alien type
 		for(x=0; x<ALIEN_COL_COUNT; x++){
 			point_t origin = {
-					.x = (x * alien.size.w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER, // account for the screen buffer
-					.y = (y * alien.size.h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + 3*ALIEN_HEIGHT*ALIEN_SCALE
+					.x = (x * alien.bitmapSize->w * ALIEN_SCALE) + x*ALIEN_PADDING_X + SCREEN_EDGE_BUFFER, // account for the screen buffer
+					.y = (y * alien.bitmapSize->h * ALIEN_SCALE) + y*ALIEN_PADDING_Y + SCREEN_EDGE_BUFFER + 3*ALIEN_HEIGHT
 			};
 			alienOrigins[ALIEN_XY_TO_INDEX(x, y)] = origin;
 
@@ -374,7 +375,7 @@ void initAlienOrigins() {
 	}
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 void shiftAlienOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift) {
 	point_t *origin = &alienOrigins[ALIEN_XY_TO_INDEX(x,y)];
@@ -384,7 +385,7 @@ void shiftAlienOrigin(uint16_t x, uint16_t y, int16_t xShift, int16_t yShift) {
 	origin->y += yShift;
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 	// If no alien exists in column, setting the y to 0 is fine because
@@ -409,11 +410,13 @@ void updateLowestLivingAliens(uint16_t x, uint16_t y) {
 		// Due to the previous check, this expression is always safe.
 		lowestAlien_Ys[x] = (y-i);
 	}
+
 	// If I'm not the lowest alien, that means you just
 	// killed an alien above a living alien. Thus,
 	// the lowest alien is still lowestAlien_Ys[x].
-
 }
+
+// ----------------------------------------------------------------------------
 
 uint16_t aliens_getFiringCount(){
 	uint8_t i, count=0;
@@ -424,6 +427,8 @@ uint16_t aliens_getFiringCount(){
 	}
 	return count;
 }
+
+// ----------------------------------------------------------------------------
 
 uint16_t aliens_get_lowest_y(){
 	uint8_t i, la;
@@ -437,26 +442,36 @@ uint16_t aliens_get_lowest_y(){
 	return y;
 }
 
+// ----------------------------------------------------------------------------
+
 point_t get_leftPoint(){
 	uint8_t i;
-	point_t alien = {0, 0};
+	point_t alien;
+
+	// starting from the left, if this column exists, get that alien.
 	for(i=0; i<ALIEN_COL_COUNT; i++){
-		if(colCount[i]){
-			return aliens_getAlienOrigin(i, 0);
+		if (aliensInColumn[i]) {
+			alien = aliens_getAlienOrigin(i, 0);
+			break;
 		}
 	}
-	return alien; // this condition is never reached
+
+	return alien;
 }
+
+// ----------------------------------------------------------------------------
 
 point_t get_rightPoint(){
 	uint8_t i;
-	point_t alien = {0, 0};
+	point_t alien;
+
+	// starting from the right, if this colum exists, get that alien.
 	for(i=ALIEN_COL_COUNT-1; i>0; i--){
-		if(colCount[i]){
-			return aliens_getAlienOrigin(i, 0);
+		if (aliensInColumn[i]) {
+			alien = aliens_getAlienOrigin(i, 0);
+			break;
 		}
 	}
-	return alien; // this condition is never reached
+
+	return alien;
 }
-
-

@@ -14,8 +14,8 @@
 #define ALIEN_COUNT 			(ALIEN_COL_COUNT*ALIEN_ROW_COUNT)
 #define ALIEN_SCALE				2
 #define ALIEN_COLOR				SCREEN_COLOR_WHITE
-#define ALIEN_WIDTH 			12
-#define ALIEN_HEIGHT 			8
+#define ALIEN_WIDTH 			(BITMAP_ALIEN_WIDTH*ALIEN_SCALE)
+#define ALIEN_HEIGHT 			(BITMAP_ALIEN_HEIGHT*ALIEN_SCALE)
 #define ALIEN_LOW_COORDINATE	0
 #define ALIEN_HIGH_COORDINATE	(ALIEN_COUNT-1)
 
@@ -51,43 +51,51 @@
  */
 
 typedef struct {
-	const uint32_t* in; 		// alien "in" bitmap
-	const uint32_t* out; 		// alien "out" bitmap
-	const symbolsize_t size; 	// size of alien bitmap
-	const uint32_t scoreValue;	// score value of the alien
+	const uint32_t* in; 			// alien "in" bitmap
+	const uint32_t* out; 			// alien "out" bitmap
+	const symbolsize_t* bitmapSize; 	// size of alien bitmap
+	const uint32_t scoreValue;		// score value of the alien
 } alien_t;
 
 // array of the 3 types of aliens (elite, infantry, and grunt)
 
 static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
+		/** Elite Aliens **/
+
 		{
-				.in = alien_top_in_12x8,			// elite aliens
+				.in = alien_top_in_12x8,
 				.out = alien_top_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.bitmapSize = &alienBitmapSize,
 				.scoreValue = ALIEN_SCORE_ELITE_VALUE
 		},
+
+		/** Infantry Aliens **/
+
 		{
-				.in = alien_middle_in_12x8,			// infantry aliens
+				.in = alien_middle_in_12x8,
 				.out = alien_middle_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.bitmapSize = &alienBitmapSize,
 				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
 		},
 		{
 				.in = alien_middle_in_12x8,
 				.out = alien_middle_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.bitmapSize = &alienBitmapSize,
 				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
 		},
+
+		/** Grunt Aliens **/
+
 		{
-				.in = alien_bottom_in_12x8,			// grunt aliens
+				.in = alien_bottom_in_12x8,
 				.out = alien_bottom_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.bitmapSize = &alienBitmapSize,
 				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
 		},
 		{
 				.in = alien_bottom_in_12x8,
 				.out = alien_bottom_out_12x8,
-				.size = {.w = ALIEN_WIDTH, .h = ALIEN_HEIGHT},
+				.bitmapSize = &alienBitmapSize,
 				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
 		}
 };

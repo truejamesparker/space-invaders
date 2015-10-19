@@ -62,16 +62,18 @@ uint8_t gameScreen_getTankLives() {
 
 void gameScreen_printGameOver() {
 	// get the location the text needs to start to be centered
-	point_t start_point = text_getCenterStartPoint(wordGameSize.w+GAME_OVER_SPACE, wordGameSize.h, GAME_OVER_SCALE);
+	point_t start_point = text_getCenterStartPoint(wordGameBitmapSize.w+GAME_OVER_SPACE,
+			wordGameBitmapSize.h, GAME_OVER_SCALE);
 
 	// draw "GAME"
-	screen_drawSymbol(word_game_24x5, start_point, wordGameSize, GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
+	screen_drawSymbol(word_game_24x5, start_point, wordGameBitmapSize,
+			GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
 
 	// shift over for a space
-	start_point.x += wordGameSize.w*GAME_OVER_SCALE + GAME_OVER_SPACE;
+	start_point.x += wordGameBitmapSize.w*GAME_OVER_SCALE + GAME_OVER_SPACE;
 
 	// draw "OVER"
-	screen_drawSymbol(word_over_24x5, start_point, wordOverSize, GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
+	screen_drawSymbol(word_over_24x5, start_point, wordOverBitmapSize, GAME_OVER_SCALE, SCREEN_COLOR_WHITE);
 }
 
 // ----------------------------------------------------------------------------

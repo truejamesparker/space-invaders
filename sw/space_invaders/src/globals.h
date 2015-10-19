@@ -102,7 +102,7 @@ static const uint32_t topOutAlienSymbol[] = {
 //
 #define BITMAP_SPACESHIP_WIDTH		16
 #define BITMAP_SPACESHIP_HEIGHT		7
-static const symbolsize_t spaceshipSize = {
+static const symbolsize_t spaceshipBitmapSize = {
 		.w = BITMAP_SPACESHIP_WIDTH,
 		.h = BITMAP_SPACESHIP_HEIGHT
 };
@@ -120,7 +120,7 @@ static const uint32_t saucer_16x7[] = {
 //
 #define BITMAP_ALIEN_EXPLOSION_WIDTH	12
 #define BITMAP_ALIEN_EXPLOSION_HEIGHT	10
-static const symbolsize_t explosionSize = {
+static const symbolsize_t explosionBitmapSize = {
 		.w = BITMAP_ALIEN_EXPLOSION_WIDTH,
 		.h = BITMAP_ALIEN_EXPLOSION_HEIGHT
 };
@@ -153,7 +153,7 @@ static const uint32_t missile_explosion_12x10[] = {
 //
 #define BITMAP_ALIEN_WIDTH	12
 #define BITMAP_ALIEN_HEIGHT	8
-static const symbolsize_t alienSize = {
+static const symbolsize_t alienBitmapSize = {
 		.w = BITMAP_ALIEN_WIDTH,
 		.h = BITMAP_ALIEN_HEIGHT
 };
@@ -222,7 +222,7 @@ static const uint32_t alien_bottom_out_12x8[] = {
 //
 #define BITMAP_TANK_WIDTH	15
 #define BITMAP_TANK_HEIGHT	8
-static const symbolsize_t tankSize = {
+static const symbolsize_t tankBitmapSize = {
 		.w = BITMAP_TANK_WIDTH,
 		.h = BITMAP_TANK_HEIGHT
 };
@@ -261,7 +261,7 @@ static const uint32_t tank_smoulder2_15x8[] = {
 //
 #define BITMAP_TANK_MISSILE_WIDTH	1
 #define BITMAP_TANK_MISSILE_HEIGHT	7
-static const symbolsize_t tankMissileSize = {
+static const symbolsize_t tankMissileBitmapSize = {
 		.w = BITMAP_TANK_MISSILE_WIDTH,
 		.h = BITMAP_TANK_MISSILE_HEIGHT
 };
@@ -280,7 +280,7 @@ static const uint32_t missile0_1x7[] = {
 //
 #define BITMAP_ALIEN_MISSILE_1_2_WIDTH	3
 #define BITMAP_ALIEN_MISSILE_1_2_HEIGHT	7
-static const symbolsize_t alienMissile12Size = {
+static const symbolsize_t alienMissile12BitmapSize = {
 		.w = BITMAP_ALIEN_MISSILE_1_2_WIDTH,
 		.h = BITMAP_ALIEN_MISSILE_1_2_HEIGHT
 };
@@ -313,7 +313,7 @@ static const uint32_t missile2r_3x7[] = {
 
 #define BITMAP_ALIEN_MISSILE_3_WIDTH	6
 #define BITMAP_ALIEN_MISSILE_3_HEIGHT	7
-static const symbolsize_t alienMissile3Size = {
+static const symbolsize_t alienMissile3BitmapSize = {
 		.w = BITMAP_ALIEN_MISSILE_3_WIDTH,
 		.h = BITMAP_ALIEN_MISSILE_3_HEIGHT
 };
@@ -341,7 +341,7 @@ static const uint32_t missile3r_6x7[] = {
 //
 #define BITMAP_BUNKER_WIDTH		24
 #define BITMAP_BUNKER_HEIGHT	18
-static const symbolsize_t bunkerSize = {
+static const symbolsize_t bunkerBitmapSize = {
 		.w = BITMAP_BUNKER_WIDTH,
 		.h = BITMAP_BUNKER_HEIGHT
 };
@@ -371,7 +371,7 @@ static const uint32_t bunker_24x18[] = {
 //
 #define BITMAP_BUNKER_DAMAGE_WIDTH		6
 #define BITMAP_BUNKER_DAMAGE_HEIGHT		6
-static const symbolsize_t bunkerDamageSize = {
+static const symbolsize_t bunkerDamageBitmapSize = {
 		.w = BITMAP_BUNKER_DAMAGE_WIDTH,
 		.h = BITMAP_BUNKER_DAMAGE_HEIGHT
 };
@@ -420,7 +420,7 @@ static const uint32_t bunkerDamage3_6x6[] = {
 //
 #define BITMAP_WORD_SCORE_WIDTH		30
 #define BITMAP_WORD_SCORE_HEIGHT	5
-static const symbolsize_t wordScoreSize = {
+static const symbolsize_t wordScoreBitmapSize = {
 		.w = BITMAP_WORD_SCORE_WIDTH,
 		.h = BITMAP_WORD_SCORE_HEIGHT
 };
@@ -434,7 +434,7 @@ static const uint32_t word_score_30x5[] = {
 
 #define BITMAP_WORD_LIVES_WIDTH		24
 #define BITMAP_WORD_LIVES_HEIGHT	5
-static const symbolsize_t wordLivesSize = {
+static const symbolsize_t wordLivesBitmapSize = {
 		.w = BITMAP_WORD_LIVES_WIDTH,
 		.h = BITMAP_WORD_LIVES_HEIGHT
 };
@@ -448,7 +448,7 @@ static const uint32_t word_lives_24x5[] = {
 
 #define BITMAP_WORD_GAME_WIDTH		24
 #define BITMAP_WORD_GAME_HEIGHT		5
-static const symbolsize_t wordGameSize = {
+static const symbolsize_t wordGameBitmapSize = {
 		.w = BITMAP_WORD_GAME_WIDTH,
 		.h = BITMAP_WORD_GAME_HEIGHT
 };
@@ -462,7 +462,7 @@ static const uint32_t word_game_24x5[] = {
 
 #define BITMAP_WORD_OVER_WIDTH		24
 #define BITMAP_WORD_OVER_HEIGHT		5
-static const symbolsize_t wordOverSize = {
+static const symbolsize_t wordOverBitmapSize = {
 		.w = BITMAP_WORD_OVER_WIDTH,
 		.h = BITMAP_WORD_OVER_HEIGHT
 };
@@ -477,13 +477,13 @@ static const uint32_t word_over_24x5[] = {
 //
 // Numbers
 //
-#define BITMAP_NUMBER_WIDTH		5
+#define BITMAP_NUMBER_WIDTH		6
 #define BITMAP_NUMBER_HEIGHT	5
-static const symbolsize_t numbersSize = {
+static const symbolsize_t numbersBitmapSize = {
 		.w = BITMAP_NUMBER_WIDTH,
 		.h = BITMAP_NUMBER_HEIGHT
 };
-static const uint32_t numbers_5x5[][5] = {
+static const uint32_t numbers_6x5[][BITMAP_NUMBER_HEIGHT] = {
 		{
 				// 0
 				packword6(0,1,1,1,0,0),
@@ -571,7 +571,7 @@ static const uint32_t numbers_5x5[][5] = {
 //
 #define BITMAP_FLOOR_WIDTH	32
 #define BITMAP_FLOOR_HEIGHT	2
-static const symbolsize_t floorSize = {
+static const symbolsize_t floorBitmapSize = {
 		.w = BITMAP_FLOOR_WIDTH,
 		.h = BITMAP_FLOOR_HEIGHT
 };
