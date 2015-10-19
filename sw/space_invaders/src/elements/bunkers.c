@@ -11,13 +11,6 @@ static const uint32_t* bunker_damage_symbols[4] = {
 		bunkerDamage3_6x6
 };
 
-
-// size of bunker bitmap
-static const symbolsize_t bunker_size = {
-		.w = 24,
-		.h = 18
-};
-
 // function definitions
 void bunkers_draw();
 void bunkers_init_origins();
@@ -44,7 +37,8 @@ void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index){
 	uint32_t status_all = bunker_array[bunker_index].status;
 	uint8_t status = bunker_point_status(bunker_index, sub_index);
 	status++;
-	uint32_t bit_mask = (0x7<<sub_index*STATUS_BIT_LENGTH);         // (mask of the bits you want to set)
+	// create a mask of the bits you want to set
+	uint32_t bit_mask = (STATUS_MASK<<sub_index*STATUS_BIT_LENGTH);
 	status_all = (status_all & (~bit_mask)) | (status<<sub_index*3);
 	bunker_array[bunker_index].status = status_all;
 }
@@ -68,14 +62,14 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 	const uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
 	// update the background frame (used for reference only)
-	screen_bgDrawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_COLOR_BLACK);
+	screen_bgDrawSymbol(symbol, point, bunkerDamageBitmapSize, BUNKER_ERODE_SCALE, SCREEN_COLOR_BLACK);
 	// draw the damage to the screen
-	screen_drawSymbol(symbol, point, bunker_damage_size, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
+	screen_drawSymbol(symbol, point, bunkerDamageBitmapSize, BUNKER_ERODE_SCALE, SCREEN_BG_COLOR);
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // Private Helper Methods
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // initialize bunkers
 void bunkers_init_origins(){
@@ -88,7 +82,7 @@ void bunkers_init_origins(){
 		};
 		bunker = &bunker_array[i];
 		bunker->origin = origin;
-		bunker->size = bunker_size;
+		bunker->size = bunkerBitmapSize;
 		bunker->status=0;
 		bunker->sub_points = malloc(BUNKER_SUB_ORIGIN_COUNT * sizeof bunker->sub_points);
 		// initialize the coordinates of all 10 sub-origins of the bunker
@@ -96,6 +90,8 @@ void bunkers_init_origins(){
 
 	}
 }
+
+// ----------------------------------------------------------------------------
 
 void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
 	uint8_t i, j, k=0, x_offset=0, y_offset=0;
@@ -113,7 +109,7 @@ void bunkers_init_sub_origins(point_t origin, point_t *sub_points) {
 	}
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // DEBUG FUNCTION ~ include in bunkers_draw()
 void draw_sub_points(bunker_t bunker){
@@ -126,23 +122,25 @@ void draw_sub_points(bunker_t bunker){
 	}
 }
 
+// ----------------------------------------------------------------------------
+
 // draw all bunkers to the screen
 void bunkers_draw(){
 	uint8_t i;
 	for(i=0; i<BUNKER_COUNT; i++){
 		point_t origin = bunker_array[i].origin;
-		screen_drawSymbol(bunker_24x18, origin, bunker_size,
+		screen_drawSymbol(bunker_24x18, origin, bunkerBitmapSize,
 				BUNKER_SCALE, BUNKER_COLOR);
-		screen_bgDrawSymbol(bunker_24x18, origin, bunker_size,
+		screen_bgDrawSymbol(bunker_24x18, origin, bunkerBitmapSize,
 				BUNKER_SCALE, BUNKER_COLOR);
 //		draw_sub_points(bunker_array[i]);
 	}
 
 }
 
+// ----------------------------------------------------------------------------
+
 // return array of current bunkers
 bunker_t bunkers_get_bunker(uint8_t index){
 	return bunker_array[index];
 }
-
-

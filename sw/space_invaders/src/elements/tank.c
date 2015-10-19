@@ -30,7 +30,7 @@ void tank_init(){
 	alive = true;
 
 	// init origin
-	origin.x = BUNKER_START_XOFFSET + ((BUNKER_WIDTH*BUNKER_SCALE/2)-(TANK_WIDTH*TANK_SCALE/2));
+	origin.x = BUNKER_START_XOFFSET + ((BUNKER_WIDTH/2)-(TANK_WIDTH*TANK_SCALE/2));
 	origin.y = (7*SCREEN_HEIGHT)/8;
 
 	tank_draw();
