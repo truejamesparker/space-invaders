@@ -6,6 +6,8 @@ static bool wobble;
 static uint16_t bunker_y;
 static uint16_t alien_block_y;
 
+// instantiate a kill-log to keep track of detonated missiles
+// for missile-to-missile collisions (extra feature) 
 static kill_t mkill_log = {.kill = false, .x = 0, .y=0};
 
 // function declarations
@@ -33,7 +35,11 @@ void missiles_init() {
 		// Turn off all missiles
 		missile_array[i].active = false;
 	}
+	// get the y-coordinate of the bunkers 
+	// used for starting missile-to-bunker impacts
 	bunker_y = bunkers_get_bunker(0).origin.y;
+	// get the y-coordinate of the alien block
+	// used for starting missile-to-alien impacts
 	alien_block_y = aliens_get_lowest_y();
 }
 
@@ -72,9 +78,11 @@ void missiles_tankFire(){
 		missile->active = true; // set status to active
 		point_t tank_gun_origin = tank_get_origin(); // get tank location
 		// compute the coordinates of the cannon
+		// x-coordinate: take into account the width of the missile and width of the gun
 		tank_gun_origin.x += (TANK_WIDTH*TANK_SCALE)/2 - (missile->size.w*MISSILE_SCALE)/2;
 		tank_gun_origin.y -= MISSILE_HEIGHT*MISSILE_SCALE;
 
+		// set the starting coordinates
 		missile->origin = tank_gun_origin;
 		// draw the missile at the tip of the tank's cannon
 		screen_drawSymbol(missile->symbol_r, missile->origin, missile->size,
@@ -119,6 +127,7 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 
 //-----------------------------------------------------------------------------
 
+// deactivate all missiles
 void missiles_deactivateAll() {
 	uint8_t i = 0;
 	for(i=0; i<MISSILE_COUNT; i++) {
@@ -129,6 +138,7 @@ void missiles_deactivateAll() {
 
 //-----------------------------------------------------------------------------
 
+// return number of alien missiles on the screen
 uint16_t missiles_getActiveAlienMissiles() {
 	uint8_t i = 0;
 	uint16_t count = 0;
@@ -145,6 +155,7 @@ uint16_t missiles_getActiveAlienMissiles() {
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
+// incrementally shift the missiles (up/down) on the screen
 void moveMissile(uint8_t missileIndex) {
 	// Grab the missile that was passed in
 	missile_t* missile = &missile_array[missileIndex];
@@ -185,6 +196,7 @@ void shiftMissileOrigin(missile_t* missile) {
 
 //-----------------------------------------------------------------------------
 
+// erase the missile on the screen
 void missiles_erase(missile_t* missile){
 	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 	screen_drawSymbol(symbol, missile->origin,
@@ -193,6 +205,7 @@ void missiles_erase(missile_t* missile){
 
 //-----------------------------------------------------------------------------
 
+// is the missile ouside the gameplay area?
 bool missiles_inBounds(missile_t* missile){
 	bool outOfBounds = (missile->origin.y > MISSILE_BOTTOM_BUFFER ||
 						missile->origin.y < MISSILE_TOP_BUFFER);
@@ -201,54 +214,61 @@ bool missiles_inBounds(missile_t* missile){
 
 //-----------------------------------------------------------------------------
 
+// deactivate missile
 void missiles_deactivate(missile_t* missile){
-	missiles_erase(missile);
-	missile->active = false;
+	missiles_erase(missile); // erase the missile image
+	missile->active = false; // set status to inactive
 }
 
 //-----------------------------------------------------------------------------
 
+// get the point directly in front of the missile (direction-dependent)
 point_t missiles_get_tip(missile_t* missile){
 	point_t origin;
 	uint16_t x = missile->origin.x;
 	uint16_t y = missile->origin.y;
 	origin.x = x + 1;
+	// if this missile is moving down, get the coordinate
+	// of the bottom of the bitmap
 	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
 	return origin;
 }
 
 //-----------------------------------------------------------------------------
 
+// check to see if a missile hit something
 void missiles_check_impact(missile_t* missile){
 	point_t tip = missiles_get_tip(missile);
-	if(missile->up){
-		// Then it's a tank's missile
-		if(tip.y > aliens_get_lowest_y()){
-			missile_alien_impact(missile);
+	if(missile->up){ // is this a tank missile
+		if(tip.y > aliens_get_lowest_y()){ // make sure missile is in range of aliens
+			missile_alien_impact(missile); // check missile-to-alien impacts
 		}
-	} else {
-		// Then it's an alien's missile
+	} else { // it's an alien missile
 		// Don't check if the missile is higher than the bunkers
 		if(tip.y > bunker_y){
-			missile_tank_impact(missile);
+			missile_tank_impact(missile); // check missile-to-tank impacts
 		}
 	}
+	// always check missile-to-missile impacts
 	missile_bunker_impact(missile);
 }
 
 //-----------------------------------------------------------------------------
 
+// check if any missiles hit each other
 void missile_missile_impact(){
 	int i;
-	missile_t* am;
-	missile_t* tm = &missile_array[TANK_MISSILE];
-	for(i=1; i<MISSILE_COUNT; i++){
+	missile_t* am; // active missile
+	missile_t* tm; // tank missile
+	tm = &missile_array[TANK_MISSILE];
+	for(i=1; i<MISSILE_COUNT; i++){ // iterate through the aliens missiles
 		am = &missile_array[i];
 		if(am->active){
 			if(missile_in_block(tm, am->origin, MISSILE_WIDTH*MISSILE_SCALE*2, MISSILE_HEIGHT*MISSILE_SCALE)){
-//				xil_printf("collision!\n\r");
+				// deactivate both missiles
 				missiles_deactivate(am);
 				missiles_deactivate(tm);
+				// draw the collision explosion
 				missile_explode(tm->origin);
 			}
 		}
@@ -257,6 +277,7 @@ void missile_missile_impact(){
 
 //-----------------------------------------------------------------------------
 
+// check if any missiles hit the bunker
 void missile_bunker_impact(missile_t* missile){
 	int i, j;
 	for(i=0; i<BUNKER_COUNT; i++){
@@ -350,7 +371,6 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 
 	int x_dist = (tip.x - target_origin.x);
 	int y_dist = up ? ((target_origin.y+target_height) - tip.y) : (tip.y - target_origin.y);
-//	int y_dist = (tip.y - target_origin.y);
 
 	if ((x_dist <= target_width) && (x_dist >= 0) &&
 			(y_dist <= (target_height+MISSILE_HEIGHT*MISSILE_SCALE)) &&
@@ -362,16 +382,19 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 	}
 }
 
+// draw the misile-to-missile explosions
 void missile_explode(point_t origin){
 //	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 	origin.x -= (explosionsize.w*MISSILE_SCALE)/2; // center on missile collision
 	screen_drawSymbol(missile_explosion_12x10, origin,
 						explosionsize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
+	// log this collision to the kill-log
 	mkill_log.kill = true;
 	mkill_log.x = origin.x;
 	mkill_log.y = origin.y;
 }
 
+// cleanup the missile-to-missile explosions
 void missile_cleanup(){
 	point_t kill_point = {.x=mkill_log.x, .y=mkill_log.y};
 	screen_drawSymbol(missile_explosion_12x10, kill_point,

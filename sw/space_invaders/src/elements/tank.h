@@ -9,6 +9,7 @@
 #include "missiles.h"
 #include "bunkers.h"
 
+// tank color (normall green)
 #define TANK_COLOR		SCREEN_COLOR_GREEN
 
 // bitmap related values
