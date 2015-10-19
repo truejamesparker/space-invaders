@@ -149,6 +149,7 @@ int8_t chooseRandomShiftDirection() {
 	return (rnd) ? SCREEN_SHIFT_LEFT : SCREEN_SHIFT_RIGHT;
 }
 
+// is the spaceship on the screen?
 bool spaceship_isActive(){
 	return (shiftDir!=0);
 }
