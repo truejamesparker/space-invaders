@@ -37,12 +37,12 @@
 
 // missile struct definition
 typedef struct{
-	point_t origin;				// current location of missile
-	const uint32_t* symbol_r;	// alternating missile bitmap
-	const uint32_t* symbol_l;	// alternating missile bitmap
-	const bool up; 				// missile direction
-	bool active;				// missile in flight?
-	const symbolsize_t size;	// size of missile bitmap
+	point_t origin;					// current location of missile
+	const uint32_t *symbol_r;		// alternating missile bitmap
+	const uint32_t *symbol_l;		// alternating missile bitmap
+	const bool up; 					// missile direction
+	bool active;					// missile in flight?
+	const symbolsize_t *bitmapSize;	// size of missile bitmap
 } missile_t;
 
 // array of all missile types
@@ -52,28 +52,28 @@ static missile_t missile_array[MISSILE_COUNT] = {
 				.symbol_l = missile0_1x7,
 				.up = true,
 				.active = false,
-				.size = {.w = 1, .h = MISSILE_HEIGHT}
+				.bitmapSize = &tankMissileBitmapSize
 		},
 		{
 				.symbol_r = missile1_3x7,			// missile type 2 (alien)
  				.symbol_l = missile1_3x7,
 				.up = false,
 				.active = false,
-				.size = {.w = 3, .h = MISSILE_HEIGHT}
+				.bitmapSize = &alienMissile12BitmapSize
 		},
 		{
 				.symbol_r = missile2r_3x7,			// missile type 3 (alien)
 				.symbol_l = missile2l_3x7,
 				.up = false,
 				.active = false,
-				.size = {.w = 3, .h = MISSILE_HEIGHT}
+				.bitmapSize = &alienMissile12BitmapSize
 		},
 		{
 				.symbol_r = missile3r_6x7,			// missile type 4 (alien)
 				.symbol_l = missile3l_6x7,
 				.up = false,
 				.active = false,
-				.size = {.w = 6, .h = MISSILE_HEIGHT}
+				.bitmapSize = &alienMissile3BitmapSize
 		},
 };
 

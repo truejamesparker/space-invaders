@@ -79,13 +79,13 @@ void missiles_tankFire(){
 		point_t tank_gun_origin = tank_get_origin(); // get tank location
 		// compute the coordinates of the cannon
 		// x-coordinate: take into account the width of the missile and width of the gun
-		tank_gun_origin.x += (TANK_WIDTH*TANK_SCALE)/2 - (missile->size.w*MISSILE_SCALE)/2;
+		tank_gun_origin.x += (TANK_WIDTH*TANK_SCALE)/2 - (missile->bitmapSize->w*MISSILE_SCALE)/2;
 		tank_gun_origin.y -= MISSILE_HEIGHT*MISSILE_SCALE;
 
 		// set the starting coordinates
 		missile->origin = tank_gun_origin;
 		// draw the missile at the tip of the tank's cannon
-		screen_drawSymbol(missile->symbol_r, missile->origin, missile->size,
+		screen_drawSymbol(missile->symbol_r, missile->origin, *missile->bitmapSize,
 				MISSILE_SCALE, SCREEN_COLOR_WHITE);
 	}
 }
@@ -114,7 +114,7 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 
 			// draw the symbol to the screen
 			screen_drawSymbol(missile_array[i].symbol_r, missile_array[i].origin,
-					missile_array[i].size, MISSILE_SCALE, MISSILE_COLOR);
+					*missile_array[i].bitmapSize, MISSILE_SCALE, MISSILE_COLOR);
 
 			missile_array[i].active = true; // set missile status to active
 
@@ -169,7 +169,7 @@ void moveMissile(uint8_t missileIndex) {
 		const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 
 		// shift it on the screen
-		screen_shiftElement(symbol, missile->origin, missile->size,
+		screen_shiftElement(symbol, missile->origin, *missile->bitmapSize,
 							0, dir*MISSILE_SHIFT, MISSILE_SCALE, MISSILE_COLOR);
 
 		// now update the origin in the missile struct
@@ -200,7 +200,7 @@ void shiftMissileOrigin(missile_t* missile) {
 void missiles_erase(missile_t* missile){
 	const uint32_t* symbol = wobble ? missile->symbol_r : missile->symbol_l;
 	screen_drawSymbol(symbol, missile->origin,
-						missile->size, MISSILE_SCALE, SREEN_BG_COLOR);
+						*missile->bitmapSize, MISSILE_SCALE, SCREEN_BG_COLOR);
 }
 
 //-----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ point_t missiles_get_tip(missile_t* missile){
 	origin.x = x + 1;
 	// if this missile is moving down, get the coordinate
 	// of the bottom of the bitmap
-	origin.y = (missile->up) ? y-1 : y + missile->size.h*MISSILE_SCALE;
+	origin.y = (missile->up) ? y-1 : y + missile->bitmapSize->h*MISSILE_SCALE;
 	return origin;
 }
 
@@ -385,7 +385,7 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 	}
 }
 
-// draw the misile-to-missile explosions
+// draw the missile-to-missile explosions
 void missile_explode(point_t origin){
 	origin.x -= (explosionBitmapSize.w*MISSILE_SCALE)/2; // center on missile collision
 	screen_drawSymbol(missile_explosion_12x10, origin,
