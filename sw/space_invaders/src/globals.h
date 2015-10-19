@@ -29,8 +29,6 @@ typedef struct {
 
 #define MIN(a,b) (((a)<(b)) ? (a) : (b))
 
-#define WORD_WIDTH 				32
-
 // set the scale of the game
 #define SCALE					2
 
@@ -235,19 +233,7 @@ static const uint32_t tank_smoulder2_15x8[] = {
 		packword15(0,0,0,1,1,1,1,1,1,1,1,1,0,0,0),
 		packword15(0,0,1,1,1,1,1,1,1,1,1,1,1,0,0) };
 
-// currently unused
-static const uint32_t block_erase_12x8[] = {
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0),
-		packword12(0,0,0,0,0,0,0,0,0,0,0,0) };
-
 // missile bitmaps
-
 static const uint32_t missile0_1x7[] = {
 		0x1,
 		0x1,
