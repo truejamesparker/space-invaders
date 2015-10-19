@@ -12,7 +12,7 @@
 #include "spaceshipSM.h"
 #include "tankSM.h"
 
-#define SM_PERIOD_GAMEPLAY_MS		10
+#define SM_PERIOD_GAMEPLAY_MS		20
 
 void gamePlaySM_tick();
 

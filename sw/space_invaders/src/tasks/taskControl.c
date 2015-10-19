@@ -2,11 +2,6 @@
 
 static task_t tasks[TC_SM_COUNT];
 
-static XTmrCtr TmrCtrInstancePtr;
-
-static uint32_t times[TC_PERIODS_TO_MEASURE];
-static uint32_t periodsElapsed = 0;
-
 // ----------------------------------------------------------------------------
 
 void taskControl_init() {
@@ -47,17 +42,11 @@ void taskControl_init() {
 	tasks[sm].elapsedTime = tasks[sm].period;
 	tasks[sm].TickFn = &missileSM_tick;
 
-	// initialize the timer to calc CPU utilization
-	XTmrCtr_Initialize(&TmrCtrInstancePtr, XPAR_AXI_TIMER_0_DEVICE_ID);
 }
 
 // ----------------------------------------------------------------------------
 
 void taskControl_tick() {
-	XTmrCtr_Reset(&TmrCtrInstancePtr, 0);
-	uint32_t time1 = XTmrCtr_GetValue(&TmrCtrInstancePtr, 0);
-	XTmrCtr_Start(&TmrCtrInstancePtr, 0);
-
 	uint8_t i;
 	for (i=0; i<TC_SM_COUNT; i++) {
 		// Check to see if this SM is ready to be ticked.
@@ -70,16 +59,6 @@ void taskControl_tick() {
 
 		// increase the task's elapsedTime by whatever the period of
 		// the FIT timer is (which is what calls this function)
-		tasks[i].elapsedTime += TC_SM_PERIOD_GCD;
-	}
-
-	XTmrCtr_Stop(&TmrCtrInstancePtr, 0);
-	uint32_t time2 = XTmrCtr_GetValue(&TmrCtrInstancePtr, 0);
-	times[periodsElapsed++] = time2 - time1;
-	if (periodsElapsed == TC_PERIODS_TO_MEASURE) {
-		uint32_t j = 0;
-		uint32_t sum = 0;
-		for (j=0;j<TC_PERIODS_TO_MEASURE;j++) sum += times[j];
-		xil_printf("Average time spent in taskControl_tick: %d\r\n", sum/TC_PERIODS_TO_MEASURE);
+		tasks[i].elapsedTime += TC_TIMER_PERIOD_MS;
 	}
 }

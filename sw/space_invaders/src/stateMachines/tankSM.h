@@ -11,7 +11,7 @@
 #include "spaceshipSM.h"
 #include "alienBlockSM.h"
 
-#define SM_PERIOD_TANK_MS 	30
+#define SM_PERIOD_TANK_MS 	60
 
 // how many periods to wait after a tank death
 #define TANK_KILLED_TIMEOUT	30

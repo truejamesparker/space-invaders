@@ -10,7 +10,7 @@
 #include "../elements/missiles.h"
 #include "../elements/gameScreen.h"
 
-#define SM_PERIOD_ALIEN_BLOCK_MS 		25
+#define SM_PERIOD_ALIEN_BLOCK_MS 		50
 
 // how many attempts to make before bailing out of the while loop
 #define ALIENBLOCK_MAX_SHOOT_ATTEMPTS	3

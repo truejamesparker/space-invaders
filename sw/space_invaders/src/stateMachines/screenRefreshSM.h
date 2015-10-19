@@ -7,7 +7,7 @@
 #include "../screen/screen.h"
 
 // Screen refresh rate of 66.67 Hz
-#define SM_PERIOD_SCREEN_REFRESH_MS 	15
+#define SM_PERIOD_SCREEN_REFRESH_MS 	30
 
 void screenRefreshSM_tick();
 
