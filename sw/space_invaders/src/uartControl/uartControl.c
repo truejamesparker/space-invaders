@@ -38,13 +38,13 @@ void uartControl_handle(char key) {
 			xil_printf("How many times should I move alien? ");
 			uint16_t n = getint();
 			xil_printf("\r\n");
-			for (n; n > 0; n--) aliens_march();
+			for (; n > 0; n--) aliens_march();
 			break;
 		case '2': // kill
 			xil_printf("Which alien should I kill? (0-54): ");
 
 			// Get an int from the user
-			uint16_t alien = getint();
+			int32_t alien = getint();
 
 			// Make sure it's within the bounds (0-54)
 			if (alien >= ALIEN_LOW_COORDINATE && alien <= ALIEN_HIGH_COORDINATE){
@@ -75,7 +75,7 @@ void uartControl_handle(char key) {
 		/* Erode Bunker */
 		case '7': // query 0-3
 			xil_printf("Which bunker should I erode? (0-3): ");
-			uint16_t bunker = getint(); // query for the bunker
+			int32_t bunker = getint(); // query for the bunker
 			if (bunker >= 0 && bunker <= 3) {
 				xil_printf("%c. Okay, will do.\r\n", bunker);
 				bunkers_damage(bunker, rand()%10);
