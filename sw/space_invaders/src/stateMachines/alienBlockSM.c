@@ -51,13 +51,13 @@ void alienBlockSM_tick() {
 				if (firingCount < MISSILE_ALIEN_COUNT) maxMissilesOnScreen = firingCount;
 
 				// figure out the max num of missiles even available to me to fire
-				uint16_t maxMissilesFireable = maxMissilesOnScreen-missiles_getActiveAlienMissiles();
+				uint16_t maxMissilesFireable = maxMissilesOnScreen - missiles_getActiveAlienMissiles();
 
 				// min between the two because we want the least amount of missiles
 				// on the screen at once as possible. Whenever maxMissilesOnScreen
 				// changes from the #define into the livingCount, it is possible a
 				// negative number could occur
-				maxMissilesFireable = MIN(firingCount,maxMissilesFireable);
+				maxMissilesFireable = MIN(firingCount, maxMissilesFireable);
 
 				// get a random number of missiles in that range to fire
 				uint16_t missilesLeftToFire = (rand()%(maxMissilesFireable+1));
@@ -66,10 +66,6 @@ void alienBlockSM_tick() {
 				// missiles on top of each other, which is imperceptible except
 				// for the fact that a single missile could issue double bunker damage.
 				bool alreadyFired[ALIEN_COL_COUNT] = { false };
-
-				// don't spin in a while(1) if you can't shoot. This happens
-				// when there are aliens on top of each other -- only 1 can shoot
-//				uint8_t shootAttempts = ALIENBLOCK_MAX_SHOOT_ATTEMPTS;
 
 				// The loop makes sure some alien will fire
 				while(missilesLeftToFire) {

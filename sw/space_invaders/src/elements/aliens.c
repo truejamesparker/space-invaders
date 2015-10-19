@@ -183,7 +183,7 @@ void aliens_kill(uint16_t index) {
 	point_t origin = aliens_getAlienOrigin(x, y);
 
 	// draw the explosion in place of that particular alien
-	screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
+	screen_drawSymbol(alien_explosion_12x10, origin, explosionSize,
 						ALIEN_SCALE, SCREEN_COLOR_WHITE);
 
 	// Increase score!
@@ -281,7 +281,7 @@ void aliens_cleanupKills() {
 		point_t origin = aliens_getAlienOrigin(kill_log.x, kill_log.y);
 
 		// Blank the rectangle that the exploded alien was
-		screen_drawSymbol(alien_explosion_12x10, origin, explosionsize,
+		screen_drawSymbol(alien_explosion_12x10, origin, explosionSize,
 								ALIEN_SCALE, SCREEN_BG_COLOR);
 
 		// reset kill log
