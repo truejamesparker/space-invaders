@@ -11,7 +11,6 @@
 
 #include "../globals.h"
 
-
 // color definitions
 #define SCREEN_COLOR_BLACK	0x00000000
 #define SCREEN_COLOR_TEAL 	0x0000FFFF
@@ -22,11 +21,11 @@
 #define SCREEN_COLOR_YELLOW 0x00FFFF00
 #define SCREEN_COLOR_WHITE 	0x00FFFFFF
 
-
 // this is a key word color and will reference the
 // background pixel value at the given screen coordinates
 #define SCREEN_BG_COLOR				0xFF00000
 
+// assign colors to screen elements
 #define SCREEN_ELEM_OUTLINE 		SCREEN_COLOR_RED
 #define SCREEN_ELEM_DIFF_OUTLINE	SCREEN_COLOR_GREEN
 #define SCREEN_ORIGIN_COLOR			SCREEN_COLOR_BROWN
@@ -59,7 +58,6 @@
 #define SCREEN_SET_XY_TO_COLOR(x,y,color) (framePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 #define SCREEN_BG_SET_XY_TO_COLOR(x, y, color) (bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 
-
 /****
  * Function prototypes
  */
@@ -91,8 +89,5 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 
 // return the color of the pixel located at screen coordinate (x,y)
 uint32_t screen_getBgColor(uint16_t x, uint16_t y);
-
-
-
 
 #endif /* SCREEN_H_ */

@@ -145,7 +145,7 @@ void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size
 //-----------------------------------------------------------------------------
 
 void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor) {
-	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0, color;
+	uint32_t row = 0, col = 0, i = 0, j = 0, x_offset = 0, y_offset = 0;
 	for (row = 0; row < size.h; row++) {
 		x_offset = 0;
 		for (col = 0; col < size.w; col++) {
@@ -238,15 +238,13 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 						color = (symbol[row-dy] & (1 << (size.w - 1 - (col-dx)))) ? onColor : bgcolor;
 
 					} else {
+						// this branch should never be evaluated. If you see yellow, you see errors
 						color = SCREEN_COLOR_YELLOW;
 					}
 
 					// if the color is SCREEN_BG_COLOR we assume we
 					// want to use the pixel color of the background
-
-					if(onColor==SCREEN_BG_COLOR){
-						color = bgcolor;
-					}
+					if (onColor == SCREEN_BG_COLOR) color = bgcolor;
 
 
 #if SCREEN_SHIFT_BOX
