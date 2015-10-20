@@ -267,7 +267,7 @@ void missile_missile_impact(){
 	for(i=1; i<MISSILE_COUNT; i++){ // iterate through the aliens missiles
 		am = &missile_array[i];
 		if(am->active){
-			if(missile_in_block(tm, am->origin, MISSILE_WIDTH*MISSILE_SCALE*2, MISSILE_HEIGHT*MISSILE_SCALE)){
+			if(missile_in_block(tm, am->origin, MISSILE_WIDTH*2, MISSILE_HEIGHT)){
 				// deactivate both missiles
 				missiles_deactivate(am);
 				missiles_deactivate(tm);
@@ -285,7 +285,7 @@ void missile_bunker_impact(missile_t* missile){
 	int i, j;
 	for(i=0; i<BUNKER_COUNT; i++){
 		bunker_t bunker = bunkers_getBunker(i);
-		if(missile_in_block(missile, bunker.origin, bunker.size.w*BUNKER_SCALE, bunker.size.h*BUNKER_SCALE)){
+		if(missile_in_block(missile, bunker.origin, BUNKER_WIDTH, BUNKER_HEIGHT)){
 			for(j=0; j<BUNKER_SUB_ORIGIN_COUNT; j++){
 				if(missile_in_block(missile, bunker.sub_points[j], BUNKER_SUB_ORIGIN_WIDTH, BUNKER_SUB_ORIGIN_HEIGHT)){
 					if (!bunkers_isPointEroded(i,j)) {
@@ -308,16 +308,18 @@ void missile_alien_impact(missile_t* missile){
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
 		// figure out what row the missile is closest to subtract its height
 		int16_t y_dist = height - aliens_getAlienOrigin(0,y).y;
-		if(y_dist <= ALIEN_HEIGHT*ALIEN_SCALE){
+		if(y_dist <= ALIEN_HEIGHT){
 			if(missile_kill_alien_in_row(missile, y)){
 				return;
 			}
 		}
 	}
+
+	// detect spaceship collision, only if spaceship is present
 	if(spaceship_isActive()){
 		point_t s_origin = spaceship_get_origin();
 		missile_t* missile = &missile_array[TANK_MISSILE];
-		bool hit = missile_in_block(missile, s_origin, SPACESHIP_WIDTH*SPACESHIP_SCALE, SPACESHIP_HEIGHT*SPACESHIP_SCALE);
+		bool hit = missile_in_block(missile, s_origin, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
 		if(hit){
 			missiles_deactivate(missile);
 			spaceship_kill();
@@ -325,7 +327,7 @@ void missile_alien_impact(missile_t* missile){
 	}
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // check if an alien has been hit
 bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
@@ -348,7 +350,7 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 	return false;
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // check if the tank has been hit
 void missile_tank_impact(missile_t* missile){
@@ -362,14 +364,14 @@ void missile_tank_impact(missile_t* missile){
 	bool hit = missile_in_block(missile, tank_origin, TANK_WIDTH, TANK_HEIGHT);
 	if (hit) tank_kill();
 }
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target_width, uint16_t target_height){
 	point_t tip = missiles_get_tip(missile);
 	bool up = missile->up;
 
-	// account for the fact that we diable graphics wrapping
-	// and allow for overflow in the origin cooridinates
+	// account for the fact that we disable graphics wrapping
+	// and allow for overflow in the origin coordinates
 	if(target_origin.x > SCREEN_WIDTH){
 		target_origin.x = 0;
 	}
@@ -377,26 +379,28 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 	int x_dist = (tip.x - target_origin.x);
 	int y_dist = up ? ((target_origin.y+target_height) - tip.y) : (tip.y - target_origin.y);
 
-	if ((x_dist <= target_width) && (x_dist >= 0) &&
-			(y_dist <= (target_height+MISSILE_HEIGHT)) &&
-					(y_dist >= 0)){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return ((x_dist <= target_width) && (x_dist >= 0) &&
+					(y_dist <= (target_height+MISSILE_HEIGHT)) &&
+					(y_dist >= 0));
 }
+
+// ----------------------------------------------------------------------------
 
 // draw the missile-to-missile explosions
 void missile_explode(point_t origin){
-	origin.x -= (explosionBitmapSize.w*MISSILE_SCALE)/2; // center on missile collision
+	// center on missile collision
+	origin.x -= (explosionBitmapSize.w*MISSILE_SCALE)/2;
+
 	screen_drawSymbol(missile_explosion_12x10, origin,
 			explosionBitmapSize, MISSILE_SCALE, SCREEN_COLOR_YELLOW);
+
 	// log this collision to the kill-log
 	mkill_log.kill = true;
 	mkill_log.x = origin.x;
 	mkill_log.y = origin.y;
 }
+
+// ----------------------------------------------------------------------------
 
 // cleanup the missile-to-missile explosions
 void missile_cleanup(){

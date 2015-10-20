@@ -3,7 +3,7 @@
 #define STATUS_MASK 	0x07
 #define BUNKER_SYMBOLS	4
 
-static bunker_t bunker_array[BUNKER_SYMBOLS];
+static bunker_t bunker_array[BUNKER_COUNT];
 
 // array of three different types of bunker damage patterns
 static const uint32_t* bunker_damage_symbols[BUNKER_SYMBOLS] = {
@@ -44,7 +44,6 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_t* bunker = &bunker_array[index];
 	point_t point = bunker->sub_points[sub_index];
 	uint8_t status = bunker_point_status(index, sub_index);
-	xil_printf("bunkers_damage(%d): status = %d\r\n", index, status);
 	const uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
 	// update the background frame (used for reference only)
@@ -74,7 +73,6 @@ void bunkers_init_origins(){
 		};
 		bunker = &bunker_array[i];
 		bunker->origin = origin;
-		bunker->size = bunkerBitmapSize;
 		bunker->status = 0;
 		bunker->sub_points = malloc(BUNKER_SUB_ORIGIN_COUNT * sizeof bunker->sub_points);
 		// initialize the coordinates of all 10 sub-origins of the bunker
@@ -112,12 +110,20 @@ uint8_t bunker_point_status(uint8_t bunker_index, uint8_t sub_index) {
 
 // increment the damage of the bunker "sub-block"
 void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index) {
+	// get the status of all the points, i.e., the entire bunker
 	uint32_t status_all = bunker_array[bunker_index].status;
-	uint8_t status = bunkers_isPointEroded(bunker_index, sub_index);
+
+	// get the current sub-block status
+	uint8_t status = bunker_point_status(bunker_index, sub_index);
+
+	// increment the damage of the sub-block of this bunker
 	status++;
+
 	// create a mask of the bits you want to set
-	uint32_t bit_mask = (STATUS_MASK<<sub_index*STATUS_BIT_LENGTH);
-	status_all = (status_all & (~bit_mask)) | (status<<sub_index*STATUS_BIT_LENGTH);
+	uint32_t bit_mask = (STATUS_MASK << (sub_index*STATUS_BIT_LENGTH));
+	status_all = (status_all & (~bit_mask)) | (status << (sub_index*STATUS_BIT_LENGTH));
+
+	// write the bits back for next time
 	bunker_array[bunker_index].status = status_all;
 }
 

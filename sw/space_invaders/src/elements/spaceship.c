@@ -6,9 +6,6 @@ static int8_t shiftDir = 0;
 // remember where we are currently
 static point_t origin = { .x = 0, .y = SPACESHIP_ORIGIN_Y };
 
-// how big are we?
-static symbolsize_t size = { .w = SPACESHIP_WIDTH, .h = SPACESHIP_HEIGHT };
-
 // current random score decisions
 uint8_t scoreArray[SPACESHIP_SCORE_MAX_LEN];
 uint8_t scoreArrayLength = 0;
@@ -36,7 +33,7 @@ void spaceship_start() {
 			SPACESHIP_START_LEFT_X : SPACESHIP_START_RIGHT_X;
 
 	// draw it on the screen, it will be hanging off the screen
-	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SPACESHIP_COLOR);
+	screen_drawSymbol(saucer_16x7, origin, spaceshipBitmapSize, SPACESHIP_SCALE, SPACESHIP_COLOR);
 }
 
 // ----------------------------------------------------------------------------
@@ -50,7 +47,7 @@ void spaceship_move() {
 		}
 
 		// redraw
-		screen_shiftElement(saucer_16x7, origin, size, (shiftDir*SPACESHIP_SHIFT_X), \
+		screen_shiftElement(saucer_16x7, origin, spaceshipBitmapSize, (shiftDir*SPACESHIP_SHIFT_X), \
 				SPACESHIP_SHIFT_Y, SPACESHIP_SCALE, SPACESHIP_COLOR);
 
 		// shift our origin
@@ -136,7 +133,7 @@ void spaceship_cancel() {
 	shiftDir = 0;
 
 	// erase spaceship
-	screen_drawSymbol(saucer_16x7, origin, size, SPACESHIP_SCALE, SCREEN_BG_COLOR);
+	screen_drawSymbol(saucer_16x7, origin, spaceshipBitmapSize, SPACESHIP_SCALE, SCREEN_BG_COLOR);
 }
 
 // ----------------------------------------------------------------------------

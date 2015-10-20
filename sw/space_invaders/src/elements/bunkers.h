@@ -36,8 +36,7 @@
 // bunker struct definition
 typedef struct {
 	point_t origin;				// current location of missile
-	symbolsize_t size;			// size of missile bitmap
-	int32_t status;
+	uint32_t status;
 	point_t *sub_points;
 } bunker_t;
 
