@@ -35,9 +35,12 @@ void missiles_init() {
 		// Turn off all missiles
 		missile_array[i].active = false;
 	}
+
 	// get the y-coordinate of the bunkers 
 	// used for starting missile-to-bunker impacts
-	bunker_y = bunkers_get_bunker(0).origin.y;
+	bunker_t bunker = bunkers_getBunker(0);
+	bunker_y = bunker.origin.y;
+
 	// get the y-coordinate of the alien block
 	// used for starting missile-to-alien impacts
 	alien_block_y = aliens_get_lowest_y();
@@ -281,11 +284,11 @@ void missile_missile_impact(){
 void missile_bunker_impact(missile_t* missile){
 	int i, j;
 	for(i=0; i<BUNKER_COUNT; i++){
-		bunker_t bunker = bunkers_get_bunker(i);
+		bunker_t bunker = bunkers_getBunker(i);
 		if(missile_in_block(missile, bunker.origin, bunker.size.w*BUNKER_SCALE, bunker.size.h*BUNKER_SCALE)){
 			for(j=0; j<BUNKER_SUB_ORIGIN_COUNT; j++){
 				if(missile_in_block(missile, bunker.sub_points[j], BUNKER_SUB_ORIGIN_WIDTH, BUNKER_SUB_ORIGIN_HEIGHT)){
-					if(!bunker_point_eroded(i,j)){
+					if (!bunkers_isPointEroded(i,j)) {
 						bunkers_damage(i, j);
 						missiles_deactivate(missile);
 						return;

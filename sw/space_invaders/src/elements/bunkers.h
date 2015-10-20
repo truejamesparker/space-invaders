@@ -47,8 +47,9 @@ void bunkers_init();
 
 // erode the given bunker
 void bunkers_damage(uint8_t bunker_index, uint8_t sub_index);
-bool bunker_point_eroded(uint8_t bunker_index, uint8_t sub_index);
+bool bunkers_isPointEroded(uint8_t bunker_index, uint8_t sub_index);
 
-bunker_t bunkers_get_bunker(uint8_t index);
+// given an index, return that bunker struct
+bunker_t bunkers_getBunker(uint8_t index);
 
 #endif /* BUNKERS_H_ */
