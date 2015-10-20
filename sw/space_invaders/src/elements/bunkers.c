@@ -44,6 +44,7 @@ void bunkers_damage(uint8_t index, uint8_t sub_index){
 	bunker_t* bunker = &bunker_array[index];
 	point_t point = bunker->sub_points[sub_index];
 	uint8_t status = bunker_point_status(index, sub_index);
+	xil_printf("bunkers_damage(%d): status = %d\r\n", index, status);
 	const uint32_t* symbol = bunker_damage_symbols[status];
 	bunker_point_damage(index, sub_index);
 	// update the background frame (used for reference only)
@@ -116,7 +117,7 @@ void bunker_point_damage(uint8_t bunker_index, uint8_t sub_index) {
 	status++;
 	// create a mask of the bits you want to set
 	uint32_t bit_mask = (STATUS_MASK<<sub_index*STATUS_BIT_LENGTH);
-	status_all = (status_all & (~bit_mask)) | (status<<sub_index*3);
+	status_all = (status_all & (~bit_mask)) | (status<<sub_index*STATUS_BIT_LENGTH);
 	bunker_array[bunker_index].status = status_all;
 }
 

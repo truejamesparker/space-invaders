@@ -82,8 +82,8 @@ void missiles_tankFire(){
 		point_t tank_gun_origin = tank_get_origin(); // get tank location
 		// compute the coordinates of the cannon
 		// x-coordinate: take into account the width of the missile and width of the gun
-		tank_gun_origin.x += (TANK_WIDTH*TANK_SCALE)/2 - (missile->bitmapSize->w*MISSILE_SCALE)/2;
-		tank_gun_origin.y -= MISSILE_HEIGHT*MISSILE_SCALE;
+		tank_gun_origin.x += (TANK_WIDTH)/2 - (missile->bitmapSize->w*MISSILE_SCALE)/2;
+		tank_gun_origin.y -= MISSILE_HEIGHT;
 
 		// set the starting coordinates
 		missile->origin = tank_gun_origin;
@@ -111,8 +111,8 @@ bool missiles_alienFire(uint16_t x, uint16_t y) {
 			point_t alienOrigin = aliens_getAlienOrigin(x, y);
 
 			// transform alien origin into the origin/tip of the missile
-			alienOrigin.y += (ALIEN_HEIGHT*ALIEN_SCALE);
-			alienOrigin.x += (ALIEN_WIDTH*ALIEN_SCALE)/2;
+			alienOrigin.y += (ALIEN_HEIGHT);
+			alienOrigin.x += (ALIEN_WIDTH)/2;
 			missile_array[i].origin = alienOrigin;
 
 			// draw the symbol to the screen
@@ -306,8 +306,7 @@ void missile_alien_impact(missile_t* missile){
 	uint16_t height = missile->origin.y;
 
 	for(y=0; y<ALIEN_ROW_COUNT; y++){
-		// figure out what row the missile is closest to
-		// subtract its height
+		// figure out what row the missile is closest to subtract its height
 		int16_t y_dist = height - aliens_getAlienOrigin(0,y).y;
 		if(y_dist <= ALIEN_HEIGHT*ALIEN_SCALE){
 			if(missile_kill_alien_in_row(missile, y)){
@@ -338,7 +337,7 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 			continue; // it's dead, move on
 		}
 		// did the missile penetrate this alien?
-		bool hit = missile_in_block(missile, alien_origin, ALIEN_WIDTH*ALIEN_SCALE, ALIEN_HEIGHT*ALIEN_SCALE);
+		bool hit = missile_in_block(missile, alien_origin, ALIEN_WIDTH, ALIEN_HEIGHT);
 		if(hit){
 			uint16_t index = alien_xy_to_index(x, row);
 			missiles_deactivate(missile); // deactivate the missile
@@ -355,13 +354,13 @@ bool missile_kill_alien_in_row(missile_t* missile, uint16_t row){
 void missile_tank_impact(missile_t* missile){
 	point_t tip = missiles_get_tip(missile);
 	point_t tank_origin = tank_get_origin();
-	if (screen_getScreenColor(tip.x, tip.y)!=TANK_COLOR && tip.y < (tank_origin.y + TANK_GUN_HEIGHT*TANK_SCALE) ){
+	if (screen_getScreenColor(tip.x, tip.y) != TANK_COLOR && tip.y < (tank_origin.y + TANK_GUN_HEIGHT) ){
 		return;
 	}
-	bool hit = missile_in_block(missile, tank_origin, TANK_WIDTH*TANK_SCALE, TANK_HEIGHT*TANK_SCALE);
-	if(hit){
-		tank_kill();
-	}
+
+	// If tank was hit, kill the tank
+	bool hit = missile_in_block(missile, tank_origin, TANK_WIDTH, TANK_HEIGHT);
+	if (hit) tank_kill();
 }
 //-----------------------------------------------------------------------------
 
@@ -379,7 +378,7 @@ bool missile_in_block(missile_t* missile, point_t target_origin, uint16_t target
 	int y_dist = up ? ((target_origin.y+target_height) - tip.y) : (tip.y - target_origin.y);
 
 	if ((x_dist <= target_width) && (x_dist >= 0) &&
-			(y_dist <= (target_height+MISSILE_HEIGHT*MISSILE_SCALE)) &&
+			(y_dist <= (target_height+MISSILE_HEIGHT)) &&
 					(y_dist >= 0)){
 		return true;
 	}
@@ -401,7 +400,7 @@ void missile_explode(point_t origin){
 
 // cleanup the missile-to-missile explosions
 void missile_cleanup(){
-	point_t kill_point = {.x=mkill_log.x, .y=mkill_log.y};
+	point_t kill_point = {.x = mkill_log.x, .y = mkill_log.y};
 	screen_drawSymbol(missile_explosion_12x10, kill_point,
 			explosionBitmapSize, MISSILE_SCALE, SCREEN_BG_COLOR);
 	mkill_log.kill = false;

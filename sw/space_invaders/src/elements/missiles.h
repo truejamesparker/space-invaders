@@ -14,10 +14,10 @@
 #include "gameScreen.h"
 #include "spaceship.h"
 
-// missile size info
-#define MISSILE_HEIGHT 		7
-#define MISSILE_WIDTH 		3
-#define MISSILE_SCALE		1 // how much should we scale?
+// missile size info (using largest missile)
+#define MISSILE_SCALE		1
+#define MISSILE_HEIGHT 		(BITMAP_ALIEN_MISSILE_3_HEIGHT*MISSILE_SCALE)
+#define MISSILE_WIDTH 		(BITMAP_ALIEN_MISSILE_3_WIDTH*MISSILE_SCALE)
 #define MISSILE_SHIFT 		4 // how many pixels should we move by every time?
 
 #define MISSILE_ALIEN_COUNT	3

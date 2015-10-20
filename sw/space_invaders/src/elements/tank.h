@@ -9,24 +9,17 @@
 #include "missiles.h"
 #include "bunkers.h"
 
-// tank color (normall green)
 #define TANK_COLOR		SCREEN_COLOR_GREEN
 
 // bitmap related values
-#define TANK_WIDTH 		15
-#define TANK_HEIGHT 	8
 #define TANK_SCALE		2
+#define TANK_WIDTH 		(BITMAP_TANK_WIDTH*TANK_SCALE)
+#define TANK_HEIGHT 	(BITMAP_TANK_HEIGHT*TANK_SCALE)
 
-#define TANK_GUN_HEIGHT 3
+#define TANK_GUN_HEIGHT (3*TANK_SCALE)
 
 // how many pixels to shift tank
 #define TANK_SHIFT_X	4
-
-// size of tank bitmap
-static const symbolsize_t tank_size = {
-		.w = TANK_WIDTH,
-		.h = TANK_HEIGHT
-};
 
 //-----------------------------------------------------------------------------
 
