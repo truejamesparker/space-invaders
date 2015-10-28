@@ -22,6 +22,42 @@
 #define BTN_CENTER_MASK	0x01
 #define BTN_ANY_MASK	0xFF
 #define BUFFER_SIZE 	512
+#define VOL_LEVELS		32
+
+static uint32_t volumes[VOL_LEVELS] = {
+	AC97_VOL_ATTN_0_DB,
+	AC97_VOL_ATTN_1_5_DB,
+	AC97_VOL_ATTN_3_0_DB,
+	AC97_VOL_ATTN_4_5_DB,
+	AC97_VOL_ATTN_6_0_DB,
+	AC97_VOL_ATTN_7_5_DB,
+	AC97_VOL_ATTN_9_0_DB,
+	AC97_VOL_ATTN_10_0_DB,
+	AC97_VOL_ATTN_11_5_DB,
+	AC97_VOL_ATTN_13_0_DB,
+	AC97_VOL_ATTN_14_5_DB,
+	AC97_VOL_ATTN_16_0_DB,
+	AC97_VOL_ATTN_17_5_DB,
+	AC97_VOL_ATTN_19_0_DB,
+	AC97_VOL_ATTN_20_5_DB,
+	AC97_VOL_ATTN_22_0_DB,
+	AC97_VOL_ATTN_23_5_DB,
+	AC97_VOL_ATTN_25_0_DB,
+	AC97_VOL_ATTN_26_5_DB,
+	AC97_VOL_ATTN_28_0_DB,
+	AC97_VOL_ATTN_29_5_DB,
+	AC97_VOL_ATTN_31_0_DB,
+	AC97_VOL_ATTN_32_5_DB,
+	AC97_VOL_ATTN_34_0_DB,
+	AC97_VOL_ATTN_35_5_DB,
+	AC97_VOL_ATTN_37_0_DB,
+	AC97_VOL_ATTN_38_5_DB,
+	AC97_VOL_ATTN_40_0_DB,
+	AC97_VOL_ATTN_41_5_DB,
+	AC97_VOL_ATTN_43_0_DB,
+	AC97_VOL_ATTN_44_5_DB,
+	AC97_VOL_ATTN_46_0_DB,
+};
 
 extern int tankFireSoundRate;
 extern int tankFireSoundFrames;
@@ -34,8 +70,7 @@ extern sound_t sound_alienMove4;
 extern sound_t sound_tankShot;
 
 XGpio gpPB;
-static uint32_t sound_data[3000] = {0};
-
+static uint8_t vol_level = 0;
 static sound_t *soundPtr;
 static uint32_t currentSampleNum;
 
@@ -44,6 +79,20 @@ void interrupt_handler_dispatcher(void* ptr);
 void fifo_interrupt_handler();
 uint32_t getCurrentSample();
 void pb_interrupt_handler(uint32_t state);
+void volume_up();
+void volume_down();
+
+void volume_down(){
+	vol_level = (vol_level==VOL_LEVELS-1) ? vol_level : ++vol_level; // don't dec if maxed out
+	uint32_t vol  = AC97_VOL_MAX + volumes[vol_level];
+	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, vol);
+}
+
+void volume_up(){
+	vol_level = (vol_level==0) ? vol_level : --vol_level; // don't dec if maxed out
+	uint32_t vol = AC97_VOL_MAX + volumes[vol_level];
+	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, vol);
+}
 
 // ----------------------------------------------------------------------------
 
@@ -54,6 +103,7 @@ void interrupts_init() {
 		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
 				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
 	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
+
 	microblaze_enable_interrupts();
 }
 
@@ -118,15 +168,15 @@ void pb_interrupt_handler(uint32_t state) {
 //	}
 
 	if (state & BTN_LEFT_MASK) {
-		play_track(SOUND_ALIEN_MOVE1);
+		play_track(SOUND_TANK_SHOT);
 	} else if (state & BTN_CENTER_MASK) {
 		play_track(SOUND_ALIEN_MOVE2);
 	} else if (state & BTN_RIGHT_MASK) {
 		play_track(SOUND_ALIEN_MOVE3);
 	} else if (state & BTN_DOWN_MASK) {
-		play_track(SOUND_ALIEN_MOVE4);
+		volume_down();
 	} else if (state & BTN_UP_MASK) {
-		play_track(SOUND_TANK_SHOT);
+		volume_up();
 	}
 }
 
@@ -184,21 +234,11 @@ int main() {
 
     // apparently we don't need to init it, just HardReset
     XAC97_HardReset(XPAR_AXI_AC97_0_BASEADDR);
-
     XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_ExtendedAudioStat, 1);
     XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, AC97_PCM_RATE_11025_HZ);
     XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR, AC97_ENABLE_IN_FIFO_INTERRUPT);
-
-    //
-
-//	while(!XAC97_isInFIFOFull(XPAR_AXI_AC97_0_BASEADDR)){
-//		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, 127);
-//	}
-//	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_AuxOutVol, AC97_VOL_MID);
-//
-//	while(!XAC97_isInFIFOFull(XPAR_AXI_AC97_0_BASEADDR)){
-//		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, 0);
-//	}
+    XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_MasterVol, AC97_VOL_MAX);
+    XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, AC97_VOL_MAX);
 
 
     while (1);
