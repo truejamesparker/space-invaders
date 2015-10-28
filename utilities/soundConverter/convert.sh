@@ -8,7 +8,12 @@ rm $OUTPUT
 
 for f in $FILES
 do
-    echo "Processing $f file..."
+    # remove path from filename
+    pathless_file=${f##*/}
+
+    echo "Processing $pathless_file file..."
+
+    sound_name=${pathless_file%.*}
     
-    ./soundConverter $f "${f%%.*}"
+    ./soundConverter $f $sound_name
 done
