@@ -15,9 +15,18 @@
 #include "xintc_l.h"
 #include "xgpio.h"
 
+typedef struct {
+    uint32_t numSamples;
+    uint32_t sampleRate;
+    const uint32_t data[];
+} sound_t;
+
+
 extern int tankFireSoundRate;
 extern int tankFireSoundFrames;
 extern int tankFireSound[];
+
+extern sound_t soundalienKilled;
 
 XGpio gpPB;
 
@@ -53,7 +62,7 @@ void interrupt_handler_dispatcher(void* ptr) {
 		// Turn off all PB interrupts for now.
 		XGpio_InterruptGlobalDisable(&gpPB);
 
-		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound, &tankFireSound[tankFireSoundFrames]);
+		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, soundalienKilled.data, &soundalienKilled.data[soundalienKilled.numSamples]);
 
 		// Ack the PB interrupt.
 		XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
