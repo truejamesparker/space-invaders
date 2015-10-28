@@ -1,5 +1,47 @@
 #include "aliens.h"
 
+// array of the 3 types of aliens (elite, infantry, and grunt)
+static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
+		/** Elite Aliens **/
+
+		{
+				.in = alien_top_in_12x8,
+				.out = alien_top_out_12x8,
+				.bitmapSize = &alienBitmapSize,
+				.scoreValue = ALIEN_SCORE_ELITE_VALUE
+		},
+
+		/** Infantry Aliens **/
+
+		{
+				.in = alien_middle_in_12x8,
+				.out = alien_middle_out_12x8,
+				.bitmapSize = &alienBitmapSize,
+				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
+		},
+		{
+				.in = alien_middle_in_12x8,
+				.out = alien_middle_out_12x8,
+				.bitmapSize = &alienBitmapSize,
+				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
+		},
+
+		/** Grunt Aliens **/
+
+		{
+				.in = alien_bottom_in_12x8,
+				.out = alien_bottom_out_12x8,
+				.bitmapSize = &alienBitmapSize,
+				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
+		},
+		{
+				.in = alien_bottom_in_12x8,
+				.out = alien_bottom_out_12x8,
+				.bitmapSize = &alienBitmapSize,
+				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
+		}
+};
+
 static bool alien_lives_matter[ALIEN_COUNT] = { false };
 static point_t alienOrigins[ALIEN_COUNT];
 
@@ -169,7 +211,7 @@ void aliens_march(){
 void aliens_kill(uint16_t index) {
 	// If there are any exploded aliens, clean up the mess
 	aliens_cleanupKills();
-
+	audio_play_track(SOUND_ALIEN_KILLED);
 	// Make sure we should be here: if already dead, bail
 	if (!alien_lives_matter[index]) return;
 

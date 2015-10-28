@@ -42,6 +42,12 @@ void taskControl_init() {
 	tasks[sm].elapsedTime = tasks[sm].period;
 	tasks[sm].TickFn = &missileSM_tick;
 
+	// Volume SM (for updating the volume)
+	++sm;
+	tasks[sm].period = SM_PERIOD_VOLUME_MS;
+	tasks[sm].elapsedTime = tasks[sm].period;
+	tasks[sm].TickFn = &volumeSM_tick;
+
 }
 
 // ----------------------------------------------------------------------------

@@ -10,6 +10,38 @@ static uint16_t alien_block_y;
 // for missile-to-missile collisions (extra feature) 
 static kill_t mkill_log = {.kill = false, .x = 0, .y=0};
 
+// array of all missile types
+static missile_t missile_array[MISSILE_COUNT] = {
+		{
+				.symbol_r = missile0_1x7,			// missile type 1 (tank)
+				.symbol_l = missile0_1x7,
+				.up = true,
+				.active = false,
+				.bitmapSize = &tankMissileBitmapSize
+		},
+		{
+				.symbol_r = missile1_3x7,			// missile type 2 (alien)
+ 				.symbol_l = missile1_3x7,
+				.up = false,
+				.active = false,
+				.bitmapSize = &alienMissile12BitmapSize
+		},
+		{
+				.symbol_r = missile2r_3x7,			// missile type 3 (alien)
+				.symbol_l = missile2l_3x7,
+				.up = false,
+				.active = false,
+				.bitmapSize = &alienMissile12BitmapSize
+		},
+		{
+				.symbol_r = missile3r_6x7,			// missile type 4 (alien)
+				.symbol_l = missile3l_6x7,
+				.up = false,
+				.active = false,
+				.bitmapSize = &alienMissile3BitmapSize
+		},
+};
+
 // function declarations
 void moveMissile(uint8_t missileIndex);
 void shiftMissileOrigin(missile_t* missile);
@@ -77,7 +109,7 @@ void missiles_tankFire(){
 	missile_t *missile = &missile_array[TANK_MISSILE];
 
 	if (!missile->active){ // no tank missile on screen
-
+		audio_play_track(SOUND_TANK_SHOT);
 		missile->active = true; // set status to active
 		point_t tank_gun_origin = tank_get_origin(); // get tank location
 		// compute the coordinates of the cannon
@@ -273,6 +305,7 @@ void missile_missile_impact(){
 				missiles_deactivate(tm);
 				// draw the collision explosion
 				missile_explode(tm->origin);
+				audio_play_track(SOUND_ALIEN_KILLED);
 			}
 		}
 	}

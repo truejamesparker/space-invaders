@@ -5,9 +5,9 @@
 
 #include "gameScreen.h"
 #include "../screen/screen.h"
+#include "../audio/audio.h"
 #include "../globals.h"
 #include "bunkers.h"
-#include "../audio/audio.h"
 
 
 #define ALIEN_COL_COUNT 		11
@@ -58,48 +58,6 @@ typedef struct {
 	const uint32_t scoreValue;		// score value of the alien
 } alien_t;
 
-// array of the 3 types of aliens (elite, infantry, and grunt)
-
-static const alien_t alien_symbols[ALIEN_ROW_COUNT] = {
-		/** Elite Aliens **/
-
-		{
-				.in = alien_top_in_12x8,
-				.out = alien_top_out_12x8,
-				.bitmapSize = &alienBitmapSize,
-				.scoreValue = ALIEN_SCORE_ELITE_VALUE
-		},
-
-		/** Infantry Aliens **/
-
-		{
-				.in = alien_middle_in_12x8,
-				.out = alien_middle_out_12x8,
-				.bitmapSize = &alienBitmapSize,
-				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
-		},
-		{
-				.in = alien_middle_in_12x8,
-				.out = alien_middle_out_12x8,
-				.bitmapSize = &alienBitmapSize,
-				.scoreValue = ALIEN_SCORE_INFANTRY_VALUE
-		},
-
-		/** Grunt Aliens **/
-
-		{
-				.in = alien_bottom_in_12x8,
-				.out = alien_bottom_out_12x8,
-				.bitmapSize = &alienBitmapSize,
-				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
-		},
-		{
-				.in = alien_bottom_in_12x8,
-				.out = alien_bottom_out_12x8,
-				.bitmapSize = &alienBitmapSize,
-				.scoreValue = ALIEN_SCORE_GRUNT_VALUE
-		}
-};
 
 /****
  * Function prototypes

@@ -8,6 +8,7 @@
 
 #include "../globals.h"
 #include "../screen/screen.h"
+#include "../audio/audio.h"
 #include "aliens.h"
 #include "tank.h"
 #include "bunkers.h"
@@ -44,38 +45,6 @@ typedef struct{
 	bool active;					// missile in flight?
 	const symbolsize_t *bitmapSize;	// size of missile bitmap
 } missile_t;
-
-// array of all missile types
-static missile_t missile_array[MISSILE_COUNT] = {
-		{
-				.symbol_r = missile0_1x7,			// missile type 1 (tank)
-				.symbol_l = missile0_1x7,
-				.up = true,
-				.active = false,
-				.bitmapSize = &tankMissileBitmapSize
-		},
-		{
-				.symbol_r = missile1_3x7,			// missile type 2 (alien)
- 				.symbol_l = missile1_3x7,
-				.up = false,
-				.active = false,
-				.bitmapSize = &alienMissile12BitmapSize
-		},
-		{
-				.symbol_r = missile2r_3x7,			// missile type 3 (alien)
-				.symbol_l = missile2l_3x7,
-				.up = false,
-				.active = false,
-				.bitmapSize = &alienMissile12BitmapSize
-		},
-		{
-				.symbol_r = missile3r_6x7,			// missile type 4 (alien)
-				.symbol_l = missile3l_6x7,
-				.up = false,
-				.active = false,
-				.bitmapSize = &alienMissile3BitmapSize
-		},
-};
 
 //-----------------------------------------------------------------------------
 

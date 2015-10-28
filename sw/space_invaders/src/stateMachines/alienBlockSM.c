@@ -4,6 +4,7 @@
 volatile static uint32_t marchSMPeriods = 0;
 volatile static uint32_t cleanSMPeriods = 0;
 
+
 // how fast aliens are currently marching
 volatile static uint32_t marchSpeed = ALIEN_BLOCK_MARCH_SLOW;
 
@@ -25,6 +26,8 @@ void alienBlockSM_tick() {
 	if (marchSMPeriods >= marchSpeed) {
 		// march the aliens
 		aliens_march();
+
+		audio_play_alien_track();
 
 		// get how many aliens are currently living
 		uint32_t firingCount = aliens_getFiringCount();

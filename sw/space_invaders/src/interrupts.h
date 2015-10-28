@@ -10,6 +10,7 @@
 
 // Interrupt Types
 #define INTS_TIMER	0
+#define INTS_AUDIO	1
 
 void interrupts_init();
 

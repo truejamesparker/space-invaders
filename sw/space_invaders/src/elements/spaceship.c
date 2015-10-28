@@ -46,6 +46,7 @@ void spaceship_move() {
 			return;
 		}
 
+		audio_play_track(SOUND_SPACESHIP);
 		// redraw
 		screen_shiftElement(saucer_16x7, origin, spaceshipBitmapSize, (shiftDir*SPACESHIP_SHIFT_X), \
 				SPACESHIP_SHIFT_Y, SPACESHIP_SCALE, SPACESHIP_COLOR);
@@ -92,7 +93,8 @@ void spaceship_kill() {
 
 	// get rid of the element on the screen and cancel its movement
 	spaceship_cancel();
-
+	audio_play_track(SOUND_ALIEN_KILLED);
+	audio_mute_track(SOUND_SPACESHIP);
 	// pick a random score between its bounds
 	// (rand()%(max-min+1))+min
 	uint32_t r = (rand()%(

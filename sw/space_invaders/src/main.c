@@ -11,6 +11,7 @@
 #include "interrupts.h"
 #include "tasks/taskControl.h"
 #include "gpio/pushButtons.h"
+#include "audio/audio.h"
 
 void application_loop();
 
@@ -21,6 +22,7 @@ int main() {
 	 * Initialization Section
 	 *********************************/
 	init_platform();
+	audio_init();
 	interrupts_init();
 	screen_init();
 	screen_clear();
@@ -42,6 +44,8 @@ int main() {
 #if !(USE_UART_CONTROL) || FORCE_INTERRUPT_CONTROL
 	// Register the task controller to run every time FIT expires
 	interrupts_register_handler(INTS_TIMER, taskControl_tick);
+	// Register the audio controller to run every time the AC97 buffer is half empty
+	interrupts_register_handler(INTS_AUDIO, audio_interrupt_handler);
 #endif
 
 	/**********************************

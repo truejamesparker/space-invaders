@@ -71,7 +71,7 @@ void tank_left() {
 void tank_kill() {
 	// let the world know that I'm dead.
 	alive = false;
-
+	audio_play_track(SOUND_TANK_DEATH);
 //	screen_drawSymbol(tank_smoulder1_15x8, origin, tank_size, TANK_SCALE, TANK_COLOR);
 }
 

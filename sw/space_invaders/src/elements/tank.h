@@ -6,6 +6,7 @@
 
 #include "../globals.h"
 #include "../screen/screen.h"
+#include "../audio/audio.h"
 #include "missiles.h"
 #include "bunkers.h"
 
