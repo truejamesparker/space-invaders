@@ -7,6 +7,7 @@
 #include "../screen/screen.h"
 #include "../globals.h"
 #include "bunkers.h"
+#include "../audio/audio.h"
 
 
 #define ALIEN_COL_COUNT 		11

@@ -6,6 +6,7 @@
 
 #include "mb_interface.h"
 #include "xintc_l.h"
+#include "audio/audio.h"
 
 // Interrupt Types
 #define INTS_TIMER	0
