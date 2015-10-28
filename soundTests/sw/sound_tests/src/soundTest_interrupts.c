@@ -8,21 +8,15 @@
 #include <xbasic_types.h>
 #include <xio.h>
 #include <xenv.h>
-
+#include "mixer.h"
 #include <stdint.h>
-
+#include "sound.h"
 #include "mb_interface.h"
 #include "xintc_l.h"
 #include "xgpio.h"
 
-typedef struct {
-    uint32_t numSamples;
-    uint32_t sampleRate;
-    const uint32_t data[];
-} sound_t;
-
-extern sound_t tankFireSound;
-extern sound_t soundalienKilled;
+extern sound_t sound_tankShot;
+extern sound_t sound_alienKilled;
 extern sound_t sound_alienMove2;
 
 XGpio gpPB;
@@ -59,7 +53,15 @@ void interrupt_handler_dispatcher(void* ptr) {
 		// ----------
 		// Turn off all PB interrupts for now.
 		XGpio_InterruptGlobalDisable(&gpPB);
-
+		int i;
+		static int j = 0;
+		if(j==8){
+			j=0;
+		}
+		play_track(j++);
+		for(i=0; i<3000; i++){
+			sound_data[i] = mix();
+		}
 		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, sound_data, &sound_data[3000]);
 //		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound.data, &tankFireSound.data[tankFireSound.numSamples]);
 //		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, soundalienKilled.data, &soundalienKilled.data[soundalienKilled.numSamples]);
@@ -103,7 +105,7 @@ int main() {
     int i=0;
 
     for(i=0; i < 3000; i++){
-    	sound_data[i] = (soundalienKilled.data[i] + tankFireSound.data[i])/2;
+    	sound_data[i] = (sound_alienKilled.data[i] + sound_alienMove2.data[i])/2;
     }
 
     while (1);
