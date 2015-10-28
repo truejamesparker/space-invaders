@@ -137,7 +137,7 @@ void XAC97_PlayAudio(Xuint32 BaseAddress, Xuint32 StartAddress,
   XAC97_AwaitCodecReady(BaseAddress);
 
   /** Disable VRA Mode **/
-  XAC97_WriteReg(BaseAddress, AC97_ExtendedAudioStat, 0);
+//  XAC97_WriteReg(BaseAddress, AC97_ExtendedAudioStat, 0);
 
   /** Play Volume Settings **/
   XAC97_WriteReg(BaseAddress, AC97_MasterVol, AC97_VOL_MAX);
