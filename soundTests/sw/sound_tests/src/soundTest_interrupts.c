@@ -26,7 +26,7 @@ extern int tankFireSoundRate;
 extern int tankFireSoundFrames;
 extern int tankFireSound[];
 
-extern sound_t soundalienKilled;
+extern sound_t sound_alienMove2;
 
 XGpio gpPB;
 
@@ -62,7 +62,9 @@ void interrupt_handler_dispatcher(void* ptr) {
 		// Turn off all PB interrupts for now.
 		XGpio_InterruptGlobalDisable(&gpPB);
 
-		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, soundalienKilled.data, &soundalienKilled.data[soundalienKilled.numSamples]);
+		u32 currentButtonState = XGpio_DiscreteRead(&gpPB, 1);
+
+		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, sound_alienMove2.data, &sound_alienMove2.data[sound_alienMove2.numSamples]);
 
 		// Ack the PB interrupt.
 		XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
