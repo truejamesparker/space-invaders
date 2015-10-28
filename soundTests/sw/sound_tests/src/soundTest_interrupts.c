@@ -22,13 +22,11 @@ typedef struct {
 } sound_t;
 
 
-extern int tankFireSoundRate;
-extern int tankFireSoundFrames;
-extern int tankFireSound[];
-
+extern sound_t tankFireSound;
 extern sound_t soundalienKilled;
 
 XGpio gpPB;
+static uint32_t sound_data[3000] = {0};
 
 // Main interrupt dispatcher that calls the user-defined handlers
 void interrupt_handler_dispatcher(void* ptr);
@@ -62,7 +60,9 @@ void interrupt_handler_dispatcher(void* ptr) {
 		// Turn off all PB interrupts for now.
 		XGpio_InterruptGlobalDisable(&gpPB);
 
-		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, soundalienKilled.data, &soundalienKilled.data[soundalienKilled.numSamples]);
+		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, sound_data, &sound_data[3000]);
+//		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound.data, &tankFireSound.data[tankFireSound.numSamples]);
+//		XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, soundalienKilled.data, &soundalienKilled.data[soundalienKilled.numSamples]);
 
 		// Ack the PB interrupt.
 		XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
@@ -75,6 +75,8 @@ void interrupt_handler_dispatcher(void* ptr) {
 }
 
 // ----------------------------------------------------------------------------
+
+
 
 int main() {
     init_platform();
@@ -98,11 +100,17 @@ int main() {
     XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_ExtendedAudioStat, 1);
     XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, AC97_PCM_RATE_11025_HZ);
 
+    int i=0;
+
+    for(i=0; i < 3000; i++){
+    	sound_data[i] = (soundalienKilled.data[i] + tankFireSound.data[i])/2;
+    }
+
     while (1);
 
 
     {
-    	XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound, &tankFireSound[tankFireSoundFrames]);
+    	XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound.data, &tankFireSound.data[tankFireSound.numSamples]);
 
 //    	XAC97_Delay(1000000);
     }
