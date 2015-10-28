@@ -21,9 +21,9 @@ typedef struct {
     const uint32_t data[];
 } sound_t;
 
-
 extern sound_t tankFireSound;
 extern sound_t soundalienKilled;
+extern sound_t sound_alienMove2;
 
 XGpio gpPB;
 static uint32_t sound_data[3000] = {0};
@@ -107,13 +107,6 @@ int main() {
     }
 
     while (1);
-
-
-    {
-    	XAC97_PlayAudio(XPAR_AXI_AC97_0_BASEADDR, tankFireSound.data, &tankFireSound.data[tankFireSound.numSamples]);
-
-//    	XAC97_Delay(1000000);
-    }
 
     cleanup_platform();
 

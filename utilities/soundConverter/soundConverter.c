@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     fprintf(output, "//\n// sound data: %s\n//\n", soundName);
 
     // create the struct
-    fprintf(output, "static const sound_t sound%s = {\n", soundName);
+    fprintf(output, "const sound_t sound_%s = {\n", soundName);
 
     // variables to store WAV file info
     uint32_t chunkID = 0;
@@ -166,7 +166,7 @@ void writeHeader(FILE *file) {
     fprintf(file, "#include <stdint.h>\n\n\n");
 
     // struct definition
-    fprintf(file, "// sound struct definition\n");
+    fprintf(file, "// sound struct definition -- move this to a *.h file\n");
     fprintf(file, "typedef struct {\n");
     fprintf(file, "    uint32_t numSamples;\n");
     fprintf(file, "    uint32_t sampleRate;\n");
