@@ -34,6 +34,7 @@ static sound_track_t sound_tracks[TRACK_NUM] = {
 uint32_t getMixedSample(){
 	int i;
 	uint32_t sample = 0;
+	uint8_t num_streams = 0;
 	for(i=0; i<TRACK_NUM; i++){
 		if(active_sounds[i]){
 			if(sound_tracks[i].sample_num == sound_tracks[i].sound->numSamples){
@@ -42,11 +43,13 @@ uint32_t getMixedSample(){
 			}
 			else{
 				sample += sound_tracks[i].sound->data[sound_tracks[i].sample_num];
+				num_streams++;
 				sound_tracks[i].sample_num++;
 			}
 		}
 	}
-	return sample;
+	num_streams = (num_streams) ? num_streams : 1; // prevent division by zero
+	return sample/num_streams;
 }
 
 void play_track(uint8_t index){

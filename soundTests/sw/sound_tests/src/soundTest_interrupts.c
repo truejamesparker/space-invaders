@@ -21,7 +21,7 @@
 #define BTN_UP_MASK		0x10
 #define BTN_CENTER_MASK	0x01
 #define BTN_ANY_MASK	0xFF
-
+#define BUFFER_SIZE 	512
 
 extern int tankFireSoundRate;
 extern int tankFireSoundFrames;
@@ -150,7 +150,7 @@ uint32_t getCurrentSample() {
 
 // ----------------------------------------------------------------------------
 
-#define MAX_FIFO_SAMPLES	50
+#define MAX_FIFO_SAMPLES	BUFFER_SIZE/2
 void fifo_interrupt_handler() {
 	uint32_t i = 0;
 
