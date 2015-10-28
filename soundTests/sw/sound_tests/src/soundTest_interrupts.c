@@ -22,6 +22,7 @@
 #define BTN_CENTER_MASK	0x01
 #define BTN_ANY_MASK	0xFF
 
+
 extern int tankFireSoundRate;
 extern int tankFireSoundFrames;
 extern int tankFireSound[];
@@ -99,6 +100,23 @@ void interrupt_handler_dispatcher(void* ptr) {
 // ----------------------------------------------------------------------------
 
 void pb_interrupt_handler(uint32_t state) {
+//	if (state & BTN_LEFT_MASK) {
+//		soundPtr = &sound_alienMove1;
+//		currentSampleNum = 0;
+//	} else if (state & BTN_CENTER_MASK) {
+//		soundPtr = &sound_alienMove2;
+//		currentSampleNum = 0;
+//	} else if (state & BTN_RIGHT_MASK) {
+//		soundPtr = &sound_alienMove3;
+//		currentSampleNum = 0;
+//	} else if (state & BTN_DOWN_MASK) {
+//		soundPtr = &sound_alienMove4;
+//		currentSampleNum = 0;
+//	} else if (state & BTN_UP_MASK) {
+//		soundPtr = &sound_tankShot;
+//		currentSampleNum = 0;
+//	}
+
 	if (state & BTN_LEFT_MASK) {
 		play_track(SOUND_ALIEN_MOVE1);
 	} else if (state & BTN_CENTER_MASK) {
@@ -137,7 +155,8 @@ void fifo_interrupt_handler() {
 	uint32_t i = 0;
 
 	while(i++ < MAX_FIFO_SAMPLES && !XAC97_isInFIFOFull(XPAR_AXI_AC97_0_BASEADDR)){
-		uint32_t soundData = mix();
+//		uint32_t soundData = getCurrentSample();
+		uint32_t soundData = getMixedSample();
 		uint32_t sample = soundData | (soundData<<16); // Shifting to put in Left and Right
 		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample); // Writing to the FIFO
 	}
@@ -179,7 +198,8 @@ int main() {
 //
 //	while(!XAC97_isInFIFOFull(XPAR_AXI_AC97_0_BASEADDR)){
 //		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, 0);
-//	}
+//	}
+
 
     while (1);
 
