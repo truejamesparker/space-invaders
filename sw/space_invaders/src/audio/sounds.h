@@ -1,12 +1,5 @@
-/*
- * sound.h
- *
- *  Created on: Oct 27, 2015
- *      Author: superman
- */
-
-#ifndef SOUND_H_
-#define SOUND_H_
+#ifndef SOUNDS_H_
+#define SOUNDS_H_
 
 #include <stdint.h>
 
@@ -23,4 +16,4 @@ typedef struct {
 } sound_track_t;
 
 
-#endif /* SOUND_H_ */
+#endif /* SOUNDS_H_ */

@@ -1,13 +1,6 @@
-/*
- * audio.c
- *
- *  Created on: Oct 27, 2015
- *      Author: superman
- */
-
 #include "audio.h"
 
-#define TRACK_NUM		8
+#define TRACK_NUM		9
 
 static uint32_t volumes[VOL_LEVELS] = {
 	AC97_VOL_ATTN_0_DB,
@@ -50,6 +43,7 @@ extern const sound_t sound_alienMove2;
 extern const sound_t sound_alienMove3;
 extern const sound_t sound_alienMove4;
 extern const sound_t sound_spaceship;
+extern const sound_t sound_spaceshipDeath;
 extern const sound_t sound_tankDeath;
 extern const sound_t sound_tankShot;
 
@@ -64,6 +58,7 @@ static sound_track_t sound_tracks[TRACK_NUM] = {
 		{.sound = &sound_alienMove3, .sample_num = 0},
 		{.sound = &sound_alienMove4, .sample_num = 0},
 		{.sound = &sound_spaceship, .sample_num = 0},
+		{.sound = &sound_spaceshipDeath, .sample_num = 0},
 		{.sound = &sound_tankDeath, .sample_num = 0},
 		{.sound = &sound_tankShot, .sample_num = 0},
 };

@@ -9,14 +9,6 @@ void (*interrupts_audio_handler)(void);
 
 // ----------------------------------------------------------------------------
 
-//void interrupts_init() {
-//	microblaze_register_handler(interrupt_handler_dispatcher, NULL);
-//	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
-//		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK));
-//	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
-//	microblaze_enable_interrupts();
-//}
-
 void interrupts_init() {
 	microblaze_register_handler(interrupt_handler_dispatcher, NULL);
 	// Enable interrupts from FIT, GPIO block, and AC97

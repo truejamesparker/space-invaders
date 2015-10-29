@@ -129,9 +129,9 @@ bool tank_isInMargin(tankdir_t tankDirection) {
 
 	// make sure that my turret doesn't go past left/right margin
 	if (tankDirection == TANK_MOVING_RIGHT) {
-		return (origin.x + (TANK_SCALE) >= (SCREEN_WIDTH-SCREEN_EDGE_BUFFER));
+		return (origin.x + (TANK_WIDTH) >= (SCREEN_WIDTH-SCREEN_EDGE_BUFFER));
 	} else {
-		return (origin.x + (TANK_SCALE)/4 <= SCREEN_EDGE_BUFFER);
+		return (origin.x + (TANK_WIDTH)/4 <= SCREEN_EDGE_BUFFER);
 	}
 }
 

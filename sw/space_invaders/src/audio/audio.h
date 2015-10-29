@@ -1,16 +1,9 @@
-/*
- * audio.h
- *
- *  Created on: Oct 27, 2015
- *      Author: superman
- */
-
 #ifndef AUDIO_H_
 #define AUDIO_H_
 
 #include "stdbool.h"
 #include "stdint.h"
-#include "sound.h"
+#include "sounds.h"
 #include "../globals.h"
 #include "../soundDriver/xac97_l.h"
 #include "xparameters.h"
@@ -25,8 +18,9 @@
 #define SOUND_ALIEN_MOVE3		3
 #define SOUND_ALIEN_MOVE4		4
 #define SOUND_SPACESHIP			5
-#define SOUND_TANK_DEATH		6
-#define SOUND_TANK_SHOT			7
+#define SOUND_SPACESHIP_KILLED	6
+#define SOUND_TANK_DEATH		7
+#define SOUND_TANK_SHOT			8
 
 void audio_init();
 void audio_interrupt_handler();

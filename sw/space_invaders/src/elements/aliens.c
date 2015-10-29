@@ -211,7 +211,10 @@ void aliens_march(){
 void aliens_kill(uint16_t index) {
 	// If there are any exploded aliens, clean up the mess
 	aliens_cleanupKills();
+
+	// play a sound!
 	audio_play_track(SOUND_ALIEN_KILLED);
+
 	// Make sure we should be here: if already dead, bail
 	if (!alien_lives_matter[index]) return;
 
