@@ -1,7 +1,10 @@
 #include "audio.h"
 
+// number of audio tracks available for play
 #define TRACK_NUM		9
 
+
+// volume presets (in  decibels)
 static uint32_t volumes[VOL_LEVELS] = {
 	AC97_VOL_ATTN_0_DB,
 	AC97_VOL_ATTN_1_5_DB,
@@ -37,6 +40,7 @@ static uint32_t volumes[VOL_LEVELS] = {
 	AC97_VOL_ATTN_46_0_DB,
 };
 
+// game sounds
 extern const sound_t sound_alienKilled;
 extern const sound_t sound_alienMove1;
 extern const sound_t sound_alienMove2;
@@ -51,6 +55,7 @@ volatile bool active_sounds[TRACK_NUM];
 static uint8_t vol_level = AC97_VOL_MAX;
 static uint8_t alien_move_count = SOUND_ALIEN_MOVE1;;
 
+// all available sound tracks
 static sound_track_t sound_tracks[TRACK_NUM] = {
 		{.sound = &sound_alienKilled, .sample_num = 0},
 		{.sound = &sound_alienMove1, .sample_num = 0},
@@ -63,7 +68,7 @@ static sound_track_t sound_tracks[TRACK_NUM] = {
 		{.sound = &sound_tankShot, .sample_num = 0},
 };
 
-
+// init the AC'97
 void audio_init(){
 	XAC97_HardReset(XPAR_AXI_AC97_0_BASEADDR);
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_ExtendedAudioStat, 1);
@@ -73,6 +78,8 @@ void audio_init(){
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, AC97_VOL_MAX);
 }
 
+// the interrupt handler for the AC'97;
+// called every time the buffer is half-empty
 void audio_interrupt_handler() {
 	uint32_t i = 0;
 	while(i++ < MAX_FIFO_SAMPLES && !XAC97_isInFIFOFull(XPAR_AXI_AC97_0_BASEADDR)){
@@ -82,18 +89,20 @@ void audio_interrupt_handler() {
 	}
 }
 
-
+// return the next audio (mixed) sample
 uint32_t getMixedSample(){
 	int i;
 	uint32_t sample = 0;
 	uint8_t num_streams = 0;
 	for(i=0; i<TRACK_NUM; i++){
 		if(active_sounds[i]){
+			// check to see if we've reached the end of the track
 			if(sound_tracks[i].sample_num == sound_tracks[i].sound->numSamples){
-				active_sounds[i] = false;
+				active_sounds[i] = false; // mark as inactive
 				sound_tracks[i].sample_num = 0;
 			}
 			else{
+				// add track sample to output sample
 				sample += sound_tracks[i].sound->data[sound_tracks[i].sample_num];
 				num_streams++;
 				sound_tracks[i].sample_num++;
@@ -101,33 +110,40 @@ uint32_t getMixedSample(){
 		}
 	}
 	num_streams = (num_streams) ? num_streams : 1; // prevent division by zero
-	return sample/num_streams;
+	return sample/num_streams; // scale output by number of streams (prevent amplification)
 }
 
+// play sound (mark track as ready for play)
 void audio_play_track(uint8_t index){
 	active_sounds[index] = true;
 }
 
+// mute track (mark track to be excluded from play)
 void audio_mute_track(uint8_t index){
 	active_sounds[index] = false;
 }
 
+// plays the next alinen march sound
 void audio_play_alien_track(){
 	audio_play_track(alien_move_count);
 	alien_move_count = (alien_move_count==SOUND_ALIEN_MOVE4) ? SOUND_ALIEN_MOVE1 : ++alien_move_count;
 }
 
+// increase volume
+void audio_volume_up(){
+	vol_level = (vol_level==0) ? vol_level : --vol_level; // don't dec if maxed out
+	uint32_t vol = AC97_VOL_MAX + volumes[vol_level];
+	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, vol);
+}
+
+// decrease volume
 void audio_volume_down(){
 	vol_level = (vol_level==VOL_LEVELS-1) ? vol_level : ++vol_level; // don't dec if maxed out
 	uint32_t vol  = AC97_VOL_MAX + volumes[vol_level];
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, vol);
 }
 
-void audio_volume_up(){
-	vol_level = (vol_level==0) ? vol_level : --vol_level; // don't dec if maxed out
-	uint32_t vol = AC97_VOL_MAX + volumes[vol_level];
-	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCMOutVol, vol);
-}
+
 
 
 
