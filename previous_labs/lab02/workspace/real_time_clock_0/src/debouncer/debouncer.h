@@ -32,7 +32,7 @@ uint8_t bouncer(uint32_t newButtonState);
 // Returns whether or not we are auto incrementing
 uint8_t in_auto_increment_mode();
 
-// Tell the bouncer that an interrupt has occured
+// Tell the bouncer that an interrupt has occurred
 // so it can debounce the button
 void tick_bouncer();
 

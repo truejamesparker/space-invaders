@@ -5,9 +5,11 @@
 #include "platform.h"       // Enables caching and other system stuff.
 #include "mb_interface.h"   // provides the microblaze interrupt enables, etc.
 #include "xintc_l.h"        // Provides handy macros for the interrupt controller.
+#include "pit.h"
 
 #include "clock/clock.h"
 #include "debouncer/debouncer.h"
+#include "uartControl/uartControl.h"
 
 XGpio gpPB;   			// This is a handle for the push-button GPIO block.
 u8 counter = 0;			// tens of milliseconds
@@ -70,8 +72,8 @@ void interrupt_handler_dispatcher(void* ptr) {
 	int intc_status = XIntc_GetIntrStatus(XPAR_INTC_0_BASEADDR);
 
 	// Check the FIT interrupt first.
-	if (intc_status & XPAR_FIT_TIMER_0_INTERRUPT_MASK){
-		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_FIT_TIMER_0_INTERRUPT_MASK);
+	if (intc_status & XPAR_PIT_0_MYINTERRUPT_MASK){
+		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_PIT_0_MYINTERRUPT_MASK);
 		timer_interrupt_handler();
 	}
 
@@ -93,13 +95,30 @@ int main (void) {
     // Enable all interrupts in the push button peripheral.
     XGpio_InterruptEnable(&gpPB, 0xFFFFFFFF);
 
+    pit_init();
+    pit_load_value(1000000); // init to 10 ms
+    pit_enable_load();
+    pit_enable_interrupts();
+    pit_enable_count();
+
+
     microblaze_register_handler(interrupt_handler_dispatcher, NULL);
     XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
-    		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK));
+    		(XPAR_PIT_0_MYINTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK));
     XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
+
     microblaze_enable_interrupts();
 
-    while(1);  // Program never ends.
+    // Tell stdin that it gets zero! none! (as far as buffering goes)
+    setvbuf(stdin, NULL, _IONBF, 0);
+
+    while(1){
+		// blocking call: wait until a character is present
+		char input = getchar();
+
+		// Handle the UART control of game
+		uartControl_handle(input);
+    }
 
     cleanup_platform();
 
