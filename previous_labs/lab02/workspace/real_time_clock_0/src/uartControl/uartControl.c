@@ -1,6 +1,6 @@
 #include "uartControl.h"
 
-static uint16_t getint();
+static uint32_t getint();
 
 
 // ----------------------------------------------------------------------------
@@ -34,8 +34,8 @@ void uartControl_handle(char key) {
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
-#define INT_BUFFER_LENGTH 5
-static uint16_t getint() {
+#define INT_BUFFER_LENGTH 10
+static uint32_t getint() {
 	// +1 for the termination '\0'
 	char buffer[INT_BUFFER_LENGTH+1];
 

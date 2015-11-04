@@ -4,7 +4,7 @@
 static uint8_t lives;
 static uint32_t score;
 
-static uint16_t getint();
+static uint32_t getint();
 
 // ----------------------------------------------------------------------------
 
@@ -155,6 +155,24 @@ void uartControl_handle(char key) {
 		case 'K':
 			xil_printf("Killing the spaceship\r\n");
 			spaceship_kill();
+			break;
+
+		case 'p': // load
+			pit_disable_count();
+			xil_printf("\n\r\n\rLoad value: ");
+
+			// Get an int from the user
+			int32_t value = getint();
+
+			// Make sure it's within the bounds
+			if (value >= 0 && value <= 4E9){
+				pit_load_value(value);
+				xil_printf("\n\r\n\rTimer updated!\n\r");
+			} else {
+				xil_printf("\n\r\n\rInvalid load value!\r\n");
+			}
+			pit_enable_count();
+			break;
 
 		default:
 			break;
@@ -165,8 +183,8 @@ void uartControl_handle(char key) {
 // Private Helper Methods
 //-----------------------------------------------------------------------------
 
-#define INT_BUFFER_LENGTH 5
-static uint16_t getint() {
+#define INT_BUFFER_LENGTH 10
+static uint32_t getint() {
 	// +1 for the termination '\0'
 	char buffer[INT_BUFFER_LENGTH+1];
 

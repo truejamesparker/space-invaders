@@ -12,6 +12,7 @@
 #include "tasks/taskControl.h"
 #include "gpio/pushButtons.h"
 #include "audio/audio.h"
+#include "pit.h"
 
 void application_loop();
 
@@ -23,6 +24,7 @@ int main() {
 	 *********************************/
 	init_platform();
 	audio_init();
+	pit_init();
 	interrupts_init();
 	screen_init();
 	screen_clear();
