@@ -23,6 +23,11 @@ void interrupts_init() {
 	XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR, AC97_ENABLE_IN_FIFO_INTERRUPT);
 	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
 
+	pit_load_value(1000000);
+	pit_enable_load();
+	pit_enable_count();
+	pit_enable_interrupts();
+
 	microblaze_enable_interrupts();
 }
 
