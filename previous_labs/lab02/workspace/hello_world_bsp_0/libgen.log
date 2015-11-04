@@ -2,7 +2,7 @@ Release 13.4 - libgen Xilinx EDK 13.4 Build EDK_O.87xd
  (nt64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
-Command Line: libgen -hw ../lab02_hw_platform/system.xml -pe microblaze_0 -log
+Command Line: libgen -hw ../hw_hw_platform/system.xml -pe microblaze_0 -log
 libgen.log system.mss 
 
 WARNING:EDK - INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable

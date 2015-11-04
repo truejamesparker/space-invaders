@@ -1,0 +1,10 @@
+##############################################################################
+## Filename:          C:/parkerbros/space-invaders/hw/pcores/pit_v1_00_a/data/pit_v2_1_0.pao
+## Description:       Peripheral Analysis Order
+## Date:              Tue Nov 03 20:48:59 2015 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+lib proc_common_v3_00_a  all 
+lib axi_lite_ipif_v1_01_a  all 
+lib pit_v1_00_a user_logic vhdl
+lib pit_v1_00_a pit vhdl

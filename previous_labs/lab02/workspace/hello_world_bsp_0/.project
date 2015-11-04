@@ -3,7 +3,7 @@
 	<name>hello_world_bsp_0</name>
 	<comment></comment>
 	<projects>
-		<project>lab02_hw_platform</project>
+		<project>hw_hw_platform</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
