@@ -82,7 +82,7 @@ bool spaceship_flashScore() {
 		// but say that this time it was true
 		return true;
 	}
-
+	return false;
 }
 
 //-----------------------------------------------------------------------------

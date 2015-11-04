@@ -1,0 +1,9 @@
+-batch 
+-create pit 
+-ver 1.00.a 
+-dir "C:\parkerbros\space-invaders\hw" 
+-lang vhdl 
+-bus axi4lite s 
+-reg 2 
+-xps 
+-bfmsim all

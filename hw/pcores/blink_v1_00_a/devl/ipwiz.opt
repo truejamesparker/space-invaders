@@ -1,0 +1,9 @@
+-batch 
+-create blink 
+-ver 1.00.a 
+-dir "C:\parkerbros\space-invaders\hw" 
+-lang vhdl 
+-bus axi4lite s 
+-reg 1 
+-xps 
+-bfmsim all

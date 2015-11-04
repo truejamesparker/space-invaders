@@ -12,8 +12,12 @@ void (*interrupts_audio_handler)(void);
 void interrupts_init() {
 	microblaze_register_handler(interrupt_handler_dispatcher, NULL);
 	// Enable interrupts from FIT, GPIO block, and AC97
+//	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
+//		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
+//				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
+
 	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
-		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
+		(XPAR_PIT_0_MYINTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
 				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
 
 	XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR, AC97_ENABLE_IN_FIFO_INTERRUPT);
@@ -45,6 +49,14 @@ void interrupt_handler_dispatcher(void* ptr) {
 
 		// Then acknowledge it so it can interrupt again
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_FIT_TIMER_0_INTERRUPT_MASK);
+	}
+	// HANDLE THE PIT INTERRUPT
+	else if (status & XPAR_PIT_0_MYINTERRUPT_MASK) {
+		if(interrupts_timer_handler) interrupts_timer_handler();
+
+		// Then acknowledge it so it can interrupt again
+		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_PIT_0_MYINTERRUPT_MASK);
+
 	}else if (status & XPAR_AXI_AC97_0_INTERRUPT_MASK) {
 		// Let the audio controller know we got an interrupt!
 		if (interrupts_audio_handler) interrupts_audio_handler();

@@ -1,0 +1,18 @@
+// Mem file initialization records.
+//
+// Release 13.4 - Data2MEM O.87xd, build 2.7 Nov 11, 2011
+// Copyright (c) 1995-2015 Xilinx, Inc.  All rights reserved.
+//
+// Command: data2mem -bm system_sim.bmm -bd "C:\parkerbros\space-invaders\hw\bootloops\microblaze_0.elf" tag microblaze_0 -bx "C:\parkerbros\space-invaders\hw\simulation\behavioral" -u -p "xc6slx45csg324-3"
+//
+// Created on Tuesday November 03, 2015 - 09:08:38 pm, from:
+//
+//     Map file     - system_sim.bmm
+//     Data file(s) - C:\parkerbros\space-invaders\hw\bootloops\microblaze_0.elf
+//
+// Address space 'microblaze_0.microblaze_0_bram_block_combined', bit lane [31:30].
+//
+// Bus width = 32 bits, number of bus blocks = 1.
+
+@00000000
+    2
