@@ -1111,25 +1111,25 @@ Top Level Output File Name         : system.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 9560
+# BELS                             : 9594
 #      GND                         : 26
-#      INV                         : 228
-#      LUT1                        : 134
-#      LUT2                        : 711
-#      LUT3                        : 1205
-#      LUT4                        : 1177
-#      LUT5                        : 1567
-#      LUT6                        : 2526
+#      INV                         : 236
+#      LUT1                        : 135
+#      LUT2                        : 718
+#      LUT3                        : 1204
+#      LUT4                        : 1174
+#      LUT5                        : 1566
+#      LUT6                        : 2530
 #      LUT6_2                      : 80
 #      MULT_AND                    : 9
-#      MUXCY                       : 670
+#      MUXCY                       : 679
 #      MUXCY_L                     : 289
 #      MUXF7                       : 212
 #      MUXF8                       : 46
 #      VCC                         : 21
-#      XORCY                       : 659
-# FlipFlops/Latches                : 7841
-#      FD                          : 904
+#      XORCY                       : 669
+# FlipFlops/Latches                : 7845
+#      FD                          : 908
 #      FD_1                        : 21
 #      FDC                         : 215
 #      FDC_1                       : 5
@@ -1190,18 +1190,18 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            7841  out of  54576    14%  
- Number of Slice LUTs:                 8131  out of  27288    29%  
-    Number used as Logic:              7628  out of  27288    27%  
+ Number of Slice Registers:            7845  out of  54576    14%  
+ Number of Slice LUTs:                 8146  out of  27288    29%  
+    Number used as Logic:              7643  out of  27288    28%  
     Number used as Memory:              503  out of   6408     7%  
        Number used as RAM:               88
        Number used as SRL:              415
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  12353
-   Number with an unused Flip Flop:    4512  out of  12353    36%  
-   Number with an unused LUT:          4222  out of  12353    34%  
-   Number of fully used LUT-FF pairs:  3619  out of  12353    29%  
+ Number of LUT Flip Flop pairs used:  12367
+   Number with an unused Flip Flop:    4522  out of  12367    36%  
+   Number with an unused LUT:          4221  out of  12367    34%  
+   Number of fully used LUT-FF pairs:  3624  out of  12367    29%  
    Number of unique control sets:       481
 
 IO Utilization: 
@@ -1236,7 +1236,7 @@ Clock Information:
 -------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------+
 Clock Signal                                                                                     | Clock buffer(FF name)                                                                                              | Load  |
 -------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------+
-GCLK                                                                                             | PLL_ADV:CLKOUT2                                                                                                    | 7484  |
+GCLK                                                                                             | PLL_ADV:CLKOUT2                                                                                                    | 7488  |
 axi_hdmi_0/axi_hdmi_0/USE_HDMI_OUT.Inst_AxiHDMITransmitter/Inst_DynClkGen/PLL_BASE_inst/CLKOUT1  | BUFG                                                                                                               | 434   |
 axi_hdmi_0/axi_hdmi_0/USE_HDMI_OUT.Inst_AxiHDMITransmitter/Inst_DynClkGen/PLL_BASE_inst/CLKOUT3  | BUFG                                                                                                               | 17    |
 axi_ac97_0_Bit_Clk_pin                                                                           | BUFGP                                                                                                              | 130   |
@@ -1273,7 +1273,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'GCLK'
   Clock period: 10.465ns (frequency: 95.553MHz)
-  Total number of paths / destination ports: 791084 / 19458
+  Total number of paths / destination ports: 791204 / 19462
 -------------------------------------------------------------------------
 Delay:               10.465ns (Levels of Logic = 21)
   Source:            axi4_0/axi4_0/crossbar_samd/gen_samd.crossbar_samd/gen_crossbar.gen_master_slots[0].reg_slice_mi/r_pipe/state_FSM_FFd2 (FF)
@@ -1779,7 +1779,7 @@ GCLK           |    3.201|         |         |         |
 
 
 Total REAL time to Xst completion: 23.00 secs
-Total CPU time to Xst completion: 22.74 secs
+Total CPU time to Xst completion: 23.27 secs
  
 --> 
 

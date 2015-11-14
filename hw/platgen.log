@@ -338,6 +338,9 @@ IPNAME:axi_hdmi INSTANCE:axi_hdmi_0 - C:\parkerbros\space-invaders\hw\system.mhs
 line 218 - Copying cache implementation netlist
 IPNAME:axi_ac97 INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs
 line 252 - Copying cache implementation netlist
+IPNAME:axi_interconnect INSTANCE:axi4lite_0 -
+C:\parkerbros\space-invaders\hw\system.mhs line 267 - Copying cache
+implementation netlist
 IPNAME:axi_interconnect INSTANCE:axi4_0 -
 C:\parkerbros\space-invaders\hw\system.mhs line 275 - Copying cache
 implementation netlist
@@ -350,6 +353,8 @@ implementation netlist
 IPNAME:d_qspi_axi INSTANCE:digilent_quadspi_cntlr -
 C:\parkerbros\space-invaders\hw\system.mhs line 345 - Copying cache
 implementation netlist
+IPNAME:axi_intc INSTANCE:axi_intc_0 - C:\parkerbros\space-invaders\hw\system.mhs
+line 357 - Copying cache implementation netlist
 IPNAME:axi_timer INSTANCE:axi_timer_0 -
 C:\parkerbros\space-invaders\hw\system.mhs line 368 - Copying cache
 implementation netlist
@@ -390,10 +395,6 @@ INSTANCE:clock_generator_0 - C:\parkerbros\space-invaders\hw\system.mhs line 161
 - Running XST synthesis
 INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs line 252 -
 Running XST synthesis
-INSTANCE:axi4lite_0 - C:\parkerbros\space-invaders\hw\system.mhs line 267 -
-Running XST synthesis
-INSTANCE:axi_intc_0 - C:\parkerbros\space-invaders\hw\system.mhs line 357 -
-Running XST synthesis
 INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 386 - Running
 XST synthesis
 INSTANCE:axi_uartlite_0 - C:\parkerbros\space-invaders\hw\system.mhs line 396 -
@@ -402,12 +403,10 @@ Running XST synthesis
 Running NGCBUILD ...
 IPNAME:clock_generator_0_wrapper INSTANCE:clock_generator_0 -
 C:\parkerbros\space-invaders\hw\system.mhs line 161 - Running NGCBUILD
-IPNAME:axi4lite_0_wrapper INSTANCE:axi4lite_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 267 - Running NGCBUILD
 INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
    If any constraint needs to be overridden, this should be done by modifying
    the data/system.ucf file.
 
 Rebuilding cache ...
 
-Total run time: 56.00 seconds
+Total run time: 36.00 seconds
