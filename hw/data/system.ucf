@@ -26,6 +26,18 @@ NET Push_Buttons_5Bits_TRI_I[4] LOC = "F5"  |  IOSTANDARD = "LVCMOS18";
 # additional constraints
 #
 
+# axi_uartlite
+#
+#
+
+NET axi_uartlite_0_RX_pin LOC="U16" | IOSTANDARD = "LVCMOS33";
+NET axi_uartlite_0_TX_pin LOC="U15" | IOSTANDARD = "LVCMOS33";
+
+#
+#
+#
+
+
 ################AXI_AC97 CONSTRAINTS########################
 Net axi_ac97_0_Bit_Clk_pin LOC = L13 | IOSTANDARD = LVCMOS33;
 Net axi_ac97_0_SData_In_pin LOC = T18 | IOSTANDARD = LVCMOS33;

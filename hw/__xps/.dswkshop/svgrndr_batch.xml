@@ -45,6 +45,8 @@
 
   <RENDERIMG RASNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\pit_0.jpg" SVGNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\pit_0.svg" TMPSVGFN="C:\parkerbros\space-invaders\hw\__xps\.dswkshop\pit_0.svg"/>
 
+  <RENDERIMG RASNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\axi_uartlite_0.jpg" SVGNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\axi_uartlite_0.svg" TMPSVGFN="C:\parkerbros\space-invaders\hw\__xps\.dswkshop\axi_uartlite_0.svg"/>
+
   <RENDERIMG RASNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\system_blkd.jpg" SVGNAME="C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\imgs\system_blkd.svg" TMPSVGFN="C:\parkerbros\space-invaders\hw\__xps\.dswkshop\system_blkd.svg"/>
 
 </RENDERBATCH>

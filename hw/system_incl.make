@@ -47,17 +47,17 @@ BRAMINIT_ELF_IMP_FILE_ARGS = -pe microblaze_0 $(MICROBLAZE_0_BOOTLOOP)
 BRAMINIT_ELF_SIM_FILES = $(MICROBLAZE_0_BOOTLOOP)
 BRAMINIT_ELF_SIM_FILE_ARGS = -pe microblaze_0 $(MICROBLAZE_0_BOOTLOOP)
 
-SIM_CMD = isim_system
+SIM_CMD = vsim
 
-BEHAVIORAL_SIM_SCRIPT = simulation/behavioral/$(SYSTEM)_setup.tcl
+BEHAVIORAL_SIM_SCRIPT = simulation/behavioral/$(SYSTEM)_setup.do
 
-STRUCTURAL_SIM_SCRIPT = simulation/structural/$(SYSTEM)_setup.tcl
+STRUCTURAL_SIM_SCRIPT = simulation/structural/$(SYSTEM)_setup.do
 
-TIMING_SIM_SCRIPT = simulation/timing/$(SYSTEM)_setup.tcl
+TIMING_SIM_SCRIPT = simulation/timing/$(SYSTEM)_setup.do
 
 DEFAULT_SIM_SCRIPT = $(BEHAVIORAL_SIM_SCRIPT)
 
-SIMGEN_OPTIONS = -p $(DEVICE) -lang $(LANGUAGE) -intstyle $(INTSTYLE) $(SEARCHPATHOPT) $(BRAMINIT_ELF_SIM_FILE_ARGS) -msg __xps/ise/xmsgprops.lst -s isim -tb
+SIMGEN_OPTIONS = -p $(DEVICE) -lang $(LANGUAGE) -intstyle $(INTSTYLE) $(SEARCHPATHOPT) $(BRAMINIT_ELF_SIM_FILE_ARGS) -msg __xps/ise/xmsgprops.lst -s mgm -tb -X C:/parkerbros/space-invaders/hw/
 
 
 CORE_STATE_DEVELOPMENT_FILES = C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family.vhd \
@@ -154,7 +154,8 @@ implementation/digilent_quadspi_cntlr_wrapper.ngc \
 implementation/axi_intc_0_wrapper.ngc \
 implementation/axi_timer_0_wrapper.ngc \
 implementation/fit_timer_0_wrapper.ngc \
-implementation/pit_0_wrapper.ngc
+implementation/pit_0_wrapper.ngc \
+implementation/axi_uartlite_0_wrapper.ngc
 
 POSTSYN_NETLIST = implementation/$(SYSTEM).ngc
 
