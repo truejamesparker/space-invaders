@@ -5829,3 +5829,17 @@ Xilinx Software Development Kit
 Xilinx EDK 13.4 Build EDK_O.87xd
 Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 Done!
+
+********************************************************************************
+At Local date and time: Sat Nov 14 15:06:16 2015
+ make -f system.make exporttosdk started...
+make: Nothing to be done for `exporttosdk'.
+Done!
+
+********************************************************************************
+At Local date and time: Sat Nov 14 15:06:16 2015
+ xsdk.exe -hwspec C:\parkerbros\space-invaders\hw\SDK\SDK_Export\hw\system.xml started...
+Xilinx Software Development Kit
+Xilinx EDK 13.4 Build EDK_O.87xd
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+Done!
