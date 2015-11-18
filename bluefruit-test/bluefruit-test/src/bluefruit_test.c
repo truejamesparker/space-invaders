@@ -1,333 +1,294 @@
-/*
- * Copyright (c) 2009 Xilinx, Inc.  All rights reserved.
- *
- * Xilinx, Inc.
- * XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS" AS A
- * COURTESY TO YOU.  BY PROVIDING THIS DESIGN, CODE, OR INFORMATION AS
- * ONE POSSIBLE   IMPLEMENTATION OF THIS FEATURE, APPLICATION OR
- * STANDARD, XILINX IS MAKING NO REPRESENTATION THAT THIS IMPLEMENTATION
- * IS FREE FROM ANY CLAIMS OF INFRINGEMENT, AND YOU ARE RESPONSIBLE
- * FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE FOR YOUR IMPLEMENTATION.
- * XILINX EXPRESSLY DISCLAIMS ANY WARRANTY WHATSOEVER WITH RESPECT TO
- * THE ADEQUACY OF THE IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO
- * ANY WARRANTIES OR REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE
- * FROM CLAIMS OF INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY
- * AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- */
 
-/*
- * helloworld.c: simple test application
- */
+
+/***************************** Include Files *********************************/
+
+#include "xparameters.h"
+#include "xuartlite.h"
+#include "xintc.h"
+#include "xil_exception.h"
 
 #include <stdio.h>
 #include "platform.h"
-#include "xparameters.h"
-#include "xuartlite.h"
 #include "interrupts.h"
 
-#define TEST_BUFFER_SIZE 16
+#include <stdio.h>
 
-XUartLite uartlite;
+/************************** Constant Definitions *****************************/
 
-uint8_t data_buffer[TEST_BUFFER_SIZE];
-uint8_t send_buffer[TEST_BUFFER_SIZE] = "hello!\n";
+/*
+ * The following constants map to the XPAR parameters created in the
+ * xparameters.h file. They are defined here such that a user can easily
+ * change all the needed parameters in one place.
+ */
+#define UARTLITE_DEVICE_ID      XPAR_UARTLITE_0_DEVICE_ID
+#define INTC_DEVICE_ID          XPAR_INTC_0_DEVICE_ID
+#define UARTLITE_INT_IRQ_ID     XPAR_INTC_0_UARTLITE_0_VEC_ID
 
-void print(char *str);
-void clear_buffer(uint8_t *buffer, uint8_t len);
+/*
+ * The following constant controls the length of the buffers to be sent
+ * and received with the UartLite device.
+ */
+#define TEST_BUFFER_SIZE        100
 
-void uart_handler(){
-	XUartLite_InterruptHandler(&uartlite);
-}
+int UartLiteIntrExample(u16 DeviceId);
 
-void print_buffer(){
-	xil_printf("%s", data_buffer);
-	clear_buffer(data_buffer, TEST_BUFFER_SIZE);
-}
+int SetupInterruptSystem(XUartLite *UartLitePtr);
 
-void clear_buffer(uint8_t *buffer, uint8_t len){
-	int i;
-	for(i=0; i<len; i++){
-		buffer[i] = 0;
-	}
-}
+void SendHandler(void *CallBackRef, unsigned int EventData);
 
-int main()
+void RecvHandler(void *CallBackRef, unsigned int EventData);
+
+/************************** Variable Definitions *****************************/
+
+ XUartLite UartLite;            /* The instance of the UartLite Device */
+
+ XIntc InterruptController;     /* The instance of the Interrupt Controller */
+
+/*
+ * The following variables are shared between non-interrupt processing and
+ * interrupt processing such that they must be global.
+ */
+
+/*
+ * The following buffers are used in this example to send and receive data
+ * with the UartLite.
+ */
+u8 SendBuffer[TEST_BUFFER_SIZE];
+u8 ReceiveBuffer[TEST_BUFFER_SIZE];
+
+/*
+ * The following counters are used to determine when the entire buffer has
+ * been sent and received.
+ */
+static volatile int TotalReceivedCount = 0;
+static volatile int TotalSentCount = 0;
+
+
+/******************************************************************************/
+/**
+*
+* Main function to call the UartLite interrupt example.
+*
+* @param	None
+*
+* @return	XST_SUCCESS if successful, XST_FAILURE if unsuccessful
+*
+* @note		None
+*
+*******************************************************************************/
+int main(void)
 {
 
+	/*
+	 * Run the UartLite Interrupt example, specify the Device ID that is
+	 * generated in xparameters.h.
+	 */
+//	interrups_init
+	UartLiteIntrExample(UARTLITE_DEVICE_ID);
 
-    init_platform();
-    interrupts_init();
-    interrupts_register_handler(INTS_UART, uart_handler);
-
-    XUartLite_Initialize(&uartlite, XPAR_AXI_UARTLITE_0_DEVICE_ID);
-    XUartLite_ResetFifos(&uartlite);
-    XUartLite_SetRecvHandler(&uartlite, uart_handler, NULL);
-    XUartLite_EnableInterrupt(&uartlite);
-
-
-
-    print("Hello World\n\r");
-    while(1);
-
-//    while(1){
-//
-//    	    uint16_t SentCount = XUartLite_Send(&uartlite, send_buffer, TEST_BUFFER_SIZE);
-//    	    if (SentCount != TEST_BUFFER_SIZE)
-//    	    {
-//    	    	xil_printf("failed to send\n\r");
-//    	        return XST_FAILURE;
-//    	    }
-//
-//    	    /*
-//    	     * Wait while the UartLite is sending the data so that we are guaranteed
-//    	     * to get the data the 1st time we call receive, otherwise this function
-//    	     * may enter receive before the data has arrived.
-//    	     */
-//    	    while (XUartLite_IsSending(&uartlite));
-//
-//
-//    	    while(!XUartLite_Recv(&uartlite, data_buffer, TEST_BUFFER_SIZE));
-//    	    xil_printf("%s", data_buffer);
-//    	    XUartLite_ResetFifos(&uartlite);
-//
-//
-//    }
-
-    cleanup_platform();
-
-    return 0;
 }
 
-///* $Id: xuartlite_polled_example.c,v 1.1.2.1 2008/02/12 12:42:02 svemula Exp $ */
-///*****************************************************************************
-//*
-//*       XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS"
-//*       AS A COURTESY TO YOU, SOLELY FOR USE IN DEVELOPING PROGRAMS AND
-//*       SOLUTIONS FOR XILINX DEVICES.  BY PROVIDING THIS DESIGN, CODE,
-//*       OR INFORMATION AS ONE POSSIBLE IMPLEMENTATION OF THIS FEATURE,
-//*       APPLICATION OR STANDARD, XILINX IS MAKING NO REPRESENTATION
-//*       THAT THIS IMPLEMENTATION IS FREE FROM ANY CLAIMS OF INFRINGEMENT,
-//*       AND YOU ARE RESPONSIBLE FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE
-//*       FOR YOUR IMPLEMENTATION.  XILINX EXPRESSLY DISCLAIMS ANY
-//*       WARRANTY WHATSOEVER WITH RESPECT TO THE ADEQUACY OF THE
-//*       IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OR
-//*       REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE FROM CLAIMS OF
-//*       INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-//*       FOR A PARTICULAR PURPOSE.
-//*
-//*       (c) Copyright 2002-2008 Xilinx Inc.
-//*       All rights reserved.
-//*
-//*******************************************************************************/
-///******************************************************************************/
-///**
-//*
-//* @file xuartlite_polled_example.c
-//*
-//* This file contains a design example using the UartLite driver (XUartLite) and
-//* hardware device using the polled mode.
-//*
-//* @note
-//*
-//* The user must provide a physical loopback such that data which is
-//* transmitted will be received.
-//*
-//* MODIFICATION HISTORY:
-//* <pre>
-//* Ver   Who  Date     Changes
-//* ----- ---- -------- -----------------------------------------------
-//* 1.00a jhl  02/13/02 First release
-//* 1.00a sv   06/13/05 Minor changes to comply to Doxygen and coding guidelines
-//* </pre>
-//******************************************************************************/
-//
-///***************************** Include Files *********************************/
-//
-//#include "xparameters.h"
-//#include "xstatus.h"
-//#include "xuartlite.h"
-//
-//
-///************************** Constant Definitions *****************************/
-//
-///*
-// * The following constants map to the XPAR parameters created in the
-// * xparameters.h file. They are defined here such that a user can easily
-// * change all the needed parameters in one place.
-// */
-//#define UARTLITE_DEVICE_ID          XPAR_UARTLITE_0_DEVICE_ID
-//
-///*
-// * The following constant controls the length of the buffers to be sent
-// * and received with the UartLite, this constant must be 16 bytes or less since
-// * this is a single threaded non-interrupt driven example such that the
-// * entire buffer will fit into the transmit and receive FIFOs of the UartLite.
-// */
-//#define TEST_BUFFER_SIZE 16
-//
-///**************************** Type Definitions *******************************/
-//
-//
-///***************** Macros (Inline Functions) Definitions *********************/
-//
-//
-///************************** Function Prototypes ******************************/
-//
-//XStatus UartLitePolledExample(Xuint16 DeviceId);
-//
-///************************** Variable Definitions *****************************/
-//
-//XUartLite UartLite;                    /* Instance of the UartLite Device */
-//
-///*
-// * The following buffers are used in this example to send and receive data
-// * with the UartLite.
-// */
-//Xuint8 SendBuffer[TEST_BUFFER_SIZE];    /* Buffer for Transmitting Data */
-//Xuint8 RecvBuffer[TEST_BUFFER_SIZE];    /* Buffer for Receiving Data */
-//
-//
-///*****************************************************************************/
-///**
-//*
-//* Main function to call the Uartlite polled example.
-//*
-//* @param    None.
-//*
-//* @return   XST_SUCCESS if successful, otherwise XST_FAILURE.
-//*
-//* @note     None.
-//*
-//******************************************************************************/
-//int main(void)
-//{
-//    XStatus Status;
-//
-//    /*
-//     * Run the UartLite polled example, specify the Device ID that is
-//     * generated in xparameters.h
-//     */
-//    Status = UartLitePolledExample(UARTLITE_DEVICE_ID);
-//    if (Status != XST_SUCCESS)
-//    {
-//    	xil_printf("failure\n\r");
-//        return XST_FAILURE;
-//    }
-//    xil_printf("success\n\r");
-//    return XST_SUCCESS;
-//
-//}
-//
-//
-///****************************************************************************/
-///**
-//* This function does a minimal test on the UartLite device and driver as a
-//* design example. The purpose of this function is to illustrate
-//* how to use the XUartLite component.
-//*
-//* This function sends data and expects to receive the data thru the UartLite
-//* such that a  physical loopback must be done with the transmit and receive
-//* signals of the UartLite.
-//*
-//* This function polls the UartLite and does not require the use of interrupts.
-//*
-//* @param    DeviceId is the Device ID of the UartLite and is the
-//*           XPAR_<uartlite_instance>_DEVICE_ID value from xparameters.h.
-//*
-//* @return   XST_SUCCESS if successful, XST_FAILURE if unsuccessful.
-//*
-//*
-//* @note
-//*
-//* This function calls the UartLite driver functions in a blocking mode such that
-//* if the transmit data does not loopback to the receive, this function may
-//* not return.
-//*
-//****************************************************************************/
-//XStatus UartLitePolledExample(Xuint16 DeviceId)
-//{
-//    XStatus Status;
-//    unsigned int SentCount;
-//    unsigned int ReceivedCount;
-//    int Index;
-//
-//    /*
-//     * Initialize the UartLite driver so that it is ready to use.
-//     */
-//    Status = XUartLite_Initialize(&UartLite, DeviceId);
-//    if (Status != XST_SUCCESS)
-//    {
-//    	xil_printf("failed init\n\r");
-//        return XST_FAILURE;
-//    }
-//
-//    /*
-//     * Perform a self-test to ensure that the hardware was built correctly.
-//     */
-//    Status = XUartLite_SelfTest(&UartLite);
-//    if (Status != XST_SUCCESS)
-//    {
-//    	xil_printf("failed selfTest\n\r");
-//        return XST_FAILURE;
-//    }
-//
-//    /*
-//     * Initialize the send buffer bytes with a pattern to send and the
-//     * the receive buffer bytes to zero.
-//     */
-//    for (Index = 0; Index < TEST_BUFFER_SIZE; Index++)
-//    {
-//        SendBuffer[Index] = Index;
-//        RecvBuffer[Index] = 0;
-//    }
-//
-//    /*
-//     * Send the buffer through the UartLite waiting til the data can be sent
-//     * (block), if the specified number of bytes was not sent successfully,
-//     * then an error occurred.
-//     */
-//    SentCount = XUartLite_Send(&UartLite, SendBuffer, TEST_BUFFER_SIZE);
-//    if (SentCount != TEST_BUFFER_SIZE)
-//    {
-//    	xil_printf("failed to send\n\r");
-//        return XST_FAILURE;
-//    }
-//
-//    /*
-//     * Wait while the UartLite is sending the data so that we are guaranteed
-//     * to get the data the 1st time we call receive, otherwise this function
-//     * may enter receive before the data has arrived.
-//     */
-//    while (XUartLite_IsSending(&UartLite))
-//    {
-//    }
-//
-//    /*
-//     * Receive the buffer from the UartLite waiting til there's data by (block),
-//     * if the specified number of bytes was not received successfully, then
-//     * an error occurred.
-//     */
-//
-//    ReceivedCount = XUartLite_Recv(&UartLite, RecvBuffer, TEST_BUFFER_SIZE);
-//    if (ReceivedCount != TEST_BUFFER_SIZE)
-//    {
-//    	xil_printf("failed to rec\n\r");
-//        return XST_FAILURE;
-//    }
-//
-//    /*
-//     * Check the receive buffer data against the send buffer and verify the
-//     * data was correctly received.
-//     */
-//    for (Index = 0; Index < TEST_BUFFER_SIZE; Index++)
-//    {
-//        if (SendBuffer[Index] != RecvBuffer[Index])
-//        {
-//        	xil_printf("data was different\n\r");
-//            return XST_FAILURE;
-//        }
-//    }
-//
-//    return XST_SUCCESS;
-//}
+/****************************************************************************/
+/**
+*
+* This function does a minimal test on the UartLite device and driver as a
+* design example. The purpose of this function is to illustrate
+* how to use the XUartLite component.
+*
+* This function sends data and expects to receive the same data through the
+* UartLite. The user must provide a physical loopback such that data which is
+* transmitted will be received.
+*
+* This function uses interrupt driver mode of the UartLite device. The calls
+* to the UartLite driver in the handlers should only use the non-blocking
+* calls.
+*
+* @param	DeviceId is the Device ID of the UartLite Device and is the
+*		XPAR_<uartlite_instance>_DEVICE_ID value from xparameters.h.
+*
+* @return	XST_SUCCESS if successful, otherwise XST_FAILURE.
+*
+* @note
+*
+* This function contains an infinite loop such that if interrupts are not
+* working it may never return.
+*
+****************************************************************************/
+int UartLiteIntrExample(u16 DeviceId)
+{
+	int Status;
+
+
+	/*
+	 * Initialize the UartLite driver so that it's ready to use.
+	 */
+	Status = XUartLite_Initialize(&UartLite, DeviceId);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Perform a self-test to ensure that the hardware was built correctly.
+	 */
+	Status = XUartLite_SelfTest(&UartLite);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Connect the UartLite to the interrupt subsystem such that interrupts can
+	 * occur. This function is application specific.
+	 */
+	Status = SetupInterruptSystem(&UartLite);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Setup the handlers for the UartLite that will be called from the
+	 * interrupt context when data has been sent and received, specify a
+	 * pointer to the UartLite driver instance as the callback reference so
+	 * that the handlers are able to access the instance data.
+	 */
+	XUartLite_SetSendHandler(&UartLite, SendHandler, &UartLite);
+	XUartLite_SetRecvHandler(&UartLite, RecvHandler, &UartLite);
+
+	/*
+	 * Enable the interrupt of the UartLite so that interrupts will occur.
+	 */
+	XUartLite_EnableInterrupt(&UartLite);
+
+	/*
+	 * Initialize the send buffer bytes with a pattern to send and the
+	 * the receive buffer bytes to zero to allow the receive data to be
+	 * verified.
+	 */
+	while(1) intr_test();
+
+}
+
+int intr_test(){
+
+	int Index;
+
+	TotalReceivedCount = 0;
+	TotalSentCount = 0;
+
+	for (Index = 0; Index < TEST_BUFFER_SIZE; Index++) {
+		SendBuffer[Index] = Index;
+		ReceiveBuffer[Index] = 0;
+	}
+
+	/*
+	 * Start receiving data before sending it since there is a loopback.
+	 */
+        xil_printf("recv\n");
+	XUartLite_Recv(&UartLite, ReceiveBuffer, TEST_BUFFER_SIZE);
+
+	/*
+	 * Send the buffer using the UartLite.
+	 */
+        xil_printf("send\n");
+	XUartLite_Send(&UartLite, SendBuffer, TEST_BUFFER_SIZE);
+
+        xil_printf("done\n");
+
+	/*
+	 * Wait for the entire buffer to be received, letting the interrupt
+	 * processing work in the background, this function may get locked
+	 * up in this loop if the interrupts are not working correctly.
+	 */
+	while ((TotalReceivedCount != TEST_BUFFER_SIZE) ||
+		(TotalSentCount != TEST_BUFFER_SIZE)) {
+	}
+        xil_printf("i sent %i\n", TotalSentCount);
+        xil_printf("received %i\n", TotalReceivedCount);
+
+	/*
+	 * Verify the entire receive buffer was successfully received.
+	 */
+	for (Index = 0; Index < TEST_BUFFER_SIZE; Index++) {
+		if (ReceiveBuffer[Index] != SendBuffer[Index]) {
+			xil_printf("data mismatch!\n\r");
+			return XST_FAILURE;
+		}
+	}
+
+        xil_printf("woot\n");
+	return XST_SUCCESS;
+}
+
+void SendHandler(void *CallBackRef, unsigned int EventData)
+{
+	TotalSentCount = EventData;
+}
+
+
+void RecvHandler(void *CallBackRef, unsigned int EventData)
+{
+	TotalReceivedCount = EventData;
+}
+
+
+int SetupInterruptSystem(XUartLite *UartLitePtr)
+{
+
+	int Status;
+
+
+	/*
+	 * Initialize the interrupt controller driver so that it is ready to
+	 * use.
+	 */
+	Status = XIntc_Initialize(&InterruptController, INTC_DEVICE_ID);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+
+	/*
+	 * Connect a device driver handler that will be called when an interrupt
+	 * for the device occurs, the device driver handler performs the
+	 * specific interrupt processing for the device.
+	 */
+	Status = XIntc_Connect(&InterruptController, UARTLITE_INT_IRQ_ID,
+			   (XInterruptHandler)XUartLite_InterruptHandler,
+			   (void *)UartLitePtr);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Start the interrupt controller such that interrupts are enabled for
+	 * all devices that cause interrupts, specific real mode so that
+	 * the UartLite can cause interrupts through the interrupt controller.
+	 */
+	Status = XIntc_Start(&InterruptController, XIN_REAL_MODE);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Enable the interrupt for the UartLite device.
+	 */
+	XIntc_Enable(&InterruptController, UARTLITE_INT_IRQ_ID);
+
+	/*
+	 * Initialize the exception table.
+	 */
+	Xil_ExceptionInit();
+
+	/*
+	 * Register the interrupt controller handler with the exception table.
+	 */
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+			 (Xil_ExceptionHandler)XIntc_InterruptHandler,
+			 &InterruptController);
+
+	/*
+	 * Enable exceptions.
+	 */
+	Xil_ExceptionEnable();
+
+	return XST_SUCCESS;
+}

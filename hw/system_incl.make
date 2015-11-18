@@ -155,7 +155,8 @@ implementation/axi_intc_0_wrapper.ngc \
 implementation/axi_timer_0_wrapper.ngc \
 implementation/fit_timer_0_wrapper.ngc \
 implementation/pit_0_wrapper.ngc \
-implementation/axi_uartlite_0_wrapper.ngc
+implementation/axi_uartlite_0_wrapper.ngc \
+implementation/axi_uart16550_0_wrapper.ngc
 
 POSTSYN_NETLIST = implementation/$(SYSTEM).ngc
 

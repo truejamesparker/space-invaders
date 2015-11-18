@@ -63,6 +63,8 @@
  PORT Push_Buttons_5Bits_TRI_I = Push_Buttons_5Bits_TRI_I, DIR = I, VEC = [0:4]
  PORT axi_uartlite_0_RX_pin = axi_uartlite_0_RX, DIR = I
  PORT axi_uartlite_0_TX_pin = axi_uartlite_0_TX, DIR = O
+ PORT axi_uart16550_0_Sin_pin = axi_uart16550_0_Sin, DIR = I
+ PORT axi_uart16550_0_Sout_pin = axi_uart16550_0_Sout, DIR = O
 
 
 BEGIN proc_sys_reset
@@ -361,7 +363,7 @@ BEGIN axi_intc
  PARAMETER C_HIGHADDR = 0x4120ffff
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
- PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt & Push_Buttons_5Bits_IP2INTC_Irpt & fit_timer_0_Interrupt & pit_0_myinterrupt & axi_uartlite_0_Interrupt
+ PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt & Push_Buttons_5Bits_IP2INTC_Irpt & fit_timer_0_Interrupt & pit_0_myinterrupt & axi_uartlite_0_Interrupt & axi_uart16550_0_IP2INTC_Irpt
  PORT Irq = axi_intc_0_Irq
 END
 
@@ -396,13 +398,25 @@ END
 BEGIN axi_uartlite
  PARAMETER INSTANCE = axi_uartlite_0
  PARAMETER HW_VER = 1.02.a
+ PARAMETER C_BAUDRATE = 9600
  PARAMETER C_BASEADDR = 0x40640000
  PARAMETER C_HIGHADDR = 0x4064ffff
- PARAMETER C_BAUDRATE = 9600
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
  PORT RX = axi_uartlite_0_RX
  PORT TX = axi_uartlite_0_TX
  PORT Interrupt = axi_uartlite_0_Interrupt
+END
+
+BEGIN axi_uart16550
+ PARAMETER INSTANCE = axi_uart16550_0
+ PARAMETER HW_VER = 1.01.a
+ PARAMETER C_BASEADDR = 0x40400000
+ PARAMETER C_HIGHADDR = 0x4040ffff
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+ PORT Sin = axi_uart16550_0_Sin
+ PORT Sout = axi_uart16550_0_Sout
+ PORT IP2INTC_Irpt = axi_uart16550_0_IP2INTC_Irpt
 END
 

@@ -60,7 +60,9 @@ entity system_stub is
     axi_ac97_0_AC97Reset_n_pin : out std_logic;
     Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
     axi_uartlite_0_RX_pin : in std_logic;
-    axi_uartlite_0_TX_pin : out std_logic
+    axi_uartlite_0_TX_pin : out std_logic;
+    axi_uart16550_0_Sin_pin : in std_logic;
+    axi_uart16550_0_Sout_pin : out std_logic
   );
 end system_stub;
 
@@ -119,7 +121,9 @@ architecture STRUCTURE of system_stub is
       axi_ac97_0_AC97Reset_n_pin : out std_logic;
       Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
       axi_uartlite_0_RX_pin : in std_logic;
-      axi_uartlite_0_TX_pin : out std_logic
+      axi_uartlite_0_TX_pin : out std_logic;
+      axi_uart16550_0_Sin_pin : in std_logic;
+      axi_uart16550_0_Sout_pin : out std_logic
     );
   end component;
 
@@ -181,7 +185,9 @@ begin
       axi_ac97_0_AC97Reset_n_pin => axi_ac97_0_AC97Reset_n_pin,
       Push_Buttons_5Bits_TRI_I => Push_Buttons_5Bits_TRI_I,
       axi_uartlite_0_RX_pin => axi_uartlite_0_RX_pin,
-      axi_uartlite_0_TX_pin => axi_uartlite_0_TX_pin
+      axi_uartlite_0_TX_pin => axi_uartlite_0_TX_pin,
+      axi_uart16550_0_Sin_pin => axi_uart16550_0_Sin_pin,
+      axi_uart16550_0_Sout_pin => axi_uart16550_0_Sout_pin
     );
 
 end architecture STRUCTURE;

@@ -33,6 +33,9 @@ NET Push_Buttons_5Bits_TRI_I[4] LOC = "F5"  |  IOSTANDARD = "LVCMOS18";
 NET axi_uartlite_0_RX_pin LOC="U16" | IOSTANDARD = "LVCMOS33";
 NET axi_uartlite_0_TX_pin LOC="U15" | IOSTANDARD = "LVCMOS33";
 
+NET axi_uart16550_0_Sin_pin LOC="U13" | IOSTANDARD = "LVCMOS33";
+NET axi_uart16550_0_Sout_pin LOC="M11" | IOSTANDARD = "LVCMOS33";
+
 #
 #
 #

@@ -66,7 +66,7 @@ INFO:EDK:4130 - IPNAME: axi_s6_ddrx, INSTANCE:MCB_DDR2 - tcl is overriding
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\
    data\axi_s6_ddrx_v2_1_0.mpd line 237 
 INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
-   PARAMETER C_NUM_INTR_INPUTS value to 6 -
+   PARAMETER C_NUM_INTR_INPUTS value to 7 -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\dat
    a\axi_intc_v2_1_0.mpd line 80 
 
@@ -92,6 +92,7 @@ Address Map for Processor microblaze_0
   (0000000000-0x00007fff) microblaze_0_d_bram_ctrl	microblaze_0_dlmb
   (0000000000-0x00007fff) microblaze_0_i_bram_ctrl	microblaze_0_ilmb
   (0x40000000-0x4000ffff) Push_Buttons_5Bits	axi4lite_0
+  (0x40400000-0x4040ffff) axi_uart16550_0	axi4lite_0
   (0x40600000-0x4060ffff) RS232_Uart_1	axi4lite_0
   (0x40640000-0x4064ffff) axi_uartlite_0	axi4lite_0
   (0x41200000-0x4120ffff) axi_intc_0	axi4lite_0
@@ -121,7 +122,7 @@ Checking platform address map ...
 Checking platform configuration ...
 IPNAME: lmb_v10, INSTANCE: microblaze_0_ilmb - 1 master(s) : 1 slave(s) 
 IPNAME: lmb_v10, INSTANCE: microblaze_0_dlmb - 1 master(s) : 1 slave(s) 
-IPNAME: axi_interconnect, INSTANCE: axi4lite_0 - 1 master(s) : 11 slave(s) 
+IPNAME: axi_interconnect, INSTANCE: axi4lite_0 - 1 master(s) : 12 slave(s) 
 IPNAME: axi_interconnect, INSTANCE: axi4_0 - 3 master(s) : 1 slave(s) 
 
 Checking port drivers...
@@ -171,7 +172,7 @@ WARNING:EDK:4181 - PORT: s2mm_prmry_reset_out_n, CONNECTOR: S2MM_RESET_OUT_N -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_vdma_v5_00_a\dat
    a\axi_vdma_v2_1_0.mpd line 224 
 WARNING:EDK:4181 - PORT: M_AXIS_S2MM_ACLK, CONNECTOR: M_AXIS_S2MM_ACLK_int -
-   floating connection - C:\parkerbros\space-invaders\hw\system.mhs line 248 
+   floating connection - C:\parkerbros\space-invaders\hw\system.mhs line 250 
 
 Performing Clock DRCs...
 
@@ -248,7 +249,7 @@ INFO:EDK:4130 - IPNAME: axi_s6_ddrx, INSTANCE:MCB_DDR2 - tcl is overriding
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\
    data\axi_s6_ddrx_v2_1_0.mpd line 230 
 INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
-   PARAMETER C_KIND_OF_INTR value to 0b11111111111111111111111111100101 -
+   PARAMETER C_KIND_OF_INTR value to 0b11111111111111111111111111001010 -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\dat
    a\axi_intc_v2_1_0.mpd line 81 
 INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
@@ -307,75 +308,73 @@ Managing hardware (BBD-specified) netlist files ...
 
 Managing cache ...
 IPNAME:proc_sys_reset INSTANCE:proc_sys_reset_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 68 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 70 - Copying cache
 implementation netlist
 IPNAME:lmb_v10 INSTANCE:microblaze_0_ilmb -
-C:\parkerbros\space-invaders\hw\system.mhs line 81 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 83 - Copying cache
 implementation netlist
 IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_i_bram_ctrl -
-C:\parkerbros\space-invaders\hw\system.mhs line 88 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 90 - Copying cache
 implementation netlist
 IPNAME:lmb_v10 INSTANCE:microblaze_0_dlmb -
-C:\parkerbros\space-invaders\hw\system.mhs line 97 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 99 - Copying cache
 implementation netlist
 IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_d_bram_ctrl -
-C:\parkerbros\space-invaders\hw\system.mhs line 104 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 106 - Copying cache
 implementation netlist
 IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
-C:\parkerbros\space-invaders\hw\system.mhs line 113 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 115 - Copying cache
 implementation netlist
 IPNAME:microblaze INSTANCE:microblaze_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 120 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 122 - Copying cache
 implementation netlist
 IPNAME:mdm INSTANCE:debug_module - C:\parkerbros\space-invaders\hw\system.mhs
-line 148 - Copying cache implementation netlist
+line 150 - Copying cache implementation netlist
 IPNAME:axi_vdma INSTANCE:axi_vdma_0 - C:\parkerbros\space-invaders\hw\system.mhs
-line 183 - Copying cache implementation netlist
+line 185 - Copying cache implementation netlist
 IPNAME:axi_gpio INSTANCE:push_buttons_5bits -
-C:\parkerbros\space-invaders\hw\system.mhs line 203 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 205 - Copying cache
 implementation netlist
 IPNAME:axi_hdmi INSTANCE:axi_hdmi_0 - C:\parkerbros\space-invaders\hw\system.mhs
-line 218 - Copying cache implementation netlist
+line 220 - Copying cache implementation netlist
 IPNAME:axi_ac97 INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs
-line 252 - Copying cache implementation netlist
-IPNAME:axi_interconnect INSTANCE:axi4lite_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 267 - Copying cache
-implementation netlist
+line 254 - Copying cache implementation netlist
 IPNAME:axi_interconnect INSTANCE:axi4_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 275 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 277 - Copying cache
 implementation netlist
 IPNAME:axi_uartlite INSTANCE:rs232_uart_1 -
-C:\parkerbros\space-invaders\hw\system.mhs line 282 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 284 - Copying cache
 implementation netlist
 IPNAME:axi_s6_ddrx INSTANCE:mcb_ddr2 -
-C:\parkerbros\space-invaders\hw\system.mhs line 297 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 299 - Copying cache
 implementation netlist
 IPNAME:d_qspi_axi INSTANCE:digilent_quadspi_cntlr -
-C:\parkerbros\space-invaders\hw\system.mhs line 345 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 347 - Copying cache
 implementation netlist
-IPNAME:axi_intc INSTANCE:axi_intc_0 - C:\parkerbros\space-invaders\hw\system.mhs
-line 357 - Copying cache implementation netlist
 IPNAME:axi_timer INSTANCE:axi_timer_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 368 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 370 - Copying cache
 implementation netlist
 IPNAME:fit_timer INSTANCE:fit_timer_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 378 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 380 - Copying cache
 implementation netlist
-IPNAME:pit INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 386
+IPNAME:pit INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 388
 - Copying cache implementation netlist
+IPNAME:axi_uartlite INSTANCE:axi_uartlite_0 -
+C:\parkerbros\space-invaders\hw\system.mhs line 398 - Copying cache
+implementation netlist
 
 Elaborating instances ...
 IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
-C:\parkerbros\space-invaders\hw\system.mhs line 113 - elaborating IP
+C:\parkerbros\space-invaders\hw\system.mhs line 115 - elaborating IP
 IPNAME:clock_generator INSTANCE:clock_generator_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 161 - elaborating IP
+C:\parkerbros\space-invaders\hw\system.mhs line 163 - elaborating IP
 ClkGen elaborate status: PASSED
 ----------------------------------------
 
 Writing HDL for elaborated instances ...
 
 Inserting wrapper level ...
-Completion time: 0.00 seconds
+Completion time: 1.00 seconds
 
 Constructing platform-level connectivity ...
 Completion time: 0.00 seconds
@@ -391,22 +390,28 @@ Running XST synthesis ...
 INFO:EDK:4211 - The following instances are synthesized with XST. The MPD option
    IMP_NETLIST=TRUE indicates that a NGC file is to be produced using XST
    synthesis. IMP_NETLIST=FALSE (default) instances are not synthesized. 
-INSTANCE:clock_generator_0 - C:\parkerbros\space-invaders\hw\system.mhs line 161
+INSTANCE:clock_generator_0 - C:\parkerbros\space-invaders\hw\system.mhs line 163
 - Running XST synthesis
-INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs line 252 -
+INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs line 254 -
 Running XST synthesis
-INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 386 - Running
+INSTANCE:axi4lite_0 - C:\parkerbros\space-invaders\hw\system.mhs line 269 -
+Running XST synthesis
+INSTANCE:axi_intc_0 - C:\parkerbros\space-invaders\hw\system.mhs line 359 -
+Running XST synthesis
+INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 388 - Running
 XST synthesis
-INSTANCE:axi_uartlite_0 - C:\parkerbros\space-invaders\hw\system.mhs line 396 -
+INSTANCE:axi_uart16550_0 - C:\parkerbros\space-invaders\hw\system.mhs line 411 -
 Running XST synthesis
 
 Running NGCBUILD ...
 IPNAME:clock_generator_0_wrapper INSTANCE:clock_generator_0 -
-C:\parkerbros\space-invaders\hw\system.mhs line 161 - Running NGCBUILD
+C:\parkerbros\space-invaders\hw\system.mhs line 163 - Running NGCBUILD
+IPNAME:axi4lite_0_wrapper INSTANCE:axi4lite_0 -
+C:\parkerbros\space-invaders\hw\system.mhs line 269 - Running NGCBUILD
 INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
    If any constraint needs to be overridden, this should be done by modifying
    the data/system.ucf file.
 
 Rebuilding cache ...
 
-Total run time: 36.00 seconds
+Total run time: 69.00 seconds
