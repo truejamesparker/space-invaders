@@ -3,10 +3,10 @@
 static XUartLite UART;
 
 static uint8_t sendBuffer[BLE_UART_BUFF_SIZE];
-static uint8_t recvBuffer[BLE_UART_BUFF_SIZE];
+
+static queue_t recvQueue;
 
 void clearSendBuffer();
-void clearRecvBuffer();
 void clearBuffer(uint8_t *buffer, uint32_t length);
 // ----------------------------------------------------------------------------
 
@@ -16,7 +16,9 @@ void ble_init() {
 
 	// clear my buffers
 	clearSendBuffer();
-	clearRecvBuffer();
+
+	// create a queue
+	queue_init(&recvQueue, BLE_QUEUE_LENGTH);
 }
 
 // ----------------------------------------------------------------------------
@@ -40,26 +42,35 @@ void ble_send(char* msg, uint32_t length) {
 // ----------------------------------------------------------------------------
 
 bool ble_available() {
+	// temporary buffer to get byteses from UARTLite
+	uint8_t recvBuffer[BLE_UART_BUFF_SIZE];
+
 	uint32_t bytes = XUartLite_Recv(&UART, recvBuffer, BLE_UART_BUFF_SIZE);
 
-	return (bytes) ? true : false;
+	if (bytes) { // I have something to put into the queue
+
+		// add each byte to the queue, overwriting stale data if necessary
+		uint32_t i = 0;
+		for (i=0; i<bytes; i++) {
+			queue_overwritePush(&recvQueue, recvBuffer[i]);
+		}
+	}
+
+	// if the receive queue isn't empty, then data is available
+	return !queue_empty(&recvQueue);
 }
 
 // ----------------------------------------------------------------------------
 
-void ble_read(char* msg, uint32_t length) {
+char ble_read() {
 
-	// TODO: Use a FIFO to store chars, then pop one char at a time?
+	// if there is something to read, pop it back!
+	if (!queue_empty(&recvQueue)) {
+		return queue_pop(&recvQueue);
+	}
 
-	// Make sure that we only read as much as we are able
-	if (length > BLE_UART_BUFF_SIZE) length = BLE_UART_BUFF_SIZE;
-
-	// Do a deep copy from recvBuffer to msg
-	uint32_t i = 0;
-	for (i=0; i<length; i++) msg[i] = recvBuffer[i];
-
-	// clear the recvBuffer
-	clearRecvBuffer();
+	// else, return NULL
+	return 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -68,12 +79,6 @@ void ble_read(char* msg, uint32_t length) {
 
 void clearSendBuffer() {
 	clearBuffer(sendBuffer, BLE_UART_BUFF_SIZE);
-}
-
-// ----------------------------------------------------------------------------
-
-void clearRecvBuffer() {
-	clearBuffer(recvBuffer, BLE_UART_BUFF_SIZE);
 }
 
 // ----------------------------------------------------------------------------
