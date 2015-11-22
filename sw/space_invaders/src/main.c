@@ -12,6 +12,7 @@
 #include "tasks/taskControl.h"
 #include "gpio/pushButtons.h"
 #include "audio/audio.h"
+#include "ble/ble.h"
 #include "pit.h"
 
 void application_loop();
@@ -30,6 +31,7 @@ int main() {
 	screen_clear();
 
 	pushButtons_init();
+	ble_init();
 
 	taskControl_init();
 

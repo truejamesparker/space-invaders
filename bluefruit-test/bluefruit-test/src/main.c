@@ -127,6 +127,8 @@ int main() {
 //				xil_printf("\r\n");
 			}
 
+    	} else {
+    		xil_printf("timed out.\r\n");
     	}
     }
 

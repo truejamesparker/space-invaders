@@ -11,9 +11,10 @@
 #include "../stateMachines/spaceshipSM.h"
 #include "../stateMachines/gamePlaySM.h"
 #include "../stateMachines/volumeSM.h"
+#include "../stateMachines/bleSM.h"
 
 #define TC_TIMER_PERIOD_MS 	10 	// how often does the FIT expire?
-#define TC_SM_COUNT 		7	// Pretty self explanatory, eh?
+#define TC_SM_COUNT 		8	// Pretty self explanatory, eh?
 
 // An array of these are created to handle when to tick SMs
 typedef struct {

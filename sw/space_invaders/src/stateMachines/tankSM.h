@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#include "../controller/controller.h"
 #include "../gpio/pushButtons.h"
 #include "../elements/tank.h"
 #include "../elements/missiles.h"

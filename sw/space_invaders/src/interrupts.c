@@ -16,6 +16,7 @@ void interrupts_init() {
 //		(XPAR_FIT_TIMER_0_INTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
 //				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
 
+	// Enable interrupts from the PIT, GPIO block, and AC97
 	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
 		(XPAR_PIT_0_MYINTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
 				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
@@ -54,15 +55,14 @@ void interrupt_handler_dispatcher(void* ptr) {
 
 		// Then acknowledge it so it can interrupt again
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_FIT_TIMER_0_INTERRUPT_MASK);
-	}
-	// HANDLE THE PIT INTERRUPT
-	else if (status & XPAR_PIT_0_MYINTERRUPT_MASK) {
+
+	} else if (status & XPAR_PIT_0_MYINTERRUPT_MASK) {
 		if(interrupts_timer_handler) interrupts_timer_handler();
 
 		// Then acknowledge it so it can interrupt again
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_PIT_0_MYINTERRUPT_MASK);
 
-	}else if (status & XPAR_AXI_AC97_0_INTERRUPT_MASK) {
+	} else if (status & XPAR_AXI_AC97_0_INTERRUPT_MASK) {
 		// Let the audio controller know we got an interrupt!
 		if (interrupts_audio_handler) interrupts_audio_handler();
 

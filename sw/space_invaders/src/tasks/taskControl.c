@@ -48,6 +48,12 @@ void taskControl_init() {
 	tasks[sm].elapsedTime = tasks[sm].period;
 	tasks[sm].TickFn = &volumeSM_tick;
 
+	// BLE SM (for receiving BLE UART data)
+	++sm;
+	tasks[sm].period = SM_PERIOD_BLE_MS;
+	tasks[sm].elapsedTime = tasks[sm].period;
+	tasks[sm].TickFn = &bleSM_tick;
+
 }
 
 // ----------------------------------------------------------------------------

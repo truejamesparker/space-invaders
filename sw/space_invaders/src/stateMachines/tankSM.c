@@ -59,10 +59,12 @@ void tankSM_tick() {
 		return;
 	}
 
+	controller_figureOutWhichDirectionToMoveThereIsProbablyABetterWayToDoThis();
+
 	// Tank direction
-	if (pushButtons_leftPressed()) {
+	if (pushButtons_leftPressed() || controller_leftPressed()) {
 		tank_left();
-	} else if (pushButtons_rightPressed()) {
+	} else if (pushButtons_rightPressed() || controller_rightPressed()) {
 		tank_right();
 	}
 
