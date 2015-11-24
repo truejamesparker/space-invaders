@@ -9,24 +9,20 @@
 #include "../queue/queue.h"
 #include "../elements/tank.h"
 #include "../elements/missiles.h"
+#include "../stateMachines/controllerSM.h"
 
-#define PACKET_ACC_LEN                  (15)
-#define PACKET_GYRO_LEN                 (15)
-#define PACKET_MAG_LEN                  (15)
-#define PACKET_QUAT_LEN                 (19)
-#define PACKET_BUTTON_LEN               (5)
-#define PACKET_COLOR_LEN                (6)
-#define PACKET_LOCATION_LEN             (15)
-
-#define READ_BUFF_LEN					(20) // this is limited by the Nordic GATT Service
-
-#define CONTROLLER_PACKET_PARSER_TIMEOUT 5000 // loop iterations
-
-#define CONTROLLER_QUEUE_LENGTH			64
+#define CONTROLLER_QUEUE_LENGTH			32
 
 #define CONTROLLER_BTN_LEFT				7
 #define CONTROLLER_BTN_RIGHT			8
 #define CONTROLLER_BTN_FIRE				1
+
+#define THRESH_VERY_FAST	(0.8f)
+#define THRESH_FAST			(0.55f)
+#define THRESH_REGULAR		(0.3f)
+#define THRESH_SLOW			(0.16f)
+#define THRESH_NO_MOVE		(0.15f)
+#define THRESH_FIRE			(2.5f)
 
 typedef enum actionType { BLE_BUTTON, BLE_ACCEL } actionType_t;
 
@@ -46,7 +42,7 @@ typedef struct {
 void controller_init();
 
 void controller_queueAction(controllerAction_t action);
-bool controller_process();
+void controller_process();
 
 bool controller_leftPressed();
 bool controller_rightPressed();

@@ -18,7 +18,7 @@
 
 #define READ_BUFF_LEN					(20) // this is limited by the Nordic GATT Service
 
-#define PACKET_PARSER_TIMEOUT 			5000 // loop iterations
+#define PACKET_PARSER_TIMEOUT 			500 // loop iterations
 
 #define SM_PERIOD_BLE_PACKET_PARSER_MS		60
 

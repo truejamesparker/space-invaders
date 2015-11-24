@@ -34,12 +34,12 @@ void blePacketParserSM_tick() {
 
 			// take the bytes from BLE and make them floats
 			x = parsefloat(packetbuffer+2);
-			xil_printf(" ");
+//			xil_printf(" ");
 			y = parsefloat(packetbuffer+6);
-			xil_printf(" ");
+//			xil_printf(" ");
 			z = parsefloat(packetbuffer+10);
 
-			xil_printf("\r\n");
+//			xil_printf("\r\n");
 
 			// create an accelerometer action
 			controllerAction_t action = {
@@ -107,7 +107,7 @@ float parsefloat(char *buffer) {
 	tmp = tmp | ((uint8_t)buffer[2]) << 16;
 	tmp = tmp | ((uint8_t)buffer[3]) << 24;
 
-	xil_printf("%x", tmp);
+//	xil_printf("%x", tmp);
 
 	float f = *(float *)&tmp;
 	return f;
