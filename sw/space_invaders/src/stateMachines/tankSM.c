@@ -97,6 +97,7 @@ void resumeGamePlay() {
 	// unlock the SMs
 	alienBlockSM_unlock();
 	spaceshipSM_unlock();
+	controllerSM_unlock();
 
 	// restart the tank
 	tank_init();

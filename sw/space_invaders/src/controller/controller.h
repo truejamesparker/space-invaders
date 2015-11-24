@@ -11,18 +11,18 @@
 #include "../elements/missiles.h"
 #include "../stateMachines/controllerSM.h"
 
-#define CONTROLLER_QUEUE_LENGTH			32
+#define CONTROLLER_ACTION_COUNT			32
 
 #define CONTROLLER_BTN_LEFT				7
 #define CONTROLLER_BTN_RIGHT			8
 #define CONTROLLER_BTN_FIRE				1
 
-#define THRESH_VERY_FAST	(0.8f)
+#define THRESH_VERY_FAST	(0.7f)
 #define THRESH_FAST			(0.55f)
-#define THRESH_REGULAR		(0.3f)
-#define THRESH_SLOW			(0.16f)
-#define THRESH_NO_MOVE		(0.15f)
-#define THRESH_FIRE			(2.5f)
+#define THRESH_REGULAR		(0.4f)
+#define THRESH_SLOW			(0.26f)
+#define THRESH_NO_MOVE		(0.25f)
+#define THRESH_FIRE			(1.5f)
 
 typedef enum actionType { BLE_BUTTON, BLE_ACCEL } actionType_t;
 
