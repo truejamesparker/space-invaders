@@ -32,6 +32,9 @@ void tankSM_tick() {
 			// remove a tank life
 			gameScreen_increaseLives(-1);
 
+			// don't allow the BLE controller access
+			controllerSM_lock();
+
 			// lock the alien block SM and spaceship SM
 			alienBlockSM_lock();
 			spaceshipSM_lock();
@@ -59,12 +62,10 @@ void tankSM_tick() {
 		return;
 	}
 
-	controller_figureOutWhichDirectionToMoveThereIsProbablyABetterWayToDoThis();
-
 	// Tank direction
-	if (pushButtons_leftPressed() || controller_leftPressed()) {
+	if (pushButtons_leftPressed()) {
 		tank_left();
-	} else if (pushButtons_rightPressed() || controller_rightPressed()) {
+	} else if (pushButtons_rightPressed()) {
 		tank_right();
 	}
 
@@ -72,6 +73,7 @@ void tankSM_tick() {
 	if (pushButtons_centerPressed()) {
 		missiles_tankFire();
 	}
+
 }
 
 // ----------------------------------------------------------------------------

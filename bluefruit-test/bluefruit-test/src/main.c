@@ -91,7 +91,7 @@ int main() {
 				// having printed out the data in this format,
 				// you can load it into MATLAB to process it
 				// and view what the accelerometer data looks like
-				xil_printf("%x %x %x\r\n", tempX, tempY, tempZ);
+//				xil_printf("%x %x %x\r\n", tempX, tempY, tempZ);
 
 
 				x = parsefloat(tempX);
@@ -101,25 +101,25 @@ int main() {
 
 				/** Here are some thresholds **/
 
-//				if (y < -0.8) {
-//					xil_printf("move right 4x\r\n");
-//				} else if (y < -0.55) {
-//					xil_printf("move right 3x\r\n");
-//				} else if (y < -0.3) {
-//					xil_printf("move right 2x\r\n");
-//				} else if (y < -0.1) {
-//					xil_printf("move right 1x\r\n");
-//				}
-//
-//				if (y > 0.8) {
-//					xil_printf("move left 4x\r\n");
-//				} else if (y > 0.55) {
-//					xil_printf("move left 3x\r\n");
-//				} else if (y > 0.3) {
-//					xil_printf("move left 2x\r\n");
-//				} else if (y > 0.1) {
-//					xil_printf("move left 1x\r\n");
-//				}
+				if (y < -0.8) {
+					xil_printf("move right 4x\r\n");
+				} else if (y < -0.55) {
+					xil_printf("move right 3x\r\n");
+				} else if (y < -0.3) {
+					xil_printf("move right 2x\r\n");
+				} else if (y < -0.1) {
+					xil_printf("move right 1x\r\n");
+				}
+
+				if (y > 0.8) {
+					xil_printf("move left 4x\r\n");
+				} else if (y > 0.55) {
+					xil_printf("move left 3x\r\n");
+				} else if (y > 0.3) {
+					xil_printf("move left 2x\r\n");
+				} else if (y > 0.1) {
+					xil_printf("move left 1x\r\n");
+				}
 
 //				xil_printf("Accel\tx: "); printFloat(x);
 //				xil_printf("\t\ty:"); printFloat(y);
@@ -127,8 +127,6 @@ int main() {
 //				xil_printf("\r\n");
 			}
 
-    	} else {
-    		xil_printf("timed out.\r\n");
     	}
     }
 

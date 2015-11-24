@@ -13,6 +13,7 @@
 #include "gpio/pushButtons.h"
 #include "audio/audio.h"
 #include "ble/ble.h"
+#include "controller/controller.h"
 #include "pit.h"
 
 void application_loop();
@@ -32,6 +33,7 @@ int main() {
 
 	pushButtons_init();
 	ble_init();
+	controller_init();
 
 	taskControl_init();
 

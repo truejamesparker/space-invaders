@@ -26,6 +26,7 @@ void gamePlaySM_tick() {
 			alienBlockSM_unlock();
 			spaceshipSM_unlock();
 			tankSM_unlock();
+			controllerSM_unlock();
 
 			// restart the tank
 			tank_init();
@@ -72,6 +73,7 @@ void gameOver() {
 	// this will lock the tank so you can't move it,
 	// and also keep it smouldering during the "GAME OVER" screen
 	tankSM_lock();
+	controllerSM_lock();
 
 	// lock the alien block SM and spaceship SM
 	alienBlockSM_lock();

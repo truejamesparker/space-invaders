@@ -46,7 +46,7 @@ void ble_send(char* msg, uint32_t length) {
 
 // ----------------------------------------------------------------------------
 
-void ble_receive() {
+bool ble_available() {
 	// temporary buffer to get byteses from UARTLite
 	uint8_t recvBuffer[BLE_UART_BUFF_SIZE];
 
@@ -60,11 +60,7 @@ void ble_receive() {
 			queue_overwritePush(&recvQueue, recvBuffer[i]);
 		}
 	}
-}
 
-// ----------------------------------------------------------------------------
-
-bool ble_dataAvailable() {
 	// if the receive queue isn't empty, then data is available
 	return !queue_empty(&recvQueue);
 }

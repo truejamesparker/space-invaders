@@ -1,38 +1,110 @@
 #include "controller.h"
 
-static char packetbuffer[READ_BUFF_LEN+1];
+static queue_t actionPtrQueue;
 
-static bool _moveRight = false;
-static bool _moveLeft = false;
+static bool moveLeft = false;
+static bool moveRight = false;
+static bool tankFire = false;
 
-uint16_t readPacket(uint16_t timeout);
 float parsefloat(uint32_t buffer);
+void actionQueuePop(controllerAction_t *action);
 
 // ----------------------------------------------------------------------------
 
-controller_figureOutWhichDirectionToMoveThereIsProbablyABetterWayToDoThis() {
-	if (readPacket(CONTROLLER_PACKET_PARSER_TIMEOUT)) {
+void controller_init() {
+	// setup the action queue
+	queue_init(&actionPtrQueue, CONTROLLER_QUEUE_LENGTH);
+}
 
-		// Buttons
-		if (packetbuffer[1] == 'B') {
-			uint8_t btnNum = packetbuffer[2] - '0';
-			uint8_t pressed = packetbuffer[3] - '0';
-			xil_printf("Button %d", btnNum);
-			if (pressed) xil_printf(" pressed\r\n");
-			else 		 xil_printf(" released\r\n");
+// ----------------------------------------------------------------------------
 
-			if      (btnNum == 8 &&  pressed) _moveRight = true;
-			else if (btnNum == 8 && !pressed) _moveRight = false;
+void controller_queueAction(controllerAction_t action) {
+	// create some memory for this action
+	controllerAction_t *actionPtr;
+	actionPtr = malloc(sizeof(controllerAction_t));
 
-			if      (btnNum == 7 &&  pressed) _moveLeft = true;
-			else if (btnNum == 7 && !pressed) _moveLeft = false;
-		}
+	// copy the contents of the incoming action to this memory allocated action
+	actionPtr->type = action.type;
+	actionPtr->btnNumber = action.btnNumber;
+	actionPtr->pressed = action.pressed;
+	actionPtr->x = action.x;
+	actionPtr->y = action.y;
+	actionPtr->z = action.z;
+
+	// push the address to the actionPtrQueue
+	queue_overwritePush(&actionPtrQueue, (uint32_t)actionPtr);
+}
+
+// ----------------------------------------------------------------------------
+
+bool controller_process() {
+
+	// get an action to process
+	controllerAction_t action;
+	actionQueuePop(&action);
+
+	switch(action.type) {
+		case BLE_BUTTON:
+
+			// since button events are only fired on
+			// PRESSED and RELEASED, this creates a 'latching'
+			// effect, i.e., you may hold down the buttons
+			// without having to press/release repeatedly
+			if (action.btnNumber == CONTROLLER_BTN_LEFT) {
+				moveLeft = action.pressed;
+				if (moveLeft) moveRight = false;
+			} else if (action.btnNumber == CONTROLLER_BTN_RIGHT) {
+				moveRight = action.pressed;
+				if (moveRight) moveLeft = false;
+			}
+
+			if (action.btnNumber == CONTROLLER_BTN_FIRE) {
+				tankFire = action.pressed;
+			}
+
+			break;
+		case BLE_ACCEL:
+			/** Here are some thresholds **/
+
+			if (action.y < -0.8) {
+//				xil_printf("move right 4x\r\n");
+			} else if (action.y < -0.55) {
+//				xil_printf("move right 3x\r\n");
+			} else if (action.y < -0.3) {
+//				xil_printf("move right 2x\r\n");
+			} else if (action.y < -0.1) {
+//				xil_printf("move right 1x\r\n");
+			}
+
+//			if (y > 0.8) {
+//				xil_printf("move left 4x\r\n");
+//			} else if (y > 0.55) {
+//				xil_printf("move left 3x\r\n");
+//			} else if (y > 0.3) {
+//				xil_printf("move left 2x\r\n");
+//			} else if (y > 0.1) {
+//				xil_printf("move left 1x\r\n");
+//			}
+
+			break;
+		default:
+			break;
 	}
+
+	// Do some tank actions
+	if 		(moveLeft) tank_left();
+	else if (moveRight) tank_right();
+
+	if (tankFire) missiles_tankFire();
+
+	return false;
 }
 
 // ----------------------------------------------------------------------------
 
 bool controller_leftPressed() {
+
+	return false;
 
 //	if (readPacket(CONTROLLER_PACKET_PARSER_TIMEOUT)) {
 ////    		xil_printf("Got something: %s\r\n", packetbuffer);
@@ -121,7 +193,7 @@ bool controller_leftPressed() {
 //	}
 
 
-	return _moveLeft;
+//	return _moveLeft;
 
 
 }
@@ -147,55 +219,27 @@ bool controller_rightPressed() {
 //			}
 //	}
 
-	return _moveRight;
+//	return _moveRight;
+
+	return false;
 }
 
 // ----------------------------------------------------------------------------
 // Private Helper Methods
 // ----------------------------------------------------------------------------
 
-float parsefloat(uint32_t buffer) {
-	float f = *(float *)&buffer;
-	return f;
-}
+void actionQueuePop(controllerAction_t *action) {
+	uint32_t actionPtrAddr = queue_pop(&actionPtrQueue);
+	controllerAction_t *actionPtr = (controllerAction_t *)actionPtrAddr;
 
-// ----------------------------------------------------------------------------
+	// deep copy over so we can free memory
+	action->type = actionPtr->type;
+	action->btnNumber = actionPtr->btnNumber;
+	action->pressed = actionPtr->pressed;
+	action->x = actionPtr->x;
+	action->y = actionPtr->y;
+	action->z = actionPtr->z;
 
-uint16_t readPacket(uint16_t timeout) {
-	uint16_t origtimeout = timeout;
-	uint16_t replyidx = 0;
-
-	memset(packetbuffer, 0, READ_BUFF_LEN);
-
-	while (timeout--) {
-		if (replyidx >= READ_BUFF_LEN) break;
-		if ((packetbuffer[1] == 'A') && (replyidx == PACKET_ACC_LEN))
-		  break;
-		if ((packetbuffer[1] == 'G') && (replyidx == PACKET_GYRO_LEN))
-		  break;
-		if ((packetbuffer[1] == 'M') && (replyidx == PACKET_MAG_LEN))
-		  break;
-		if ((packetbuffer[1] == 'Q') && (replyidx == PACKET_QUAT_LEN))
-		  break;
-		if ((packetbuffer[1] == 'B') && (replyidx == PACKET_BUTTON_LEN))
-		  break;
-		if ((packetbuffer[1] == 'C') && (replyidx == PACKET_COLOR_LEN))
-		  break;
-		if ((packetbuffer[1] == 'L') && (replyidx == PACKET_LOCATION_LEN))
-		  break;
-
-		while (ble_dataAvailable()) {
-		  char c = ble_read();
-		  if (c == '!') {
-			replyidx = 0;
-		  }
-		  packetbuffer[replyidx] = c;
-		  replyidx++;
-		  timeout = origtimeout;
-		}
-	}
-
-	packetbuffer[replyidx] = '\0';
-
-	return replyidx;
+	// make sure to free the memory we allocated!
+	free(actionPtr);
 }

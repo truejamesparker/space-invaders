@@ -11,7 +11,7 @@
  #define QUEUE_FAIL		0
 
 typedef uint32_t queue_index_t;
-typedef uint8_t  queue_data_t;
+typedef uint32_t queue_data_t;
 typedef uint32_t queue_size_t;
 
 typedef struct {

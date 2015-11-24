@@ -50,9 +50,15 @@ void taskControl_init() {
 
 	// BLE SM (for receiving BLE UART data)
 	++sm;
-	tasks[sm].period = SM_PERIOD_BLE_MS;
+	tasks[sm].period = SM_PERIOD_BLE_PACKET_PARSER_MS;
 	tasks[sm].elapsedTime = tasks[sm].period;
-	tasks[sm].TickFn = &bleSM_tick;
+	tasks[sm].TickFn = &blePacketParserSM_tick;
+
+	// Controller MS (for processing controller events at variable speeds)
+	++sm;
+	tasks[sm].period = SM_PERIOD_CONTROLLER_MS;
+	tasks[sm].elapsedTime = tasks[sm].period;
+	tasks[sm].TickFn = &controllerSM_tick;
 
 }
 

@@ -11,6 +11,7 @@
 #include "alienBlockSM.h"
 #include "spaceshipSM.h"
 #include "tankSM.h"
+#include "controllerSM.h"
 
 #define SM_PERIOD_GAMEPLAY_MS		20
 

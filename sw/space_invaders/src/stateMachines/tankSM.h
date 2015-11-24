@@ -11,6 +11,7 @@
 #include "../elements/gameScreen.h"
 #include "spaceshipSM.h"
 #include "alienBlockSM.h"
+#include "controllerSM.h"
 
 #define SM_PERIOD_TANK_MS 	60
 
