@@ -1,6 +1,7 @@
 #include "gamePlaySM.h"
 
 volatile static bool waitForButton = false;
+volatile static bool gamePaused = false;
 
 void startNewLevel();
 void gameOver();
@@ -33,6 +34,10 @@ void gamePlaySM_tick() {
 		}
 	}
 
+	// If slideSwitch 0 is on, then pause the game.
+	if (slideSwitches_isOn(SW_PAUSE)) gamePlaySM_pauseGame();
+	else gamePlaySM_resumeGame();
+
 	// here I need to check different game play states
 	// There are three different game play events:
 	// 1. I killed all the aliens, so start a new level
@@ -48,6 +53,32 @@ void gamePlaySM_tick() {
 	if (!gameScreen_getTankLives() || aliens_belowBunkers()) {
 		gameOver();
 	}
+}
+
+// ----------------------------------------------------------------------------
+
+void gamePlaySM_pauseGame() {
+	if (gamePaused) return;
+	xil_printf("Game Paused!\r\n");
+	alienBlockSM_lock();
+	spaceshipSM_lock();
+	tankSM_lock();
+	controllerSM_lock();
+
+	gamePaused = true;
+}
+
+// ----------------------------------------------------------------------------
+
+void gamePlaySM_resumeGame() {
+	if (!gamePaused) return;
+	xil_printf("Unpaused!\r\n");
+	alienBlockSM_unlock();
+	spaceshipSM_unlock();
+	tankSM_unlock();
+	controllerSM_unlock();
+
+	gamePaused = false;
 }
 
 // ----------------------------------------------------------------------------

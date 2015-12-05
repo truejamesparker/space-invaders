@@ -11,6 +11,7 @@
 #include "interrupts.h"
 #include "tasks/taskControl.h"
 #include "gpio/pushButtons.h"
+#include "gpio/slideSwitches.h"
 #include "audio/audio.h"
 #include "ble/ble.h"
 #include "controller/controller.h"
@@ -32,6 +33,7 @@ int main() {
 	screen_clear();
 
 	pushButtons_init();
+	slideSwitches_init();
 	ble_init();
 	controller_init();
 
