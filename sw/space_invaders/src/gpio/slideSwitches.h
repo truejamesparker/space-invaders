@@ -11,6 +11,9 @@
 
 // Define different sliders to be different actions
 #define SW_PAUSE		(0x00)
+#define SW_SHOW_CAPTURE (0x05)
+#define SW_SW_CAPTURE	(0x06)
+#define SW_HW_CAPTURE	(0x07)
 
 // Setup the switches in HW
 void slideSwitches_init();
