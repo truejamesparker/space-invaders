@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "../controller/controller.h"
 #include "../gpio/pushButtons.h"
@@ -20,7 +21,7 @@
 
 void tankSM_tick();
 
-void tankSM_lock();
+void tankSM_lock(bool dead);
 void tankSM_unlock();
 
 #endif /* TANKSM_H_ */

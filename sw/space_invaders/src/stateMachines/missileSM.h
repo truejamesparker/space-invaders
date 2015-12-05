@@ -12,7 +12,9 @@
 #define MISSILE_ALIEN_REFRESH	2
 #define MISSILE_TANK_REFRESH	1
 
-
 void missileSM_tick();
+
+void missileSM_lock();
+void missileSM_unlock();
 
 #endif /* MISSLESM_H_ */

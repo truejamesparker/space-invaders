@@ -4,6 +4,9 @@ volatile static uint32_t timeoutSMPeriods = 0;
 
 volatile static bool locked = false;
 
+// sometimes smouldering just means locking, not smouldering
+volatile static bool smoulder = false;
+
 void resumeGamePlay();
 
 // ----------------------------------------------------------------------------
@@ -11,6 +14,9 @@ void resumeGamePlay();
 void tankSM_tick() {
 
 	if (locked) {
+		// If locked but not smoulder, bail
+		if (!smoulder) return;
+
 		// continue to smoulder
 		if (timeoutSMPeriods % 2) tank_smoulder();
 
@@ -78,8 +84,9 @@ void tankSM_tick() {
 
 // ----------------------------------------------------------------------------
 
-void tankSM_lock() {
+void tankSM_lock(bool dead) {
 	locked = true;
+	smoulder = dead;
 }
 
 // ----------------------------------------------------------------------------
