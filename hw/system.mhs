@@ -63,6 +63,8 @@
  PORT Push_Buttons_5Bits_TRI_I = Push_Buttons_5Bits_TRI_I, DIR = I, VEC = [0:4]
  PORT axi_uartlite_0_RX_pin = axi_uartlite_0_RX, DIR = I
  PORT axi_uartlite_0_TX_pin = axi_uartlite_0_TX, DIR = O
+# PORT slide_swtiches_8bits_GPIO_IO_pin = slide_swtiches_8bits_GPIO_IO, DIR = IO, VEC = [7:0]
+ PORT slide_swtiches_8bits_GPIO_IO_I_pin = net_slide_swtiches_8bits_GPIO_IO_I_pin, DIR = I, VEC = [7:0]
 
 
 BEGIN proc_sys_reset
@@ -305,7 +307,7 @@ BEGIN axi_s6_ddrx
  PARAMETER C_MEM_NUM_COL_BITS = 10
  PARAMETER C_SKIP_IN_TERM_CAL = 0
  PARAMETER C_S0_AXI_ENABLE = 1
- PARAMETER C_INTERCONNECT_S0_AXI_MASTERS = microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC & axi_vdma_0.M_AXI_MM2S
+ PARAMETER C_INTERCONNECT_S0_AXI_MASTERS = microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC & axi_vdma_0.M_AXI_MM2S & dma_ctrl_0.M_AXI
  PARAMETER C_MEM_DDR2_RTT = 50OHMS
  PARAMETER C_S0_AXI_STRICT_COHERENCY = 0
  PARAMETER C_INTERCONNECT_S0_AXI_AW_REGISTER = 8
@@ -361,7 +363,7 @@ BEGIN axi_intc
  PARAMETER C_HIGHADDR = 0x4120ffff
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
- PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt & Push_Buttons_5Bits_IP2INTC_Irpt & fit_timer_0_Interrupt & pit_0_myinterrupt & axi_uartlite_0_Interrupt
+ PORT Intr = axi_ac97_0_Interrupt & axi_timer_0_Interrupt & Push_Buttons_5Bits_IP2INTC_Irpt & fit_timer_0_Interrupt & pit_0_myinterrupt & axi_uartlite_0_Interrupt & slide_swtiches_8bits_IP2INTC_Irpt & dma_ctrl_0_interrupt
  PORT Irq = axi_intc_0_Irq
 END
 
@@ -396,13 +398,40 @@ END
 BEGIN axi_uartlite
  PARAMETER INSTANCE = axi_uartlite_0
  PARAMETER HW_VER = 1.02.a
+ PARAMETER C_BAUDRATE = 9600
  PARAMETER C_BASEADDR = 0x40640000
  PARAMETER C_HIGHADDR = 0x4064ffff
- PARAMETER C_BAUDRATE = 9600
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
  PORT RX = axi_uartlite_0_RX
  PORT TX = axi_uartlite_0_TX
  PORT Interrupt = axi_uartlite_0_Interrupt
+END
+
+BEGIN dma_ctrl
+ PARAMETER INSTANCE = dma_ctrl_0
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0x7ac00000
+ PARAMETER C_HIGHADDR = 0x7ac0ffff
+ BUS_INTERFACE M_AXI = axi4_0
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+ PORT m_axi_lite_aclk = clk_100_0000MHzPLL0
+ PORT interrupt = dma_ctrl_0_interrupt
+END
+
+BEGIN axi_gpio
+ PARAMETER INSTANCE = slide_swtiches_8bits
+ PARAMETER HW_VER = 1.01.b
+ PARAMETER C_INTERRUPT_PRESENT = 1
+ PARAMETER C_GPIO_WIDTH = 8
+ PARAMETER C_ALL_INPUTS = 8
+ PARAMETER C_BASEADDR = 0x40040000
+ PARAMETER C_HIGHADDR = 0x4004ffff
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+# PORT GPIO_IO = slide_swtiches_8bits_GPIO_IO
+ PORT IP2INTC_Irpt = slide_swtiches_8bits_IP2INTC_Irpt
+ PORT GPIO_IO_I = net_slide_swtiches_8bits_GPIO_IO_I_pin
 END
 
