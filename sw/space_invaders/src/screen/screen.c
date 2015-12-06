@@ -63,7 +63,7 @@ void screen_init() {
 	// IP.
 	myFrameBuffer.FrameStoreStartAddr[0] = FRAME_BUFFER_0_ADDR;
 	myFrameBuffer.FrameStoreStartAddr[1] = FRAME_BUFFER_0_ADDR + 4 * 640 * 480;
-	myFrameBuffer.FrameStoreStartAddr[2] = FRAME_BUFFER_0_ADDR + 4 * 640 * 480;
+	myFrameBuffer.FrameStoreStartAddr[2] = FRAME_BUFFER_0_ADDR + 2 * 4 * 640 * 480;
 
 	if (XST_FAILURE == XAxiVdma_DmaSetBufferAddr(&videoDMAController,
 			XAXIVDMA_READ, myFrameBuffer.FrameStoreStartAddr)) {
@@ -77,7 +77,7 @@ void screen_init() {
 	// of frame 0 and frame 1.
 	framePointer = (unsigned int *) FRAME_BUFFER_0_ADDR;
 	bgFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
-	captureFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
+	captureFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 2 * 4 * 640 * 480);
 
 	// This tells the HDMI controller the resolution of your display (there must be a better way to do this).
 	XIo_Out32(XPAR_AXI_HDMI_0_BASEADDR, SCREEN_WIDTH*SCREEN_HEIGHT);
@@ -127,8 +127,8 @@ void screen_clear() {
 //-----------------------------------------------------------------------------
 
 // repark the screen pointer
-void screen_refresh() {
-	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, SCREEN_MAIN_FRAME,
+void screen_refresh(uint8_t frameIdx) {
+	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, frameIdx,
 			XAXIVDMA_READ)) {
 		xil_printf("vdma parking failed\n\r");
 	}

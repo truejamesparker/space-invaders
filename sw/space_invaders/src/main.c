@@ -70,7 +70,7 @@ int main() {
 
 void application_loop() {
 	// refresh the screen after everything has been initialized
-	screen_refresh();
+	screen_refresh(SCREEN_MAIN_FRAME);
 
 	// Tell stdin that it gets zero! none! (as far as buffering goes)
 	setvbuf(stdin, NULL, _IONBF, 0);
@@ -86,7 +86,7 @@ void application_loop() {
 		uartControl_handle(input);
 
 		// sync the screen with the frame
-		screen_refresh();
+		screen_refresh(SCREEN_MAIN_FRAME);
 #endif
 	}
 

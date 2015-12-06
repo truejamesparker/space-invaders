@@ -74,7 +74,7 @@ void screen_init();
 void screen_clear();
 
 // Causes the screen to park again, redrawing the framePointer to screen
-void screen_refresh();
+void screen_refresh(uint8_t frameIdx);
 
 // draw a given bitmap to the screen with an appropriate scale applied
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor);

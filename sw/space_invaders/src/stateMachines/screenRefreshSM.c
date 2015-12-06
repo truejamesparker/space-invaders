@@ -1,10 +1,12 @@
 #include "screenRefreshSM.h"
 
+volatile uint8_t screenFrameIdx = SCREEN_MAIN_FRAME;
+
 // ----------------------------------------------------------------------------
 
 void screenRefreshSM_tick() {
 	// All I do is refresh the screen, all day long.
-	screen_refresh();
+	screen_refresh(screenFrameIdx);
 
 
 	// --------------------------------
