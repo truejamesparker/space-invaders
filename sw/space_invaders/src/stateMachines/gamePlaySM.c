@@ -34,10 +34,6 @@ void gamePlaySM_tick() {
 		}
 	}
 
-	// If slideSwitch 0 is on, then pause the game.
-	if (slideSwitches_isOn(SW_PAUSE)) gamePlaySM_pauseGame();
-	else gamePlaySM_resumeGame();
-
 	// here I need to check different game play states
 	// There are three different game play events:
 	// 1. I killed all the aliens, so start a new level
@@ -59,6 +55,7 @@ void gamePlaySM_tick() {
 
 void gamePlaySM_pauseGame() {
 	if (gamePaused) return;
+	xil_printf("Game paused!\r\n");
 	alienBlockSM_lock();
 	spaceshipSM_lock();
 	tankSM_lock(false);
@@ -72,6 +69,7 @@ void gamePlaySM_pauseGame() {
 
 void gamePlaySM_resumeGame() {
 	if (!gamePaused) return;
+	xil_printf("Unpaused!\r\n");
 	alienBlockSM_unlock();
 	spaceshipSM_unlock();
 	tankSM_unlock();

@@ -62,6 +62,7 @@
 #define SCREEN_XY_TO_INDEX(x,y) (((y)*SCREEN_WIDTH) + (x))
 #define SCREEN_SET_XY_TO_COLOR(x,y,color) (framePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 #define SCREEN_BG_SET_XY_TO_COLOR(x, y, color) (bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
+#define SCREEN_CAPTURE_SET_XY_TO_COLOR(x, y, color) (captureFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 
 /****
  * Function prototypes

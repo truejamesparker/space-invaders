@@ -6,7 +6,6 @@
 #include <stdbool.h>
 
 #include "../gpio/pushButtons.h"
-#include "../gpio/slideSwitches.h"
 #include "../elements/aliens.h"
 #include "../elements/tank.h"
 #include "alienBlockSM.h"
