@@ -50,6 +50,11 @@
 #define SCREEN_SHIFT_BOX	0
 #define SCREEN_SHOW_ORIGIN	0
 
+// Number of frame buffers (Main, bg, capture)
+#define SCREEN_FRAME_COUNT 		3
+#define SCREEN_MAIN_FRAME		0
+#define SCREEN_CAPTURE_FRAME	2
+
 /****
  * Macro definitions
  */

@@ -4,6 +4,7 @@ static XAxiVdma videoDMAController;
 
 static unsigned int* framePointer;
 static unsigned int* bgFramePointer;
+static unsigned int* captureFramePointer;
 
 //-----------------------------------------------------------------------------
 
@@ -20,7 +21,7 @@ void screen_init() {
 	}
 
 	// Step 3: (optional) set the frame store number.
-	if (XST_FAILURE == XAxiVdma_SetFrmStore(&videoDMAController, 2,
+	if (XST_FAILURE == XAxiVdma_SetFrmStore(&videoDMAController, SCREEN_FRAME_COUNT,
 			XAXIVDMA_READ)) {
 		xil_printf("Set Frame Store Failed.");
 	}
@@ -30,9 +31,9 @@ void screen_init() {
 	// function generates an error if you set the write frame count to 0. We set it to 2
 	// but ignore it because we don't need a write channel at all.
 	XAxiVdma_FrameCounter myFrameConfig;
-	myFrameConfig.ReadFrameCount = 2;
+	myFrameConfig.ReadFrameCount = SCREEN_FRAME_COUNT;
 	myFrameConfig.ReadDelayTimerCount = 10;
-	myFrameConfig.WriteFrameCount = 2;
+	myFrameConfig.WriteFrameCount = SCREEN_FRAME_COUNT;
 	myFrameConfig.WriteDelayTimerCount = 10;
 	int status = XAxiVdma_SetFrameCounter(&videoDMAController, &myFrameConfig);
 	if (status != XST_SUCCESS) {
@@ -62,6 +63,7 @@ void screen_init() {
 	// IP.
 	myFrameBuffer.FrameStoreStartAddr[0] = FRAME_BUFFER_0_ADDR;
 	myFrameBuffer.FrameStoreStartAddr[1] = FRAME_BUFFER_0_ADDR + 4 * 640 * 480;
+	myFrameBuffer.FrameStoreStartAddr[2] = FRAME_BUFFER_0_ADDR + 4 * 640 * 480;
 
 	if (XST_FAILURE == XAxiVdma_DmaSetBufferAddr(&videoDMAController,
 			XAXIVDMA_READ, myFrameBuffer.FrameStoreStartAddr)) {
@@ -75,9 +77,7 @@ void screen_init() {
 	// of frame 0 and frame 1.
 	framePointer = (unsigned int *) FRAME_BUFFER_0_ADDR;
 	bgFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
-	// Just paint some large red, green, blue, and white squares in different
-	// positions of the image for each frame in the buffer (framePointer0 and framePointer1).
-
+	captureFramePointer = (unsigned int*) (FRAME_BUFFER_0_ADDR + 4 * 640 * 480);
 
 	// This tells the HDMI controller the resolution of your display (there must be a better way to do this).
 	XIo_Out32(XPAR_AXI_HDMI_0_BASEADDR, SCREEN_WIDTH*SCREEN_HEIGHT);
@@ -86,12 +86,12 @@ void screen_init() {
 	if (XST_FAILURE == XAxiVdma_DmaStart(&videoDMAController, XAXIVDMA_READ)) {
 		xil_printf("DMA START FAILED\r\n");
 	}
-	int frameIndex = 0;
+
 	// We have two frames, let's park on frame 0. Use frameIndex to index them.
 	// Note that you have to start the DMA process before parking on a frame.
 
 	screen_clear();
-	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, frameIndex,
+	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, SCREEN_MAIN_FRAME,
 			XAXIVDMA_READ)) {
 		xil_printf("vdma parking failed\n\r");
 	}
@@ -128,7 +128,7 @@ void screen_clear() {
 
 // repark the screen pointer
 void screen_refresh() {
-	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, 0,
+	if (XST_FAILURE == XAxiVdma_StartParking(&videoDMAController, SCREEN_MAIN_FRAME,
 			XAXIVDMA_READ)) {
 		xil_printf("vdma parking failed\n\r");
 	}
