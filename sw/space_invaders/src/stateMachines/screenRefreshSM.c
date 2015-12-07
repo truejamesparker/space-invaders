@@ -2,6 +2,8 @@
 
 volatile uint8_t screenFrameIdx = SCREEN_MAIN_FRAME;
 
+volatile bool swCapturedPreviously = false;
+
 // ----------------------------------------------------------------------------
 
 void screenRefreshSM_tick() {
@@ -12,11 +14,25 @@ void screenRefreshSM_tick() {
 	// --------------------------------
 	// Screen Capture Support
 
+	// If game is paused, don't even do this stuff
+//	// If slideSwitch 0 is on, then pause the game.
+//	if (slideSwitches_isOn(SW_PAUSE)) gamePlaySM_pauseGame();
+//	else gamePlaySM_resumeGame();
+
 	// Hardware, DMA-based screen capture
-//	if (slideSwitches_isOn(SW_HW_CAPTURE)) screenCapture_hwSave();
+//	if (slideSwitches_isOn(SW_HW_CAPTURE)) screen_hwCapture();
 
 	// Software, slow screen capture
-	if (slideSwitches_isOn(SW_SW_CAPTURE)) screenCapture_swSave();
+	if (slideSwitches_isOn(SW_SW_CAPTURE)) {
+		if (!swCapturedPreviously) {
+			gamePlaySM_pauseGame();
+			screen_swCapture();
+			gamePlaySM_resumeGame();
+			swCapturedPreviously = true;
+		}
+	} else {
+		swCapturedPreviously = false;
+	}
 
 	// Display the saved screen capture
 	if (slideSwitches_isOn(SW_SHOW_CAPTURE)) {
@@ -34,8 +50,5 @@ void screenRefreshSM_tick() {
 		}
 	}
 
-//	// If slideSwitch 0 is on, then pause the game.
-//	if (slideSwitches_isOn(SW_PAUSE)) gamePlaySM_pauseGame();
-//	else gamePlaySM_resumeGame();
 	// --------------------------------
 }

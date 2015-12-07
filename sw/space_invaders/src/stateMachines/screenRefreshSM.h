@@ -6,7 +6,6 @@
 #include <stdbool.h>
 
 #include "../screen/screen.h"
-#include "../screen/screenCapture.h"
 #include "gamePlaySM.h"
 #include "../gpio/slideSwitches.h"
 

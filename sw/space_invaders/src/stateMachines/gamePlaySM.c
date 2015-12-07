@@ -55,7 +55,6 @@ void gamePlaySM_tick() {
 
 void gamePlaySM_pauseGame() {
 	if (gamePaused) return;
-	xil_printf("Game paused!\r\n");
 	alienBlockSM_lock();
 	spaceshipSM_lock();
 	tankSM_lock(false);
@@ -69,7 +68,6 @@ void gamePlaySM_pauseGame() {
 
 void gamePlaySM_resumeGame() {
 	if (!gamePaused) return;
-	xil_printf("Unpaused!\r\n");
 	alienBlockSM_unlock();
 	spaceshipSM_unlock();
 	tankSM_unlock();
@@ -77,6 +75,12 @@ void gamePlaySM_resumeGame() {
 	controllerSM_unlock();
 
 	gamePaused = false;
+}
+
+// ----------------------------------------------------------------------------
+
+bool gamePlaySM_isGamePaused() {
+	return gamePaused;
 }
 
 // ----------------------------------------------------------------------------
