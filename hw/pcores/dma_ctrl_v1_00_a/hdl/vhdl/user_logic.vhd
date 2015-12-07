@@ -51,8 +51,9 @@
 -- DO NOT EDIT BELOW THIS LINE --------------------
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_arith.all;
-use ieee.std_logic_unsigned.all;
+--use ieee.std_logic_arith.all;
+--use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
 
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.all;
@@ -117,7 +118,8 @@ entity user_logic is
   port
   (
     -- ADD USER PORTS BELOW THIS LINE ------------------
-    interrupt											 : out std_logic;
+    --USER ports added here
+    interrupt                     : out std_logic;
     -- ADD USER PORTS ABOVE THIS LINE ------------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -180,6 +182,7 @@ architecture IMP of user_logic is
   signal slv_read_ack                   : std_logic;
   signal slv_write_ack                  : std_logic;
 
+
   ------------------------------------------
   -- Signals for user logic master model example
   ------------------------------------------
@@ -221,6 +224,18 @@ architecture IMP of user_logic is
   signal mst_fifo_valid_read_xfer       : std_logic;
   signal Bus2IP_Reset                   : std_logic;
 attribute SIGIS of Bus2IP_Reset   : signal is "RST";
+
+	-- USER SIGNALS
+
+  signal read_req                       : std_logic;
+  signal write_req                      : std_logic;
+  signal src_addr                       : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+  signal dest_addr                      : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+  alias  len                            : std_logic_vector(C_SLV_DWIDTH-1 downto 0) is slv_reg2;
+  signal count                          : unsigned(C_SLV_DWIDTH-1 downto 0);
+	signal bus_addr                       : std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+
+
 begin
 
   --USER logic implementation added here
@@ -369,11 +384,12 @@ begin
   mst_read_ack      <= mst_reg_read_req;
 
   -- rip control bits from master model registers
-  mst_cntl_rd_req   <= mst_reg(0)(0);
-  mst_cntl_wr_req   <= mst_reg(0)(1);
+  mst_cntl_rd_req   <= read_req; --mst_reg(0)(0);
+  mst_cntl_wr_req   <= write_req; --mst_reg(0)(1);
   mst_cntl_bus_lock <= mst_reg(0)(2);
   mst_cntl_burst    <= mst_reg(0)(3);
-  mst_ip2bus_addr   <= mst_reg(7) & mst_reg(6) & mst_reg(5) & mst_reg(4);
+  --mst_ip2bus_addr   <= mst_reg(7) & mst_reg(6) & mst_reg(5) & mst_reg(4);
+	mst_ip2bus_addr   <= bus_addr;
   mst_ip2bus_be     <= mst_reg(9) & mst_reg(8);
   mst_xfer_length   <= mst_reg(13)(3 downto 0) & mst_reg(12);
 
@@ -515,7 +531,7 @@ begin
         mst_cmd_sm_set_error      <= '0';
         mst_cmd_sm_set_timeout    <= '0';
         mst_cmd_sm_busy           <= '0';
-				interrupt									<= '0';
+        interrupt                 <= '0';
                 
       else
 
@@ -531,7 +547,7 @@ begin
         mst_cmd_sm_set_error      <= '0';
         mst_cmd_sm_set_timeout    <= '0';
         mst_cmd_sm_busy           <= '1';
-				interrupt									<= '0';
+        interrupt                 <= '0';
                 
         -- state transition
         case mst_cmd_sm_state is
@@ -540,6 +556,12 @@ begin
             if ( mst_go = '1' ) then
               mst_cmd_sm_state  <= CMD_RUN;
               mst_cmd_sm_clr_go <= '1';
+              -- BEGIN USER LOGIC --
+              count <= unsigned(len)+unsigned(len);
+              read_req <= '1';
+              write_req <= '0';
+              bus_addr <= src_addr;
+              -- END USER LOGIC --
             else
               mst_cmd_sm_state  <= CMD_IDLE;
               mst_cmd_sm_busy   <= '0';
@@ -583,10 +605,25 @@ begin
             end if;
 
           when CMD_DONE =>
-            mst_cmd_sm_state    <= CMD_IDLE;
-            mst_cmd_sm_set_done <= '1';
-            mst_cmd_sm_busy     <= '0';
-						interrupt						<= '1';
+            if (count = 0) then
+              mst_cmd_sm_state    <= CMD_IDLE;
+              mst_cmd_sm_set_done <= '1';
+              mst_cmd_sm_busy     <= '0';
+              interrupt           <= '1';
+            else
+              if(read_req='1') then
+                bus_addr <= dest_addr;
+                src_addr <= std_logic_vector(unsigned(src_addr)+4); -- increment write addr
+              elsif(write_req='1') then
+                bus_addr <= src_addr; -- put read addr on bus
+                dest_addr <= std_logic_vector(unsigned(dest_addr)+4); -- increment write addr
+              end if;
+                count <= count - 4; --decrement operation counter
+                read_req <= not read_req;
+                write_req <= not write_req;
+            end if;
+
+            
 
           when others =>
             mst_cmd_sm_state    <= CMD_IDLE;
