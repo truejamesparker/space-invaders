@@ -1,6 +1,7 @@
 #include "gamePlaySM.h"
 
 volatile static bool waitForButton = false;
+volatile static bool gamePaused = false;
 
 void startNewLevel();
 void gameOver();
@@ -51,6 +52,34 @@ void gamePlaySM_tick() {
 }
 
 // ----------------------------------------------------------------------------
+
+void gamePlaySM_pauseGame() {
+	if (gamePaused) return;
+	xil_printf("Game paused!\r\n");
+	alienBlockSM_lock();
+	spaceshipSM_lock();
+	tankSM_lock(false);
+	missileSM_lock();
+	controllerSM_lock();
+
+	gamePaused = true;
+}
+
+// ----------------------------------------------------------------------------
+
+void gamePlaySM_resumeGame() {
+	if (!gamePaused) return;
+	xil_printf("Unpaused!\r\n");
+	alienBlockSM_unlock();
+	spaceshipSM_unlock();
+	tankSM_unlock();
+	missileSM_unlock();
+	controllerSM_unlock();
+
+	gamePaused = false;
+}
+
+// ----------------------------------------------------------------------------
 // Private Helper Methods
 // ----------------------------------------------------------------------------
 
@@ -71,8 +100,8 @@ void gameOver() {
 	waitForButton = true;
 
 	// this will lock the tank so you can't move it,
-	// and also keep it smouldering during the "GAME OVER" screen
-	tankSM_lock();
+	// and also keep it smouldering during the "GAME OVER" screen (true)
+	tankSM_lock(true);
 	controllerSM_lock();
 
 	// lock the alien block SM and spaceship SM

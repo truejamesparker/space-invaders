@@ -50,6 +50,11 @@
 #define SCREEN_SHIFT_BOX	0
 #define SCREEN_SHOW_ORIGIN	0
 
+// Number of frame buffers (Main, bg, capture)
+#define SCREEN_FRAME_COUNT 		3
+#define SCREEN_MAIN_FRAME		0
+#define SCREEN_CAPTURE_FRAME	2
+
 /****
  * Macro definitions
  */
@@ -57,6 +62,7 @@
 #define SCREEN_XY_TO_INDEX(x,y) (((y)*SCREEN_WIDTH) + (x))
 #define SCREEN_SET_XY_TO_COLOR(x,y,color) (framePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 #define SCREEN_BG_SET_XY_TO_COLOR(x, y, color) (bgFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
+#define SCREEN_CAPTURE_SET_XY_TO_COLOR(x, y, color) (captureFramePointer[SCREEN_XY_TO_INDEX((x),(y))] = color)
 
 /****
  * Function prototypes
@@ -69,7 +75,7 @@ void screen_init();
 void screen_clear();
 
 // Causes the screen to park again, redrawing the framePointer to screen
-void screen_refresh();
+void screen_refresh(uint8_t frameIdx);
 
 // draw a given bitmap to the screen with an appropriate scale applied
 void screen_drawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t size, uint16_t scale, uint32_t onColor);

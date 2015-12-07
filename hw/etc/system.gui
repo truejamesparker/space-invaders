@@ -232,7 +232,9 @@
     <SPLITTERS COLLAPSIBLE="1" HANDLEWIDTH="4" MARKER="255" ORIENTATION="1" RESIZE="1" SIZES="62,630,200" VERSION="0"/>
     <SET ID="microblaze_0" IS_EXPANDED="TRUE"/>
     <STATUS>
-      <SELECTIONS/>
+      <SELECTIONS>
+        <VARIABLE ID="microblaze_0.slide_swtiches_8bits:C_BASEADDR:C_HIGHADDR" PARENT="microblaze_0"/>
+      </SELECTIONS>
     </STATUS>
   </SET>
 

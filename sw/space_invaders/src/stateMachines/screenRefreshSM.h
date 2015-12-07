@@ -3,8 +3,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "../screen/screen.h"
+#include "../screen/screenCapture.h"
+#include "gamePlaySM.h"
+#include "../gpio/slideSwitches.h"
 
 // Screen refresh rate of 33.33 Hz
 #define SM_PERIOD_SCREEN_REFRESH_MS 	30

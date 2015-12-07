@@ -12,10 +12,15 @@
 #include "spaceshipSM.h"
 #include "tankSM.h"
 #include "controllerSM.h"
+#include "missileSM.h"
 
 #define SM_PERIOD_GAMEPLAY_MS		20
 
 void gamePlaySM_tick();
+
+// Allow the user to play/pause
+void gamePlaySM_pauseGame();
+void gamePlaySM_resumeGame();
 
 
 #endif /* GAMEPLAYSM_H_ */

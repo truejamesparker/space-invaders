@@ -388,8 +388,7 @@ begin
   mst_cntl_wr_req   <= write_req; --mst_reg(0)(1);
   mst_cntl_bus_lock <= mst_reg(0)(2);
   mst_cntl_burst    <= mst_reg(0)(3);
-  --mst_ip2bus_addr   <= mst_reg(7) & mst_reg(6) & mst_reg(5) & mst_reg(4);
-	mst_ip2bus_addr   <= bus_addr;
+	mst_ip2bus_addr   <= bus_addr --mst_reg(7) & mst_reg(6) & mst_reg(5) & mst_reg(4);
   mst_ip2bus_be     <= mst_reg(9) & mst_reg(8);
   mst_xfer_length   <= mst_reg(13)(3 downto 0) & mst_reg(12);
 

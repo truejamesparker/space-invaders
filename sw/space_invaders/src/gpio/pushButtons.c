@@ -50,4 +50,5 @@ bool pushButtons_centerPressed() {
 bool pushButtons_anyPressed() {
 	return XGpio_DiscreteRead(&gpPB, CH) & BTN_ANY_MASK;
 }
+
 // ----------------------------------------------------------------------------
