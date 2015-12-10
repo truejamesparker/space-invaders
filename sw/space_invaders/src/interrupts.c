@@ -20,7 +20,7 @@ void interrupts_init() {
 	// Enable interrupts from the PIT, GPIO block, and AC97
 	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
 		(XPAR_PIT_0_MYINTERRUPT_MASK | XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK
-				| XPAR_AXI_AC97_0_INTERRUPT_MASK));
+				| XPAR_AXI_AC97_0_INTERRUPT_MASK | XPAR_DMA_CTRL_0_INTERRUPT_MASK));
 
 	XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR, AC97_ENABLE_IN_FIFO_INTERRUPT);
 	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
@@ -69,9 +69,10 @@ void interrupt_handler_dispatcher(void* ptr) {
 		if (interrupts_audio_handler) interrupts_audio_handler();
 
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_AXI_AC97_0_INTERRUPT_MASK);
-	} else if (status & 0/*XPAR_DMA_THING_BASEADDR*/) {
+
+	} else if (status & XPAR_DMA_CTRL_0_INTERRUPT_MASK) {
 		if (interrupts_dma_handler) interrupts_dma_handler();
 
-		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, 0/*XPAR_DMA_THING_BASEADDR*/);
+		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_DMA_CTRL_0_INTERRUPT_MASK);
 	}
 }

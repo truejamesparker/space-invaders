@@ -1775,7 +1775,7 @@ m_axi_lite_aclk|    4.275|         |         |         |
 
 
 Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 8.75 secs
+Total CPU time to Xst completion: 8.63 secs
  
 --> 
 

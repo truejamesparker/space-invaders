@@ -306,6 +306,8 @@ void screen_hwCapture() {
 	// source: framePointer
 	// destination: captureFramePointer
 	// (these are already both pointers, see declaration above)
+	DMA_CTRL_transfer(XPAR_DMA_CTRL_0_BASEADDR, framePointer, captureFramePointer, 4*SCREEN_WIDTH*SCREEN_HEIGHT);
+
 }
 
 //-----------------------------------------------------------------------------

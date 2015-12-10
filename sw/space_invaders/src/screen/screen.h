@@ -10,6 +10,7 @@
 #include "xio.h"
 
 #include "../globals.h"
+#include "../dma/dma_ctrl.h"
 
 // color definitions
 #define SCREEN_COLOR_BLACK	0x00000000
