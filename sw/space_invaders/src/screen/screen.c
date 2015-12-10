@@ -302,7 +302,10 @@ void screen_swCapture() {
 //-----------------------------------------------------------------------------
 
 void screen_hwCapture() {
-
+	// use the DMA to copy
+	// source: framePointer
+	// destination: captureFramePointer
+	// (these are already both pointers, see declaration above)
 }
 
 //-----------------------------------------------------------------------------

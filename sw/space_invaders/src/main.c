@@ -10,11 +10,13 @@
 #include "screen/screen.h"
 #include "interrupts.h"
 #include "tasks/taskControl.h"
+#include "stateMachines/screenRefreshSM.h"
 #include "gpio/pushButtons.h"
 #include "gpio/slideSwitches.h"
 #include "audio/audio.h"
 #include "ble/ble.h"
 #include "controller/controller.h"
+#include "timer/timer.h"
 #include "pit.h"
 
 void application_loop();
@@ -37,6 +39,8 @@ int main() {
 	ble_init();
 	controller_init();
 
+	timer_init();
+
 	taskControl_init();
 
 	// elements
@@ -52,9 +56,11 @@ int main() {
 #if !(USE_UART_CONTROL) || FORCE_INTERRUPT_CONTROL
 	// Register the task controller to run every time FIT expires
 	interrupts_register_handler(INTS_TIMER, taskControl_tick);
+#endif
 	// Register the audio controller to run every time the AC97 buffer is half empty
 	interrupts_register_handler(INTS_AUDIO, audio_interrupt_handler);
-#endif
+	// Register a handler to be called every time the DMA finishes a HW capture
+	interrupts_register_handler(INTS_DMA, screenRefreshSM_hwCaptureDone);
 
 	/**********************************
 	 * Main Application Loop
