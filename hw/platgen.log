@@ -371,8 +371,10 @@ IPNAME:axi_uartlite INSTANCE:axi_uartlite_0 -
 C:\parkerbros\space-invaders\hw\system.mhs line 398 - Copying cache
 implementation netlist
 IPNAME:axi_gpio INSTANCE:slide_swtiches_8bits -
-C:\parkerbros\space-invaders\hw\system.mhs line 423 - Copying cache
+C:\parkerbros\space-invaders\hw\system.mhs line 411 - Copying cache
 implementation netlist
+IPNAME:dma_ctrl INSTANCE:dma_ctrl_0 - C:\parkerbros\space-invaders\hw\system.mhs
+line 426 - Copying cache implementation netlist
 
 Elaborating instances ...
 IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
@@ -407,7 +409,7 @@ INSTANCE:axi_ac97_0 - C:\parkerbros\space-invaders\hw\system.mhs line 254 -
 Running XST synthesis
 INSTANCE:pit_0 - C:\parkerbros\space-invaders\hw\system.mhs line 388 - Running
 XST synthesis
-INSTANCE:dma_ctrl_0 - C:\parkerbros\space-invaders\hw\system.mhs line 411 -
+INSTANCE:dma_ctrl_0 - C:\parkerbros\space-invaders\hw\system.mhs line 426 -
 Running XST synthesis
 
 Running NGCBUILD ...
@@ -419,4 +421,4 @@ INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
 
 Rebuilding cache ...
 
-Total run time: 36.00 seconds
+Total run time: 37.00 seconds

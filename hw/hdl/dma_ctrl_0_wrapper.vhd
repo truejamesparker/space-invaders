@@ -7,8 +7,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 
-library dma_ctrl_v1_00_a;
-use dma_ctrl_v1_00_a.all;
+library dma_ctrl_v2_00_a;
+use dma_ctrl_v2_00_a.all;
 
 entity dma_ctrl_0_wrapper is
   port (

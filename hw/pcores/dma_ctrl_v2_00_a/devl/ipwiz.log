@@ -12,14 +12,35 @@ Analyze pcore dma_ctrl ...
 
 
 ----------------------------------------------------------------------------
+--                            Design Analysis                             --
+----------------------------------------------------------------------------
+Analyze pcore dma_ctrl ...
+
+
+----------------------------------------------------------------------------
+--                            Design Analysis                             --
+----------------------------------------------------------------------------
+Analyze pcore dma_ctrl ...
+
+
+----------------------------------------------------------------------------
+--                            Design Analysis                             --
+----------------------------------------------------------------------------
+Analyze pcore dma_ctrl ...
+
+
+----------------------------------------------------------------------------
 --                            File Generation                             --
 ----------------------------------------------------------------------------
 Creating HDL source directory ...
 Generating top peripheral VHDL template ...
-Generating stub user logic VHDL template ...
+Generating stub user logic Verilog template ...
 HDL templates successfully generated ...
 Creating data directory ...
 Generating XPS inteface files ...
+WARNING:HDLParsers:3497 - Ignoring Verilog File
+   "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/data/../hdl/verilog/
+   user_logic.v"
 Compiling vhdl file
 "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hd
 l/vhdl/family_support.vhd" in Library proc_common_v3_00_a.
@@ -113,13 +134,8 @@ a/hdl/vhdl/axi_master_lite.vhd" in Library axi_master_lite_v1_00_a.
 Entity <axi_master_lite> compiled.
 Entity <axi_master_lite> (Architecture <implementation>) compiled.
 Compiling vhdl file
-"C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/data/../hdl/vhdl/user_l
-ogic.vhd" in Library dma_ctrl_v1_00_a.
-Entity <user_logic> compiled.
-Entity <user_logic> (Architecture <IMP>) compiled.
-Compiling vhdl file
-"C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/data/../hdl/vhdl/dma_ct
-rl.vhd" in Library dma_ctrl_v1_00_a.
+"C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/data/../hdl/vhdl/dma_ct
+rl.vhd" in Library dma_ctrl_v2_00_a.
 Entity <dma_ctrl> compiled.
 Entity <dma_ctrl> (Architecture <IMP>) compiled.
 
@@ -130,7 +146,7 @@ INFO:EDK:1607 - IPTYPE set to value : PERIPHERAL
 INFO:EDK:1511 - IMP_NETLIST set to value : TRUE
 INFO:EDK:1486 - HDL set to value : VHDL
 WARNING:EDK:3588 - Unable to delete temporary XST project file
-   C:\parkerbros\space-invaders\hw\pcores\dma_ctrl_v1_00_a\data\_dma_ctrl_xst.pr
+   C:\parkerbros\space-invaders\hw\pcores\dma_ctrl_v2_00_a\data\_dma_ctrl_xst.pr
    j : 13
 XPS interface files successfully generated ...
 Creating development directory ...
@@ -140,33 +156,19 @@ Development misc files successfully generated ...
 No ProjNavigator support files will be generated at this time ...
 No XST synthesis support files will be generated at this time ...
 No BFM simulation files will be generated at this time ...
-Creating software driver data directory ...
-Generating software driver XPS interface (mdd/tcl) files ...
-Software driver data definition file (.mdd) successfully generated ...
-Software driver data generation file (.tcl) successfully generated ...
-Creating software driver src directory ...
-Generating software driver template files ...
-Software driver compile file (Makefile) successfully generated ...
-output user slave register(s) offset to software driver header ...
-output user master register(s) offset to software driver header ...
-Software driver header file (.h) successfully generated ...
-Software driver source file (.c) successfully generated ...
-Software driver SelfTest file (.c) successfully generated ...
-Software driver template files successfully generated ...
+No software driver files will be generated at this time ...
 
 ----------------------------------------------------------------------------
 --                              Final Report                              --
 ----------------------------------------------------------------------------
 Thank you for using Create and Import Peripheral Wizard! Please find your
 peripheral hardware templates under
-C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v1_00_a and peripheral software
-templates under C:\parkerbros\space-invaders\hw/drivers/dma_ctrl_v1_00_a
-respectively.
+C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v2_00_a.
 
 Peripheral Summary:
 
   top name       : dma_ctrl
-  version        : 1.00.a
+  version        : 2.00.a
   type           : AXI4LITE master slave
   features       : slave attachment
                    master attachment
@@ -186,31 +188,19 @@ Address Block Summary:
 File Summary
 
   - HDL source -
-  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v1_00_a/hdl
+  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v2_00_a/hdl
   top entity     : vhdl/dma_ctrl.vhd
-  user logic     : vhdl/user_logic.vhd
+  user logic     : verilog/user_logic.v
 
   - XPS interface -
-  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v1_00_a/data
+  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v2_00_a/data
   mpd            : dma_ctrl_v2_1_0.mpd
   pao            : dma_ctrl_v2_1_0.pao
 
   - Misc file -
-  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v1_00_a/devl
+  C:\parkerbros\space-invaders\hw/pcores/dma_ctrl_v2_00_a/devl
   help           : README.txt
   option         : ipwiz.opt
   log            : ipwiz.log
-
-  - Driver source -
-  C:\parkerbros\space-invaders\hw/drivers/dma_ctrl_v1_00_a/src
-  makefile       : Makefile
-  header         : dma_ctrl.h
-  source         : dma_ctrl.c
-  selftest       : dma_ctrl_selftest.c
-
-  - Driver interface -
-  C:\parkerbros\space-invaders\hw/drivers/dma_ctrl_v1_00_a/data
-  mdd            : dma_ctrl_v2_1_0.mdd
-  tcl            : dma_ctrl_v2_1_0.tcl
 
 

@@ -1,11 +1,11 @@
 ##############################################################################
-## Filename:          C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/data/dma_ctrl_v2_1_0.pao
+## Filename:          C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/data/dma_ctrl_v2_1_0.pao
 ## Description:       Peripheral Analysis Order
-## Date:              Sat Dec 05 14:12:37 2015 (by Create and Import Peripheral Wizard)
+## Date:              Mon Dec 07 15:04:41 2015 (by Create and Import Peripheral Wizard)
 ##############################################################################
 
 lib proc_common_v3_00_a  all 
 lib axi_lite_ipif_v1_01_a  all 
 lib axi_master_lite_v1_00_a  all 
-lib dma_ctrl_v1_00_a user_logic vhdl
-lib dma_ctrl_v1_00_a dma_ctrl vhdl
+lib dma_ctrl_v2_00_a user_logic verilog
+lib dma_ctrl_v2_00_a dma_ctrl vhdl

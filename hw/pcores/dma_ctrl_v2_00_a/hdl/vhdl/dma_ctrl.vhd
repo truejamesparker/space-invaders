@@ -33,9 +33,9 @@
 --
 ------------------------------------------------------------------------------
 -- Filename:          dma_ctrl.vhd
--- Version:           1.00.a
+-- Version:           2.00.a
 -- Description:       Top level design, instantiates library components and user logic.
--- Date:              Sat Dec 05 14:12:37 2015 (by Create and Import Peripheral Wizard)
+-- Date:              Mon Dec 07 15:04:41 2015 (by Create and Import Peripheral Wizard)
 -- VHDL Standard:     VHDL'93
 ------------------------------------------------------------------------------
 -- Naming Conventions:
@@ -71,9 +71,6 @@ use axi_lite_ipif_v1_01_a.axi_lite_ipif;
 
 library axi_master_lite_v1_00_a;
 use axi_master_lite_v1_00_a.axi_master_lite;
-
-library dma_ctrl_v1_00_a;
-use dma_ctrl_v1_00_a.user_logic;
 
 ------------------------------------------------------------------------------
 -- Entity section
@@ -166,7 +163,8 @@ entity dma_ctrl is
   port
   (
     -- ADD USER PORTS BELOW THIS LINE ------------------
-    interrupt 										 : out std_logic;
+    --USER ports added here
+		interrupt											 : out  std_logic;
     -- ADD USER PORTS ABOVE THIS LINE ------------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -321,6 +319,61 @@ architecture IMP of dma_ctrl is
   signal user_IP2Bus_WrAck              : std_logic;
   signal user_IP2Bus_Error              : std_logic;
 
+  ------------------------------------------
+  -- Component declaration for verilog user logic
+  ------------------------------------------
+  component user_logic is
+    generic
+    (
+      -- ADD USER GENERICS BELOW THIS LINE ---------------
+      --USER generics added here
+      -- ADD USER GENERICS ABOVE THIS LINE ---------------
+
+      -- DO NOT EDIT BELOW THIS LINE ---------------------
+      -- Bus protocol parameters, do not add to or delete
+      C_MST_AWIDTH                   : integer              := 32;
+      C_MST_DWIDTH                   : integer              := 32;
+      C_NUM_REG                      : integer              := 8;
+      C_SLV_DWIDTH                   : integer              := 32
+      -- DO NOT EDIT ABOVE THIS LINE ---------------------
+    );
+    port
+    (
+      -- ADD USER PORTS BELOW THIS LINE ------------------
+			interrupt											 : out	std_logic;
+      -- ADD USER PORTS ABOVE THIS LINE ------------------
+
+      -- DO NOT EDIT BELOW THIS LINE ---------------------
+      -- Bus protocol ports, do not add to or delete
+      Bus2IP_Clk                     : in  std_logic;
+      Bus2IP_Resetn                  : in  std_logic;
+      Bus2IP_Data                    : in  std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+      Bus2IP_BE                      : in  std_logic_vector(C_SLV_DWIDTH/8-1 downto 0);
+      Bus2IP_RdCE                    : in  std_logic_vector(C_NUM_REG-1 downto 0);
+      Bus2IP_WrCE                    : in  std_logic_vector(C_NUM_REG-1 downto 0);
+      IP2Bus_Data                    : out std_logic_vector(C_SLV_DWIDTH-1 downto 0);
+      IP2Bus_RdAck                   : out std_logic;
+      IP2Bus_WrAck                   : out std_logic;
+      IP2Bus_Error                   : out std_logic;
+      ip2bus_mstrd_req               : out std_logic;
+      ip2bus_mstwr_req               : out std_logic;
+      ip2bus_mst_addr                : out std_logic_vector(C_MST_AWIDTH-1 downto 0);
+      ip2bus_mst_be                  : out std_logic_vector((C_MST_DWIDTH/8)-1 downto 0);
+      ip2bus_mst_lock                : out std_logic;
+      ip2bus_mst_reset               : out std_logic;
+      bus2ip_mst_cmdack              : in  std_logic;
+      bus2ip_mst_cmplt               : in  std_logic;
+      bus2ip_mst_error               : in  std_logic;
+      bus2ip_mst_rearbitrate         : in  std_logic;
+      bus2ip_mst_cmd_timeout         : in  std_logic;
+      bus2ip_mstrd_d                 : in  std_logic_vector(C_MST_DWIDTH-1 downto 0);
+      bus2ip_mstrd_src_rdy_n         : in  std_logic;
+      ip2bus_mstwr_d                 : out std_logic_vector(C_MST_DWIDTH-1 downto 0);
+      bus2ip_mstwr_dst_rdy_n         : in  std_logic
+      -- DO NOT EDIT ABOVE THIS LINE ---------------------
+    );
+  end component user_logic;
+
 begin
 
   ------------------------------------------
@@ -428,7 +481,7 @@ begin
   ------------------------------------------
   -- instantiate User Logic
   ------------------------------------------
-  USER_LOGIC_I : entity dma_ctrl_v1_00_a.user_logic
+  USER_LOGIC_I : component user_logic
     generic map
     (
       -- MAP USER GENERICS BELOW THIS LINE ---------------
@@ -443,7 +496,8 @@ begin
     port map
     (
       -- MAP USER PORTS BELOW THIS LINE ------------------
-      interrupt 										 => interrupt,
+      --USER ports mapped here
+			interrupt 										=> interrupt,
       -- MAP USER PORTS ABOVE THIS LINE ------------------
 
       Bus2IP_Clk                     => ipif_Bus2IP_Clk,

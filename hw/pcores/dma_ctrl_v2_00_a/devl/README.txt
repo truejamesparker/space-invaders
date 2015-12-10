@@ -8,9 +8,9 @@ TABLE OF CONTENTS
 Peripheral Summary:
 
   XPS project / EDK repository               : C:\parkerbros\space-invaders\hw
-  logical library name                       : dma_ctrl_v1_00_a
+  logical library name                       : dma_ctrl_v2_00_a
   top name                                   : dma_ctrl
-  version                                    : 1.00.a
+  version                                    : 2.00.a
   type                                       : AXI4LITE master slave
   features                                   : slave attachment
                                                master attachment
@@ -40,7 +40,7 @@ Address Block for User Logic and IPIF Predefined Services
     modify this template file except certain marked places for adding user
     specific generics and ports.
 
-  vhdl/user_logic.vhd
+  verilog/user_logic.v
 
     This is the template file for the stub user logic design entity, either in
     VHDL or Verilog, where the actual functionalities should get implemented.
@@ -58,39 +58,6 @@ Address Block for User Logic and IPIF Predefined Services
 
     This Peripheral Analysis Order file defines the analysis order of all the HDL
     source files that are used to compile your peripheral.
-
-- Driver source file(s)
-
-  src/dma_ctrl.h
-
-    This is the software driver header template file, which contains address offset of
-    software addressable registers in your peripheral, as well as some common masks and
-    simple register access macros or function declaration.
-
-  src/dma_ctrl.c
-
-    This is the software driver source template file, to define all applicable driver
-    functions.
-
-  src/dma_ctrl_selftest.c
-
-    This is the software driver self test example file, which contain self test example
-    code to test various hardware features of your peripheral.
-
-  src/Makefile
-
-    This is the software driver makefile to compile drivers.
-
-- Driver interface file(s)
--user needs to add these to repositories path in SDK (Xilinx Tools-->Repositories)
-
-  data/dma_ctrl_v2_1_0.mdd
-
-    This is the Microprocessor Driver Definition file.
-
-  data/dma_ctrl_v2_1_0.tcl
-
-    This is the Microprocessor Driver Command file.
 
 - Other misc file(s)
 
