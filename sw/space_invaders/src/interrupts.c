@@ -6,6 +6,7 @@ void interrupt_handler_dispatcher(void* ptr);
 // User-defined interrupt handlers
 void (*interrupts_timer_handler)(void);
 void (*interrupts_audio_handler)(void);
+void (*interrupts_dma_handler)(void);
 
 // ----------------------------------------------------------------------------
 
@@ -36,8 +37,9 @@ void interrupts_init() {
 
 void interrupts_register_handler(uint8_t type, void (*func)(void)) {
 	// Based on the type, set the appropriate interrupt handler
-	if (type == INTS_TIMER) interrupts_timer_handler = func;
+	if      (type == INTS_TIMER) interrupts_timer_handler = func;
 	else if (type == INTS_AUDIO) interrupts_audio_handler = func;
+	else if (type == INTS_DMA)   interrupts_dma_handler = func;
 }
 
 // ----------------------------------------------------------------------------
@@ -57,7 +59,7 @@ void interrupt_handler_dispatcher(void* ptr) {
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_FIT_TIMER_0_INTERRUPT_MASK);
 
 	} else if (status & XPAR_PIT_0_MYINTERRUPT_MASK) {
-		if(interrupts_timer_handler) interrupts_timer_handler();
+		if (interrupts_timer_handler) interrupts_timer_handler();
 
 		// Then acknowledge it so it can interrupt again
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_PIT_0_MYINTERRUPT_MASK);
@@ -67,5 +69,9 @@ void interrupt_handler_dispatcher(void* ptr) {
 		if (interrupts_audio_handler) interrupts_audio_handler();
 
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_AXI_AC97_0_INTERRUPT_MASK);
+	} else if (status & 0/*XPAR_DMA_THING_BASEADDR*/) {
+		if (interrupts_dma_handler) interrupts_dma_handler();
+
+		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, 0/*XPAR_DMA_THING_BASEADDR*/);
 	}
 }

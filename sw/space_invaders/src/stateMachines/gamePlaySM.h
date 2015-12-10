@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "../gpio/pushButtons.h"
+#include "../gpio/slideSwitches.h"
 #include "../elements/aliens.h"
 #include "../elements/tank.h"
 #include "alienBlockSM.h"
@@ -21,6 +22,7 @@ void gamePlaySM_tick();
 // Allow the user to play/pause
 void gamePlaySM_pauseGame();
 void gamePlaySM_resumeGame();
+bool gamePlaySM_isGamePaused();
 
 
 #endif /* GAMEPLAYSM_H_ */

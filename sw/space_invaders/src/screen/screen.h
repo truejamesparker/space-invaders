@@ -96,4 +96,8 @@ void screen_bgDrawSymbol(const uint32_t* symbol, point_t origin, symbolsize_t si
 // return the color of the pixel located at screen coordinate (x,y)
 uint32_t screen_getBgColor(uint16_t x, uint16_t y);
 
+// screen capture methods
+void screen_swCapture();
+void screen_hwCapture();
+
 #endif /* SCREEN_H_ */

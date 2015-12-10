@@ -282,5 +282,32 @@ void screen_shiftElement(const uint32_t* symbol, point_t origin, symbolsize_t si
 }
 
 //-----------------------------------------------------------------------------
+// Screen Capture Methods
+//-----------------------------------------------------------------------------
+
+void screen_swCapture() {
+	uint32_t x = 0;
+	uint32_t y = 0;
+
+	// loop through each pixel
+	for (y = 0; y < SCREEN_HEIGHT; y++) {
+		for (x = 0; x < SCREEN_WIDTH; x++) {
+
+			SCREEN_CAPTURE_SET_XY_TO_COLOR(x, y, framePointer[SCREEN_XY_TO_INDEX(x,y)]);
+
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+
+void screen_hwCapture() {
+	// use the DMA to copy
+	// source: framePointer
+	// destination: captureFramePointer
+	// (these are already both pointers, see declaration above)
+}
+
+//-----------------------------------------------------------------------------
 // Private Helper Methods
 //-----------------------------------------------------------------------------
