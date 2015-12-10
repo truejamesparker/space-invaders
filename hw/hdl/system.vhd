@@ -2209,6 +2209,37 @@ architecture STRUCTURE of system is
     );
   end component;
 
+  component slide_swtiches_8bits_wrapper is
+    port (
+      S_AXI_ACLK : in std_logic;
+      S_AXI_ARESETN : in std_logic;
+      S_AXI_AWADDR : in std_logic_vector(31 downto 0);
+      S_AXI_AWVALID : in std_logic;
+      S_AXI_AWREADY : out std_logic;
+      S_AXI_WDATA : in std_logic_vector(31 downto 0);
+      S_AXI_WSTRB : in std_logic_vector(3 downto 0);
+      S_AXI_WVALID : in std_logic;
+      S_AXI_WREADY : out std_logic;
+      S_AXI_BRESP : out std_logic_vector(1 downto 0);
+      S_AXI_BVALID : out std_logic;
+      S_AXI_BREADY : in std_logic;
+      S_AXI_ARADDR : in std_logic_vector(31 downto 0);
+      S_AXI_ARVALID : in std_logic;
+      S_AXI_ARREADY : out std_logic;
+      S_AXI_RDATA : out std_logic_vector(31 downto 0);
+      S_AXI_RRESP : out std_logic_vector(1 downto 0);
+      S_AXI_RVALID : out std_logic;
+      S_AXI_RREADY : in std_logic;
+      IP2INTC_Irpt : out std_logic;
+      GPIO_IO_I : in std_logic_vector(7 downto 0);
+      GPIO_IO_O : out std_logic_vector(7 downto 0);
+      GPIO_IO_T : out std_logic_vector(7 downto 0);
+      GPIO2_IO_I : in std_logic_vector(31 downto 0);
+      GPIO2_IO_O : out std_logic_vector(31 downto 0);
+      GPIO2_IO_T : out std_logic_vector(31 downto 0)
+    );
+  end component;
+
   component dma_ctrl_0_wrapper is
     port (
       S_AXI_ACLK : in std_logic;
@@ -2253,37 +2284,6 @@ architecture STRUCTURE of system is
       m_axi_lite_bvalid : in std_logic;
       m_axi_lite_bresp : in std_logic_vector(1 downto 0);
       interrupt : out std_logic
-    );
-  end component;
-
-  component slide_swtiches_8bits_wrapper is
-    port (
-      S_AXI_ACLK : in std_logic;
-      S_AXI_ARESETN : in std_logic;
-      S_AXI_AWADDR : in std_logic_vector(31 downto 0);
-      S_AXI_AWVALID : in std_logic;
-      S_AXI_AWREADY : out std_logic;
-      S_AXI_WDATA : in std_logic_vector(31 downto 0);
-      S_AXI_WSTRB : in std_logic_vector(3 downto 0);
-      S_AXI_WVALID : in std_logic;
-      S_AXI_WREADY : out std_logic;
-      S_AXI_BRESP : out std_logic_vector(1 downto 0);
-      S_AXI_BVALID : out std_logic;
-      S_AXI_BREADY : in std_logic;
-      S_AXI_ARADDR : in std_logic_vector(31 downto 0);
-      S_AXI_ARVALID : in std_logic;
-      S_AXI_ARREADY : out std_logic;
-      S_AXI_RDATA : out std_logic_vector(31 downto 0);
-      S_AXI_RRESP : out std_logic_vector(1 downto 0);
-      S_AXI_RVALID : out std_logic;
-      S_AXI_RREADY : in std_logic;
-      IP2INTC_Irpt : out std_logic;
-      GPIO_IO_I : in std_logic_vector(7 downto 0);
-      GPIO_IO_O : out std_logic_vector(7 downto 0);
-      GPIO_IO_T : out std_logic_vector(7 downto 0);
-      GPIO2_IO_I : in std_logic_vector(31 downto 0);
-      GPIO2_IO_O : out std_logic_vector(31 downto 0);
-      GPIO2_IO_T : out std_logic_vector(31 downto 0)
     );
   end component;
 
@@ -2600,8 +2600,8 @@ architecture STRUCTURE of system is
   attribute BOX_TYPE of fit_timer_0_wrapper : component is "user_black_box";
   attribute BOX_TYPE of pit_0_wrapper : component is "user_black_box";
   attribute BOX_TYPE of axi_uartlite_0_wrapper : component is "user_black_box";
-  attribute BOX_TYPE of dma_ctrl_0_wrapper : component is "user_black_box";
   attribute BOX_TYPE of slide_swtiches_8bits_wrapper : component is "user_black_box";
+  attribute BOX_TYPE of dma_ctrl_0_wrapper : component is "user_black_box";
 
 begin
 
@@ -4831,27 +4831,57 @@ begin
       TX => axi_uartlite_0_TX
     );
 
-  dma_ctrl_0 : dma_ctrl_0_wrapper
+  slide_swtiches_8bits : slide_swtiches_8bits_wrapper
     port map (
       S_AXI_ACLK => pgassign1(12),
       S_AXI_ARESETN => axi4lite_0_M_ARESETN(11),
       S_AXI_AWADDR => axi4lite_0_M_AWADDR(383 downto 352),
       S_AXI_AWVALID => axi4lite_0_M_AWVALID(11),
+      S_AXI_AWREADY => axi4lite_0_M_AWREADY(11),
       S_AXI_WDATA => axi4lite_0_M_WDATA(383 downto 352),
       S_AXI_WSTRB => axi4lite_0_M_WSTRB(47 downto 44),
       S_AXI_WVALID => axi4lite_0_M_WVALID(11),
+      S_AXI_WREADY => axi4lite_0_M_WREADY(11),
+      S_AXI_BRESP => axi4lite_0_M_BRESP(23 downto 22),
+      S_AXI_BVALID => axi4lite_0_M_BVALID(11),
       S_AXI_BREADY => axi4lite_0_M_BREADY(11),
       S_AXI_ARADDR => axi4lite_0_M_ARADDR(383 downto 352),
       S_AXI_ARVALID => axi4lite_0_M_ARVALID(11),
-      S_AXI_RREADY => axi4lite_0_M_RREADY(11),
       S_AXI_ARREADY => axi4lite_0_M_ARREADY(11),
       S_AXI_RDATA => axi4lite_0_M_RDATA(383 downto 352),
       S_AXI_RRESP => axi4lite_0_M_RRESP(23 downto 22),
       S_AXI_RVALID => axi4lite_0_M_RVALID(11),
-      S_AXI_WREADY => axi4lite_0_M_WREADY(11),
-      S_AXI_BRESP => axi4lite_0_M_BRESP(23 downto 22),
-      S_AXI_BVALID => axi4lite_0_M_BVALID(11),
-      S_AXI_AWREADY => axi4lite_0_M_AWREADY(11),
+      S_AXI_RREADY => axi4lite_0_M_RREADY(11),
+      IP2INTC_Irpt => slide_swtiches_8bits_IP2INTC_Irpt,
+      GPIO_IO_I => net_slide_swtiches_8bits_GPIO_IO_I_pin,
+      GPIO_IO_O => open,
+      GPIO_IO_T => open,
+      GPIO2_IO_I => net_gnd32(0 to 31),
+      GPIO2_IO_O => open,
+      GPIO2_IO_T => open
+    );
+
+  dma_ctrl_0 : dma_ctrl_0_wrapper
+    port map (
+      S_AXI_ACLK => pgassign1(12),
+      S_AXI_ARESETN => axi4lite_0_M_ARESETN(12),
+      S_AXI_AWADDR => axi4lite_0_M_AWADDR(415 downto 384),
+      S_AXI_AWVALID => axi4lite_0_M_AWVALID(12),
+      S_AXI_WDATA => axi4lite_0_M_WDATA(415 downto 384),
+      S_AXI_WSTRB => axi4lite_0_M_WSTRB(51 downto 48),
+      S_AXI_WVALID => axi4lite_0_M_WVALID(12),
+      S_AXI_BREADY => axi4lite_0_M_BREADY(12),
+      S_AXI_ARADDR => axi4lite_0_M_ARADDR(415 downto 384),
+      S_AXI_ARVALID => axi4lite_0_M_ARVALID(12),
+      S_AXI_RREADY => axi4lite_0_M_RREADY(12),
+      S_AXI_ARREADY => axi4lite_0_M_ARREADY(12),
+      S_AXI_RDATA => axi4lite_0_M_RDATA(415 downto 384),
+      S_AXI_RRESP => axi4lite_0_M_RRESP(25 downto 24),
+      S_AXI_RVALID => axi4lite_0_M_RVALID(12),
+      S_AXI_WREADY => axi4lite_0_M_WREADY(12),
+      S_AXI_BRESP => axi4lite_0_M_BRESP(25 downto 24),
+      S_AXI_BVALID => axi4lite_0_M_BVALID(12),
+      S_AXI_AWREADY => axi4lite_0_M_AWREADY(12),
       m_axi_lite_aclk => pgassign1(12),
       m_axi_lite_aresetn => axi4_0_S_ARESETN(3),
       md_error => open,
@@ -4875,36 +4905,6 @@ begin
       m_axi_lite_bvalid => axi4_0_S_BVALID(3),
       m_axi_lite_bresp => axi4_0_S_BRESP(7 downto 6),
       interrupt => dma_ctrl_0_interrupt
-    );
-
-  slide_swtiches_8bits : slide_swtiches_8bits_wrapper
-    port map (
-      S_AXI_ACLK => pgassign1(12),
-      S_AXI_ARESETN => axi4lite_0_M_ARESETN(12),
-      S_AXI_AWADDR => axi4lite_0_M_AWADDR(415 downto 384),
-      S_AXI_AWVALID => axi4lite_0_M_AWVALID(12),
-      S_AXI_AWREADY => axi4lite_0_M_AWREADY(12),
-      S_AXI_WDATA => axi4lite_0_M_WDATA(415 downto 384),
-      S_AXI_WSTRB => axi4lite_0_M_WSTRB(51 downto 48),
-      S_AXI_WVALID => axi4lite_0_M_WVALID(12),
-      S_AXI_WREADY => axi4lite_0_M_WREADY(12),
-      S_AXI_BRESP => axi4lite_0_M_BRESP(25 downto 24),
-      S_AXI_BVALID => axi4lite_0_M_BVALID(12),
-      S_AXI_BREADY => axi4lite_0_M_BREADY(12),
-      S_AXI_ARADDR => axi4lite_0_M_ARADDR(415 downto 384),
-      S_AXI_ARVALID => axi4lite_0_M_ARVALID(12),
-      S_AXI_ARREADY => axi4lite_0_M_ARREADY(12),
-      S_AXI_RDATA => axi4lite_0_M_RDATA(415 downto 384),
-      S_AXI_RRESP => axi4lite_0_M_RRESP(25 downto 24),
-      S_AXI_RVALID => axi4lite_0_M_RVALID(12),
-      S_AXI_RREADY => axi4lite_0_M_RREADY(12),
-      IP2INTC_Irpt => slide_swtiches_8bits_IP2INTC_Irpt,
-      GPIO_IO_I => net_slide_swtiches_8bits_GPIO_IO_I_pin,
-      GPIO_IO_O => open,
-      GPIO_IO_T => open,
-      GPIO2_IO_I => net_gnd32(0 to 31),
-      GPIO2_IO_O => open,
-      GPIO2_IO_T => open
     );
 
   iobuf_0 : IOBUF

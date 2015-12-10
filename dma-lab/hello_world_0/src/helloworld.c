@@ -25,22 +25,50 @@
 #include "dma_ctrl.h"
 #include "xparameters.h"
 #include "stdint.h"
+#include "mb_interface.h"   // provides the microblaze interrupt enables, etc.
+#include "xintc_l.h"        // Provides handy macros for the interrupt controller.
 
-void print(char *str);
+volatile uint32_t dest[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+volatile uint32_t src[13] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
+
+void dma_interrupt_handler(){
+	xil_printf("done!\n\r");
+	int i;
+	for(i=0; i<13; i++){
+		xil_printf("After: %d\n\r", dest[i]);
+	}
+
+}
+
+void interrupt_handler_dispatcher(void* ptr) {
+	int intc_status = XIntc_GetIntrStatus(XPAR_INTC_0_BASEADDR);
+
+	// Check the FIT interrupt first.
+	if (intc_status & XPAR_DMA_CTRL_0_INTERRUPT_MASK){
+		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_DMA_CTRL_0_INTERRUPT_MASK);
+		dma_interrupt_handler();
+	}
+}
 
 int main()
 {
     init_platform();
-
-    xil_printf("Hello World\n\r");
-    uint32_t before, after;
-    before = DMA_CTRL_mReadSlaveReg0(XPAR_DMA_CTRL_0_BASEADDR, 0);
-    xil_printf("%x\n\r", before);
-    DMA_CTRL_mWriteSlaveReg0(XPAR_DMA_CTRL_0_BASEADDR, 0, 0xDEADBEEF);
-    after = DMA_CTRL_mReadSlaveReg0(XPAR_DMA_CTRL_0_BASEADDR, 0);
-    xil_printf("%x\n\r", after);
-
     cleanup_platform();
+
+    microblaze_register_handler(interrupt_handler_dispatcher, NULL);
+	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR, XPAR_DMA_CTRL_0_INTERRUPT_MASK);
+	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
+   microblaze_enable_interrupts();
+
+	int i;
+	for(i=0; i<13; i++){
+		xil_printf("Before: %d\n\r", dest[i]);
+	}
+    DMA_CTRL_transfer(XPAR_DMA_CTRL_0_BASEADDR, &src, &dest, 4*13);
+
+    while(1);
+
+
 
     return 0;
 }

@@ -2,7 +2,7 @@
 * Filename:          C:\parkerbros\space-invaders\hw/drivers/dma_ctrl_v1_00_a/src/dma_ctrl.h
 * Version:           1.00.a
 * Description:       dma_ctrl Driver Header File
-* Date:              Sat Dec 05 14:12:37 2015 (by Create and Import Peripheral Wizard)
+* Date:              Sat Dec 05 11:24:03 2015 (by Create and Import Peripheral Wizard)
 *****************************************************************************/
 
 #ifndef DMA_CTRL_H
@@ -13,6 +13,7 @@
 #include "xbasic_types.h"
 #include "xstatus.h"
 #include "xil_io.h"
+#include "stdint.h"
 
 /************************** Constant Definitions ***************************/
 
@@ -199,6 +200,7 @@
  */
 void DMA_CTRL_MasterSendWord(Xuint32 BaseAddress, Xuint32 DstAddress);
 void DMA_CTRL_MasterRecvWord(Xuint32 BaseAddress, Xuint32 SrcAddress);
+void DMA_CTRL_transfer(Xuint32 BaseAddress, Xuint32 source, Xuint32 dest, Xuint32 byteCount);
 
 /**
  *

@@ -408,18 +408,6 @@ BEGIN axi_uartlite
  PORT Interrupt = axi_uartlite_0_Interrupt
 END
 
-BEGIN dma_ctrl
- PARAMETER INSTANCE = dma_ctrl_0
- PARAMETER HW_VER = 1.00.a
- PARAMETER C_BASEADDR = 0x7ac00000
- PARAMETER C_HIGHADDR = 0x7ac0ffff
- BUS_INTERFACE M_AXI = axi4_0
- BUS_INTERFACE S_AXI = axi4lite_0
- PORT S_AXI_ACLK = clk_100_0000MHzPLL0
- PORT m_axi_lite_aclk = clk_100_0000MHzPLL0
- PORT interrupt = dma_ctrl_0_interrupt
-END
-
 BEGIN axi_gpio
  PARAMETER INSTANCE = slide_swtiches_8bits
  PARAMETER HW_VER = 1.01.b
@@ -433,5 +421,17 @@ BEGIN axi_gpio
 # PORT GPIO_IO = slide_swtiches_8bits_GPIO_IO
  PORT IP2INTC_Irpt = slide_swtiches_8bits_IP2INTC_Irpt
  PORT GPIO_IO_I = net_slide_swtiches_8bits_GPIO_IO_I_pin
+END
+
+BEGIN dma_ctrl
+ PARAMETER INSTANCE = dma_ctrl_0
+ PARAMETER HW_VER = 2.00.a
+ PARAMETER C_BASEADDR = 0x7ac00000
+ PARAMETER C_HIGHADDR = 0x7ac0ffff
+ BUS_INTERFACE M_AXI = axi4_0
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+ PORT m_axi_lite_aclk = clk_100_0000MHzPLL0
+ PORT interrupt = dma_ctrl_0_interrupt
 END
 

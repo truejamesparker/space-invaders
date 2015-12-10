@@ -57,6 +57,9 @@ INFO:Xst - Part-select index evaluated to out of bound value may lead to incorre
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
+Analyzing Verilog file "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" into library dma_ctrl_v2_00_a
+Parsing module <user_logic>.
+WARNING:HDLCompiler:991 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 444: Event expressions must result in a singular type
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family.vhd" into library proc_common_v3_00_a
 Parsing package <family>.
 Parsing package body <family>.
@@ -609,10 +612,7 @@ Parsing architecture <implementation> of entity <axi_master_lite_cntlr>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_master_lite_v1_00_a/hdl/vhdl/axi_master_lite.vhd" into library axi_master_lite_v1_00_a
 Parsing entity <axi_master_lite>.
 Parsing architecture <implementation> of entity <axi_master_lite>.
-Parsing VHDL file "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" into library dma_ctrl_v1_00_a
-Parsing entity <user_logic>.
-Parsing architecture <IMP> of entity <user_logic>.
-Parsing VHDL file "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/dma_ctrl.vhd" into library dma_ctrl_v1_00_a
+Parsing VHDL file "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/vhdl/dma_ctrl.vhd" into library dma_ctrl_v2_00_a
 Parsing entity <dma_ctrl>.
 Parsing architecture <IMP> of entity <dma_ctrl>.
 Parsing VHDL file "C:\parkerbros\space-invaders\hw\hdl\dma_ctrl_0_wrapper.vhd" into library work
@@ -625,7 +625,7 @@ Parsing architecture <STRUCTURE> of entity <dma_ctrl_0_wrapper>.
 
 Elaborating entity <dma_ctrl_0_wrapper> (architecture <STRUCTURE>) from library <work>.
 
-Elaborating entity <dma_ctrl> (architecture <IMP>) with generics from library <dma_ctrl_v1_00_a>.
+Elaborating entity <dma_ctrl> (architecture <IMP>) with generics from library <dma_ctrl_v2_00_a>.
 
 Elaborating entity <axi_lite_ipif> (architecture <imp>) with generics from library <axi_lite_ipif_v1_01_a>.
 
@@ -652,11 +652,15 @@ Elaborating entity <axi_master_lite_reset> (architecture <implementation>) from 
 
 Elaborating entity <axi_master_lite_cntlr> (architecture <implementation>) with generics from library <axi_master_lite_v1_00_a>.
 WARNING:HDLCompiler:1127 - "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_master_lite_v1_00_a/hdl/vhdl/axi_master_lite_cntlr.vhd" Line 402: Assignment to sig_ip2bus_lock ignored, since the identifier is never used
+Going to verilog side to elaborate module user_logic
 
-Elaborating entity <user_logic> (architecture <IMP>) with generics from library <dma_ctrl_v1_00_a>.
-WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" Line 390: Assignment to mst_cntl_burst ignored, since the identifier is never used
-WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" Line 394: Assignment to mst_xfer_length ignored, since the identifier is never used
-INFO:HDLCompiler:679 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" Line 628. Case statement is complete. others clause is never selected
+Elaborating module <user_logic(C_MST_AWIDTH=32,C_MST_DWIDTH=32,C_NUM_REG=8,C_SLV_DWIDTH=32,GO_BYTE_LANE=15)>.
+WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 369: Assignment to mst_cntl_rd_req ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 370: Assignment to mst_cntl_wr_req ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 372: Assignment to mst_cntl_burst ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 373: Assignment to mst_ip2bus_addr ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "C:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" Line 375: Assignment to mst_xfer_length ignored, since the identifier is never used
+Going to vhdl side to elaborate module srl_fifo_f
 
 Elaborating entity <srl_fifo_f> (architecture <imp>) with generics from library <proc_common_v3_00_a>.
 
@@ -665,6 +669,8 @@ Elaborating entity <srl_fifo_rbu_f> (architecture <imp>) with generics from libr
 Elaborating entity <cntr_incr_decr_addn_f> (architecture <imp>) with generics from library <proc_common_v3_00_a>.
 
 Elaborating entity <dynshreg_f> (architecture <behavioral>) with generics from library <proc_common_v3_00_a>.
+Back to verilog to continue elaboration
+Back to vhdl to continue elaboration
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -677,7 +683,7 @@ Synthesizing Unit <dma_ctrl_0_wrapper>.
 Unit <dma_ctrl_0_wrapper> synthesized.
 
 Synthesizing Unit <dma_ctrl>.
-    Related source file is "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/dma_ctrl.vhd".
+    Related source file is "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/vhdl/dma_ctrl.vhd".
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
@@ -704,8 +710,8 @@ WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/p
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
     Set property "MAX_FANOUT = 10000" for signal <m_axi_lite_aresetn>.
 WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/dma_ctrl.vhd" line 329: Output port <Bus2IP_Addr> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/dma_ctrl.vhd" line 329: Output port <Bus2IP_RNW> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/vhdl/dma_ctrl.vhd" line 382: Output port <Bus2IP_Addr> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/vhdl/dma_ctrl.vhd" line 382: Output port <Bus2IP_RNW> of the instance <AXI_LITE_IPIF_I> is unconnected or connected to loadless signal.
     Summary:
 	inferred   3 Multiplexer(s).
 Unit <dma_ctrl> synthesized.
@@ -911,43 +917,274 @@ INFO:Xst:2774 - HDL ADVISOR - KEEP property attached to signal sig_bus2ip_cmplt_
 Unit <axi_master_lite_cntlr> synthesized.
 
 Synthesizing Unit <user_logic>.
-    Related source file is "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd".
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
+    Related source file is "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v".
         C_MST_AWIDTH = 32
         C_MST_DWIDTH = 32
         C_NUM_REG = 8
         C_SLV_DWIDTH = 32
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
-WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/property is not supported by the current software release and will be ignored.
+        CMD_IDLE = 3'b000
+        CMD_READ = 3'b001
+        CMD_WRITE = 3'b010
+        CMD_WAIT_FOR_READ = 3'b011
+        CMD_WAIT_FOR_WRITE = 3'b100
+        CMD_DONE = 3'b101
+        BE_WIDTH = 4
+        GO_DATA_KEY = 8'b00001010
+        GO_BYTE_LANE = 15
 WARNING:Xst:647 - Input <bus2ip_mst_rearbitrate> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" line 644: Output port <Addr> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" line 644: Output port <FIFO_Empty> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd" line 644: Output port <FIFO_Full> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
-    Register <interrupt> equivalent to <mst_cmd_sm_set_done> has been removed
-    Found 32-bit register for signal <slv_reg1>.
-    Found 32-bit register for signal <slv_reg2>.
-    Found 32-bit register for signal <slv_reg3>.
-    Found 8-bit register for signal <mst_reg<0>>.
-    Found 8-bit register for signal <mst_reg<1>>.
-    Found 8-bit register for signal <mst_reg<2>>.
-    Found 8-bit register for signal <mst_reg<3>>.
-    Found 8-bit register for signal <mst_reg<4>>.
-    Found 8-bit register for signal <mst_reg<5>>.
-    Found 8-bit register for signal <mst_reg<6>>.
-    Found 8-bit register for signal <mst_reg<7>>.
-    Found 8-bit register for signal <mst_reg<8>>.
-    Found 8-bit register for signal <mst_reg<9>>.
-    Found 8-bit register for signal <mst_reg<10>>.
-    Found 8-bit register for signal <mst_reg<11>>.
-    Found 8-bit register for signal <mst_reg<12>>.
-    Found 8-bit register for signal <mst_reg<13>>.
-    Found 8-bit register for signal <mst_reg<14>>.
+INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" line 654: Output port <Addr> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" line 654: Output port <FIFO_Empty> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v" line 654: Output port <FIFO_Full> of the instance <DATA_CAPTURE_FIFO_I> is unconnected or connected to loadless signal.
+    Register <my_interrupt> equivalent to <mst_cmd_sm_set_done> has been removed
+    Found 1-bit register for signal <slv_reg0<30>>.
+    Found 1-bit register for signal <slv_reg0<29>>.
+    Found 1-bit register for signal <slv_reg0<28>>.
+    Found 1-bit register for signal <slv_reg0<27>>.
+    Found 1-bit register for signal <slv_reg0<26>>.
+    Found 1-bit register for signal <slv_reg0<25>>.
+    Found 1-bit register for signal <slv_reg0<24>>.
+    Found 1-bit register for signal <slv_reg0<23>>.
+    Found 1-bit register for signal <slv_reg0<22>>.
+    Found 1-bit register for signal <slv_reg0<21>>.
+    Found 1-bit register for signal <slv_reg0<20>>.
+    Found 1-bit register for signal <slv_reg0<19>>.
+    Found 1-bit register for signal <slv_reg0<18>>.
+    Found 1-bit register for signal <slv_reg0<17>>.
+    Found 1-bit register for signal <slv_reg0<16>>.
+    Found 1-bit register for signal <slv_reg0<15>>.
+    Found 1-bit register for signal <slv_reg0<14>>.
+    Found 1-bit register for signal <slv_reg0<13>>.
+    Found 1-bit register for signal <slv_reg0<12>>.
+    Found 1-bit register for signal <slv_reg0<11>>.
+    Found 1-bit register for signal <slv_reg0<10>>.
+    Found 1-bit register for signal <slv_reg0<9>>.
+    Found 1-bit register for signal <slv_reg0<8>>.
+    Found 1-bit register for signal <slv_reg0<7>>.
+    Found 1-bit register for signal <slv_reg0<6>>.
+    Found 1-bit register for signal <slv_reg0<5>>.
+    Found 1-bit register for signal <slv_reg0<4>>.
+    Found 1-bit register for signal <slv_reg0<3>>.
+    Found 1-bit register for signal <slv_reg0<2>>.
+    Found 1-bit register for signal <slv_reg0<1>>.
+    Found 1-bit register for signal <slv_reg0<0>>.
+    Found 1-bit register for signal <slv_reg1<31>>.
+    Found 1-bit register for signal <slv_reg1<30>>.
+    Found 1-bit register for signal <slv_reg1<29>>.
+    Found 1-bit register for signal <slv_reg1<28>>.
+    Found 1-bit register for signal <slv_reg1<27>>.
+    Found 1-bit register for signal <slv_reg1<26>>.
+    Found 1-bit register for signal <slv_reg1<25>>.
+    Found 1-bit register for signal <slv_reg1<24>>.
+    Found 1-bit register for signal <slv_reg1<23>>.
+    Found 1-bit register for signal <slv_reg1<22>>.
+    Found 1-bit register for signal <slv_reg1<21>>.
+    Found 1-bit register for signal <slv_reg1<20>>.
+    Found 1-bit register for signal <slv_reg1<19>>.
+    Found 1-bit register for signal <slv_reg1<18>>.
+    Found 1-bit register for signal <slv_reg1<17>>.
+    Found 1-bit register for signal <slv_reg1<16>>.
+    Found 1-bit register for signal <slv_reg1<15>>.
+    Found 1-bit register for signal <slv_reg1<14>>.
+    Found 1-bit register for signal <slv_reg1<13>>.
+    Found 1-bit register for signal <slv_reg1<12>>.
+    Found 1-bit register for signal <slv_reg1<11>>.
+    Found 1-bit register for signal <slv_reg1<10>>.
+    Found 1-bit register for signal <slv_reg1<9>>.
+    Found 1-bit register for signal <slv_reg1<8>>.
+    Found 1-bit register for signal <slv_reg1<7>>.
+    Found 1-bit register for signal <slv_reg1<6>>.
+    Found 1-bit register for signal <slv_reg1<5>>.
+    Found 1-bit register for signal <slv_reg1<4>>.
+    Found 1-bit register for signal <slv_reg1<3>>.
+    Found 1-bit register for signal <slv_reg1<2>>.
+    Found 1-bit register for signal <slv_reg1<1>>.
+    Found 1-bit register for signal <slv_reg1<0>>.
+    Found 1-bit register for signal <slv_reg2<31>>.
+    Found 1-bit register for signal <slv_reg2<30>>.
+    Found 1-bit register for signal <slv_reg2<29>>.
+    Found 1-bit register for signal <slv_reg2<28>>.
+    Found 1-bit register for signal <slv_reg2<27>>.
+    Found 1-bit register for signal <slv_reg2<26>>.
+    Found 1-bit register for signal <slv_reg2<25>>.
+    Found 1-bit register for signal <slv_reg2<24>>.
+    Found 1-bit register for signal <slv_reg2<23>>.
+    Found 1-bit register for signal <slv_reg2<22>>.
+    Found 1-bit register for signal <slv_reg2<21>>.
+    Found 1-bit register for signal <slv_reg2<20>>.
+    Found 1-bit register for signal <slv_reg2<19>>.
+    Found 1-bit register for signal <slv_reg2<18>>.
+    Found 1-bit register for signal <slv_reg2<17>>.
+    Found 1-bit register for signal <slv_reg2<16>>.
+    Found 1-bit register for signal <slv_reg2<15>>.
+    Found 1-bit register for signal <slv_reg2<14>>.
+    Found 1-bit register for signal <slv_reg2<13>>.
+    Found 1-bit register for signal <slv_reg2<12>>.
+    Found 1-bit register for signal <slv_reg2<11>>.
+    Found 1-bit register for signal <slv_reg2<10>>.
+    Found 1-bit register for signal <slv_reg2<9>>.
+    Found 1-bit register for signal <slv_reg2<8>>.
+    Found 1-bit register for signal <slv_reg2<7>>.
+    Found 1-bit register for signal <slv_reg2<6>>.
+    Found 1-bit register for signal <slv_reg2<5>>.
+    Found 1-bit register for signal <slv_reg2<4>>.
+    Found 1-bit register for signal <slv_reg2<3>>.
+    Found 1-bit register for signal <slv_reg2<2>>.
+    Found 1-bit register for signal <slv_reg2<1>>.
+    Found 1-bit register for signal <slv_reg2<0>>.
+    Found 1-bit register for signal <slv_reg3<31>>.
+    Found 1-bit register for signal <slv_reg3<30>>.
+    Found 1-bit register for signal <slv_reg3<29>>.
+    Found 1-bit register for signal <slv_reg3<28>>.
+    Found 1-bit register for signal <slv_reg3<27>>.
+    Found 1-bit register for signal <slv_reg3<26>>.
+    Found 1-bit register for signal <slv_reg3<25>>.
+    Found 1-bit register for signal <slv_reg3<24>>.
+    Found 1-bit register for signal <slv_reg3<23>>.
+    Found 1-bit register for signal <slv_reg3<22>>.
+    Found 1-bit register for signal <slv_reg3<21>>.
+    Found 1-bit register for signal <slv_reg3<20>>.
+    Found 1-bit register for signal <slv_reg3<19>>.
+    Found 1-bit register for signal <slv_reg3<18>>.
+    Found 1-bit register for signal <slv_reg3<17>>.
+    Found 1-bit register for signal <slv_reg3<16>>.
+    Found 1-bit register for signal <slv_reg3<15>>.
+    Found 1-bit register for signal <slv_reg3<14>>.
+    Found 1-bit register for signal <slv_reg3<13>>.
+    Found 1-bit register for signal <slv_reg3<12>>.
+    Found 1-bit register for signal <slv_reg3<11>>.
+    Found 1-bit register for signal <slv_reg3<10>>.
+    Found 1-bit register for signal <slv_reg3<9>>.
+    Found 1-bit register for signal <slv_reg3<8>>.
+    Found 1-bit register for signal <slv_reg3<7>>.
+    Found 1-bit register for signal <slv_reg3<6>>.
+    Found 1-bit register for signal <slv_reg3<5>>.
+    Found 1-bit register for signal <slv_reg3<4>>.
+    Found 1-bit register for signal <slv_reg3<3>>.
+    Found 1-bit register for signal <slv_reg3<2>>.
+    Found 1-bit register for signal <slv_reg3<1>>.
+    Found 1-bit register for signal <slv_reg3<0>>.
+    Found 1-bit register for signal <mst_reg<0><7>>.
+    Found 1-bit register for signal <mst_reg<0><6>>.
+    Found 1-bit register for signal <mst_reg<0><5>>.
+    Found 1-bit register for signal <mst_reg<0><4>>.
+    Found 1-bit register for signal <mst_reg<0><3>>.
+    Found 1-bit register for signal <mst_reg<0><2>>.
+    Found 1-bit register for signal <mst_reg<0><1>>.
+    Found 1-bit register for signal <mst_reg<0><0>>.
+    Found 1-bit register for signal <mst_reg<1><7>>.
+    Found 1-bit register for signal <mst_reg<1><6>>.
+    Found 1-bit register for signal <mst_reg<1><5>>.
+    Found 1-bit register for signal <mst_reg<1><4>>.
+    Found 1-bit register for signal <mst_reg<1><3>>.
+    Found 1-bit register for signal <mst_reg<1><2>>.
+    Found 1-bit register for signal <mst_reg<1><1>>.
+    Found 1-bit register for signal <mst_reg<1><0>>.
+    Found 1-bit register for signal <mst_reg<2><7>>.
+    Found 1-bit register for signal <mst_reg<2><6>>.
+    Found 1-bit register for signal <mst_reg<2><5>>.
+    Found 1-bit register for signal <mst_reg<2><4>>.
+    Found 1-bit register for signal <mst_reg<2><3>>.
+    Found 1-bit register for signal <mst_reg<2><2>>.
+    Found 1-bit register for signal <mst_reg<2><1>>.
+    Found 1-bit register for signal <mst_reg<2><0>>.
+    Found 1-bit register for signal <mst_reg<3><7>>.
+    Found 1-bit register for signal <mst_reg<3><6>>.
+    Found 1-bit register for signal <mst_reg<3><5>>.
+    Found 1-bit register for signal <mst_reg<3><4>>.
+    Found 1-bit register for signal <mst_reg<3><3>>.
+    Found 1-bit register for signal <mst_reg<3><2>>.
+    Found 1-bit register for signal <mst_reg<3><1>>.
+    Found 1-bit register for signal <mst_reg<3><0>>.
+    Found 1-bit register for signal <mst_reg<4><7>>.
+    Found 1-bit register for signal <mst_reg<4><6>>.
+    Found 1-bit register for signal <mst_reg<4><5>>.
+    Found 1-bit register for signal <mst_reg<4><4>>.
+    Found 1-bit register for signal <mst_reg<4><3>>.
+    Found 1-bit register for signal <mst_reg<4><2>>.
+    Found 1-bit register for signal <mst_reg<4><1>>.
+    Found 1-bit register for signal <mst_reg<4><0>>.
+    Found 1-bit register for signal <mst_reg<5><7>>.
+    Found 1-bit register for signal <mst_reg<5><6>>.
+    Found 1-bit register for signal <mst_reg<5><5>>.
+    Found 1-bit register for signal <mst_reg<5><4>>.
+    Found 1-bit register for signal <mst_reg<5><3>>.
+    Found 1-bit register for signal <mst_reg<5><2>>.
+    Found 1-bit register for signal <mst_reg<5><1>>.
+    Found 1-bit register for signal <mst_reg<5><0>>.
+    Found 1-bit register for signal <mst_reg<6><7>>.
+    Found 1-bit register for signal <mst_reg<6><6>>.
+    Found 1-bit register for signal <mst_reg<6><5>>.
+    Found 1-bit register for signal <mst_reg<6><4>>.
+    Found 1-bit register for signal <mst_reg<6><3>>.
+    Found 1-bit register for signal <mst_reg<6><2>>.
+    Found 1-bit register for signal <mst_reg<6><1>>.
+    Found 1-bit register for signal <mst_reg<6><0>>.
+    Found 1-bit register for signal <mst_reg<7><7>>.
+    Found 1-bit register for signal <mst_reg<7><6>>.
+    Found 1-bit register for signal <mst_reg<7><5>>.
+    Found 1-bit register for signal <mst_reg<7><4>>.
+    Found 1-bit register for signal <mst_reg<7><3>>.
+    Found 1-bit register for signal <mst_reg<7><2>>.
+    Found 1-bit register for signal <mst_reg<7><1>>.
+    Found 1-bit register for signal <mst_reg<7><0>>.
+    Found 1-bit register for signal <mst_reg<8><7>>.
+    Found 1-bit register for signal <mst_reg<8><6>>.
+    Found 1-bit register for signal <mst_reg<8><5>>.
+    Found 1-bit register for signal <mst_reg<8><4>>.
+    Found 1-bit register for signal <mst_reg<8><3>>.
+    Found 1-bit register for signal <mst_reg<8><2>>.
+    Found 1-bit register for signal <mst_reg<8><1>>.
+    Found 1-bit register for signal <mst_reg<8><0>>.
+    Found 1-bit register for signal <mst_reg<9><7>>.
+    Found 1-bit register for signal <mst_reg<9><6>>.
+    Found 1-bit register for signal <mst_reg<9><5>>.
+    Found 1-bit register for signal <mst_reg<9><4>>.
+    Found 1-bit register for signal <mst_reg<9><3>>.
+    Found 1-bit register for signal <mst_reg<9><2>>.
+    Found 1-bit register for signal <mst_reg<9><1>>.
+    Found 1-bit register for signal <mst_reg<9><0>>.
+    Found 1-bit register for signal <mst_reg<10><7>>.
+    Found 1-bit register for signal <mst_reg<10><6>>.
+    Found 1-bit register for signal <mst_reg<10><5>>.
+    Found 1-bit register for signal <mst_reg<10><4>>.
+    Found 1-bit register for signal <mst_reg<10><3>>.
+    Found 1-bit register for signal <mst_reg<10><2>>.
+    Found 1-bit register for signal <mst_reg<10><1>>.
+    Found 1-bit register for signal <mst_reg<10><0>>.
+    Found 1-bit register for signal <mst_reg<11><7>>.
+    Found 1-bit register for signal <mst_reg<11><6>>.
+    Found 1-bit register for signal <mst_reg<11><5>>.
+    Found 1-bit register for signal <mst_reg<11><4>>.
+    Found 1-bit register for signal <mst_reg<11><3>>.
+    Found 1-bit register for signal <mst_reg<11><2>>.
+    Found 1-bit register for signal <mst_reg<11><1>>.
+    Found 1-bit register for signal <mst_reg<11><0>>.
+    Found 1-bit register for signal <mst_reg<12><7>>.
+    Found 1-bit register for signal <mst_reg<12><6>>.
+    Found 1-bit register for signal <mst_reg<12><5>>.
+    Found 1-bit register for signal <mst_reg<12><4>>.
+    Found 1-bit register for signal <mst_reg<12><3>>.
+    Found 1-bit register for signal <mst_reg<12><2>>.
+    Found 1-bit register for signal <mst_reg<12><1>>.
+    Found 1-bit register for signal <mst_reg<12><0>>.
+    Found 1-bit register for signal <mst_reg<13><7>>.
+    Found 1-bit register for signal <mst_reg<13><6>>.
+    Found 1-bit register for signal <mst_reg<13><5>>.
+    Found 1-bit register for signal <mst_reg<13><4>>.
+    Found 1-bit register for signal <mst_reg<13><3>>.
+    Found 1-bit register for signal <mst_reg<13><2>>.
+    Found 1-bit register for signal <mst_reg<13><1>>.
+    Found 1-bit register for signal <mst_reg<13><0>>.
+    Found 1-bit register for signal <mst_reg<14><7>>.
+    Found 1-bit register for signal <mst_reg<14><6>>.
+    Found 1-bit register for signal <mst_reg<14><5>>.
+    Found 1-bit register for signal <mst_reg<14><4>>.
+    Found 1-bit register for signal <mst_reg<14><3>>.
+    Found 1-bit register for signal <mst_reg<14><2>>.
+    Found 1-bit register for signal <mst_reg<14><1>>.
+    Found 1-bit register for signal <mst_reg<14><0>>.
     Found 1-bit register for signal <mst_go>.
-    Found 2-bit register for signal <mst_cmd_sm_state>.
+    Found 3-bit register for signal <mst_cmd_sm_state>.
     Found 1-bit register for signal <mst_cmd_sm_clr_go>.
     Found 1-bit register for signal <mst_cmd_sm_rd_req>.
     Found 1-bit register for signal <mst_cmd_sm_wr_req>.
@@ -958,38 +1195,31 @@ INFO:Xst:3210 - "c:/parkerbros/space-invaders/hw/pcores/dma_ctrl_v1_00_a/hdl/vhd
     Found 1-bit register for signal <mst_cmd_sm_set_error>.
     Found 1-bit register for signal <mst_cmd_sm_set_timeout>.
     Found 1-bit register for signal <mst_cmd_sm_busy>.
-    Found 32-bit register for signal <count>.
-    Found 1-bit register for signal <read_req>.
-    Found 1-bit register for signal <write_req>.
-    Found 32-bit register for signal <bus_addr>.
-    Found 32-bit register for signal <src_addr>.
-    Found 32-bit register for signal <dest_addr>.
-    Found 32-bit register for signal <slv_reg0>.
+    Found 32-bit register for signal <counter>.
+    Found 1-bit register for signal <slv_reg0<31>>.
     Found finite state machine <FSM_1> for signal <mst_cmd_sm_state>.
     -----------------------------------------------------------------------
-    | States             | 4                                              |
-    | Transitions        | 9                                              |
+    | States             | 6                                              |
+    | Transitions        | 14                                             |
     | Inputs             | 4                                              |
-    | Outputs            | 2                                              |
+    | Outputs            | 3                                              |
     | Clock              | Bus2IP_Clk (rising_edge)                       |
-    | Reset              | Bus2IP_Reset (positive)                        |
+    | Reset              | bus2ip_Reset (positive)                        |
     | Reset type         | synchronous                                    |
-    | Reset State        | cmd_idle                                       |
-    | Power Up State     | cmd_idle                                       |
+    | Reset State        | 000                                            |
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 32-bit adder for signal <src_addr[31]_GND_25_o_add_78_OUT> created at line 1241.
-    Found 32-bit adder for signal <dest_addr[31]_GND_25_o_add_79_OUT> created at line 1241.
-    Found 32-bit subtractor for signal <GND_25_o_GND_25_o_sub_86_OUT<31:0>> created at line 1308.
-    Found 1-bit 4-to-1 multiplexer for signal <mst_cmd_sm_state[1]_count[31]_Mux_97_o> created at line 553.
-    Found 1-bit 4-to-1 multiplexer for signal <mst_cmd_sm_state[1]_GND_25_o_Mux_98_o> created at line 553.
-    Found 1-bit 4-to-1 multiplexer for signal <mst_cmd_sm_state[1]_GND_25_o_Mux_99_o> created at line 553.
+    Found 32-bit adder for signal <slv_reg0[31]_counter[31]_add_81_OUT> created at line 557.
+    Found 32-bit adder for signal <slv_reg1[31]_counter[31]_add_91_OUT> created at line 593.
+    Found 32-bit adder for signal <counter[31]_GND_26_o_add_99_OUT> created at line 622.
+    Found 32-bit comparator greater for signal <counter[31]_slv_reg2[31]_LessThan_101_o> created at line 622
     WARNING:Xst:2404 -  FFs/Latches <mst_cmd_sm_reset<0:0>> (without init value) have a constant value of 0 in block <user_logic>.
     Summary:
-	inferred   3 Adder/Subtractor(s).
-	inferred 423 D-type flip-flop(s).
-	inferred 183 Multiplexer(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred 325 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred 166 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <user_logic> synthesized.
 
@@ -1062,35 +1292,33 @@ Unit <dynshreg_f> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 6
+# Adders/Subtractors                                   : 5
  32-bit adder                                          : 2
- 32-bit subtractor                                     : 1
  4-bit adder                                           : 1
  5-bit adder                                           : 2
-# Registers                                            : 100
- 1-bit register                                        : 49
+# Registers                                            : 197
+ 1-bit register                                        : 163
  2-bit register                                        : 3
- 32-bit register                                       : 29
- 4-bit register                                        : 3
+ 32-bit register                                       : 26
+ 4-bit register                                        : 4
  5-bit register                                        : 1
- 8-bit register                                        : 15
-# Comparators                                          : 1
+# Comparators                                          : 2
+ 32-bit comparator greater                             : 1
  5-bit comparator lessequal                            : 1
-# Multiplexers                                         : 199
- 1-bit 2-to-1 multiplexer                              : 160
- 1-bit 4-to-1 multiplexer                              : 3
+# Multiplexers                                         : 182
+ 1-bit 2-to-1 multiplexer                              : 157
  32-bit 16-to-1 multiplexer                            : 1
- 32-bit 2-to-1 multiplexer                             : 32
- 4-bit 2-to-1 multiplexer                              : 3
+ 32-bit 2-to-1 multiplexer                             : 22
+ 4-bit 2-to-1 multiplexer                              : 2
 # FSMs                                                 : 2
 
 =========================================================================
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
 
 =========================================================================
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-WARNING:Xst:2404 -  FFs/Latches <mst_reg_1<7:4>> (without init value) have a constant value of 0 in block <user_logic>.
 
 Synthesizing (advanced) Unit <cntr_incr_decr_addn_f>.
 The following registers are absorbed into accumulator <cnt_i>: 1 register on signal <cnt_i>.
@@ -1099,11 +1327,6 @@ Unit <cntr_incr_decr_addn_f> synthesized (advanced).
 Synthesizing (advanced) Unit <slave_attachment>.
 The following registers are absorbed into counter <INCLUDE_DPHASE_TIMER.dpto_cnt>: 1 register on signal <INCLUDE_DPHASE_TIMER.dpto_cnt>.
 Unit <slave_attachment> synthesized (advanced).
-
-Synthesizing (advanced) Unit <user_logic>.
-The following registers are absorbed into accumulator <src_addr>: 1 register on signal <src_addr>.
-The following registers are absorbed into accumulator <dest_addr>: 1 register on signal <dest_addr>.
-Unit <user_logic> synthesized (advanced).
 
 Synthesizing (advanced) Unit <dynshreg_f>.
 	Found 16-bit dynamic shift register for signal <Dout<31>>.
@@ -1144,25 +1367,24 @@ Unit <dynshreg_f> synthesized (advanced).
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 2
- 32-bit subtractor                                     : 1
+# Adders/Subtractors                                   : 3
+ 32-bit adder                                          : 2
  5-bit adder carry in                                  : 1
 # Counters                                             : 1
  4-bit up counter                                      : 1
-# Accumulators                                         : 3
- 32-bit up accumulator                                 : 2
+# Accumulators                                         : 1
  5-bit up accumulator cin                              : 1
-# Registers                                            : 531
- Flip-Flops                                            : 531
+# Registers                                            : 501
+ Flip-Flops                                            : 501
 # Shift Registers                                      : 32
  16-bit dynamic shift register                         : 32
-# Comparators                                          : 1
+# Comparators                                          : 2
+ 32-bit comparator greater                             : 1
  5-bit comparator lessequal                            : 1
-# Multiplexers                                         : 188
- 1-bit 2-to-1 multiplexer                              : 150
- 1-bit 4-to-1 multiplexer                              : 3
- 32-bit 2-to-1 multiplexer                             : 32
- 4-bit 2-to-1 multiplexer                              : 3
+# Multiplexers                                         : 171
+ 1-bit 2-to-1 multiplexer                              : 147
+ 32-bit 2-to-1 multiplexer                             : 22
+ 4-bit 2-to-1 multiplexer                              : 2
 # FSMs                                                 : 2
 
 =========================================================================
@@ -1172,22 +1394,26 @@ Macro Statistics
 =========================================================================
 WARNING:Xst:1293 - FF/Latch <s_axi_rresp_i_0> has a constant value of 0 in block <slave_attachment>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <s_axi_bresp_i_0> has a constant value of 0 in block <slave_attachment>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <mst_reg_2_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_2> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_3> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_4> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_5> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_6> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_2_7> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_2> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_3> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_4> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_5> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_6> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg_3_7> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <mst_reg<3>_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_2> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_4> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_5> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_3> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_6> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<3>_7> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_2> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_3> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_5> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_6> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_4> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<2>_7> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<1>_4> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<1>_5> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<1>_7> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_reg<1>_6> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
 Analyzing FSM <MFsm> for best encoding.
 Optimizing FSM <dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/FSM_0> on signal <state[1:2]> with user encoding.
 ----------------------
@@ -1199,24 +1425,19 @@ Optimizing FSM <dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/FSM_0> on signal <
  sm_resp  | 11
 ----------------------
 Analyzing FSM <MFsm> for best encoding.
-Optimizing FSM <dma_ctrl_0/USER_LOGIC_I/FSM_1> on signal <mst_cmd_sm_state[1:2]> with sequential encoding.
--------------------------------
- State             | Encoding
--------------------------------
- cmd_idle          | 00
- cmd_run           | 01
- cmd_wait_for_data | 11
- cmd_done          | 10
--------------------------------
-WARNING:Xst:1710 - FF/Latch <count_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <bus_addr_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <bus_addr_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_cmd_sm_ip2bus_addr_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <mst_cmd_sm_ip2bus_addr_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <src_addr_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <src_addr_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <dest_addr_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <dest_addr_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+Optimizing FSM <dma_ctrl_0/USER_LOGIC_I/FSM_1> on signal <mst_cmd_sm_state[1:3]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 000
+ 001   | 001
+ 011   | 011
+ 010   | 010
+ 100   | 110
+ 101   | 111
+-------------------
+WARNING:Xst:1710 - FF/Latch <counter_0> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <counter_1> (without init value) has a constant value of 0 in block <user_logic>. This FF/Latch will be trimmed during the optimization process.
 
 Optimizing unit <dynshreg_f> ...
 
@@ -1233,139 +1454,20 @@ Optimizing unit <user_logic> ...
 Optimizing unit <srl_fifo_rbu_f> ...
 WARNING:Xst:1293 - FF/Latch <dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_bresp_i_1> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rresp_i_1> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_1> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_0> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_set_timeout> (without init value) has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_bus_lock> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
 WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/CNTR_INCR_DECR_ADDN_F_I/cnt_i_4> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
 WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/overflow_i> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
 WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/underflow_i> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
 WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/FIFO_Full> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1293 - FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_17> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_16> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_15> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_14> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_13> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_12> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_11> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_10> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_9> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_8> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_7> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_6> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_5> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_4> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_3> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_2> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_1> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_0> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wstrb_3> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wstrb_2> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wstrb_1> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wstrb_0> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_wr_req> (without init value) has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_write_error> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_resp_cmplt> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_addr_cmplt> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_bready> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_data_cmplt> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wvalid> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_awvalid> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_wr_dst_rdy> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_in_prog> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_31> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_30> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_29> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_28> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_27> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_26> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_25> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_24> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_23> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_22> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_21> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_20> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_19> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_m_axi_wdata_18> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_req_reg> has a constant value of 0 in block <dma_ctrl_0_wrapper>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_31> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_0_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_30> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_1_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_29> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_2_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_28> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_3_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_27> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_4_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_26> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_5_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_25> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_6_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_24> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_7_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_23> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_8_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_22> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_9_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_21> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_10_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_20> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_11_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_19> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_12_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_18> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_13_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_17> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_14_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_16> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_15_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_15> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_16_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_14> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_17_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_13> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_18_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_12> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_19_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_11> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_20_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_10> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_21_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_9> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_22_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_8> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_23_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_7> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_24_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_6> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_25_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_5> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_26_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_4> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_27_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_3> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_28_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_2> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_29_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_1> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_30_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_mstrd_d_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/DYNSHREG_F_I/Mshreg_Dout_31_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_ip2bus_be_3> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_ip2bus_be_2> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_ip2bus_be_1> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_ip2bus_be_0> is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:2677 - Node <dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_rd_src_rdy> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/CNTR_INCR_DECR_ADDN_F_I/cnt_i_3> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/CNTR_INCR_DECR_ADDN_F_I/cnt_i_2> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/CNTR_INCR_DECR_ADDN_F_I/cnt_i_1> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
-WARNING:Xst:2677 - Node <dma_ctrl_0/USER_LOGIC_I/DATA_CAPTURE_FIFO_I/I_SRL_FIFO_RBU_F/CNTR_INCR_DECR_ADDN_F_I/cnt_i_0> of sequential type is unconnected in block <dma_ctrl_0_wrapper>.
 
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block dma_ctrl_0_wrapper, actual ratio is 3.
-FlipFlop dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg has been replicated 4 time(s)
+FlipFlop dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg has been replicated 3 time(s)
+FlipFlop dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_state_FSM_FFd1 has been replicated 2 time(s)
+FlipFlop dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_state_FSM_FFd2 has been replicated 2 time(s)
+FlipFlop dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_state_FSM_FFd3 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -1373,8 +1475,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 487
- Flip-Flops                                            : 487
+# Registers                                            : 491
+ Flip-Flops                                            : 491
 
 =========================================================================
 
@@ -1397,23 +1499,26 @@ Top Level Output File Name         : dma_ctrl_0_wrapper.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 658
+# BELS                             : 709
 #      GND                         : 1
-#      INV                         : 35
-#      LUT1                        : 59
-#      LUT2                        : 27
-#      LUT3                        : 40
-#      LUT4                        : 24
-#      LUT5                        : 109
-#      LUT6                        : 185
-#      MUXCY                       : 87
+#      INV                         : 4
+#      LUT1                        : 30
+#      LUT2                        : 88
+#      LUT3                        : 158
+#      LUT4                        : 50
+#      LUT5                        : 77
+#      LUT6                        : 158
+#      MUXCY                       : 78
+#      MUXF7                       : 2
 #      VCC                         : 1
-#      XORCY                       : 90
-# FlipFlops/Latches                : 487
-#      FD                          : 21
-#      FDE                         : 123
-#      FDR                         : 57
-#      FDRE                        : 286
+#      XORCY                       : 62
+# FlipFlops/Latches                : 491
+#      FD                          : 28
+#      FDR                         : 201
+#      FDRE                        : 258
+#      FDS                         : 4
+# Shift Registers                  : 32
+#      SRLC16E                     : 32
 
 Device utilization summary:
 ---------------------------
@@ -1422,16 +1527,18 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             487  out of  54576     0%  
- Number of Slice LUTs:                  479  out of  27288     1%  
-    Number used as Logic:               479  out of  27288     1%  
+ Number of Slice Registers:             491  out of  54576     0%  
+ Number of Slice LUTs:                  597  out of  27288     2%  
+    Number used as Logic:               565  out of  27288     2%  
+    Number used as Memory:               32  out of   6408     0%  
+       Number used as SRL:               32
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    731
-   Number with an unused Flip Flop:     244  out of    731    33%  
-   Number with an unused LUT:           252  out of    731    34%  
-   Number of fully used LUT-FF pairs:   235  out of    731    32%  
-   Number of unique control sets:        21
+ Number of LUT Flip Flop pairs used:    778
+   Number with an unused Flip Flop:     287  out of    778    36%  
+   Number with an unused LUT:           181  out of    778    23%  
+   Number of fully used LUT-FF pairs:   310  out of    778    39%  
+   Number of unique control sets:        16
 
 IO Utilization: 
  Number of IOs:                         304
@@ -1460,8 +1567,8 @@ Clock Information:
 -----------------------------------+-------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                             | Load  |
 -----------------------------------+-------------------------------------------------------------------+-------+
-S_AXI_ACLK                         | NONE(dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd1)| 445   |
-m_axi_lite_aclk                    | NONE(dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_req_reg)   | 42    |
+S_AXI_ACLK                         | NONE(dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd1)| 400   |
+m_axi_lite_aclk                    | NONE(dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_req_reg)   | 123   |
 -----------------------------------+-------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -1473,9 +1580,9 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 5.190ns (Maximum Frequency: 192.675MHz)
-   Minimum input arrival time before clock: 3.037ns
-   Maximum output required time after clock: 3.245ns
+   Minimum period: 5.013ns (Maximum Frequency: 199.485MHz)
+   Minimum input arrival time before clock: 3.099ns
+   Maximum output required time after clock: 3.485ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -1484,35 +1591,65 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'S_AXI_ACLK'
-  Clock period: 5.190ns (frequency: 192.675MHz)
-  Total number of paths / destination ports: 8781 / 639
+  Clock period: 5.013ns (frequency: 199.485MHz)
+  Total number of paths / destination ports: 44357 / 597
 -------------------------------------------------------------------------
-Delay:               5.190ns (Levels of Logic = 4)
-  Source:            dma_ctrl_0/USER_LOGIC_I/count_6 (FF)
-  Destination:       dma_ctrl_0/USER_LOGIC_I/bus_addr_17 (FF)
+Delay:               5.013ns (Levels of Logic = 34)
+  Source:            dma_ctrl_0/USER_LOGIC_I/counter_2 (FF)
+  Destination:       dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_state_FSM_FFd3 (FF)
   Source Clock:      S_AXI_ACLK rising
   Destination Clock: S_AXI_ACLK rising
 
-  Data Path: dma_ctrl_0/USER_LOGIC_I/count_6 to dma_ctrl_0/USER_LOGIC_I/bus_addr_17
+  Data Path: dma_ctrl_0/USER_LOGIC_I/counter_2 to dma_ctrl_0/USER_LOGIC_I/mst_cmd_sm_state_FSM_FFd3
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              3   0.447   0.995  dma_ctrl_0/USER_LOGIC_I/count_6 (dma_ctrl_0/USER_LOGIC_I/count_6)
-     LUT6:I1->O            3   0.203   0.995  dma_ctrl_0/USER_LOGIC_I/count[31]_GND_25_o_equal_78_o<31>3 (dma_ctrl_0/USER_LOGIC_I/count[31]_GND_25_o_equal_78_o<31>2)
-     LUT6:I1->O            9   0.203   0.830  dma_ctrl_0/USER_LOGIC_I/count[31]_GND_25_o_equal_78_o<31>6 (dma_ctrl_0/USER_LOGIC_I/count[31]_GND_25_o_equal_78_o)
-     LUT4:I3->O           16   0.205   1.005  dma_ctrl_0/USER_LOGIC_I/_n0557_inv1_rstpot (dma_ctrl_0/USER_LOGIC_I/_n0557_inv1_rstpot)
-     LUT5:I4->O            1   0.205   0.000  dma_ctrl_0/USER_LOGIC_I/count_2_dpot (dma_ctrl_0/USER_LOGIC_I/count_2_dpot)
-     FDE:D                     0.102          dma_ctrl_0/USER_LOGIC_I/count_2
+     FDRE:C->Q             2   0.447   0.616  dma_ctrl_0/USER_LOGIC_I/counter_2 (dma_ctrl_0/USER_LOGIC_I/counter_2)
+     INV:I->O              1   0.206   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_lut<2>_INV_0 (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_lut<2>)
+     MUXCY:S->O            1   0.172   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<2> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<2>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<3> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<3>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<4> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<4>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<5> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<5>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<6> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<6>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<7> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<7>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<8> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<8>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<9> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<9>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<10> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<10>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<11> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<11>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<12> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<12>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<13> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<13>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<14> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<14>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<15> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<15>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<16> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<16>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<17> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<17>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<18> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<18>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<19> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<19>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<20> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<20>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<21> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<21>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<22> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<22>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<23> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<23>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<24> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<24>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<25> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<25>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<26> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<26>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<27> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<27>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<28> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<28>)
+     MUXCY:CI->O           1   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<29> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<29>)
+     MUXCY:CI->O           0   0.019   0.000  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<30> (dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_cy<30>)
+     XORCY:CI->O           3   0.180   0.898  dma_ctrl_0/USER_LOGIC_I/Madd_counter[31]_GND_26_o_add_99_OUT_xor<31> (dma_ctrl_0/USER_LOGIC_I/counter[31]_GND_26_o_add_99_OUT<31>)
+     LUT4:I0->O            0   0.203   0.000  dma_ctrl_0/USER_LOGIC_I/Mcompar_counter[31]_slv_reg2[31]_LessThan_101_o_lutdi15 (dma_ctrl_0/USER_LOGIC_I/Mcompar_counter[31]_slv_reg2[31]_LessThan_101_o_lutdi15)
+     MUXCY:DI->O          33   0.145   1.306  dma_ctrl_0/USER_LOGIC_I/Mcompar_counter[31]_slv_reg2[31]_LessThan_101_o_cy<15> (dma_ctrl_0/USER_LOGIC_I/Mcompar_counter[31]_slv_reg2[31]_LessThan_101_o_cy<15>)
+     LUT2:I1->O            1   0.205   0.000  dma_ctrl_0/USER_LOGIC_I/Mmux_GND_26_o_counter[31]_mux_102_OUT210 (dma_ctrl_0/USER_LOGIC_I/GND_26_o_counter[31]_mux_102_OUT<10>)
+     FDRE:D                    0.102          dma_ctrl_0/USER_LOGIC_I/counter_10
     ----------------------------------------
-    Total                      5.190ns (1.365ns logic, 3.825ns route)
-                                       (26.3% logic, 73.7% route)
+    Total                      5.013ns (2.192ns logic, 2.821ns route)
+                                       (43.7% logic, 56.3% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'm_axi_lite_aclk'
-  Clock period: 3.277ns (frequency: 305.177MHz)
-  Total number of paths / destination ports: 135 / 78
+  Clock period: 4.275ns (frequency: 233.896MHz)
+  Total number of paths / destination ports: 367 / 234
 -------------------------------------------------------------------------
-Delay:               3.277ns (Levels of Logic = 1)
+Delay:               4.275ns (Levels of Logic = 1)
   Source:            dma_ctrl_0/AXI_MASTER_LITE_I/I_RESET_MODULE/sig_combined_reset (FF)
   Destination:       dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_31 (FF)
   Source Clock:      m_axi_lite_aclk rising
@@ -1522,78 +1659,80 @@ Delay:               3.277ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               6   0.447   0.849  dma_ctrl_0/AXI_MASTER_LITE_I/I_RESET_MODULE/sig_combined_reset (dma_ctrl_0/AXI_MASTER_LITE_I/I_RESET_MODULE/sig_combined_reset)
-     LUT2:I0->O           36   0.203   1.348  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/axi_reset_sig_bus2ip_cmplt_local_OR_21_o1 (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/axi_reset_sig_bus2ip_cmplt_local_OR_21_o)
-     FDRE:R                    0.430          dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_2
+     FD:C->Q              80   0.447   1.746  dma_ctrl_0/AXI_MASTER_LITE_I/I_RESET_MODULE/sig_combined_reset (dma_ctrl_0/AXI_MASTER_LITE_I/I_RESET_MODULE/sig_combined_reset)
+     LUT2:I1->O           43   0.205   1.448  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/axi_reset_sig_bus2ip_cmplt_local_OR_21_o1 (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/axi_reset_sig_bus2ip_cmplt_local_OR_21_o)
+     FDRE:R                    0.430          dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_0
     ----------------------------------------
-    Total                      3.277ns (1.080ns logic, 2.197ns route)
-                                       (33.0% logic, 67.0% route)
+    Total                      4.275ns (1.082ns logic, 3.193ns route)
+                                       (25.3% logic, 74.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'S_AXI_ACLK'
-  Total number of paths / destination ports: 798 / 636
+  Total number of paths / destination ports: 721 / 559
 -------------------------------------------------------------------------
-Offset:              3.037ns (Levels of Logic = 3)
+Offset:              2.918ns (Levels of Logic = 3)
   Source:            S_AXI_ARVALID (PAD)
-  Destination:       dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 (FF)
+  Destination:       dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_1 (FF)
   Destination Clock: S_AXI_ACLK rising
 
-  Data Path: S_AXI_ARVALID to dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6
+  Data Path: S_AXI_ARVALID to dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_1
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT5:I0->O           18   0.203   1.297  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_start11 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/start)
-     LUT6:I2->O            1   0.203   0.684  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/MEM_DECODE_GEN[1].PER_CE_GEN[2].MULTIPLE_CES_THIS_CS_GEN.CE_I/Mmux_CS11 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_expnd_i<6>)
-     LUT4:I2->O            1   0.203   0.000  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6_rstpot (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6_rstpot)
-     FD:D                      0.102          dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6
+     LUT3:I0->O            8   0.205   1.167  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_bus2ip_addr_i91 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/bus2ip_addr_i<8>)
+     LUT6:I0->O            1   0.203   0.808  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/MEM_DECODE_GEN[1].GEN_FOR_MULTI_CS.MEM_SELECT_I/Mmux_CS11 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/pselect_hit_i<1>)
+     LUT4:I1->O            1   0.205   0.000  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_1_rstpot (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_1_rstpot)
+     FD:D                      0.102          dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_1
     ----------------------------------------
-    Total                      3.037ns (1.056ns logic, 1.981ns route)
-                                       (34.8% logic, 65.2% route)
+    Total                      2.918ns (0.944ns logic, 1.974ns route)
+                                       (32.3% logic, 67.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'm_axi_lite_aclk'
-  Total number of paths / destination ports: 13 / 9
+  Total number of paths / destination ports: 97 / 82
 -------------------------------------------------------------------------
-Offset:              2.245ns (Levels of Logic = 3)
-  Source:            m_axi_lite_rvalid (PAD)
+Offset:              3.099ns (Levels of Logic = 4)
+  Source:            m_axi_lite_awready (PAD)
   Destination:       dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local (FF)
   Destination Clock: m_axi_lite_aclk rising
 
-  Data Path: m_axi_lite_rvalid to dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local
+  Data Path: m_axi_lite_awready to dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT2:I0->O            1   0.203   0.808  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_data_taken1 (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_data_taken)
-     LUT6:I3->O            2   0.205   0.617  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_cmplt_sig_wr_cmplt_OR_41_o (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_cmplt_sig_wr_cmplt_OR_41_o)
+     LUT6:I0->O            1   0.203   0.580  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_cmplt_SW0 (N4)
+     LUT5:I4->O            2   0.205   0.617  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_cmplt (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_wr_cmplt)
+     LUT6:I5->O            2   0.205   0.617  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_cmplt_sig_wr_cmplt_OR_41_o (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_rd_cmplt_sig_wr_cmplt_OR_41_o)
      LUT2:I1->O            1   0.205   0.000  dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local_glue_set (dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local_glue_set)
      FDR:D                     0.102          dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_bus2ip_cmplt_local
     ----------------------------------------
-    Total                      2.245ns (0.820ns logic, 1.425ns route)
-                                       (36.5% logic, 63.5% route)
+    Total                      3.099ns (1.285ns logic, 1.814ns route)
+                                       (41.5% logic, 58.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'S_AXI_ACLK'
-  Total number of paths / destination ports: 79 / 38
+  Total number of paths / destination ports: 68 / 38
 -------------------------------------------------------------------------
-Offset:              3.245ns (Levels of Logic = 2)
-  Source:            dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 (FF)
-  Destination:       S_AXI_ARREADY (PAD)
+Offset:              3.485ns (Levels of Logic = 3)
+  Source:            dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 (FF)
+  Destination:       S_AXI_WREADY (PAD)
   Source Clock:      S_AXI_ACLK rising
 
-  Data Path: dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 to S_AXI_ARREADY
+  Data Path: dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 to S_AXI_WREADY
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              20   0.447   1.093  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6)
-     LUT2:I1->O           25   0.205   1.297  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/rdce_out_i<6>1 (dma_ctrl_0/ipif_Bus2IP_RdCE<1>)
-     LUT6:I4->O            2   0.203   0.000  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/rd_done1 (S_AXI_ARREADY)
+     FD:C->Q               9   0.447   1.058  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 (dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5)
+     LUT5:I2->O            1   0.205   0.580  dma_ctrl_0/USER_LOGIC_I/IP2Bus_WrAck<0>_SW1 (N40)
+     LUT6:I5->O            4   0.205   0.788  dma_ctrl_0/USER_LOGIC_I/IP2Bus_WrAck<0> (dma_ctrl_0/user_IP2Bus_WrAck)
+     LUT2:I0->O            0   0.203   0.000  dma_ctrl_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/wr_done1 (S_AXI_AWREADY)
     ----------------------------------------
-    Total                      3.245ns (0.855ns logic, 2.390ns route)
-                                       (26.3% logic, 73.7% route)
+    Total                      3.485ns (1.060ns logic, 2.425ns route)
+                                       (30.4% logic, 69.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'm_axi_lite_aclk'
-  Total number of paths / destination ports: 63 / 63
+  Total number of paths / destination ports: 106 / 106
 -------------------------------------------------------------------------
 Offset:              0.447ns (Levels of Logic = 0)
   Source:            dma_ctrl_0/AXI_MASTER_LITE_I/I_RD_WR_CNTLR/sig_ip2bus_addr_reg_31 (FF)
@@ -1619,8 +1758,8 @@ Clock to Setup on destination clock S_AXI_ACLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-S_AXI_ACLK     |    5.190|         |         |         |
-m_axi_lite_aclk|    2.431|         |         |         |
+S_AXI_ACLK     |    5.013|         |         |         |
+m_axi_lite_aclk|    6.589|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock m_axi_lite_aclk
@@ -1628,21 +1767,21 @@ Clock to Setup on destination clock m_axi_lite_aclk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-S_AXI_ACLK     |    3.054|         |         |         |
-m_axi_lite_aclk|    3.277|         |         |         |
+S_AXI_ACLK     |    3.225|         |         |         |
+m_axi_lite_aclk|    4.275|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 7.91 secs
+Total CPU time to Xst completion: 8.75 secs
  
 --> 
 
-Total memory usage is 287456 kilobytes
+Total memory usage is 288480 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :  185 (   0 filtered)
-Number of infos    :   12 (   0 filtered)
+Number of warnings :   56 (   0 filtered)
+Number of infos    :   13 (   0 filtered)
 

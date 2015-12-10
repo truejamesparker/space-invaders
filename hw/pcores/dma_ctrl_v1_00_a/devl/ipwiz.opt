@@ -1,9 +1,0 @@
--batch 
--create dma_ctrl 
--ver 1.00.a 
--dir "C:\parkerbros\space-invaders\hw" 
--lang vhdl 
--bus axi4lite ms 
--reg 4 
--xps 
--driver 

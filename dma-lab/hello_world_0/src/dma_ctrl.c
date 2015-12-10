@@ -2,7 +2,7 @@
 * Filename:          C:\parkerbros\space-invaders\hw/drivers/dma_ctrl_v1_00_a/src/dma_ctrl.c
 * Version:           1.00.a
 * Description:       dma_ctrl Driver Source File
-* Date:              Sat Dec 05 14:12:37 2015 (by Create and Import Peripheral Wizard)
+* Date:              Sat Dec 05 11:24:03 2015 (by Create and Import Peripheral Wizard)
 *****************************************************************************/
 
 
@@ -73,3 +73,15 @@ void DMA_CTRL_MasterRecvWord(Xuint32 BaseAddress, Xuint32 SrcAddress)
   Xil_Out8(BaseAddress+DMA_CTRL_MST_GO_PORT_OFFSET, MST_START);
 }
 
+void DMA_CTRL_transfer(Xuint32 BaseAddress, Xuint32 source, Xuint32 dest, Xuint32 byteCount){
+
+	DMA_CTRL_mWriteSlaveReg0(BaseAddress, 0, source); // write source
+	DMA_CTRL_mWriteSlaveReg1(BaseAddress, 0, dest); // write destination
+	DMA_CTRL_mWriteSlaveReg2(BaseAddress, 0, byteCount); // write length
+
+	Xil_Out8(BaseAddress+DMA_CTRL_MST_CNTL_REG_OFFSET, MST_BRRD);
+//	Xil_Out8(BaseAddress+DMA_CTRL_MST_CNTL_REG_OFFSET, MST_SGRD);
+//	Xil_Out32(BaseAddress+DMA_CTRL_MST_ADDR_REG_OFFSET, source);
+	Xil_Out16(BaseAddress+DMA_CTRL_MST_BE_REG_OFFSET, 0xFFFF);		// enable all byte lanes
+	Xil_Out8(BaseAddress+DMA_CTRL_MST_GO_PORT_OFFSET, MST_START); 	// initialize copy
+}

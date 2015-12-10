@@ -47,17 +47,17 @@ BRAMINIT_ELF_IMP_FILE_ARGS = -pe microblaze_0 $(MICROBLAZE_0_BOOTLOOP)
 BRAMINIT_ELF_SIM_FILES = $(MICROBLAZE_0_BOOTLOOP)
 BRAMINIT_ELF_SIM_FILE_ARGS = -pe microblaze_0 $(MICROBLAZE_0_BOOTLOOP)
 
-SIM_CMD = vsim
+SIM_CMD = isim_system
 
-BEHAVIORAL_SIM_SCRIPT = simulation/behavioral/$(SYSTEM)_setup.do
+BEHAVIORAL_SIM_SCRIPT = simulation/behavioral/$(SYSTEM)_setup.tcl
 
-STRUCTURAL_SIM_SCRIPT = simulation/structural/$(SYSTEM)_setup.do
+STRUCTURAL_SIM_SCRIPT = simulation/structural/$(SYSTEM)_setup.tcl
 
-TIMING_SIM_SCRIPT = simulation/timing/$(SYSTEM)_setup.do
+TIMING_SIM_SCRIPT = simulation/timing/$(SYSTEM)_setup.tcl
 
 DEFAULT_SIM_SCRIPT = $(BEHAVIORAL_SIM_SCRIPT)
 
-SIMGEN_OPTIONS = -p $(DEVICE) -lang $(LANGUAGE) -intstyle $(INTSTYLE) $(SEARCHPATHOPT) $(BRAMINIT_ELF_SIM_FILE_ARGS) -msg __xps/ise/xmsgprops.lst -s mgm -tb -X C:/parkerbros/space-invaders/hw/
+SIMGEN_OPTIONS = -p $(DEVICE) -lang $(LANGUAGE) -intstyle $(INTSTYLE) $(SEARCHPATHOPT) $(BRAMINIT_ELF_SIM_FILE_ARGS) -msg __xps/ise/xmsgprops.lst -s isim -tb
 
 
 CORE_STATE_DEVELOPMENT_FILES = C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v3_00_a/hdl/vhdl/family.vhd \
@@ -135,8 +135,8 @@ pcores/pit_v1_00_a/hdl/vhdl/pit.vhd \
 C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_master_lite_v1_00_a/hdl/vhdl/axi_master_lite_reset.vhd \
 C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_master_lite_v1_00_a/hdl/vhdl/axi_master_lite_cntlr.vhd \
 C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_master_lite_v1_00_a/hdl/vhdl/axi_master_lite.vhd \
-pcores/dma_ctrl_v1_00_a/hdl/vhdl/user_logic.vhd \
-pcores/dma_ctrl_v1_00_a/hdl/vhdl/dma_ctrl.vhd
+pcores/dma_ctrl_v2_00_a/hdl/verilog/user_logic.v \
+pcores/dma_ctrl_v2_00_a/hdl/vhdl/dma_ctrl.vhd
 
 WRAPPER_NGC_FILES = implementation/proc_sys_reset_0_wrapper.ngc \
 implementation/microblaze_0_ilmb_wrapper.ngc \
@@ -161,8 +161,8 @@ implementation/axi_timer_0_wrapper.ngc \
 implementation/fit_timer_0_wrapper.ngc \
 implementation/pit_0_wrapper.ngc \
 implementation/axi_uartlite_0_wrapper.ngc \
-implementation/dma_ctrl_0_wrapper.ngc \
-implementation/slide_swtiches_8bits_wrapper.ngc
+implementation/slide_swtiches_8bits_wrapper.ngc \
+implementation/dma_ctrl_0_wrapper.ngc
 
 POSTSYN_NETLIST = implementation/$(SYSTEM).ngc
 
